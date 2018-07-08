@@ -1,0 +1,42 @@
+// Mixins
+
+@mixin utility-ellipsis {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin utility-clear {
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+// Placeholders
+
+%utility-disable-text-selection {
+  user-select: none;
+}
+
+%utility-ellipsis {
+  @include utility-ellipsis;
+}
+
+%utility-fit-parent {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+%utility-middle-align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

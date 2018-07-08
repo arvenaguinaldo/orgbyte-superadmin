@@ -1,0 +1,93 @@
+@import 'animation';
+@import 'color';
+@import 'utility';
+
+.root {
+  @extend %utility-disable-text-selection;
+  transition: all .1s ease-in-out;
+  transition-property: background-color, border-color, color;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  outline: none;
+  border: 0;
+  padding: 0;
+  border-radius: 5px;
+  text-align: center;
+  white-space: nowrap;
+  color: $color-white;
+  background-color: $color-blue;
+  appearance: none;
+  overflow: hidden;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    background-color: $color-blue-dark-2;
+  }
+
+  &:active {
+    background-color: $color-blue-dark-3;
+  }
+}
+
+.wrapper {
+  height: 100%;
+}
+
+.overlay {
+  @extend %utility-fit-parent;
+}
+
+.content {
+  transition: all .1s ease-in-out;
+  transition-property: opacity;
+  display: block;
+  padding: 8px 16px;
+
+  .loading & {
+    opacity: 0;
+  }
+}
+
+.spinner {
+  @extend %utility-middle-align;
+  width: 20px;
+}
+
+.fadeIn {
+  animation: fadeIn .2s linear 1 forwards;
+}
+
+// prop: loading
+
+.loading {
+  composes: root;
+  background-color: $color-blue-dark-2;
+
+  &,
+  &[disabled] {
+    cursor: progress;
+  }
+
+  &:active {
+    top: 0;
+  }
+}
+
+// prop: disabled
+
+.disabled {
+  composes: root;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  &,
+  &:active,
+  &:hover {
+    background-color: $color-gray;
+  }
+}

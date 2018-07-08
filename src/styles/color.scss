@@ -1,0 +1,19 @@
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+$color-black: #000;
+$color-white: #fff;
+$color-gray: #ccc;
+
+$color-blue: #00f;
+$color-blue-dark-1: shade($color-blue, 5%);
+$color-blue-dark-2: shade($color-blue, 15%);
+$color-blue-dark-3: shade($color-blue, 30%);
+$color-blue-light-1: tint($color-blue, 40%);
+$color-blue-light-2: tint($color-blue, 80%);
+$color-blue-light-3: tint($color-blue, 90%);
