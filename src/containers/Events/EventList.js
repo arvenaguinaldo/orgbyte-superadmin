@@ -7,6 +7,7 @@ import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events
 import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
+import Button from '@material-ui/core/Button';
 
 class EventList extends Component {
   static propTypes = {
@@ -36,6 +37,10 @@ class EventList extends Component {
                 </div>
               );
             })}
+
+            <Button variant="outlined" color="primary">
+              Default
+            </Button>
           </div>
         </main>
       </div>
