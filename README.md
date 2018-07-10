@@ -1,5 +1,5 @@
 
-## Installation
+## Installation (for Mac or Linux)
 1. Install [nvm](https://github.com/creationix/nvm#installation)
 2. Install `node 6.4`
     ```
@@ -19,7 +19,7 @@
     npm start
     ```
 
-2. Then visit [localhost:8081](http://localhost:8888) from your browser.
+2. Then visit [localhost:8888](http://localhost:8888) from your browser.
 
 Additionally, you can change the port:
 
