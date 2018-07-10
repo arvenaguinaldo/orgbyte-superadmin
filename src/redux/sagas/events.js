@@ -24,7 +24,7 @@ function* watchRequest() {
   yield* takeEvery(EVENTS.FETCH_EVENTS, fetchEvents);
 }
 
-export default function* sampleSaga() {
+export default function* events() {
   yield [
     fork(watchRequest)
   ];

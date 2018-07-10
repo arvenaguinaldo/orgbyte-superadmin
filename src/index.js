@@ -4,14 +4,12 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import configureStore from 'redux/configureStore';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from 'containers/App/App';
 
 // Global Styles
 import 'styles/base.scss';
 
 function startApp() {
-  injectTapEventPlugin();
 
   const history = createHistory();
   const store = configureStore(undefined, history);
