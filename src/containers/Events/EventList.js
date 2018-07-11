@@ -7,6 +7,7 @@ import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events
 import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
+import LayoutWithTopbarAndSidebar from 'layout/LayoutWithTopbarAndSidebar';
 import Button from '@material-ui/core/Button';
 
 class EventList extends Component {
@@ -21,29 +22,31 @@ class EventList extends Component {
   render() {
     const styles = require('./EventList.scss');
     return (
-      <div className={styles.root}>
-        <header className={styles.topbar}>
-          <h1>Events</h1>
-        </header>
-        <main className={styles.main}>
-          <div>
-            {this.props.events.map((event) => {
-              return (
-                <div key={event.id}>
-                  <span>{event.name}</span>
-                  <span>{event.venue}</span>
-                  <span>{event.ticket_price}</span>
-                  <span>{event.date_time}</span>
-                </div>
-              );
-            })}
+      <LayoutWithTopbarAndSidebar>
+        <div className={styles.root}>
+          <header className={styles.topbar}>
+            <h1>Events</h1>
+          </header>
+          <main className={styles.main}>
+            <div>
+              {this.props.events.map((event) => {
+                return (
+                  <div key={event.id}>
+                    <span>{event.name}</span>
+                    <span>{event.venue}</span>
+                    <span>{event.ticket_price}</span>
+                    <span>{event.date_time}</span>
+                  </div>
+                );
+              })}
 
-            <Button variant="outlined" color="primary">
-              Default
-            </Button>
-          </div>
-        </main>
-      </div>
+              <Button variant="outlined" color="primary">
+                Default
+              </Button>
+            </div>
+          </main>
+        </div>
+      </LayoutWithTopbarAndSidebar>
     );
   }
 }

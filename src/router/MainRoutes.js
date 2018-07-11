@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 
 // Routes
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
-// Components
-import NotFoundPage from 'containers/NotFound/NotFoundPage';
+// Components / Pages
+import Home from 'containers/Home/Home';
 import EventList from 'containers/Events/EventList';
+import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
 class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-        <Redirect exact from="/" to="/events" />
+        <Route path="/" component={Home} exact />
         <Route path="/events" component={EventList} />
         <Route path="" component={NotFoundPage} />
       </Switch>
