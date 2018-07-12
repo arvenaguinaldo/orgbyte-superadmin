@@ -7,7 +7,7 @@ import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events
 import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
-import LayoutWithTopbarAndSidebar from 'layout/LayoutWithTopbarAndSidebar';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Button from '@material-ui/core/Button';
 
 class EventList extends Component {

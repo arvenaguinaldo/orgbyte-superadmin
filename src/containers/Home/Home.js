@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import LayoutWithTopbarAndSidebar from 'layout/LayoutWithTopbarAndSidebar';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 class Home extends Component {
   render() {
