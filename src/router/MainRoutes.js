@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 // Components / Pages
-import Home from 'containers/Home/Home';
+import Login from 'containers/Login/Login';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
@@ -12,7 +12,7 @@ class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-        <Route path="/" component={Home} exact />
+        <Route path="/" component={Login} exact />
         <Route path="/events" component={EventList} />
         <Route path="" component={NotFoundPage} />
       </Switch>
