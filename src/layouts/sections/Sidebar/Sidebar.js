@@ -21,6 +21,7 @@ import ManageIcon from '@material-ui/icons/Person';
 import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
+import style from './Sidebar.scss';
 
 
 const drawerWidth = 240;
@@ -46,6 +47,13 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing.unit * 9
     }
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4
@@ -99,6 +107,7 @@ class Sidebar extends Component {
         </div>
 
         <MenuList
+          className={style.menuList}
           subheader={<ListSubheader className={classNames(!open && classes.hide)} component="div">Administration</ListSubheader>}
         >
           <MenuItem component={Link} to="/events" selected={pathname === '/events'}>

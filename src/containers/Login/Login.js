@@ -37,10 +37,10 @@ const styles = theme => ({
   title: {
     textAlign: 'center'
   },
-  button:{
+  button: {
     background: '#5E1619',
-    "&:hover": {
-      backgroundColor: "#e2e1e0",
+    '&:hover': {
+      backgroundColor: '#e2e1e0',
       color: '#5E1619'
     }
   }
@@ -49,7 +49,6 @@ const styles = theme => ({
 
 function SimpleCard(props) {
   const {classes} = props;
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <div>
@@ -59,25 +58,25 @@ function SimpleCard(props) {
             Login
           </Typography>
           <TextField
-          id="full-width"
-          label="Username"
-          placeholder="Enter Username"
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="full-width"
-          label="Password"
-          placeholder="Enter Password"
-          fullWidth
-          margin="normal"
-          type="password"
-        />
+            id="full-width"
+            label="Username"
+            placeholder="Enter Username"
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            id="full-width"
+            label="Password"
+            placeholder="Enter Password"
+            fullWidth
+            margin="normal"
+            type="password"
+          />
         </CardContent>
         <CardActions>
-        <Button variant="contained" color="primary" className={classes.button} fullWidth="true">
-        Login
-      </Button>
+          <Button variant="contained" color="primary" className={classes.button} fullWidth="true">
+          Login
+          </Button>
         </CardActions>
       </Card>
     </div>
