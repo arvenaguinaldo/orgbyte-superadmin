@@ -8,6 +8,7 @@ import Login from 'containers/Login/Login';
 import Home from 'containers/Home/Home';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
+import OrganizationList from 'containers/OrganizationList/OrganizationList';
 
 class MainRoutes extends Component {
   render() {
@@ -16,6 +17,7 @@ class MainRoutes extends Component {
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/events" component={EventList} />
+        <Route path="/organizations" component={OrganizationList} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
