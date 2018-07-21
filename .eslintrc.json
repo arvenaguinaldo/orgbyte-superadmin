@@ -54,6 +54,7 @@
     "react/no-multi-comp": 0,
     "react/prefer-stateless-function": 0,
     "react/require-default-props": 0,
+    "linebreak-style": 0,
     "wrap-iife": [2, "outside"]
   },
   "plugins": [

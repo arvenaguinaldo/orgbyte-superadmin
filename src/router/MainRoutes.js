@@ -7,6 +7,7 @@ import {Switch, Route} from 'react-router-dom';
 import Home from 'containers/Home/Home';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
+import OrganizationList from 'containers/OrganizationList/OrganizationList';
 
 class MainRoutes extends Component {
   render() {
@@ -14,6 +15,7 @@ class MainRoutes extends Component {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/events" component={EventList} />
+        <Route path="/organizations" component={OrganizationList} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
