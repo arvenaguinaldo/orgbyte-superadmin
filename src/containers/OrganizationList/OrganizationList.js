@@ -41,6 +41,11 @@ const columnData = [
   {id: 'actions', numeric: false, disablePadding: false, label: 'Actions'}
 ];
 class EnhancedTableHead extends React.Component {
+ static propTypes = {
+   onRequestSort: PropTypes.func.isRequired,
+   order: PropTypes.string.isRequired,
+   orderBy: PropTypes.string.isRequired
+ };
   createSortHandler = property => (event) => {
     this.props.onRequestSort(event, property);
   };
@@ -79,11 +84,7 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired
-};
+
 const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit
@@ -110,7 +111,10 @@ const toolbarStyles = theme => ({
 });
 let EnhancedTableToolbar = (props) => {
   const {numSelected, classes} = props;
-
+  EnhancedTableToolbar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    numSelected: PropTypes.number.isRequired
+  };
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -147,10 +151,7 @@ let EnhancedTableToolbar = (props) => {
     </Toolbar>
   );
 };
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired
-};
+
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 const actionsStyles = theme => ({
   root: {
@@ -160,6 +161,14 @@ const actionsStyles = theme => ({
   }
 });
 class TablePaginationActions extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    count: PropTypes.number.isRequired,
+    onChangePage: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    theme: PropTypes.object.isRequired
+  };
   handleFirstPageButtonClick = (event) => {
     this.props.onChangePage(event, 0);
   };
@@ -216,14 +225,7 @@ class TablePaginationActions extends React.Component {
     );
   }
 }
-TablePaginationActions.propTypes = {
-  classes: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired
-};
+
 const TablePaginationActionsWrapped = withStyles(actionsStyles, {withTheme: true})(
   TablePaginationActions,
 );
@@ -260,6 +262,9 @@ const styles = theme => ({
 
 class OrgTable extends React.Component {
   constructor(props) {
+    OrgTable.propTypes = {
+      classes: PropTypes.object.isRequired
+    };
     const {classes} = props;
     super(props);
     this.state = {
@@ -365,8 +370,5 @@ class OrgTable extends React.Component {
   }
 
 }
-OrgTable.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(OrgTable);
