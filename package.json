@@ -30,7 +30,8 @@
     "redux-form": "^7.2.0",
     "redux-logger": "^2.8.2",
     "redux-saga": "^0.14.3",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "validator": "^10.4.0"
   },
   "devDependencies": {
     "autoprefixer": "6.7.6",

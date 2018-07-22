@@ -1,5 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
+
+// action
+
+import {loginAction} from 'redux/actions/login';
+
+//  material ui
+
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +16,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+
+// validation
+import validateInput from './LoginValidations';
+
 
 const styles = theme => ({
   container: {
@@ -18,9 +31,6 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200
   },
-  menu: {
-    width: 200
-  },
   card: {
     minWidth: 275,
     width: 300,
@@ -29,62 +39,103 @@ const styles = theme => ({
     marginTop: '100px',
     paddingBottom: '10px'
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
   title: {
     textAlign: 'center'
-  },
-  button: {
-    background: '#5E1619',
-    '&:hover': {
-      backgroundColor: '#e2e1e0',
-      color: '#5E1619'
-    }
   }
 });
 
+class Login extends Component {
+  static propTypes = {
+    loginAction: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
+  };
 
-function SimpleCard(props) {
-  const {classes} = props;
+  state = {
+    email: '',
+    password: '',
+    errorMessage: {},
+    error: {},
+    isLoading: false
+  }
 
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} color="textPrimary" variant="display1">
-            Login
-          </Typography>
-          <TextField
-            id="full-width"
-            label="Username"
-            placeholder="Enter Username"
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            id="full-width"
-            label="Password"
-            placeholder="Enter Password"
-            fullWidth
-            margin="normal"
-            type="password"
-          />
-        </CardContent>
-        <CardActions>
-          <Button variant="contained" color="primary" className={classes.button} fullWidth="true">
-          Login
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
-  );
+  onSubmit = (event) => {
+    event.preventDefault();
+    if (this.isValid()) {
+      this.setState({errorMessage: {}, errors: {}, isLoading: true});
+      this.props.loginAction(this.state);
+    }
+  }
+
+  isValid = () => {
+    const {error, errorMessage, isValid} = validateInput(this.state);
+    if (!isValid) {
+      this.setState({errorMessage});
+      this.setState({error});
+    }
+    return isValid;
+  }
+
+  handleChange = name => ({target: {value}}) => {
+    this.setState({
+      [name]: value
+    });
+  };
+
+
+  render() {
+    const {error, errorMessage, email, password, isLoading} = this.state;
+    const {classes} = this.props;
+
+    return (
+      <div>
+        <form className={classes.container} noValidate autoComplete="on" onSubmit={this.onSubmit}>
+          <Card className={classes.card}>
+            <CardContent className={classes.content}>
+              <Typography className={classes.title} color="textSecondary" variant="display1">
+                LOGIN
+              </Typography>
+
+              <TextField
+                label="Email"
+                value={email}
+                placeholder="Email"
+                fullWidth
+                margin="normal"
+                type="email"
+                autoComplete="email"
+                error={error.email}
+                helperText={errorMessage.email}
+                onChange={this.handleChange('email')}
+              />
+
+              <TextField
+                label="Password"
+                value={password}
+                placeholder="Enter Password"
+                fullWidth
+                margin="normal"
+                type="password"
+                error={error.password}
+                helperText={errorMessage.password}
+                onChange={this.handleChange('password')}
+              />
+
+
+            </CardContent>
+            <CardActions>
+              <Button variant="contained" color="primary" className={classes.button} disabled={isLoading} fullWidth onClick={this.onSubmit}>
+                <Typography color="inherit" variant="button">
+                  Login
+                </Typography>
+              </Button>
+            </CardActions>
+          </Card>
+        </form>
+      </div>
+    );
+  }
 }
+export default compose(
+  connect(null, {loginAction}),
+  withStyles(styles))(Login);
 
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(SimpleCard);
