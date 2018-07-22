@@ -5,6 +5,8 @@ import {ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import configureStore from 'redux/configureStore';
 import App from 'containers/App/App';
+import {MuiThemeProvider} from '@material-ui/core/styles';
+import myTheme from 'styles/MyTheme';
 
 // Global Styles
 import 'styles/base.scss';
@@ -16,9 +18,11 @@ function startApp() {
 
   ReactDOM.render(
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
+      <MuiThemeProvider theme={myTheme}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </MuiThemeProvider>
     </Provider>,
     document.getElementById('root'),
   );
