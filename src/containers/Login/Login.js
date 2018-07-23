@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 // validation
-import validateInput from './LoginValidations';
+import validateInput from 'utils/LoginValidations';
 
 
 const styles = theme => ({
@@ -119,7 +119,6 @@ class Login extends Component {
                 helperText={errorMessage.password}
                 onChange={this.handleChange('password')}
               />
-
 
             </CardContent>
             <CardActions>
