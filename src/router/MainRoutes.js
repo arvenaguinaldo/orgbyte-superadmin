@@ -9,6 +9,7 @@ import Home from 'containers/Home/Home';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
+import PresidentList from 'containers/PresidentList/PresidentList';
 
 class MainRoutes extends Component {
   render() {
@@ -18,6 +19,7 @@ class MainRoutes extends Component {
         <Route path="/login" component={Login} exact />
         <Route path="/events" component={EventList} />
         <Route path="/organizations" component={OrganizationList} />
+        <Route path="/presidents" component={PresidentList} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
