@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
-
+import {fetchUsers} from 'redux/actions/users';
+import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
 // action
 
-import {loginAction} from 'redux/actions/login';
+// import {login} from 'redux/actions/auth';
 
 //  material ui
 
@@ -46,9 +47,12 @@ const styles = theme => ({
 
 class Login extends Component {
   static propTypes = {
-    loginAction: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
   };
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
 
   state = {
     email: '',
@@ -59,10 +63,11 @@ class Login extends Component {
   }
 
   onSubmit = (event) => {
+    const {email, password} = this.state;
     event.preventDefault();
     if (this.isValid()) {
       this.setState({errorMessage: {}, errors: {}, isLoading: true});
-      this.props.loginAction(this.state);
+      fetchUsers(email, password);
     }
   }
 
@@ -134,7 +139,14 @@ class Login extends Component {
     );
   }
 }
+
+const withRedux = connect(null, fetchUsers);
+
+const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
+  return props.isLoading;
+});
 export default compose(
-  connect(null, {loginAction}),
+  withRedux,
+  withLoadingWhileFetchingData,
   withStyles(styles))(Login);
 
