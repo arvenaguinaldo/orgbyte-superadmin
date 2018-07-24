@@ -21,11 +21,13 @@ import ManageIcon from '@material-ui/icons/Person';
 import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-
+import Typography from '@material-ui/core/Typography';
+import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
+import styles from './CSSsidebar.css';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const Styles = theme => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
@@ -38,9 +40,11 @@ const styles = theme => ({
   },
   drawerPaperClose: {
     overflowX: 'hidden',
+    paddingTop: '10px',
+    paddingLeft: '10px',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScree
     }),
     width: theme.spacing.unit * 7,
     [theme.breakpoints.up('sm')]: {
@@ -48,7 +52,8 @@ const styles = theme => ({
     }
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: '50px',
+    backgroundColor: '#550909'
   },
   listHeader: {
     fontSize: '10px'
@@ -68,11 +73,15 @@ class Sidebar extends Component {
   };
 
   state = {
-    advancedMenuOpen: false
+    advancedMenuOpen: false,
+    accountsMenuOpen: false
   };
 
   handleClick = () => {
     this.setState(state => ({advancedMenuOpen: !state.advancedMenuOpen}));
+  };
+  handleClick2 = () => {
+    this.setState(state => ({accountsMenuOpen: !state.accountsMenuOpen}));
   };
 
   render() {
@@ -103,23 +112,38 @@ class Sidebar extends Component {
         >
           <MenuItem component={Link} to="/events" selected={pathname === '/events'}>
             <ListItemIcon>
-              <DashBoardIcon />
+              <DashBoardIcon style={{color: 'white'}} />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary={<Typography variant="subheading" className={styles.list}>Dashboard</Typography>} />
           </MenuItem>
-
-          <MenuItem button>
+          <MenuItem button onClick={this.handleClick2} >
             <ListItemIcon>
-              <ManageIcon />
+              <ManageIcon style={{color: 'white'}} />
             </ListItemIcon>
-            <ListItemText primary="Manage Accounts" />
+            <ListItemText primary={<Typography variant="subheading" className={styles.list}>Manage Accounts</Typography>} />
+            {this.state.accountsMenuOpen ? <ExpandLess /> : <ExpandMore />}
           </MenuItem>
-
+          <Collapse in={this.state.accountsMenuOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+              <MenuItem button className={classes.nested}>
+                <ListItemIcon>
+                  <BackupIcon />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" style={{color: '#FFFFFF'}}>Organizations List</Typography>} />
+              </MenuItem>
+              <MenuItem style={{backgroundColor: '#550909', paddingLeft: '50px'}}>
+                <ListItemIcon>
+                  <SupervisorAccount />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" style={{color: '#FFFFFF'}}>Presidents List</Typography>} />
+              </MenuItem>
+            </MenuList>
+          </Collapse>
           <MenuItem button onClick={this.handleClick}>
             <ListItemIcon>
-              <AdvanceIcon />
+              <AdvanceIcon style={{color: 'white'}} />
             </ListItemIcon>
-            <ListItemText inset primary="Advanced" />
+            <ListItemText inset primary={<Typography variant="subheading" style={{color: '#FFFFFF'}}>Advanced</Typography>} />
             {this.state.advancedMenuOpen ? <ExpandLess /> : <ExpandMore />}
           </MenuItem>
           <Collapse in={this.state.advancedMenuOpen} timeout="auto" unmountOnExit>
@@ -128,21 +152,20 @@ class Sidebar extends Component {
                 <ListItemIcon>
                   <BackupIcon />
                 </ListItemIcon>
-                <ListItemText inset primary="Backup" />
+                <ListItemText inset primary={<Typography variant="body1" style={{color: '#FFFFFF'}}>Backup</Typography>} />
               </MenuItem>
             </MenuList>
           </Collapse>
         </MenuList>
-
         <MenuList
           component="nav"
           subheader={<ListSubheader className={classNames(!open && classes.hide)} component="div">User</ListSubheader>}
         >
           <MenuItem button>
             <ListItemIcon>
-              <LogoutIcon />
+              <LogoutIcon style={{color: 'white'}} />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary={<Typography variant="subheading" style={{color: '#FFFFFF'}}>Logout</Typography>} />
           </MenuItem>
         </MenuList>
       </Drawer>
@@ -152,5 +175,6 @@ class Sidebar extends Component {
 
 export default compose(
   withRouter,
-  withStyles(styles, {withTheme: true})
+  withStyles(Styles, {withTheme: true})
 )(Sidebar);
+
