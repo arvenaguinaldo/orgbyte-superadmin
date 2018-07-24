@@ -34,7 +34,7 @@ function getSorting(order, orderBy) {
 const columnData = [
   {id: 'no', numeric: true, disablePadding: false, label: 'No.'},
   {id: 'name', numeric: false, disablePadding: false, label: 'Full Name'},
-  {id: 'positionOnOrganization', numeric: false, disablePadding: false, label: 'Position in the Organization'},
+  {id: 'positionOnOrganization', numeric: false, disablePadding: false, label: 'Position'},
   {id: 'organization', numeric: false, disablePadding: false, label: 'Organization'},
   {id: 'email', numeric: false, disablePadding: false, label: 'Email'},
   {id: 'contactNumber', numeric: false, disablePadding: false, label: 'Contact Number'},
