@@ -51,6 +51,13 @@ const Styles = theme => ({
       width: theme.spacing.unit * 9
     }
   },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar
+  },
   nested: {
     paddingLeft: '50px',
     backgroundColor: '#550909'
