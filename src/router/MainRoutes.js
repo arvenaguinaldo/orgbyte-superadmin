@@ -4,9 +4,7 @@ import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 
 // Components / Pages
-sideBarLayout
 import Login from 'containers/Login/Login';
-develop
 import Home from 'containers/Home/Home';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
