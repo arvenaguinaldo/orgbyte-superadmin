@@ -47,6 +47,7 @@ const styles = theme => ({
 
 class Login extends Component {
   static propTypes = {
+    fetchUsers: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
   };
 
@@ -67,7 +68,15 @@ class Login extends Component {
     event.preventDefault();
     if (this.isValid()) {
       this.setState({errorMessage: {}, errors: {}, isLoading: true});
-      fetchUsers(email, password);
+      this.props.fetchUsers({email, password});
+      // .then(
+      //   (response) => {
+      //     this.context.router.push('/');
+      //   },
+      //   (error) => {
+      //     this.setState({errors: error.data.errors, isLoading: true});
+      //   }
+      // );
     }
   }
 
@@ -140,7 +149,7 @@ class Login extends Component {
   }
 }
 
-const withRedux = connect(null, fetchUsers);
+const withRedux = connect(null, {fetchUsers});
 
 const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
   return props.isLoading;
