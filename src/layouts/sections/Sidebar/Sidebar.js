@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {Link, withRouter} from 'react-router-dom';
 import classNames from 'classnames';
+import {connect} from 'react-redux';
+
+import {logout} from 'redux/actions/auth';
+
+// Material UI Styles
 import {withStyles} from '@material-ui/core/styles';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,7 +26,6 @@ import ManageIcon from '@material-ui/icons/Person';
 import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-
 
 const drawerWidth = 240;
 
@@ -65,17 +69,24 @@ const styles = theme => ({
   }
 });
 
+
 class Sidebar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
-    onRequestSidebarClose: PropTypes.func.isRequired
+    onRequestSidebarClose: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired
   };
 
   state = {
     advancedMenuOpen: false
+  };
+
+  onLogout = (event) => {
+    event.preventDefault();
+    this.props.logout();
   };
 
   handleClick = () => {
@@ -145,7 +156,7 @@ class Sidebar extends Component {
           component="nav"
           subheader={<ListSubheader className={classNames(!open && classes.hide)} component="div">User</ListSubheader>}
         >
-          <MenuItem button>
+          <MenuItem button onClick={this.onLogout}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
@@ -156,8 +167,10 @@ class Sidebar extends Component {
     );
   }
 }
+const withRedux = connect(null, {logout});
 
 export default compose(
   withRouter,
+  withRedux,
   withStyles(styles, {withTheme: true})
 )(Sidebar);

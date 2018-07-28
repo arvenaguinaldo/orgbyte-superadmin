@@ -2,11 +2,15 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
-import {fetchUsers} from 'redux/actions/users';
-import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
+import {Redirect} from 'react-router-dom';
+import {createStructuredSelector} from 'reselect';
+import * as authenticate from 'utils/AuthService';
+
 // action
 
-// import {login} from 'redux/actions/auth';
+import {login} from 'redux/actions/auth';
+import {makeSelectAuthMeta} from 'redux/selectors/auth';
+import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
 
 //  material ui
 
@@ -47,36 +51,23 @@ const styles = theme => ({
 
 class Login extends Component {
   static propTypes = {
-    fetchUsers: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
   };
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
 
   state = {
     email: '',
     password: '',
     errorMessage: {},
-    error: {},
-    isLoading: false
+    error: {}
   }
 
   onSubmit = (event) => {
     const {email, password} = this.state;
     event.preventDefault();
     if (this.isValid()) {
-      this.setState({errorMessage: {}, errors: {}, isLoading: true});
-      this.props.fetchUsers({email, password});
-      // .then(
-      //   (response) => {
-      //     this.context.router.push('/');
-      //   },
-      //   (error) => {
-      //     this.setState({errors: error.data.errors, isLoading: true});
-      //   }
-      // );
+      this.setState({errorMessage: {}, errors: {}});
+      this.props.login({email, password});
     }
   }
 
@@ -95,10 +86,14 @@ class Login extends Component {
     });
   };
 
-
   render() {
-    const {error, errorMessage, email, password, isLoading} = this.state;
+    const {from} = this.props.location.state || {from: {pathname: '/'}}; // eslint-disable-line react/prop-types
+    const {error, errorMessage, email, password} = this.state;
     const {classes} = this.props;
+
+    if (authenticate.isUserAuthenticated()) {
+      return <Redirect to={from} />;
+    }
 
     return (
       <div>
@@ -136,7 +131,7 @@ class Login extends Component {
 
             </CardContent>
             <CardActions>
-              <Button variant="contained" color="primary" className={classes.button} disabled={isLoading} fullWidth onClick={this.onSubmit}>
+              <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={this.onSubmit}>
                 <Typography color="inherit" variant="button">
                   Login
                 </Typography>
@@ -149,10 +144,14 @@ class Login extends Component {
   }
 }
 
-const withRedux = connect(null, {fetchUsers});
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectAuthMeta()
+});
+
+const withRedux = connect(mapStateToProps, {login});
 
 const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
-  return props.isLoading;
+  return props.meta.isLoading;
 });
 export default compose(
   withRedux,

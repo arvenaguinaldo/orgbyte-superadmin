@@ -1,8 +1,21 @@
-import api from 'services/api/api';
+import {AUTH} from 'constants/actions/auth';
 
-export function login(data) {
-  return api.callPost('/sessions', data).then((res) => {
-    const token = res.data.token;
-    localStorage.setItem('token', token);
-  });
-}
+export const login = params => ({
+  type: AUTH.LOGIN,
+  params
+});
+
+export const setCurrentUser = response => ({
+  type: AUTH.SET_CURRENT_USER,
+  response
+});
+
+export const logout = params => ({
+  type: AUTH.LOGOUT,
+  params
+});
+
+export const loginSuccess = response => ({
+  type: AUTH.LOGIN_SUCCESS,
+  response
+});
