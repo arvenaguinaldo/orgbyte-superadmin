@@ -5,6 +5,12 @@ import {ConnectedRouter} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import configureStore from 'redux/configureStore';
 import App from 'containers/App/App';
+import {create} from 'jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {MuiThemeProvider} from '@material-ui/core/styles';
+import myTheme from 'styles/MyTheme';
 
 // Authentications
 import * as authenticate from 'utils/AuthService';
@@ -20,17 +26,28 @@ function startApp() {
   const history = createHistory();
   const store = configureStore(undefined, history);
 
+  const generateClassName = createGenerateClassName();
+  const jss = create(jssPreset());
+  jss.options.insertionPoint = document.getElementById('jss-insertion-point');
+
+
   if (authenticate.getToken()) {
     authenticate.authenticateToken(localStorage.token);
     store.dispatch(setCurrentUser(jwt.decode(authenticate.getToken())));
   }
 
+
   ReactDOM.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
-    </Provider>,
+    <JssProvider jss={jss} generateClassName={generateClassName}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <MuiThemeProvider theme={myTheme}>
+            <CssBaseline />
+            <App />
+          </MuiThemeProvider>
+        </ConnectedRouter>
+      </Provider>
+    </JssProvider>,
     document.getElementById('root'),
   );
 
