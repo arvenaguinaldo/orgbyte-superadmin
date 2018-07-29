@@ -52,30 +52,29 @@ const styles = theme => ({
 class Login extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
+    location: PropTypes.object,
     classes: PropTypes.object.isRequired
   };
 
   state = {
     email: '',
     password: '',
-    errorMessage: {},
-    error: {}
+    errors: {}
   }
 
   onSubmit = (event) => {
     const {email, password} = this.state;
     event.preventDefault();
     if (this.isValid()) {
-      this.setState({errorMessage: {}, errors: {}});
+      this.setState({errors: {}});
       this.props.login({email, password});
     }
   }
 
   isValid = () => {
-    const {error, errorMessage, isValid} = validateInput(this.state);
+    const {errors, isValid} = validateInput(this.state);
     if (!isValid) {
-      this.setState({errorMessage});
-      this.setState({error});
+      this.setState({errors});
     }
     return isValid;
   }
@@ -87,8 +86,8 @@ class Login extends Component {
   };
 
   render() {
-    const {from} = this.props.location.state || {from: {pathname: '/'}}; // eslint-disable-line react/prop-types
-    const {error, errorMessage, email, password} = this.state;
+    const {from} = this.props.location.state || {from: {pathname: '/'}};
+    const {errors, email, password} = this.state;
     const {classes} = this.props;
 
     if (authenticate.isUserAuthenticated()) {
@@ -112,8 +111,8 @@ class Login extends Component {
                 margin="normal"
                 type="email"
                 autoComplete="email"
-                error={error.email}
-                helperText={errorMessage.email}
+                error={!!errors.email}
+                helperText={errors.email}
                 onChange={this.handleChange('email')}
               />
 
@@ -124,8 +123,8 @@ class Login extends Component {
                 fullWidth
                 margin="normal"
                 type="password"
-                error={error.password}
-                helperText={errorMessage.password}
+                error={!!errors.password}
+                helperText={errors.password}
                 onChange={this.handleChange('password')}
               />
 
@@ -156,5 +155,6 @@ const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
 export default compose(
   withRedux,
   withLoadingWhileFetchingData,
-  withStyles(styles))(Login);
+  withStyles(styles)
+)(Login);
 

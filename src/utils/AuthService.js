@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export function authenticateToken(token) {
   localStorage.setItem('token', token);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 export function isUserAuthenticated() {
