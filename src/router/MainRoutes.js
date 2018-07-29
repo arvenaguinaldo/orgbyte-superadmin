@@ -11,6 +11,7 @@ import NotFoundPage from 'containers/NotFound/NotFoundPage';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
 import PresidentList from 'containers/PresidentList/PresidentList';
 import BackupList from 'containers/BackupList/BackupList';
+import AddOrganization from 'containers/AddOgranization/AddOrganization';
 
 class MainRoutes extends Component {
   render() {
@@ -24,6 +25,7 @@ class MainRoutes extends Component {
         <Route path="/organizations" component={OrganizationList} />
         <Route path="/presidents" component={PresidentList} />
         <Route path="/backups" component={BackupList} />
+        <Route path="/addorganization" component={AddOrganization} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );

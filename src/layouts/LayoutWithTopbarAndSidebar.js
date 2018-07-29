@@ -22,7 +22,7 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#EEEEEE',
     padding: theme.spacing.unit * 3
   }
 });
