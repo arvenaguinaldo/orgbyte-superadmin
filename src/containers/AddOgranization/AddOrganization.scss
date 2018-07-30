@@ -7,10 +7,16 @@
 
 .form {
   height: 400px;
+  padding: 30px;
 }
 
 .bottomButton {
   position: absolute;
+  margin-top: 10px;
   right: 40px;
+}
+
+.inline {
+  display: inline;
 }
 
