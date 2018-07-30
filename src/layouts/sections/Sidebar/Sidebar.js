@@ -17,13 +17,17 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashBoardIcon from '@material-ui/icons/Dashboard';
-import ManageIcon from '@material-ui/icons/Person';
-import AdvanceIcon from '@material-ui/icons/Settings';
-import BackupIcon from '@material-ui/icons/Backup';
+import DateIcon from '@material-ui/icons/DateRange';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
+import AddIcon from '@material-ui/icons/Add';
+import PersonIcon from '@material-ui/icons/Person';
 import Typography from '@material-ui/core/Typography';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
+import InfoIcon from '@material-ui/icons/Info';
+import MailIcon from '@material-ui/icons/Mail';
+import PhoneIcon from '@material-ui/icons/Phone';
 import style from './Sidebar.scss';
+
 
 const drawerWidth = 240;
 
@@ -58,7 +62,11 @@ const Styles = theme => ({
     ...theme.mixins.toolbar
   },
   nested: {
-    paddingLeft: '50px'
+    paddingLeft: '50px',
+    backgroundColor: '#380e10',
+    '&:hover': {
+      backgroundColor: '#2f0c0e'
+    }
   },
   hide: {
     display: 'none'
@@ -81,9 +89,6 @@ class Sidebar extends Component {
 
   handleClickAdvanced = () => {
     this.setState(state => ({advancedMenuOpen: !state.advancedMenuOpen}));
-  };
-  handleClickAccounts = () => {
-    this.setState(state => ({accountsMenuOpen: !state.accountsMenuOpen}));
   };
 
   render() {
@@ -117,31 +122,21 @@ class Sidebar extends Component {
         <MenuList
           subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">Administration</ListSubheader>}
         >
-          <MenuItem component={Link} to="/events" selected={pathname === '/events'}>
+          <MenuItem className={style.Menu} component={Link} to="/events" selected={pathname === '/events'}>
+            <ListItemIcon>
+              <PersonIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Membership</Typography>} />
+          </MenuItem>
+          <MenuItem className={style.Menu} component={Link} to="/events" selected={pathname === '/events'}>
             <ListItemIcon>
               <DashBoardIcon className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Dashboard</Typography>} />
-          </MenuItem>
-
-          <MenuItem button onClick={this.handleClickAccounts} selected={pathname === '/organizations' || pathname === '/presidents'} >
-            <ListItemIcon>
-              <ManageIcon className={style.listIcon} />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Manage Accounts</Typography>} />
-            {accountsMenuOpen || !onRequestSidebarClose ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Orgshirt</Typography>} />
           </MenuItem>
 
           <Collapse in={accountsMenuOpen && open} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
-
-              <MenuItem component={Link} to="/organizations" selected={pathname === '/organizations'} className={classes.nested}>
-                <ListItemIcon>
-                  <BackupIcon className={style.listIcon} />
-                </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Organizations List</Typography>} />
-              </MenuItem>
-
               <MenuItem component={Link} to="/presidents" selected={pathname === '/presidents'} className={classes.nested}>
                 <ListItemIcon>
                   <SupervisorAccount className={style.listIcon} />
@@ -152,11 +147,11 @@ class Sidebar extends Component {
             </MenuList>
           </Collapse>
 
-          <MenuItem button onClick={this.handleClickAdvanced} selected={pathname === '/backup'} >
+          <MenuItem className={style.Menu} button onClick={this.handleClickAdvanced} selected={pathname === '/backup'} >
             <ListItemIcon>
-              <AdvanceIcon className={style.listIcon} />
+              <DateIcon className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText inset primary={<Typography variant="subheading" className={style.list}>Advanced</Typography>} />
+            <ListItemText inset primary={<Typography variant="body1" className={style.list}>Events</Typography>} />
             {advancedMenuOpen || !onRequestSidebarClose ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
@@ -165,22 +160,56 @@ class Sidebar extends Component {
 
               <MenuItem component={Link} to="/backup" selected={pathname === '/backup'} className={classes.nested}>
                 <ListItemIcon>
-                  <BackupIcon className={style.listIcon} />
+                  <AddIcon className={style.listIcon} />
                 </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Backup</Typography>} />
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Event</Typography>} />
               </MenuItem>
 
             </MenuList>
           </Collapse>
         </MenuList>
         <MenuList
-          subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">User</ListSubheader>}
+          subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">Communication</ListSubheader>}
         >
-          <MenuItem>
+          <MenuItem className={style.Menu} >
+            <ListItemIcon>
+              <InfoIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Announcemets</Typography>} />
+          </MenuItem>
+          <MenuItem className={style.Menu} >
+            <ListItemIcon>
+              <MailIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Mail</Typography>} />
+          </MenuItem>
+          <MenuItem className={style.Menu} >
+            <ListItemIcon>
+              <PhoneIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>SMS</Typography>} />
+          </MenuItem>
+        </MenuList>
+        <MenuList
+          subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">Communication</ListSubheader>}
+        >
+          <MenuItem className={style.Menu} >
+            <ListItemIcon>
+              <InfoIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Manage Accounts</Typography>} />
+          </MenuItem>
+          <MenuItem className={style.Menu} >
+            <ListItemIcon>
+              <MailIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Change Password</Typography>} />
+          </MenuItem>
+          <MenuItem className={style.Menu} >
             <ListItemIcon>
               <LogoutIcon className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Logout</Typography>} />
+            <ListItemText primary={<Typography variant="body1" className={style.list}>Logout</Typography>} />
           </MenuItem>
         </MenuList>
       </Drawer>

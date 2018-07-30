@@ -66,7 +66,7 @@ class Topbar extends Component {
             <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit" noWrap>
-            SUPER ADMIN
+          ADMIN
           </Typography>
         </Toolbar>
       </AppBar>
