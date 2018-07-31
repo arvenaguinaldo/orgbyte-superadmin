@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export function authenticateToken(token) {
   localStorage.setItem('token', token);
 }
@@ -9,7 +7,6 @@ export function isUserAuthenticated() {
 }
 
 export function deauthenticateUser() {
-  delete axios.defaults.headers.common['Authorization'];
   localStorage.removeItem('token');
 }
 
