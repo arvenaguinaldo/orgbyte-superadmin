@@ -2,21 +2,18 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {Link, withRouter} from 'react-router-dom';
-import classNames from 'classnames';
-import {connect} from 'react-redux';
 
+import {connect} from 'react-redux';
 import {logout} from 'redux/actions/auth';
 
 // Material UI Styles
+
 import {withStyles} from '@material-ui/core/styles';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -31,43 +28,19 @@ import Typography from '@material-ui/core/Typography';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import style from './Sidebar.scss';
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const Styles = theme => ({
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
     backgroundColor: '#5E1619'
   },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    paddingTop: '10px',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScree
-    }),
-    width: theme.spacing.unit * 9,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 8
-    }
-  },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 10px',
     ...theme.mixins.toolbar
   },
   nested: {
     paddingLeft: '50px'
-  },
-  hide: {
-    display: 'none'
   }
 });
 
@@ -103,10 +76,7 @@ class Sidebar extends Component {
   render() {
     const {
       classes,
-      location: {pathname},
-      theme,
-      open,
-      onRequestSidebarClose
+      location: {pathname}
     } = this.props;
 
     const {
@@ -118,18 +88,13 @@ class Sidebar extends Component {
       <Drawer
         variant="permanent"
         classes={{
-          paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose)
+          paper: classes.drawerPaper
         }}
-        open={open}
       >
-        <div className={classes.toolbar}>
-          <IconButton onClick={onRequestSidebarClose} className={style.listIcon}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
+        <div className={classes.toolbar} />
 
         <MenuList
-          subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">Administration</ListSubheader>}
+          subheader={<ListSubheader className={style.subHeader} component="div">Administration</ListSubheader>}
         >
           <MenuItem component={Link} to="/events" selected={pathname === '/events'}>
             <ListItemIcon>
@@ -143,10 +108,10 @@ class Sidebar extends Component {
               <ManageIcon className={style.listIcon} />
             </ListItemIcon>
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Manage Accounts</Typography>} />
-            {accountsMenuOpen || !onRequestSidebarClose ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+            {accountsMenuOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <Collapse in={accountsMenuOpen && open} timeout="auto" unmountOnExit>
+          <Collapse in={accountsMenuOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
               <MenuItem component={Link} to="/organizations" selected={pathname === '/organizations'} className={classes.nested}>
@@ -171,10 +136,10 @@ class Sidebar extends Component {
               <AdvanceIcon className={style.listIcon} />
             </ListItemIcon>
             <ListItemText inset primary={<Typography variant="subheading" className={style.list}>Advanced</Typography>} />
-            {advancedMenuOpen || !onRequestSidebarClose ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+            {advancedMenuOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <Collapse in={advancedMenuOpen && open} timeout="auto" unmountOnExit>
+          <Collapse in={advancedMenuOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
               <MenuItem component={Link} to="/backup" selected={pathname === '/backup'} className={classes.nested}>
@@ -188,7 +153,7 @@ class Sidebar extends Component {
           </Collapse>
         </MenuList>
         <MenuList
-          subheader={<ListSubheader className={classNames(style.subHeader, !open && classes.hide)} component="div">User</ListSubheader>}
+          subheader={<ListSubheader className={style.subHeader} component="div">User</ListSubheader>}
         >
 
           <MenuItem button onClick={this.onLogout}>
