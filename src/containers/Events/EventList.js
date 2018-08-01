@@ -6,7 +6,7 @@ import {compose} from 'recompose';
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
-import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Button from '@material-ui/core/Button';
 
@@ -66,12 +66,12 @@ const withFetchInitialData = fetchInitialData((props) => {
   props.fetchEvents();
 });
 
-const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
   return props.meta.isLoading;
 });
 
 export default compose(
   withRedux,
   withFetchInitialData,
-  withLoadingWhileFetchingData
+  withLoadingWhileFetchingDataInsideLayout
 )(EventList);

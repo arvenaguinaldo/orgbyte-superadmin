@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {Link, withRouter} from 'react-router-dom';
+
+import {connect} from 'react-redux';
+import {logout} from 'redux/actions/auth';
+
+// Material UI Styles
+
 import {withStyles} from '@material-ui/core/styles';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,6 +23,7 @@ import ManageIcon from '@material-ui/icons/Person';
 import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
+
 import Typography from '@material-ui/core/Typography';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import style from './Sidebar.scss';
@@ -37,15 +44,23 @@ const Styles = theme => ({
   }
 });
 
+
 class Sidebar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
   };
 
   state = {
     advancedMenuOpen: false,
     accountsMenuOpen: false
+  };
+
+
+  onLogout = (event) => {
+    event.preventDefault();
+    this.props.logout();
   };
 
   handleClickAdvanced = () => {
@@ -137,7 +152,8 @@ class Sidebar extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">User</ListSubheader>}
         >
-          <MenuItem>
+
+          <MenuItem button onClick={this.onLogout}>
             <ListItemIcon>
               <LogoutIcon className={style.listIcon} />
             </ListItemIcon>
@@ -148,9 +164,11 @@ class Sidebar extends Component {
     );
   }
 }
+const withRedux = connect(null, {logout});
 
 export default compose(
   withRouter,
+  withRedux,
   withStyles(Styles, {withTheme: true})
 )(Sidebar);
 
