@@ -18,10 +18,9 @@ import FormControl from '@material-ui/core/FormControl';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import FormLabel from '@material-ui/core/FormLabel';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-// import Radio from '@material-ui/core/Radio';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import {CirclePicker} from 'react-color';
 
 // layout
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
@@ -50,11 +49,16 @@ const styles = theme => ({
   grid: {
     backgroundColor: '#5F1D24'
   },
+  input: {
+    display: 'none'
+  },
+  button: {
+    width: '300px'
+  },
   hide: {
     display: 'none'
   }
 });
-/* eslint-disable react/prefer-stateless-function */
 
 function TextMaskCustom(props) {
   const {inputRef, ...other} = props;
@@ -81,15 +85,29 @@ class AddOrganization extends Component {
   };
 
   state = {
-    activeStep: 0,
-    textmask: '  -   ',
+    nameOfOrganization: '',
     college: '',
-    organizationType: '',
+    acronym: '',
+    recognitionNumber: '  -   ',
+    date: '',
+    natureOfOrganization: '',
+    typeOfOrganization: '',
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    email: '',
+    presidentCollege: '',
+    selectedLogo: null,
+    color: ['#5C181D', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
+      '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107',
+      '#ff9800', '#ff5722', '#795548', '#607d8b'],
+    colorPreview: '#5C181D',
+    activeStep: 0,
     error: ''
   };
 
   getSteps = () => {
-    return ['Organization Profile', 'President Profile', 'Create an ad'];
+    return ['Organization Profile', 'President Profile', 'Personalize'];
   }
 
   getStepContent = (stepIndex) => {
@@ -99,149 +117,340 @@ class AddOrganization extends Component {
       case 1:
         return this.presidentProfile();
       case 2:
-        return 'This is the bit I really care about!';
+        return this.personalize();
       default:
         return 'Uknown stepIndex';
     }
   }
 
-  handleChange = name => (event) => {
+  handleChange = name => ({target: {value}}) => {
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
+  };
+
+  imageUploadHandler = (event) => {
+    event.preventDefault();
+    this.setState({
+      selectedLogo: URL.createObjectURL(event.target.files[0])
+    });
+  }
+
+  handleColorChangeComplete = (color) => {
+    this.setState({colorPreview: color.hex});
   };
 
   orgnazationProfile = () => {
     const {
-      textmask,
+      nameOfOrganization,
       college,
+      acronym,
+      recognitionNumber,
+      date,
+      natureOfOrganization,
+      typeOfOrganization,
       error
     } = this.state;
+
     const {classes} = this.props;
     return (
-      <Paper className={style.form} elevation={0} square={false} >
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={12} md={12}>
 
-            <Grid container spacing={40}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="with-placeholder"
-                  label="Name of Organization"
-                  placeholder="Organization Name"
-                  className={classes.textField}
-                  margin="normal"
-                  error={!!error}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl className={classes.formControl} margin="normal" fullWidth>
-                  <InputLabel htmlFor="age-simple">College</InputLabel>
-                  <Select
-                    value={college}
-                    className={classes.textField}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'college',
-                      id: 'age-simple'
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>College of Information and Communications Technology</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid container spacing={40}>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                value={nameOfOrganization}
+                label="Name of Organization"
+                placeholder="Organization Name"
+                className={classes.textField}
+                onChange={this.handleChange('nameOfOrganization')}
+                margin="normal"
+                error={!!error.nameOfOrganization}
+                fullWidth
+              />
             </Grid>
 
-            <Grid container spacing={32}>
-              <Grid item xs={6} sm={2}>
-                <TextField
-                  id="with-placeholder"
-                  label="Acronym"
-                  placeholder="Acronym"
+            <Grid item xs={12} sm={12} md={6}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.college} fullWidth>
+                <InputLabel htmlFor="age-simple">College</InputLabel>
+                <Select
+                  value={college}
                   className={classes.textField}
-                  margin="normal"
-                />
-              </Grid>
+                  onChange={this.handleChange('college')}
+                  inputProps={{
+                    name: 'college',
+                    id: 'age-simple'
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>College of Information and Communications Technology</MenuItem>
+                </Select>
+                <FormHelperText>{error.college}</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
 
-              <Grid item xs={6} sm={2}>
-                <FormControl className={classes.formControl} margin="normal">
-                  <InputLabel htmlFor="formatted-text-mask-input">Recognition Number</InputLabel>
-                  <Input
-                    value={textmask}
-                    onChange={this.handleChange('textmask')}
-                    id="formatted-text-mask-input"
-                    inputComponent={TextMaskCustom}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6} sm={2}>
-                <FormControl className={classes.formControl} margin="normal" >
-                  <TextField
-                    id="date"
-                    label="Date of Formation"
-                    type="date"
-                    defaultValue="2017-05-24"
-                    className={classes.textField}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    fullWidth
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <FormControl className={classes.formControl} margin="normal" fullWidth>
-                  <InputLabel htmlFor="age-simple">Nature of Organization</InputLabel>
-                  <Select
-                    value={college}
-                    className={classes.textField}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'college',
-                      id: 'age-simple'
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Academic</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid><Grid item xs={6} sm={3}>
-                <FormControl className={classes.formControl} margin="normal" fullWidth>
-                  <InputLabel htmlFor="age-simple">Type of Organization</InputLabel>
-                  <Select
-                    value={college}
-                    className={classes.textField}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'college',
-                      id: 'age-simple'
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>University Based</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid container spacing={32}>
+            <Grid item xs={6} sm={6} md={2}>
+              <TextField
+                value={acronym}
+                label="Acronym"
+                placeholder="Acronym"
+                className={classes.textField}
+                onChange={this.handleChange('acronym')}
+                margin="normal"
+                error={!!error.acronym}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={6} sm={6} md={2}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.recognitionNumber} fullWidth>
+                <InputLabel htmlFor="formatted-text-mask-input">Recognition Number</InputLabel>
+                <Input
+                  value={recognitionNumber}
+                  onChange={this.handleChange('recognitionNumber')}
+                  id="formatted-text-mask-input"
+                  inputComponent={TextMaskCustom}
+                />
+                <FormHelperText>{error.recognitionNumber}</FormHelperText>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={6} sm={6} md={2}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.date} fullWidth>
+
+                <TextField
+                  value={date}
+                  label="Date of Formation"
+                  type="date"
+                  className={classes.textField}
+                  onChange={this.handleChange('date')}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  fullWidth
+                />
+
+                <FormHelperText>{error.date}</FormHelperText>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={6} sm={6} md={3}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.natureOfOrganization} fullWidth>
+                <InputLabel htmlFor="age-simple">Nature of Organization</InputLabel>
+                <Select
+                  value={natureOfOrganization}
+                  className={classes.textField}
+                  onChange={this.handleChange('natureOfOrganization')}
+                  inputProps={{
+                    name: 'natureOfOrganization',
+                    id: 'age-simple'
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Academic</MenuItem>
+                </Select>
+                <FormHelperText>{error.natureOfOrganization}</FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} sm={6} md={3}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.typeOfOrganization} fullWidth>
+                <InputLabel htmlFor="age-simple">Type of Organization</InputLabel>
+                <Select
+                  value={typeOfOrganization}
+                  className={classes.textField}
+                  onChange={this.handleChange('typeOfOrganization')}
+                  inputProps={{
+                    name: 'typeOfOrganization',
+                    id: 'age-simple'
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>University Based</MenuItem>
+                </Select>
+                <FormHelperText>{error.typeOfOrganization}</FormHelperText>
+              </FormControl>
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </Grid>
     );
   }
 
   presidentProfile = () => {
+    const {
+      lastName,
+      firstName,
+      middleName,
+      email,
+      presidentCollege,
+      error
+    } = this.state;
+    const {classes} = this.props;
     return (
-      <Paper className={style.form} elevation={0} square={false} >
-        <p>President Profile</p>
-      </Paper>
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={12} md={12}>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12} md={4}>
+              <TextField
+                value={lastName}
+                label="Last Name"
+                placeholder="Last Name"
+                className={classes.textField}
+                onChange={this.handleChange('lastName')}
+                margin="normal"
+                error={!!error.lastName}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <TextField
+                value={firstName}
+                label="First Name"
+                placeholder="First Name"
+                className={classes.textField}
+                onChange={this.handleChange('firstName')}
+                margin="normal"
+                error={!!error.firstName}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              <TextField
+                value={middleName}
+                label="Middle Name"
+                placeholder="Middle Name"
+                className={classes.textField}
+                onChange={this.handleChange('middleName')}
+                margin="normal"
+                error={!!error.middleName}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                value={email}
+                label="Email"
+                placeholder="Email"
+                type="email"
+                className={classes.textField}
+                onChange={this.handleChange('email')}
+                margin="normal"
+                error={!!error.email}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <FormControl className={classes.formControl} margin="normal" error={!!error.presidentCollege} fullWidth>
+                <InputLabel htmlFor="age-simple">College</InputLabel>
+                <Select
+                  value={presidentCollege}
+                  className={classes.textField}
+                  onChange={this.handleChange('presidentCollege')}
+                  inputProps={{
+                    name: 'presidentCollege',
+                    id: 'age-simple'
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>College of Information and Communications Technology</MenuItem>
+                </Select>
+                <FormHelperText>{error.presidentCollege}</FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  personalize = () => {
+    const {selectedLogo, color, colorPreview} = this.state;
+    const {classes} = this.props;
+
+    return (
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={12} md={12}>
+          <Grid container spacing={24}>
+
+
+            <Grid item xs={12} sm={12} md={6} >
+              <Typography variant="display1" gutterBottom>
+                  Upload your logo
+              </Typography>
+
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={6} >
+                  <Paper className={style.imagePreview} elevation={1} square={false}>
+                    {selectedLogo === null ? (
+                      <Typography className={style.yourLogoHere} variant="headline" gutterBottom>Your Logo Here</Typography>
+                    ) : (<img className={style.selectedLogo} alt="Organization Logo" src={selectedLogo} />
+                    )}
+                  </Paper>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    onChange={this.imageUploadHandler}
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button color="primary" variant="contained" component="span" className={classes.button} fullWidth>
+                        Upload a image
+                    </Button>
+                  </label>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Typography variant="display1" gutterBottom>
+                  Choose a color
+              </Typography>
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={6} >
+                  <Paper style={{backgroundColor: colorPreview}} className={style.colorPreviewBox} elevation={0} square={false} />
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={24} >
+                <Grid item xs={12} sm={12} md={6} >
+                  <CirclePicker
+                    width={300}
+                    circleSize={39}
+                    circleSpacing={11}
+                    colors={color}
+                    onChangeComplete={this.handleColorChangeComplete}
+                  />
+                </Grid>
+              </Grid>
+
+            </Grid>
+
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -285,10 +494,12 @@ class AddOrganization extends Component {
               })}
             </Stepper>
 
-            {this.getStepContent(activeStep)}
+            <Paper className={style.form} elevation={0} square={false} >
+              {this.getStepContent(activeStep)}
+            </Paper>
 
             <div className={style.bottomButton}>
-              {this.state.activeStep === steps.length ? (
+              {activeStep === steps.length ? (
                 <div>
                   <Typography className={classes.instructions}>
                 All steps completed - you&quot;re finished
