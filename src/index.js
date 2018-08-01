@@ -32,7 +32,6 @@ function startApp() {
 
 
   if (authenticate.getToken()) {
-    console.log(authenticate.getToken());
     authenticate.authenticateToken(localStorage.token);
     store.dispatch(setCurrentUser(jwt.decode(authenticate.getToken())));
   }

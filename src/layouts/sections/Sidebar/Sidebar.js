@@ -49,9 +49,6 @@ class Sidebar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired,
-    onRequestSidebarClose: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired
   };
 
