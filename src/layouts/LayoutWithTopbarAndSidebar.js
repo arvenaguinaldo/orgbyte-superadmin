@@ -33,25 +33,12 @@ class LayoutWithTopbarAndSidebar extends Component {
     children: PropTypes.node.isRequired
   }
 
-  state = {
-    open: false
-  };
-
-  handleSidebarOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleSidebarClose = () => {
-    this.setState({open: false});
-  };
-
   render() {
-    const {open} = this.state;
     const {classes, children} = this.props;
     return (
       <div className={classes.root}>
-        <Topbar open={open} onRequestSidebarOpen={this.handleSidebarOpen} />
-        <Sidebar open={open} onRequestSidebarClose={this.handleSidebarClose} />
+        <Topbar />
+        <Sidebar />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {children}

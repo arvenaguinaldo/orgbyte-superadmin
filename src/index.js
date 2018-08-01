@@ -12,8 +12,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import myTheme from 'styles/MyTheme';
 
+// Authentications
+import * as authenticate from 'utils/AuthService';
+import jwt from 'jsonwebtoken';
+import {setCurrentUser} from 'redux/actions/auth';
+
 // Global Styles
 import 'styles/base.scss';
+
 
 function startApp() {
 
@@ -23,6 +29,13 @@ function startApp() {
   const generateClassName = createGenerateClassName();
   const jss = create(jssPreset());
   jss.options.insertionPoint = document.getElementById('jss-insertion-point');
+
+
+  if (authenticate.getToken()) {
+    authenticate.authenticateToken(localStorage.token);
+    store.dispatch(setCurrentUser(jwt.decode(authenticate.getToken())));
+  }
+
 
   ReactDOM.render(
     <JssProvider jss={jss} generateClassName={generateClassName}>

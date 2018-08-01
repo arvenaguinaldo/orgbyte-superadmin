@@ -14,6 +14,7 @@
     "history": "^4.7.2",
     "immutable": "^3.8.1",
     "immutable-treeutils": "0.1.8",
+    "jsonwebtoken": "^8.3.0",
     "lodash.get": "^4.4.2",
     "lodash.snakecase": "^4.1.1",
     "npm": "^6.2.0",
@@ -34,7 +35,8 @@
     "redux-form": "^7.2.0",
     "redux-logger": "^2.8.2",
     "redux-saga": "^0.14.3",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "validator": "^10.4.0"
   },
   "devDependencies": {
     "autoprefixer": "6.7.6",
@@ -63,7 +65,7 @@
     "dirty-chai": "^2.0.1",
     "dotenv": "4.0.0",
     "enzyme": "^2.8.2",
-    "eslint": "^4.3.0",
+    "eslint": "^5.2.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-babel": "^4.1.2",
