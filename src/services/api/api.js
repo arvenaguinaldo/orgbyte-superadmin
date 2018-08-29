@@ -1,11 +1,12 @@
 import axios from 'axios';
 import config from 'config';
+import * as authenticate from 'utils/AuthService';
 
 axios.defaults.baseURL = config.apiUrl;
 
 const getAuthenticationHeaders = () => {
   return {
-    Authorization: `token ${config.accessToken}`
+    Authorization: `token ${authenticate.getToken()}`
   };
 };
 
