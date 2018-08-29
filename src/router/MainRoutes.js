@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 // Routes
 import {Switch, Route} from 'react-router-dom';
-// import PrivateRoute from 'router/routes/PrivateRoute';
+import PrivateRoute from 'router/routes/PrivateRoute';
 
 // Components / Pages
 import Login from 'containers/Login/Login';
@@ -19,19 +19,21 @@ class MainRoutes extends Component {
     return (
       <Switch>
 
-        {/* <PrivateRoute path="/" component={Home} exact />
+        <PrivateRoute path="/" component={Home} exact />
         <PrivateRoute path="/organizations" component={OrganizationList} />
+        <PrivateRoute path="/presidents" component={PresidentList} />
         <Route path="/login" component={Login} exact />
         <PrivateRoute path="/events" component={EventList} />
-        <PrivateRoute path="/backups" component={BackupList} /> */}
+        <PrivateRoute path="/backup" component={BackupList} />
+        <PrivateRoute path="/addorganization" component={AddOrganization} />
 
-        <Route path="/" component={Home} exact />
+        {/* <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/events" component={EventList} />
         <Route path="/organizations" component={OrganizationList} />
         <Route path="/presidents" component={PresidentList} />
         <Route path="/backups" component={BackupList} />
-        <Route path="/addorganization" component={AddOrganization} />
+        <Route path="/addorganization" component={AddOrganization} /> */}
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
