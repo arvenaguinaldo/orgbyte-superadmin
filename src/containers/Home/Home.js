@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 class Home extends Component {
   render() {
     return (
-      <LoginAdmin />
+      <LayoutWithTopbarAndSidebar>
+        this is home page
+      </LayoutWithTopbarAndSidebar>
     );
   }
 }

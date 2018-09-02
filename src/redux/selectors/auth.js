@@ -13,6 +13,11 @@ export const makeSelectAuthUser = () => createSelector(
   auth => auth.login
 );
 
+export const makeSelectCurrentUser = () => createSelector(
+  makeSelectAuth(),
+  auth => auth.user
+);
+
 export const makeSelectAuthMeta = () => createSelector(
   makeSelectAuth(),
   auth => auth.meta

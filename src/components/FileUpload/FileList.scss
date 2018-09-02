@@ -1,0 +1,27 @@
+@import 'color';
+
+.file {
+  margin-top: 16px;
+  color: #ccc;
+
+  &:first-child {
+    margin-top: 20px;
+  }
+}
+
+.fileName {
+  display: inline-block;
+}
+
+.fileSize {
+  display: inline-block;
+}
+
+.progressBar {
+  height: 5px;
+  margin: 5px auto 0;
+}
+
+.errorFile {
+  color: rgb(255, 0, 0);
+}
