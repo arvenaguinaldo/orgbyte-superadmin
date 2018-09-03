@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.3.0",
     "lodash.get": "^4.4.2",
     "lodash.snakecase": "^4.1.1",
+    "mui-datatables": "^2.0.0-beta-21",
     "material-ui-pickers": "^1.0.0-rc.12",
     "moment": "^2.22.2",
     "npm": "^6.2.0",
