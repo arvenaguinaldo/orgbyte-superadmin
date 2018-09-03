@@ -14,6 +14,7 @@ import OrganizationList from 'containers/OrganizationList/OrganizationList';
 import PresidentList from 'containers/PresidentList/PresidentList';
 import BackupList from 'containers/BackupList/BackupList';
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
+import AddMember from 'containers/Membership/AddMember/AddMember';
 
 class MainRoutes extends Component {
   render() {
@@ -28,6 +29,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
+        <PrivateRoute path="/addmember" component={AddMember} />
 
         {/* <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />
