@@ -49,7 +49,7 @@ const styles = theme => ({
   }
 });
 
-class Login extends Component {
+class LoginAdmin extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     location: PropTypes.object,
@@ -156,5 +156,4 @@ export default compose(
   withRedux,
   withLoadingWhileFetchingData,
   withStyles(styles)
-)(Login);
-
+)(LoginAdmin);

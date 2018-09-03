@@ -7,3 +7,11 @@ module.exports = (() => {
 
   return commonConfig;
 })();
+
+export const s3Config = {
+  accessKeyId: 'AKIAIRKM6VWMEJMXD4TA',
+  secretAccessKey: '0vUdiqIHimqdDg1v9JM'
+};
+
+export const s3Region = 'ap-southeast-1';
+
