@@ -12,6 +12,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import myTheme from 'styles/MyTheme';
 
+<<<<<<< HEAD
+=======
+// for datepicker import
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+
+>>>>>>> 77f23de545b4f7c85975e8b3f97b9f67dd54aaf0
 // Authentications
 import * as authenticate from 'utils/AuthService';
 import jwt from 'jsonwebtoken';
@@ -40,12 +47,14 @@ function startApp() {
   ReactDOM.render(
     <JssProvider jss={jss} generateClassName={generateClassName}>
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <MuiThemeProvider theme={myTheme}>
-            <CssBaseline />
-            <App />
-          </MuiThemeProvider>
-        </ConnectedRouter>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <ConnectedRouter history={history}>
+            <MuiThemeProvider theme={myTheme}>
+              <CssBaseline />
+              <App />
+            </MuiThemeProvider>
+          </ConnectedRouter>
+        </MuiPickersUtilsProvider>
       </Provider>
     </JssProvider>,
     document.getElementById('root'),

@@ -1,0 +1,78 @@
+// @import 'color';
+
+.form {
+  border: 1px dashed #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.maxFilesReached {
+  border: 0;
+}
+
+.message {
+  text-align: center;
+}
+
+.icon {
+  cursor: pointer;
+  color: #ccc;
+  line-height: 1;
+}
+
+.label {
+  color: #ccc;
+  line-height: 1;
+}
+
+.errorMessage {
+  font-size: 14px;
+  color: rgb(255, 0, 0);
+  margin-bottom: 5px;
+}
+
+// Sizes
+.small {
+  .message {
+    margin: 12px 20px 20px;
+  }
+
+  .icon {
+    font-size: 48px;
+  }
+
+  .label,
+  .fileName {
+    font-size: 16px;
+  }
+}
+
+.medium {
+  .message {
+    margin: 22px 30px 30px;
+  }
+
+  .icon {
+    font-size: 64px;
+  }
+
+  .label,
+  .fileName {
+    font-size: 18px;
+  }
+}
+
+.large {
+  .message {
+    margin: 40px 50px 50px;
+  }
+
+  .icon {
+    font-size: 90px;
+  }
+
+  .label,
+  .fileName {
+    font-size: 20px;
+  }
+}
