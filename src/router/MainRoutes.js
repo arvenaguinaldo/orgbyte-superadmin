@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 // Routes
 import {Switch, Route} from 'react-router-dom';
+// import PrivateRoute from 'router/routes/PrivateRoute';
 
 // Components / Pages
 import Login from 'containers/Login/Login';
@@ -16,10 +17,15 @@ class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-        <Route path="/" component={Home} exact />
-         sideBarLayout
+
+        {/* <PrivateRoute path="/" component={Home} exact />
+        <PrivateRoute path="/organizations" component={OrganizationList} />
         <Route path="/login" component={Login} exact />
-         develop
+        <PrivateRoute path="/events" component={EventList} />
+        <PrivateRoute path="/backups" component={BackupList} /> */}
+
+        <Route path="/" component={Home} exact />
+        <Route path="/login" component={Login} exact />
         <Route path="/events" component={EventList} />
         <Route path="/organizations" component={OrganizationList} />
         <Route path="/presidents" component={PresidentList} />

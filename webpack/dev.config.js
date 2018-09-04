@@ -1,10 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var LiveReloadPlugin = require('webpack-livereload-plugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StyleLintPlugin = require('stylelint-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -66,7 +66,7 @@ module.exports = {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: function () {
+                plugins() {
                   return [
                     require('autoprefixer')
                   ];
@@ -144,5 +144,9 @@ module.exports = {
       OMS_API_PORT: process.env.OMS_API_PORT,
       BACKEND_API_PORT: process.env.BACKEND_API_PORT
     })
-  ]
+  ],
+  node: {
+    net: 'empty',
+    dns: 'empty'
+  }
 };
