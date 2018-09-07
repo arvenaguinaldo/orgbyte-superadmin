@@ -3,6 +3,7 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
+  currentOrg: [],
   meta: {
     loading: false
   }
@@ -16,6 +17,21 @@ const organizations = (state = initialState, action) => {
       }));
     }
     case ORGANIZATIONS.FETCH_ORGANIZATIONS_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        list: data,
+        currentOrg: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+    case ORGANIZATIONS.FETCH_ORGANIZATION: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case ORGANIZATIONS.FETCH_ORGANIZATION_SUCCESS: {
       const {data} = action.response;
       return initialState.merge(fromJS({
         list: data,

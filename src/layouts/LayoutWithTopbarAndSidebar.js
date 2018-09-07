@@ -45,18 +45,6 @@ class LayoutWithTopbarAndSidebar extends Component {
     user: PropTypes.object.isRequired
   }
 
-<<<<<<< HEAD
-  render() {
-    const {classes, children} = this.props;
-    return (
-      <div className={classes.root}>
-        <Topbar />
-        <Sidebar />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          {children}
-        </main>
-=======
   state = {
     mobileOpen: false,
     user: {}
@@ -79,7 +67,6 @@ class LayoutWithTopbarAndSidebar extends Component {
             {children}
           </main>
         </div>
->>>>>>> 77f23de545b4f7c85975e8b3f97b9f67dd54aaf0
       </div>
     );
   }

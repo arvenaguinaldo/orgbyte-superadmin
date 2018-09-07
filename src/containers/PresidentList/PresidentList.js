@@ -49,7 +49,7 @@ class OrganizationTable extends React.Component {
       filterType: 'dropdown',
       responsive: 'scroll',
       rowsPerPage: 5,
-      resizableColumns: true,
+      resizableColumns: false,
       customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
     };
     return (

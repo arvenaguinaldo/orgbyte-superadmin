@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.4.1",
-    "@material-ui/icons": "^1.1.0",
+    "@material-ui/icons": "^1.1.1",
     "Validator": "^1.0.5",
     "aws-sdk": "^2.290.0",
     "axios": "^0.15.3",
@@ -13,7 +13,7 @@
     "classnames": "^2.2.5",
     "core-js": "^2.5.1",
     "deep-freeze": "0.0.1",
-    "dropzone": "^5.1.1",
+    "dropzone": "^5.5.1",
     "generate-password": "^1.4.0",
     "history": "^4.7.2",
     "immutable": "^3.8.1",
@@ -21,9 +21,9 @@
     "jsonwebtoken": "^8.3.0",
     "lodash.get": "^4.4.2",
     "lodash.snakecase": "^4.1.1",
-    "mui-datatables": "^2.0.0-beta-21",
     "material-ui-pickers": "^1.0.0-rc.12",
     "moment": "^2.22.2",
+    "mui-datatables": "^2.0.0-beta-28",
     "npm": "^6.2.0",
     "query-string": "^5.0.0",
     "react": "^16.4.1",
@@ -43,7 +43,8 @@
     "redux-form-input-masks": "^1.2.0",
     "redux-logger": "^2.8.2",
     "redux-saga": "^0.14.3",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "validator": "^10.7.1"
   },
   "devDependencies": {
     "autoprefixer": "6.7.6",

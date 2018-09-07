@@ -22,6 +22,7 @@ export const renderTextField = (
 ) => (
   <TextField
     label={label}
+    defaultValue={defaultValue}
     placeholder={label}
     error={!!touched && !!error}
     helperText={!!touched && error}
