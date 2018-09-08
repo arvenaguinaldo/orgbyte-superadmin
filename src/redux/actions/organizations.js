@@ -10,6 +10,16 @@ export const fetchOrganizationsSuccess = response => ({
   response
 });
 
+export const fetchOrganization = params => ({
+  type: ORGANIZATIONS.FETCH_ORGANIZATION,
+  params
+});
+
+export const fetchOrganizationSuccess = response => ({
+  type: ORGANIZATIONS.FETCH_ORGANIZATION_SUCCESS,
+  response
+});
+
 export const addOrganization = params => ({
   type: ORGANIZATIONS.ADD_ORGANIZATION,
   params
