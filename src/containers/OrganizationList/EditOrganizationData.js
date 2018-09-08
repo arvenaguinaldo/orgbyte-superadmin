@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 import {createTextMask} from 'redux-form-input-masks';
@@ -178,10 +179,13 @@ const mapStateToProps = createStructuredSelector({
   organization: makeSelectOrganizationsList()
 });
 
+const withRedux = connect(mapStateToProps, {fetchOrganization});
+
 export default compose(
   reduxForm({
     form: 'EditOrganizationDataForm',
     destroyOnUnmount: false
-  }, mapStateToProps, fetchOrganization),
+  }),
+  withRedux,
   withStyles(styles)
 )(EditOrganizationData);

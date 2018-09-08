@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.4.1",
-    "@material-ui/icons": "^1.1.1",
-    "Validator": "^1.0.5",
+    "@material-ui/icons": "^1.1.0",
+    "@mdi/font": "^2.7.94",
     "aws-sdk": "^2.290.0",
     "axios": "^0.15.3",
     "babel-runtime": "^6.23.0",

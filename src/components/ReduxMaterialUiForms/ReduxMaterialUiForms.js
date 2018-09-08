@@ -1,19 +1,18 @@
 import React from 'react';
 
-// Textfield
+// Material UI
 import TextField from '@material-ui/core/TextField';
-
-// Select
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 
 // Date picker
 import {DatePicker} from 'material-ui-pickers';
-
-import Button from '@material-ui/core/Button';
 
 import {CirclePicker} from 'react-color';
 
@@ -110,6 +109,24 @@ export const renderCircleColorPicker = (
       {...custom}
     />
     <FormHelperText>{touched && error}</FormHelperText>
+  </FormControl>
+);
+
+
+export const renderRadioButton = (
+  {input, label, fullWidth, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+    <FormLabel component="legend">{label}</FormLabel>
+    <RadioGroup
+      aria-label={label}
+      onChange={(event, index, value) => input.onChange(value)}
+      {...input}
+      {...custom}
+    >
+      {children}
+    </RadioGroup>
+    <FormHelperText>{(touched && error) || warning}</FormHelperText>
   </FormControl>
 );
 

@@ -28,11 +28,13 @@ const styles = theme => ({
 class Topbar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    onHandleDrawerToggle: PropTypes.func.isRequired
+    onHandleDrawerToggle: PropTypes.func.isRequired,
+    organization: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   render() {
-    const {classes, onHandleDrawerToggle} = this.props;
+    const {classes, onHandleDrawerToggle, user, organization} = this.props;
 
     return (
       <AppBar
@@ -41,6 +43,9 @@ class Topbar extends Component {
         color="secondary"
       >
         <Toolbar>
+          <Typography variant="title" color="inherit" noWrap >
+            {user.name}
+          </Typography>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -49,9 +54,19 @@ class Topbar extends Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" noWrap>
-            ADMIN
-          </Typography>
+
+          {user.user_type_id === 'admin' ? (
+            organization.map((org) => {
+              return (
+                <Typography key={org.id} variant="title" color="inherit" noWrap >
+                  {org.name}
+                </Typography>
+              );
+            })) :
+            <Typography key={user.id} variant="title" color="inherit" noWrap >
+              SUPER ADMIN
+            </Typography>
+          }
         </Toolbar>
       </AppBar>
     );
@@ -59,3 +74,15 @@ class Topbar extends Component {
 }
 
 export default withStyles(styles, {withTheme: true})(Topbar);
+
+
+// {organization.filter((org) => {
+//   return user.id === org.user_id;
+// }).map((org) => {
+//   return (
+//     <Typography variant="title" color="inherit" noWrap >
+//       {org.name}
+//     </Typography>
+//   );
+// })
+// }
