@@ -3,6 +3,7 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
+  currentOrg: [],
   meta: {
     loading: false
   }
@@ -19,6 +20,7 @@ const organizations = (state = initialState, action) => {
       const {data} = action.response;
       return initialState.merge(fromJS({
         list: data,
+        currentOrg: data,
         meta: {
           loading: false
         }

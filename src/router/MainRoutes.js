@@ -29,7 +29,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
-        <PrivateRoute path="/addmember" component={AddMember} />
+        <PrivateRoute path="/memberships" component={AddMember} />
 
         {/* <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />

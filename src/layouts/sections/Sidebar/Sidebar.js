@@ -63,8 +63,8 @@ class Sidebar extends Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
-        {user.user_type_id === 1 ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
-        {user.user_type_id === 2 ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
       </div>
     );
 
