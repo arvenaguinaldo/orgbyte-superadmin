@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import eventsReducer from 'redux/reducers/events';
 import authReducer from 'redux/reducers/auth';
 import organizationsReducer from 'redux/reducers/organizations';
+import usersReducer from 'redux/reducers/users';
 import notificationReducer from 'redux/reducers/notification';
 import {routerReducer} from 'react-router-redux';
 import {reducer as formReducers} from 'redux-form';
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   events: eventsReducer,
   auth: authReducer,
   organizations: organizationsReducer,
+  users: usersReducer,
   notification: notificationReducer
 });
 

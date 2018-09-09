@@ -28,6 +28,7 @@ class OrganizationTable extends React.Component {
   changeStuff(newcolumns) {
     this.setState({columns: newcolumns});
   }
+
   render() {
     const {organizations} = this.props;
     const {columns} = this.state;
