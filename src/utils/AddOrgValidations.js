@@ -44,6 +44,7 @@ export const validate = (values) => {
   }
 
   if (organization.organization_type_id === 1) {
+    organization.college_id = null;
     errors.organization.college_id = null;
   }
 

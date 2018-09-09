@@ -6,7 +6,7 @@ import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 import {createTextMask} from 'redux-form-input-masks';
 import {fetchOrganization} from 'redux/actions/organizations';
-import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
+import {makeSelectOrganizationSelectedOrg} from 'redux/selectors/organizations';
 
 
 import {renderTextField, renderSelectField, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
@@ -43,8 +43,8 @@ class EditOrganizationData extends React.Component {
   };
 
   componentWillMount() {
-    // const {id} = this.props;
-    // this.props.fetchOrganization({id});
+    const {id} = this.props;
+    this.props.fetchOrganization(id);
   }
 
   handleDateChange = (date) => {
@@ -68,6 +68,7 @@ class EditOrganizationData extends React.Component {
         >
           <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="display1">Edit</Typography></DialogTitle>
           <DialogContent>
+            {console.log(this.props.id)}
             <form initialvalues={organization}>
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12} md={12}>
@@ -176,7 +177,7 @@ class EditOrganizationData extends React.Component {
 // export default withStyles(styles)(EditOrganizationData);
 
 const mapStateToProps = createStructuredSelector({
-  organization: makeSelectOrganizationsList()
+  organization: makeSelectOrganizationSelectedOrg()
 });
 
 const withRedux = connect(mapStateToProps, {fetchOrganization});

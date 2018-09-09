@@ -37,7 +37,8 @@ render() {
   const selectedRowsLength = Object.keys(selectedRows.data);
   return (
     <div className={OrganizationListStyles.iconsDiv}>
-      {open ? (<EditOrganizationData id={selectedRows.data[0].index} open={open} handleClose={this.handleClose} />) : (null)}
+      {console.log(selectedRows)}
+      {open ? (<EditOrganizationData id={67} open={open} handleClose={this.handleClose} />) : (null)}
       {selectedRowsLength < 1 ? (
         <Tooltip title={'Edit'}>
           <IconButton className={classes.iconButton} onClick={this.handleClickOpen}>

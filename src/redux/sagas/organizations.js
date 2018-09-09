@@ -45,7 +45,9 @@ function* addOrganization(action) {
           yield call(callErrorNotification, `Could not add data: ${userResponse.error}`);
         } else {
           const params = {organizations_id: response.data.id, user_id: userResponse.data.id};
-          yield put(organizationsActions.addOrganizationUser(params));
+          yield call(organizationsService.addUserToOrg, params);
+          yield call(organizationsService.addOrgToUser, params);
+          yield put(push('/organizations'));
         }
       }
 
@@ -53,17 +55,17 @@ function* addOrganization(action) {
   }
 }
 
-function* addOrganizationUser(action) {
-  const response = yield call(organizationsService.addUser, action.params);
-  if (response) {
-    console.log(action.params);
-    if (response.error) {
-      yield call(callErrorNotification, `Could not add data: ${response.error}`);
-    } else {
-      yield put(push('/addorganization'));
-    }
-  }
-}
+// function* addOrganizationUser(action) {
+//   const response = yield call(organizationsService.addUser, action.params);
+//   if (response) {
+//     console.log(action.params);
+//     if (response.error) {
+//       yield call(callErrorNotification, `Could not add data: ${response.error}`);
+//     } else {
+//       yield put(push('/addorganization'));
+//     }
+//   }
+// }
 
 //* *********** Watchers ************//
 
@@ -80,14 +82,14 @@ function* watchRequestAddOrganization() {
 }
 
 
-function* watchRequestAddOrganizationUser() {
-  yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
-}
+// function* watchRequestAddOrganizationUser() {
+//   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
+// }
 export default function* organizations() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchOrganization),
-    fork(watchRequestAddOrganization),
-    fork(watchRequestAddOrganizationUser)
+    fork(watchRequestAddOrganization)
+    // fork(watchRequestAddOrganizationUser)
   ];
 }
