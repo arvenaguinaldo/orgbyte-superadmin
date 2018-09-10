@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
+import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderRadioButton} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {addMember} from 'redux/actions/users';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
@@ -17,20 +19,49 @@ import {validate} from 'utils/AddMemberIndividualValidations';
 import style from './Individual.scss';
 
 export class Individual extends Component {
+
+  onSubmit = (values, dispatch) => {
+    dispatch(addMember(values));
+  };
+
   render() {
     const contactNumberMask = createTextMask({
       pattern: '+63 (999) 999-9999',
       placeholder: ' '
     });
 
+    const groupNumberMask = createTextMask({
+      pattern: 'G-9',
+      placeholder: ' '
+    });
+    const sectionMask = createTextMask({
+      pattern: 'A',
+      placeholder: ' '
+    });
+    const studentNumberMask = createTextMask({
+      pattern: '9999-999999',
+      placeholder: ' '
+    });
+
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={12} md={12}>
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} md={4}>
+
+              <Grid container spacing={32}>
+                <Grid item xs={12} sm={12} md={3}>
+                  <Field
+                    name="student_number"
+                    component={renderTextField}
+                    label="Student Number"
+                    fullWidth
+                    {...studentNumberMask}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={3}>
                   <Field
                     name="last_name"
                     component={renderTextField}
@@ -38,7 +69,7 @@ export class Individual extends Component {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={12} sm={12} md={3}>
                   <Field
                     name="first_name"
                     component={renderTextField}
@@ -46,7 +77,7 @@ export class Individual extends Component {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={12} sm={12} md={3}>
                   <Field
                     name="middle_name"
                     component={renderTextField}
@@ -55,6 +86,7 @@ export class Individual extends Component {
                   />
                 </Grid>
               </Grid>
+
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12} md={3}>
                   <Field
@@ -83,49 +115,56 @@ export class Individual extends Component {
                     fullWidth
                   />
                 </Grid>
+              </Grid>
 
-                <Grid item xs={12} sm={12} md={2}>
+              <Grid container spacing={32}>
+                <Grid item xs={6} sm={6} md={2}>
                   <Field
                     name="year_level"
                     component={renderSelectField}
                     label="Year Level"
                     fullWidth
                   >
-                    <MenuItem value={1}>FIRST YEAR</MenuItem>
-                    <MenuItem value={2}>SECOND YEAR</MenuItem>
+                    <MenuItem value={1}>First Year</MenuItem>
+                    <MenuItem value={2}>Second Year</MenuItem>
+                    <MenuItem value={3}>Third Year</MenuItem>
+                    <MenuItem value={4}>Fourth Year</MenuItem>
                   </Field>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={2}>
+                <Grid item xs={6} sm={6} md={2}>
                   <Field
                     name="section"
                     component={renderTextField}
                     label="Section"
                     fullWidth
+                    {...sectionMask}
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={2}>
+                <Grid item xs={6} sm={6} md={2}>
                   <Field
                     name="group"
                     component={renderTextField}
                     label="Group"
                     fullWidth
+                    {...groupNumberMask}
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid item xs={6} sm={6} md={6}>
                   <Field
-                    name="major"
+                    name="major_id"
                     component={renderSelectField}
                     label="Major"
                     fullWidth
                   >
-                    <MenuItem value={1}>Bachelor of Science in Information Technology</MenuItem>
-                    <MenuItem value={2}>Computer Technology</MenuItem>
+                    <MenuItem value={2}>Bachelor of Science in Information Technology</MenuItem>
                   </Field>
                 </Grid>
+              </Grid>
 
+              <Grid container spacing={32}>
                 <Grid item xs={12} sm={12} md={4}>
                   <Field
                     name="semester"
@@ -133,17 +172,21 @@ export class Individual extends Component {
                     label="Semester"
                     fullWidth
                   >
-                    <FormControlLabel value="firstSem" control={<Radio />} label="1st Semester" />
-                    <FormControlLabel value="secondSem" control={<Radio />} label="2nd Semester" />
+                    <FormControlLabel value="1" control={<Radio color="primary" />} label="1st Semester" />
+                    <FormControlLabel value="2" control={<Radio color="primary" />} label="2nd Semester" />
                   </Field>
                 </Grid>
-
               </Grid>
+
             </Grid>
           </Grid>
           <div className={style.bottomButton}>
-            <Button variant="raised" color="primary" type="submit" disabled={!valid}>
-            Add a member
+            <Button component={Link} to="/memberships" color="primary" className={style.button}>
+              Cancel
+            </Button>
+
+            <Button variant="raised" color="primary" type="submit" className={style.button} disabled={!valid}>
+              Add a member
             </Button>
           </div>
         </form>
@@ -156,4 +199,5 @@ export default reduxForm({
   form: 'AddMember',
   destroyOnUnmount: false,
   validate
-})(Individual);
+}, null, {addMember}
+)(Individual);

@@ -30,6 +30,17 @@ function* fetchOrganization(action) {
   }
 }
 
+function* fetchCurrentOrganization(action) {
+  const response = yield call(organizationsService.fetchCurrentOrganization, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(organizationsActions.fetchCurrentOrganizationSuccess(response));
+    }
+  }
+}
+
 function* addOrganization(action) {
   const response = yield call(organizationsService.addOrganization, action.params);
   if (response) {
@@ -77,6 +88,10 @@ function* watchRequestFetchOrganization() {
   yield* takeEvery(ORGANIZATIONS.FETCH_ORGANIZATION, fetchOrganization);
 }
 
+function* watchRequestFetchCurrentOrganization() {
+  yield* takeEvery(ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION, fetchCurrentOrganization);
+}
+
 function* watchRequestAddOrganization() {
   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION, addOrganization);
 }
@@ -89,6 +104,7 @@ export default function* organizations() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchOrganization),
+    fork(watchRequestFetchCurrentOrganization),
     fork(watchRequestAddOrganization)
     // fork(watchRequestAddOrganizationUser)
   ];

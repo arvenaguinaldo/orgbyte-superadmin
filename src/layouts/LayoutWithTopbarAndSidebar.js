@@ -9,7 +9,7 @@ import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
 import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
-import {fetchOrganizations} from 'redux/actions/organizations';
+import {fetchCurrentOrganization} from 'redux/actions/organizations';
 
 const drawerWidth = 250;
 
@@ -46,7 +46,7 @@ class LayoutWithTopbarAndSidebar extends Component {
     children: PropTypes.node.isRequired,
     user: PropTypes.object.isRequired,
     organization: PropTypes.array,
-    fetchOrganizations: PropTypes.func
+    fetchCurrentOrganization: PropTypes.func
   }
 
   state = {
@@ -56,7 +56,7 @@ class LayoutWithTopbarAndSidebar extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchOrganizations();
+    this.props.fetchCurrentOrganization();
   }
 
   handleDrawerToggle = () => {
@@ -86,7 +86,7 @@ const mapStateToProps = createStructuredSelector({
   organization: makeSelectCurrentOrganization()
 });
 
-const withRedux = connect(mapStateToProps, {fetchOrganizations});
+const withRedux = connect(mapStateToProps, {fetchCurrentOrganization});
 
 export default compose(
   withRedux,

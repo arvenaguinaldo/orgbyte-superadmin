@@ -121,6 +121,7 @@ export const renderRadioButton = (
     <RadioGroup
       aria-label={label}
       onChange={(event, index, value) => input.onChange(value)}
+      style={{display: 'inline-table', padding: '0px'}}
       {...input}
       {...custom}
     >

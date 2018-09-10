@@ -4,6 +4,7 @@ import {fromJS} from 'immutable';
 const initialState = fromJS({
   list: [],
   presidents: [],
+  members: [],
   meta: {
     loading: false
   }
@@ -40,6 +41,40 @@ const users = (state = initialState, action) => {
         }
       }));
     }
+
+    case USERS.ADD_MEMBER: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.ADD_MEMBER_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        members: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case USERS.FETCH_MEMBERS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.FETCH_MEMBERS_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        members: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+
     default:
       return state;
   }

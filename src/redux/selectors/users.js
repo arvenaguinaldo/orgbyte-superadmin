@@ -21,3 +21,8 @@ export const makeSelectUsersMeta = () => createSelector(
   makeSelectUsers(),
   users => users.meta
 );
+
+export const makeSelectMembersList = () => createSelector(
+  makeSelectUsers(),
+  users => users.members
+);

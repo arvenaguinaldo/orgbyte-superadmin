@@ -18,6 +18,7 @@ export const validate = (values) => {
     'middle_name',
     'email',
     'contact_number',
+    'address',
     'year_level',
     'section',
     'group',

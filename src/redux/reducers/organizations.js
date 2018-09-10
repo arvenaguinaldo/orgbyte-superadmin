@@ -21,7 +21,6 @@ const organizations = (state = initialState, action) => {
       const {data} = action.response;
       return initialState.merge(fromJS({
         list: data,
-        currentOrg: data,
         meta: {
           loading: false
         }
@@ -36,6 +35,20 @@ const organizations = (state = initialState, action) => {
       const {data} = action.response;
       return initialState.merge(fromJS({
         selectedOrg: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+    case ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        currentOrg: data,
         meta: {
           loading: false
         }
