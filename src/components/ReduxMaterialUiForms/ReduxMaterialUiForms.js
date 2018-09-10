@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import {CirclePicker} from 'react-color';
 
 export const renderTextField = (
-  {input, label, fullWidth, defaultValue, meta: {touched, error}, ...custom} // eslint-disable-line react/prop-types
+  {input, label, fullWidth, multiline, defaultValue, meta: {touched, error}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <TextField
     label={label}
@@ -28,13 +28,14 @@ export const renderTextField = (
     helperText={!!touched && error}
     margin="normal"
     fullWidth={fullWidth}
+    multiline={multiline}
     {...input}
     {...custom}
   />
 );
 
 export const renderSelectField = (
-  {input, label, fullWidth, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
+  {input, label, fullWidth, multiple, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
     <InputLabel htmlFor="age-simple">{label}</InputLabel>
