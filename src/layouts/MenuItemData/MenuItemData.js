@@ -224,14 +224,14 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Announcements</Typography>} />
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem component={Link} to="/email" selected={pathname === '/email'}>
             <ListItemIcon>
               <Mail className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Mail</Typography>} />
+            <ListItemText primary={<Typography variant="subheading" className={style.list}>E-Mail</Typography>} />
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem component={Link} to="/sms" selected={pathname === '/sms'}>
             <ListItemIcon>
               <SMS className={style.listIcon} />
             </ListItemIcon>
