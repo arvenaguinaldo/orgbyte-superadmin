@@ -14,6 +14,8 @@ import OrganizationList from 'containers/OrganizationList/OrganizationList';
 import PresidentList from 'containers/PresidentList/PresidentList';
 import BackupList from 'containers/BackupList/BackupList';
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
+import Email from 'containers/SendEmail/Email';
+import SendSMS from 'containers/SendSMS/SendSMS';
 
 class MainRoutes extends Component {
   render() {
@@ -37,6 +39,8 @@ class MainRoutes extends Component {
         <Route path="/presidents" component={PresidentList} />
         <Route path="/backups" component={BackupList} />
         <Route path="/addorganization" component={AddOrganization} />
+        <Route path="/email" component={Email} />
+        <Route path="/sms" component={SendSMS} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
