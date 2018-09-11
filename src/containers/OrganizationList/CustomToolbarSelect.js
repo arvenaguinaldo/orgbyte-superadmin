@@ -16,6 +16,9 @@ class CustomToolbarSelect extends React.Component {
 
   handleClickOpen = () => {
     this.setState({open: true});
+    const tableData = this.props.data;
+    const selectedIndex = tableData[this.props.selectedRows.data[0].index];
+    console.log(tableData[selectedIndex]['id']);
   };
 
   handleClose = () => {
@@ -23,12 +26,14 @@ class CustomToolbarSelect extends React.Component {
   };
 
 handleDelete = () => {
-  const tableData = this.props.data;
-  const selectedData = this.props.selectedRows.data;
-  for (let i = this.props.selectedRows.data.length - 1; i >= 0; i -= 1) {
-    tableData.splice(selectedData[i].index, 1);
-  }
-  const cols = ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation'];
+  // const tableData = this.props.data;
+  // const selectedData = this.props.selectedRows.data;
+  // for (let i = this.props.selectedRows.data.length - 1; i >= 0; i -= 1) {
+  //   tableData.splice(selectedData[i].index, 1);
+  // }
+  console.log(this.props.selectedRows.data[0].index);
+  console.log(this.props.data);
+  const cols = ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type'];
   this.props.changeHandler(cols);
 }
 render() {

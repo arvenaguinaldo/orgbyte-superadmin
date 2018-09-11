@@ -19,14 +19,56 @@ class OrganizationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type']
+      columns: [
+        {
+          name: 'Id',
+          options: {
+            display: false
+          }
+        },
+        {
+          name: 'Name',
+          options: {
+            display: true
+          }
+        },
+        {
+          name: 'Acronym',
+          options: {
+            display: true
+          }
+        },
+        {
+          name: 'Recognition No.',
+          options: {
+            display: true
+          }
+        },
+        {
+          name: 'Date of Formation',
+          options: {
+            display: true
+          }
+        },
+        {
+          name: 'College',
+          options: {
+            display: true
+          }
+        },
+        {
+          name: 'Type',
+          options: {
+            display: true
+          }
+        }
+      ]
     };
   }
 
   componentWillMount() {
     this.props.fetchOrganizations();
   }
-
   changeStuff(newcolumns) {
     this.setState({columns: newcolumns});
   }
@@ -39,7 +81,7 @@ class OrganizationTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={organizations} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
     };
     return (
       <LayoutWithTopbarAndSidebar>
