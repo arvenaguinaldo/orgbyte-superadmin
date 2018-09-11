@@ -17,7 +17,7 @@ class CustomToolbarSelect extends React.Component {
   handleClickOpen = () => {
     this.setState({open: true});
     const tableData = this.props.data;
-    const selectedIndex = tableData[this.props.selectedRows.data[0].index];
+    const selectedIndex = this.props.selectedRows.data[0].index;
     console.log(tableData[selectedIndex]['id']);
   };
 

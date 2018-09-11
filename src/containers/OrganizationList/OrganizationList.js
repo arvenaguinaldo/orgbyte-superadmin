@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
 import {fetchOrganizations} from 'redux/actions/organizations';
@@ -61,6 +63,28 @@ class OrganizationTable extends React.Component {
           options: {
             display: true
           }
+        },
+        {
+          name: 'Active',
+          options: {
+            filter: true,
+            customBodyRender: (value, tableMeta, updateValue) => {
+              return (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={value}
+                      value={value ? 'Yes' : 'No'}
+                    />
+                  }
+                  onChange={(event) => {
+                    updateValue(event.target.value !== 'Yes');
+                  }}
+                />
+              );
+            }
+          }
         }
       ]
     };
@@ -81,6 +105,9 @@ class OrganizationTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
+      onRowsSelect: (rowsSelected, allRows) => {
+        console.log(rowsSelected, allRows);
+      },
       customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={organizations} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
     };
     return (
@@ -95,7 +122,8 @@ class OrganizationTable extends React.Component {
               org.recognition_number,
               org.formation,
               org.college_name,
-              org.organization_type_name
+              org.organization_type_name,
+              org.status
             ];
           })}
           columns={this.state.columns}
