@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+// import _ from 'lodash';
 import Topbar from 'layouts/sections/Topbar/Topbar';
 import Sidebar from 'layouts/sections/Sidebar/Sidebar';
 
@@ -9,7 +10,6 @@ import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
 import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
-import {fetchCurrentOrganization} from 'redux/actions/organizations';
 
 const drawerWidth = 250;
 
@@ -45,8 +45,7 @@ class LayoutWithTopbarAndSidebar extends Component {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
     user: PropTypes.object.isRequired,
-    organization: PropTypes.array,
-    fetchCurrentOrganization: PropTypes.func
+    organization: PropTypes.array
   }
 
   state = {
@@ -54,10 +53,6 @@ class LayoutWithTopbarAndSidebar extends Component {
     user: {},
     organization: []
   };
-
-  componentWillMount() {
-    this.props.fetchCurrentOrganization();
-  }
 
   handleDrawerToggle = () => {
     this.setState(state => ({mobileOpen: !state.mobileOpen}));
@@ -86,7 +81,7 @@ const mapStateToProps = createStructuredSelector({
   organization: makeSelectCurrentOrganization()
 });
 
-const withRedux = connect(mapStateToProps, {fetchCurrentOrganization});
+const withRedux = connect(mapStateToProps, null);
 
 export default compose(
   withRedux,

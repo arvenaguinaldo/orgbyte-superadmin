@@ -20,6 +20,7 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import * as authenticate from 'utils/AuthService';
 import jwt from 'jsonwebtoken';
 import {setCurrentUser} from 'redux/actions/auth';
+import {fetchCurrentOrganization} from 'redux/actions/organizations';
 
 // Global Styles
 import 'styles/base.scss';
@@ -38,6 +39,7 @@ function startApp() {
   if (authenticate.getToken()) {
     authenticate.authenticateToken(localStorage.token);
     store.dispatch(setCurrentUser(jwt.decode(authenticate.getToken())));
+    store.dispatch(fetchCurrentOrganization());
   }
 
 

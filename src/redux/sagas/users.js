@@ -2,6 +2,7 @@ import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as usersActions from 'redux/actions/users';
 import * as usersService from 'services/api/users';
+import {push} from 'react-router-redux';
 import {USERS} from 'constants/actions/users';
 import {callErrorNotification} from './notification';
 
@@ -36,6 +37,7 @@ function* addMember(action) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
       yield put(usersActions.addMemberSuccess(response));
+      push('/memberships');
     }
   }
 }

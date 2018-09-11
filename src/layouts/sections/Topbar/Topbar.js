@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
+// import * as currentOrg from 'utils/SetCurrentOrganization';
 
 const drawerWidth = 250;
 
@@ -28,8 +28,8 @@ const styles = theme => ({
 class Topbar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    organization: PropTypes.array,
     onHandleDrawerToggle: PropTypes.func.isRequired,
-    organization: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired
   };
 
@@ -76,13 +76,12 @@ class Topbar extends Component {
 export default withStyles(styles, {withTheme: true})(Topbar);
 
 
-// {organization.filter((org) => {
-//   return user.id === org.user_id;
-// }).map((org) => {
-//   return (
-//     <Typography variant="title" color="inherit" noWrap >
-//       {org.name}
-//     </Typography>
-//   );
-// })
-// }
+// {user.user_type_id === 'admin' ? (
+//   <Typography variant="title" color="inherit" noWrap >
+//     {currentOrg.getOrganizationName()}
+//   </Typography>
+// ) : (
+//   <Typography key={user.id} variant="title" color="inherit" noWrap >
+//     SUPER ADMIN
+//   </Typography>
+// )}
