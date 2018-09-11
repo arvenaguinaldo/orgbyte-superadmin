@@ -1,6 +1,7 @@
 import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as authActions from 'redux/actions/auth';
+import * as orgActions from 'redux/actions/organizations';
 import * as authService from 'services/api/auth';
 import * as authenticate from 'utils/AuthService';
 import {push} from 'react-router-redux';
@@ -19,6 +20,11 @@ function* login(action) {
       yield put(authActions.loginSuccess(response));
       authenticate.authenticateToken(response.data.token);
       yield put(authActions.setCurrentUser(jwt.decode(response.data.token)));
+
+      if (response.data.organization_id !== null) {
+        yield put(orgActions.fetchCurrentOrganization());
+      }
+
       yield put(push('/'));
     }
   }

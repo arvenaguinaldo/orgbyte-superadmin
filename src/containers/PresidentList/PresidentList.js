@@ -1,48 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectPresidentsList} from 'redux/selectors/users';
+import {fetchPresidents} from 'redux/actions/users';
+
 import MUIDataTable from 'mui-datatables';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+
 import CustomToolbar from './CustomToolbarSelect';
 
-class OrganizationTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      columns: ['No', 'Full Name', 'Position', 'Organization', 'Email', 'Contact Number'],
-      data: [
-        [1, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [2, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [3, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [4, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [5, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [6, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [7, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [8, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567'],
-        [9, 'Lara Beatrice Hilario', 'President', 'SWITS', 'larabeatrice@gmail.com', '09161234567']
-
-      ]
-    };
+class PresidentsTable extends React.Component {
+  static propTypes = {
+    presidents: PropTypes.array,
+    fetchPresidents: PropTypes.func.isRequired
   }
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTableBodyCell: {
-        root: {
-          paddingLeft: '0px',
-          paddingRight: '0px'
-        }
-      },
-      MUIDataTableHeadCell: {
-        root: {
-          paddingLeft: '0px',
-          paddingRight: '0px'
-        }
-      }
-    }
-  });
+
+  state = {
+    columns: ['Id', 'Full Name', 'Organization', 'Email', 'Contact Number']
+  };
+
+  componentWillMount() {
+    this.props.fetchPresidents();
+  }
+
   changeStuff(newcolumns) {
     this.setState({columns: newcolumns});
   }
+
   render() {
+    const {presidents} = this.props;
+    const {columns} = this.state;
     const options = {
       filter: true,
       selectableRows: true,
@@ -54,16 +43,32 @@ class OrganizationTable extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <MuiThemeProvider theme={this.getMuiTheme()}>
-          <MUIDataTable
-            title={'Presidents List'}
-            data={this.state.data}
-            columns={this.state.columns}
-            options={options}
-          />
-        </MuiThemeProvider>
+        <MUIDataTable
+          title={'Presidents List'}
+          data={presidents.map((president) => {
+            return [
+              president.id,
+              president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
+              president.organization_name,
+              president.email,
+              president.contact_number
+            ];
+          })}
+          columns={columns}
+          options={options}
+        />
       </LayoutWithTopbarAndSidebar>
     );
   }
 }
-export default OrganizationTable;
+
+const mapStateToProps = createStructuredSelector({
+  presidents: makeSelectPresidentsList()
+});
+
+const withRedux = connect(mapStateToProps, {fetchPresidents});
+
+
+export default compose(
+  withRedux,
+)(PresidentsTable);

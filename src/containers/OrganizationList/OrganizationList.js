@@ -16,12 +16,10 @@ class OrganizationTable extends React.Component {
     organizations: PropTypes.array,
     fetchOrganizations: PropTypes.func.isRequired
   }
-  constructor(props) {
-    super(props);
-    this.state = {
-      columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type']
-    };
-  }
+
+  state = {
+    columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type']
+  };
 
   componentWillMount() {
     this.props.fetchOrganizations();
@@ -30,8 +28,10 @@ class OrganizationTable extends React.Component {
   changeStuff(newcolumns) {
     this.setState({columns: newcolumns});
   }
+
   render() {
     const {organizations} = this.props;
+    const {columns} = this.state;
     const options = {
       filter: true,
       selectableRows: true,
@@ -56,7 +56,7 @@ class OrganizationTable extends React.Component {
               org.organization_type_name
             ];
           })}
-          columns={this.state.columns}
+          columns={columns}
           options={options}
         />
       </LayoutWithTopbarAndSidebar>

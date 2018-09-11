@@ -18,6 +18,11 @@ export const makeSelectCurrentOrganization = () => createSelector(
   organizations => organizations.currentOrg
 );
 
+export const makeSelectOrganizationSelectedOrg = () => createSelector(
+  makeSelectOrganizations(),
+  organizations => organizations.selectedOrg
+);
+
 export const makeSelectOrganizationsMeta = () => createSelector(
   makeSelectOrganizations(),
   organizations => organizations.meta

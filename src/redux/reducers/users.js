@@ -1,65 +1,23 @@
-import {ORGANIZATIONS} from 'constants/actions/organizations';
+import {USERS} from 'constants/actions/users';
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
-  currentOrg: [],
-  selectedOrg: [],
+  presidents: [],
+  members: [],
   meta: {
     loading: false
   }
 });
 
-const organizations = (state = initialState, action) => {
+const users = (state = initialState, action) => {
   switch (action.type) {
-    case ORGANIZATIONS.FETCH_ORGANIZATIONS: {
+    case USERS.FETCH_USERS: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-    case ORGANIZATIONS.FETCH_ORGANIZATIONS_SUCCESS: {
-      const {data} = action.response;
-      return initialState.merge(fromJS({
-        list: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
-    case ORGANIZATIONS.FETCH_ORGANIZATION: {
-      return state.mergeIn(['meta'], fromJS({
-        isLoading: true
-      }));
-    }
-    case ORGANIZATIONS.FETCH_ORGANIZATION_SUCCESS: {
-      const {data} = action.response;
-      return initialState.merge(fromJS({
-        selectedOrg: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
-    case ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION: {
-      return state.mergeIn(['meta'], fromJS({
-        isLoading: true
-      }));
-    }
-    case ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION_SUCCESS: {
-      const {data} = action.response;
-      return initialState.merge(fromJS({
-        currentOrg: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
-    case ORGANIZATIONS.ADD_ORGANIZATION: {
-      return state.mergeIn(['meta'], fromJS({
-        isLoading: true
-      }));
-    }
-    case ORGANIZATIONS.ADD_ORGANIZATION_SUCCESS: {
+    case USERS.FETCH_USERS_SUCCESS: {
       const {data} = action.response;
       return initialState.merge(fromJS({
         list: data,
@@ -69,23 +27,57 @@ const organizations = (state = initialState, action) => {
       }));
     }
 
-    case ORGANIZATIONS.ADD_ORGANIZATION_USER: {
+    case USERS.FETCH_PRESIDENTS: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-    case ORGANIZATIONS.ADD_ORGANIZATION_USER_SUCCESS: {
+    case USERS.FETCH_PRESIDENTS_SUCCESS: {
       const {data} = action.response;
       return initialState.merge(fromJS({
-        list: data,
+        presidents: data,
         meta: {
           loading: false
         }
       }));
     }
+
+    case USERS.ADD_MEMBER: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.ADD_MEMBER_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        members: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case USERS.FETCH_MEMBERS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.FETCH_MEMBERS_SUCCESS: {
+      const {data} = action.response;
+      return initialState.merge(fromJS({
+        members: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+
     default:
       return state;
   }
 };
 
-export default organizations;
+export default users;

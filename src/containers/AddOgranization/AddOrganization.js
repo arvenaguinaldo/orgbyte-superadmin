@@ -374,6 +374,9 @@ class AddOrganization extends Component {
       <LayoutWithTopbarAndSidebar>
         <form onSubmit={handleSubmit(this.onSubmit)} name="createOrganization">
           <div className={classes.root}>
+            <Typography variant="display1" gutterBottom>
+            Add Organization
+            </Typography>
             <Paper elevation={1} square={false} >
               <Stepper className={style.stepper} activeStep={activeStep} alternativeLabel>
                 {steps.map((label) => {

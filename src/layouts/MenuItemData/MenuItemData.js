@@ -17,6 +17,8 @@ import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
+import AddIcon from '@material-ui/icons/addcircle';
+import People from '@material-ui/icons/people';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';
@@ -83,12 +85,20 @@ class SuperAdminMenuItemData extends Component {
           <Collapse in={accountsMenuOpen} timeout="auto" >
             <MenuList component="div" disablePadding>
 
+              <MenuItem component={Link} to="/addorganization" selected={pathname === '/addorganization'} className={style.nested}>
+                <ListItemIcon>
+                  <AddIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Organization</Typography>} />
+              </MenuItem>
+
               <MenuItem component={Link} to="/organizations" selected={pathname === '/organizations'} className={style.nested}>
                 <ListItemIcon>
-                  <BackupIcon className={style.listIcon} />
+                  <People className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText inset primary={<Typography variant="body1" className={style.list}>Organizations List</Typography>} />
               </MenuItem>
+
 
               <MenuItem component={Link} to="/presidents" selected={pathname === '/presidents'} className={style.nested}>
                 <ListItemIcon>
@@ -214,14 +224,14 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Announcements</Typography>} />
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem component={Link} to="/email" selected={pathname === '/email'}>
             <ListItemIcon>
               <Mail className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Mail</Typography>} />
+            <ListItemText primary={<Typography variant="subheading" className={style.list}>E-Mail</Typography>} />
           </MenuItem>
 
-          <MenuItem>
+          <MenuItem component={Link} to="/sms" selected={pathname === '/sms'}>
             <ListItemIcon>
               <SMS className={style.listIcon} />
             </ListItemIcon>

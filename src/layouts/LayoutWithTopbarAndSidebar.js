@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+// import _ from 'lodash';
 import Topbar from 'layouts/sections/Topbar/Topbar';
 import Sidebar from 'layouts/sections/Sidebar/Sidebar';
 
@@ -8,6 +9,7 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 
 const drawerWidth = 250;
 
@@ -42,12 +44,14 @@ class LayoutWithTopbarAndSidebar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    organization: PropTypes.array
   }
 
   state = {
     mobileOpen: false,
-    user: {}
+    user: {},
+    organization: []
   };
 
   handleDrawerToggle = () => {
@@ -56,12 +60,12 @@ class LayoutWithTopbarAndSidebar extends Component {
 
   render() {
     const {mobileOpen} = this.state;
-    const {classes, children, user} = this.props;
+    const {classes, children, user, organization} = this.props;
     return (
       <div className={classes.root}>
         <Sidebar user={user} mobileOpen={mobileOpen} onHandleDrawerToggle={this.handleDrawerToggle} />
         <div className={classes.appFrame}>
-          <Topbar user={user} onHandleDrawerToggle={this.handleDrawerToggle} />
+          <Topbar organization={organization} user={user} onHandleDrawerToggle={this.handleDrawerToggle} />
           <main className={classes.content}>
             <div className={classes.toolbar} />
             {children}
@@ -73,7 +77,8 @@ class LayoutWithTopbarAndSidebar extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  user: makeSelectCurrentUser()
+  user: makeSelectCurrentUser(),
+  organization: makeSelectCurrentOrganization()
 });
 
 const withRedux = connect(mapStateToProps, null);
