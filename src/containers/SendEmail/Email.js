@@ -55,7 +55,7 @@ class Email extends Component {
 
         <LayoutWithTopbarAndSidebar>
           <Paper className={myStyles.Paper}>
-            <Typography variant="title" color="primary">Email</Typography>
+            <Typography variant="display1" color="primary" gutterBottom>Email</Typography>
             <form>
               <Grid container spacing={0}>
                 <Grid item xs={12} sm={12} md={12}>
@@ -123,10 +123,14 @@ class Email extends Component {
                       />
                     </Grid>
                   </Grid>
-
-                  <Button size="small" variant="contained" color="primary" className={myStyles.sendButton}>
-                 Send
-                  </Button>
+                  <div className={myStyles.actionsDiv}>
+                    <Button size="small" variant="contained" color="secondary" className={myStyles.actionsButton}>
+                      Cancel
+                    </Button>
+                    <Button size="small" variant="contained" color="primary">
+                      Send
+                    </Button>
+                  </div>
 
                 </Grid>
               </Grid>
