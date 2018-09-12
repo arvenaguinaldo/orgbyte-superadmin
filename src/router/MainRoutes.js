@@ -18,6 +18,7 @@ import AddMember from 'containers/Membership/AddMember/AddMember';
 import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
+import AddAccount from 'containers/AccountList/AddAccount';
 
 class MainRoutes extends Component {
   render() {
@@ -36,6 +37,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/memberships" component={Memberships} />
         <PrivateRoute path="/email" component={Email} />
         <PrivateRoute path="/sms" component={SendSMS} />
+        <PrivateRoute path="/accounts" component={AddAccount} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
