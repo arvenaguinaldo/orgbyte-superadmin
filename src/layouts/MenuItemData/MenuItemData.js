@@ -25,7 +25,6 @@ import Info from '@material-ui/icons/Info';
 import Mail from '@material-ui/icons/Mail';
 import SMS from '@material-ui/icons/Sms';
 import Add from '@material-ui/icons/Add';
-import Account from '@material-ui/icons/AccountCircle';
 import Lock from '@material-ui/icons/Lock';
 import Shop from '@material-ui/icons/ShoppingBasket';
 
@@ -154,14 +153,17 @@ class AdminMenuItemData extends Component {
   };
 
   state = {
-    advancedMenuOpen: false
+    advancedMenuOpen: false,
+    accountsMenuOpen: false
   };
 
   handleClickAdvanced = () => {
-    this.setState(state => ({advancedMenuOpen: !state.advancedMenuOpen}));
+    this.setState(state => ({advancedMenuOpen: !state.advancedMenuOpen, accountsMenuOpen: false}));
+    console.log(this.state);
   };
   handleClickAccounts = () => {
-    this.setState(state => ({accountsMenuOpen: !state.accountsMenuOpen}));
+    this.setState(state => ({accountsMenuOpen: !state.accountsMenuOpen, advancedMenuOpen: false}));
+    console.log(this.state);
   };
 
   render() {
@@ -171,7 +173,8 @@ class AdminMenuItemData extends Component {
     } = this.props;
 
     const {
-      advancedMenuOpen
+      advancedMenuOpen,
+      accountsMenuOpen
     } = this.state;
 
     return (
@@ -238,22 +241,38 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subheading" className={style.list}>SMS</Typography>} />
           </MenuItem>
         </MenuList>
+
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">User</ListSubheader>}
         >
-          <MenuItem component={Link} to="/accounts" selected={pathname === '/accounts'}>
+
+          <MenuItem button onClick={this.handleClickAccounts} selected={pathname === '/organizations' || pathname === '/presidents'} >
             <ListItemIcon>
-              <Account className={style.listIcon} />
+              <ManageIcon className={style.listIcon} />
             </ListItemIcon>
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Manage Accounts</Typography>} />
+            {accountsMenuOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <MenuItem>
-            <ListItemIcon>
-              <Lock className={style.listIcon} />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Change Password</Typography>} />
-          </MenuItem>
+          <Collapse in={accountsMenuOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+
+              <MenuItem className={style.nested} component={Link} to="/changepassword">
+                <ListItemIcon>
+                  <Lock className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subheading" className={style.list}>Change Password</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/accounts" selected={pathname === '/accounts'} >
+                <ListItemIcon>
+                  <ManageIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subheading" className={style.list}>Accounts</Typography>} />
+              </MenuItem>
+
+            </MenuList>
+          </Collapse>
 
           <MenuItem button onClick={onLogout}>
             <ListItemIcon>
@@ -261,12 +280,12 @@ class AdminMenuItemData extends Component {
             </ListItemIcon>
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Logout</Typography>} />
           </MenuItem>
+
         </MenuList>
       </div>
     );
   }
 }
-
 
 export {
   SuperAdminMenuItemData,

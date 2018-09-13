@@ -46,10 +46,7 @@ class CustomToolbarSelect extends React.Component {
     const selectedRowsLength = Object.keys(selectedRows.data);
     return (
       <div className={style.iconsDiv}>
-        {console.log(selectedRows)}
-
-        {open ? (<EditOrganizationData id={67} open={open} handleClose={this.handleClose} />) : (null)}
-
+        {open ? (<EditOrganizationData id={4} open={open} handleClose={this.handleClose} />) : (null)}
         {selectedRowsLength < 1 ? (
           <Tooltip title={'Edit'}>
             <IconButton className={classes.iconButton} onClick={this.handleClickOpen}>
