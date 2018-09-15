@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 });
 
-class AddMember extends Component {
+class Purchase extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired
   }
@@ -54,7 +54,7 @@ class AddMember extends Component {
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="display1" gutterBottom>
-          Add a Member
+          Purchase
         </Typography>
         <div className={classes.root}>
           <AppBar position="static" color="default">
@@ -78,4 +78,4 @@ class AddMember extends Component {
   }
 }
 
-export default withStyles(styles)(AddMember);
+export default withStyles(styles)(Purchase);

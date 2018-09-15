@@ -14,11 +14,11 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
-import {validate} from 'utils/AddMemberIndividualValidations';
+import {validate} from 'utils/Validations/AddMemberIndividual';
 
 import style from './Individual.scss';
 
-export class Individual extends Component {
+class Individual extends Component {
 
   onSubmit = (values, dispatch) => {
     dispatch(addMember(values));
@@ -40,7 +40,8 @@ export class Individual extends Component {
     });
     const studentNumberMask = createTextMask({
       pattern: '9999-999999',
-      placeholder: ' '
+      placeholder: ' ',
+      guide: false
     });
 
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types

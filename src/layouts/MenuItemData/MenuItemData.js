@@ -186,7 +186,7 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Membership</Typography>} />
           </MenuItem>
 
-          <MenuItem >
+          <MenuItem component={Link} to="/shirts" selected={pathname === '/shirts'}>
             <ListItemIcon>
               <Shop className={style.listIcon} />
             </ListItemIcon>

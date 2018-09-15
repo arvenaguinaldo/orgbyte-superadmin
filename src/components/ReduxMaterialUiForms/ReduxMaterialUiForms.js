@@ -9,6 +9,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import FormGroup from '@material-ui/core/FormGroup';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 // Date picker
@@ -132,3 +135,31 @@ export const renderRadioButton = (
   </FormControl>
 );
 
+export const renderCheckboxGroup = (
+  {label, fullWidth, meta: {touched, error, warning}, children}, // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+    <FormLabel component="legend">{label}</FormLabel>
+    <FormGroup
+      style={{display: 'inline-table', padding: '0px'}}
+    >
+      {children}
+    </FormGroup>
+    <FormHelperText>{(touched && error) || warning}</FormHelperText>
+  </FormControl>
+);
+
+
+export const renderCheckbox = (
+  {input, label}, // eslint-disable-line react/prop-types
+) => (
+  <FormControlLabel
+    control={
+      <Checkbox
+        checked={input.value}
+        onChange={input.onChange}
+      />
+    }
+    label={label}
+  />
+);

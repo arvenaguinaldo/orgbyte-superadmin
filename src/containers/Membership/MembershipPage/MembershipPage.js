@@ -4,30 +4,28 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {createStructuredSelector} from 'reselect';
-import {makeSelectMembersList} from 'redux/selectors/users';
+import {makeSelectMembersList, makeSelectUsersMeta} from 'redux/selectors/users';
 import {fetchMembers} from 'redux/actions/users';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import CustomToolbar from './CustomToolbarSelect';
+
 import style from './MembershipPage.scss';
 
 class MembershipPage extends React.Component {
   static propTypes = {
-    members: PropTypes.array,
-    fetchMembers: PropTypes.func.isRequired
+    members: PropTypes.array
   }
 
   state = {
     columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Address']
   };
-
-  componentWillMount() {
-    this.props.fetchMembers();
-  }
 
   changeStuff(newcolumns) {
     this.setState({columns: newcolumns});
@@ -76,12 +74,27 @@ class MembershipPage extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  members: makeSelectMembersList()
+  members: makeSelectMembersList(),
+  meta: makeSelectUsersMeta()
 });
 
+// const mapDispatchToProps = {
+//   fetchEvents
+// };
+
 const withRedux = connect(mapStateToProps, {fetchMembers});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchMembers();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
+});
 
 
 export default compose(
   withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout
 )(MembershipPage);

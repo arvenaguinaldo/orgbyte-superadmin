@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {validate, warn} from 'utils/AddOrgValidations';
+import {validate, warn} from 'utils/Validations/AddOrganization';
 
 import generator from 'generate-password';
 
