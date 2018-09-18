@@ -20,6 +20,7 @@ import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import Test from 'containers/ConfirmationDialogs/Test';
+import Prompts from 'containers/Prompts/Test';
 
 class MainRoutes extends Component {
   render() {
@@ -40,6 +41,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/sms" component={SendSMS} />
         <PrivateRoute path="/test" component={Test} />
         <PrivateRoute path="/accounts" component={AddAccount} />
+        <PrivateRoute path="/prompts" component={Prompts} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
