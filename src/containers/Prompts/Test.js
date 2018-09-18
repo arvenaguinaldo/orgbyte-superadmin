@@ -1,12 +1,12 @@
 import React from 'react';
-import Prompts from './Prompts.js';
+import Prompts from '../../components/Notifications/Prompts.js';
 
 
 class Test extends React.Component {
     state ={
       open: true,
       variant: 'success',
-      message: 'wow'
+      message: 'Completed'
     }
     render() {
       return (
