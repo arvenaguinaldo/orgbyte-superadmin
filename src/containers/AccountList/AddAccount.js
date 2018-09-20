@@ -56,10 +56,10 @@ class AddAccount extends React.Component {
           <div>
             <Paper className={mystyle.Paper}>
               <form>
-                <Grid container spacing={24}>
+                <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={12}>
 
-                    <Grid container spacing={32}>
+                    <Grid container spacing={40}>
                       <Grid item xs={12} sm={12} md={3}>
                         <Field
                           name="last_name"
