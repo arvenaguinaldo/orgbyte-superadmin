@@ -1,5 +1,5 @@
 import React from 'react';
-import Responsivedialog from './ConfirmationDialog.js';
+import Responsivedialog from 'components/ConfirmationDialogs/ConfirmationDialog';
 
 
 class Test extends React.Component {

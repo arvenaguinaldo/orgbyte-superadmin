@@ -5,6 +5,7 @@ import * as usersService from 'services/api/users';
 import {push} from 'react-router-redux';
 import {USERS} from 'constants/actions/users';
 import {callErrorNotification} from './notification';
+import {callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
 
@@ -36,8 +37,9 @@ function* addMember(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
+      yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(usersActions.addMemberSuccess(response));
-      push('/memberships');
+      yield put(push('/memberships'));
     }
   }
 }

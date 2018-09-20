@@ -1,5 +1,5 @@
 import React from 'react';
-import Prompts from '../../components/Notifications/Prompts.js';
+import Prompts from 'components/Notifications/Notification';
 
 
 class Test extends React.Component {
@@ -11,9 +11,8 @@ class Test extends React.Component {
     render() {
       return (
         <Prompts
-          variant={this.state.variant}
-          message={this.state.message}
-          open={this.state.open}
+          variant="success"
+          message="yehey"
         />
       );
     }

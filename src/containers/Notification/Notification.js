@@ -5,10 +5,11 @@ import {createStructuredSelector} from 'reselect';
 import {makeSelectNotification} from 'redux/selectors/notification';
 import {clearMessage} from 'redux/actions/notification';
 
+import NotificationAlert from 'components/Notifications/Notification';
+
 class Notification extends Component {
   static propTypes = {
-    notification: PropTypes.object,
-    clearMessage: PropTypes.func.isRequired
+    notification: PropTypes.object
   };
 
   render() {
@@ -20,8 +21,11 @@ class Notification extends Component {
 
     return (
       <div>
-        <p>{notification.message}</p>
-        <div onClick={this.props.clearMessage}>[X]</div>
+        <NotificationAlert
+          variant={notification.type}
+          message={notification.message}
+          open
+        />
       </div>
     );
   }
