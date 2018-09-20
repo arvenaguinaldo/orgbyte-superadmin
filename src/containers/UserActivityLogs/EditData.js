@@ -68,6 +68,7 @@ class EditData extends React.Component {
         >
           <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="display1">Edit</Typography></DialogTitle>
           <DialogContent>
+            {console.log(this.props.id)}
             <form initialvalues={organization}>
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12} md={12}>

@@ -19,6 +19,7 @@ import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
+import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import Test from 'containers/ConfirmationDialogs/Test';
 
 class MainRoutes extends Component {
@@ -40,6 +41,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/sms" component={SendSMS} />
         <PrivateRoute path="/test" component={Test} />
         <PrivateRoute path="/accounts" component={AddAccount} />
+        <PrivateRoute path="/logs" component={UserActivityLogs} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
