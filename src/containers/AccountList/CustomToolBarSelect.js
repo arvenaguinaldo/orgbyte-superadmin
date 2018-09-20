@@ -5,9 +5,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import style from './OrganizationList.scss';
+import style from './AccountList.scss';
 
-import EditOrganizationData from './EditOrganizationData';
+import EditData from './EditData';
 
 class CustomToolbarSelect extends React.Component {
   static propTypes = {
@@ -40,13 +40,11 @@ class CustomToolbarSelect extends React.Component {
 
   render() {
     const {classes, selectedRows} = this.props;
-
     const {open} = this.state;
-
     const selectedRowsLength = Object.keys(selectedRows.data);
     return (
       <div className={style.iconsDiv}>
-        {open ? (<EditOrganizationData id={4} open={open} handleClose={this.handleClose} />) : (null)}
+        {open ? (<EditData id={67} open={open} handleClose={this.handleClose} />) : (null)}
         {selectedRowsLength < 1 ? (
           <Tooltip title={'Edit'}>
             <IconButton className={classes.iconButton} onClick={this.handleClickOpen}>
