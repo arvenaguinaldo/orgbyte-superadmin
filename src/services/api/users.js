@@ -13,5 +13,5 @@ export const addMember = (params) => {
 };
 
 export const fetchMembers = () => {
-  return api.callGet('/users/members');
+  return api.callGet('/members');
 };

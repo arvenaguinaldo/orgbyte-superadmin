@@ -1,23 +1,25 @@
-import {USERS} from 'constants/actions/users';
+import {SHIRTS} from 'constants/actions/shirts';
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
-  presidents: [],
-  members: [],
+  sizes: [],
+  isVerified: false,
+  orgshirt: '',
+  purchaseShirt: '',
   meta: {
     loading: false
   }
 });
 
-const users = (state = initialState, action) => {
+const shirts = (state = initialState, action) => {
   switch (action.type) {
-    case USERS.FETCH_USERS: {
+    case SHIRTS.FETCH_SHIRTS: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-    case USERS.FETCH_USERS_SUCCESS: {
+    case SHIRTS.FETCH_SHIRTS_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
         list: data,
@@ -27,57 +29,70 @@ const users = (state = initialState, action) => {
       }));
     }
 
-    case USERS.FETCH_PRESIDENTS: {
+    case SHIRTS.VERIFY_MEMBER: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-    case USERS.FETCH_PRESIDENTS_SUCCESS: {
+    case SHIRTS.VERIFY_MEMBER_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        presidents: data,
+        verifyMember: data,
+        isVerified: true,
+        meta: {
+          loading: true
+        }
+      }));
+    }
+
+    case SHIRTS.ADD_ORGSHIRT: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.ADD_ORGSHIRT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        orgshirt: data,
+        meta: {
+          loading: true
+        }
+      }));
+    }
+
+    case SHIRTS.FETCH_SIZES: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.FETCH_SIZES_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        sizes: data,
         meta: {
           loading: false
         }
       }));
     }
 
-    case USERS.ADD_MEMBER: {
+    case SHIRTS.PURCHASE_SHIRT: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-
-    case USERS.ADD_MEMBER_SUCCESS: {
+    case SHIRTS.PURCHASE_SHIRT_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        members: data,
+        purchaseShirt: data,
         meta: {
           loading: false
         }
       }));
     }
-
-    case USERS.FETCH_MEMBERS: {
-      return state.mergeIn(['meta'], fromJS({
-        isLoading: true
-      }));
-    }
-
-    case USERS.FETCH_MEMBERS_SUCCESS: {
-      const {data} = action.response;
-      return state.merge(fromJS({
-        members: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
-
 
     default:
       return state;
   }
 };
 
-export default users;
+export default shirts;
