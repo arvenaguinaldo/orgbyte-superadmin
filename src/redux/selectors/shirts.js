@@ -22,6 +22,11 @@ export const makeSelectIsVerified = () => createSelector(
   shirts => shirts.isVerified
 );
 
+export const makeSelectShirtSizes = () => createSelector(
+  makeSelectShirts(),
+  shirts => shirts.sizes
+);
+
 export const makeSelectShirtsMeta = () => createSelector(
   makeSelectShirts(),
   shirts => shirts.meta

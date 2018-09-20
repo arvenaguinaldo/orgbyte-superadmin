@@ -154,15 +154,18 @@ class AdminMenuItemData extends Component {
   };
 
   state = {
-    advancedMenuOpen: false
+    advancedEventsOpen: false,
+    advancedShirtsOpen: false
   };
 
-  handleClickAdvanced = () => {
-    this.setState(state => ({advancedMenuOpen: !state.advancedMenuOpen}));
+  handleClickEvents = () => {
+    this.setState(state => ({advancedEventsOpen: !state.advancedEventsOpen}));
   };
-  handleClickAccounts = () => {
-    this.setState(state => ({accountsMenuOpen: !state.accountsMenuOpen}));
+
+  handleClickShirts = () => {
+    this.setState(state => ({advancedShirtsOpen: !state.advancedShirtsOpen}));
   };
+
 
   render() {
     const {
@@ -171,7 +174,8 @@ class AdminMenuItemData extends Component {
     } = this.props;
 
     const {
-      advancedMenuOpen
+      advancedEventsOpen,
+      advancedShirtsOpen
     } = this.state;
 
     return (
@@ -186,22 +190,36 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subheading" className={style.list}>Membership</Typography>} />
           </MenuItem>
 
-          <MenuItem component={Link} to="/shirts" selected={pathname === '/shirts'}>
+          <MenuItem button onClick={this.handleClickShirts} component={Link} to="/shirts" selected={pathname === '/shirts'}>
             <ListItemIcon>
               <Shop className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subheading" className={style.list}>Org Shirt</Typography>} />
+            <ListItemText primary={<Typography variant="subheading" className={style.list}>Organizational Shirt</Typography>} />
+            {advancedShirtsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <MenuItem button onClick={this.handleClickAdvanced} selected={pathname === '/backup'} >
+          <Collapse in={advancedShirtsOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+
+              <MenuItem component={Link} to="/shirts/addorganizationalshirt" selected={pathname === '/shirts/addorganizationalshirt'} className={style.nested}>
+                <ListItemIcon>
+                  <Add className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Shirt</Typography>} />
+              </MenuItem>
+
+            </MenuList>
+          </Collapse>
+
+          <MenuItem button onClick={this.handleClickEvents} selected={pathname === '/events'} >
             <ListItemIcon>
               <AdvanceIcon className={style.listIcon} />
             </ListItemIcon>
             <ListItemText inset primary={<Typography variant="subheading" className={style.list}>Event</Typography>} />
-            {advancedMenuOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+            {advancedEventsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <Collapse in={advancedMenuOpen} timeout="auto" unmountOnExit>
+          <Collapse in={advancedEventsOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
               <MenuItem component={Link} to="/backups" selected={pathname === '/backups'} className={style.nested}>
@@ -213,6 +231,7 @@ class AdminMenuItemData extends Component {
 
             </MenuList>
           </Collapse>
+
         </MenuList>
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Communication</ListSubheader>}

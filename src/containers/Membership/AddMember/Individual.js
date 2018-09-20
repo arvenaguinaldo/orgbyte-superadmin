@@ -21,6 +21,7 @@ import style from './Individual.scss';
 class Individual extends Component {
 
   onSubmit = (values, dispatch) => {
+    console.log(values);
     dispatch(addMember(values));
   };
 

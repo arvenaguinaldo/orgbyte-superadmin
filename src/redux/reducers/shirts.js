@@ -3,7 +3,10 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
+  sizes: [],
   isVerified: false,
+  orgshirt: '',
+  purchaseShirt: '',
   meta: {
     loading: false
   }
@@ -41,6 +44,52 @@ const shirts = (state = initialState, action) => {
         }
       }));
     }
+
+    case SHIRTS.ADD_ORGSHIRT: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.ADD_ORGSHIRT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        orgshirt: data,
+        meta: {
+          loading: true
+        }
+      }));
+    }
+
+    case SHIRTS.FETCH_SIZES: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.FETCH_SIZES_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        sizes: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case SHIRTS.PURCHASE_SHIRT: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.PURCHASE_SHIRT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        purchaseShirt: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

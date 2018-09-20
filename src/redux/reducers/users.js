@@ -19,7 +19,7 @@ const users = (state = initialState, action) => {
     }
     case USERS.FETCH_USERS_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         list: data,
         meta: {
           loading: false
@@ -34,7 +34,7 @@ const users = (state = initialState, action) => {
     }
     case USERS.FETCH_PRESIDENTS_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         presidents: data,
         meta: {
           loading: false
@@ -50,7 +50,7 @@ const users = (state = initialState, action) => {
 
     case USERS.ADD_MEMBER_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         members: data,
         meta: {
           loading: false
@@ -66,7 +66,7 @@ const users = (state = initialState, action) => {
 
     case USERS.FETCH_MEMBERS_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         members: data,
         meta: {
           loading: false

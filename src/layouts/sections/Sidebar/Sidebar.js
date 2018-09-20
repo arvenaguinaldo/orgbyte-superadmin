@@ -73,7 +73,6 @@ class Sidebar extends Component {
         <Hidden mdUp>
           <Drawer
             variant="temporary"
-            containerStyle={{transform: 'none'}}
             open={mobileOpen}
             onClose={onHandleDrawerToggle}
             classes={{

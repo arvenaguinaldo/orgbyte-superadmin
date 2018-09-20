@@ -17,7 +17,7 @@ import AddOrganization from 'containers/AddOgranization/AddOrganization';
 import AddMember from 'containers/Membership/AddMember/AddMember';
 import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
 import OrganizationalShirts from 'containers/OrganizationalShirts/OrganizationalShirtsPage/OrganizationalShirtPage';
-import OrganizationalShirtInfo from 'containers/OrganizationalShirts/OrganizationalShirtInfo/OrganizationalShirtInfo';
+import AddOrganizationalShirt from 'containers/OrganizationalShirts/AddOrganizationalShirt/AddOrganizationalShirt';
 import Purchase from 'containers/OrganizationalShirts/Purchase/Purchase';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
@@ -39,7 +39,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/memberships" component={Memberships} />
         <PrivateRoute path="/email" component={Email} />
         <PrivateRoute path="/sms" component={SendSMS} />
-        <PrivateRoute path="/shirts/info" component={OrganizationalShirtInfo} />
+        <PrivateRoute path="/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
         <Route path="" component={NotFoundPage} />

@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createTextMask} from 'redux-form-input-masks';
 
 import {Field, reduxForm} from 'redux-form';
+import {purchaseShirt} from 'redux/actions/shirts';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +14,15 @@ import Button from '@material-ui/core/Button';
 import style from './Individual.scss';
 
 class IndividualPurchaseForm extends Component {
+  static propTypes = {
+    shirtSizes: PropTypes.array
+  }
+
+  onSubmit = (values, dispatch) => {
+    console.log(values);
+    dispatch(purchaseShirt(values));
+  };
+
   render() {
     const contactNumberMask = createTextMask({
       pattern: '+63 (999) 999-9999',
@@ -27,21 +38,29 @@ class IndividualPurchaseForm extends Component {
       placeholder: ' '
     });
 
+    const required = value => (value ? undefined : 'This field is Required');
+
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
           <Grid item xs={6} sm={6} md={2}>
             <Field
               name="size"
               component={renderSelectField}
               label="Size"
+              validate={required}
               fullWidth
             >
-              <MenuItem value={1}>Small</MenuItem>
-              <MenuItem value={2}>Large</MenuItem>
-              <MenuItem value={3}>Extra Large</MenuItem>
-              <MenuItem value={4}>Double Extra Large</MenuItem>
+              <MenuItem value={'XXS'}>XXS</MenuItem>
+              <MenuItem value={'XS'}>XS</MenuItem>
+              <MenuItem value={'S'}>S</MenuItem>
+              <MenuItem value={'M'}>M</MenuItem>
+              <MenuItem value={'L'}>L</MenuItem>
+              <MenuItem value={'XL'}>XL</MenuItem>
+              <MenuItem value={'2XL'}>2XL</MenuItem>
+              <MenuItem value={'3XL'}>3XL</MenuItem>
+              <MenuItem value={'4XL'}>4XL</MenuItem>
             </Field>
           </Grid>
 
@@ -174,7 +193,7 @@ class IndividualPurchaseForm extends Component {
 
 export default reduxForm({
   form: 'IndividualPurchase',
-  overwriteOnInitialValuesChange: false,
+  overwriteOnInitialValuesChange: true,
   enableReinitialize: true,
   destroyOnUnmount: false
 })(IndividualPurchaseForm);

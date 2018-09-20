@@ -51,8 +51,8 @@ class OrganizationalShirtPage extends React.Component {
           Organizational Shirts
         </Typography>
 
-        <Button component={Link} to="/shirts/info" variant="raised" color="primary" className={style.button} >
-          Orgshirt
+        <Button component={Link} to="/shirts/purchase" variant="raised" color="primary" className={style.button} >
+          Purchase
         </Button>
 
         <MUIDataTable

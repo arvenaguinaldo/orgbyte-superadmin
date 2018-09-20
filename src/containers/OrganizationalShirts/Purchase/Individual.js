@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
+
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import {createStructuredSelector} from 'reselect';
-import {makeSelectVerifyMember, makeSelectIsVerified, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import fetchInitialData from 'hoc/fetchInitialData';
+
 // redux form
 import {Field, reduxForm} from 'redux-form';
 
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+
+// actions
 import {verifyMember} from 'redux/actions/shirts';
+import {fetchSizes} from 'redux/actions/shirts';
+import {makeSelectVerifyMember, makeSelectIsVerified, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
 
 // material ui
 import {withStyles} from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-// import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import green from '@material-ui/core/colors/green';
 
@@ -64,6 +68,7 @@ class Individual extends Component {
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
     isVerified: PropTypes.bool,
+    shirtSizes: PropTypes.array,
     meta: PropTypes.object.isRequired
   }
 
@@ -73,10 +78,8 @@ class Individual extends Component {
     }
   };
 
-
   render() {
-
-    const {classes, isVerified} = this.props;
+    const {classes, isVerified, verifiedMember, shirtSizes} = this.props;
 
     const buttonClassname = classNames({
       [classes.buttonSuccess]: isVerified
@@ -123,7 +126,7 @@ class Individual extends Component {
               </Grid>
             </form>
 
-            <IndividualPurchaseForm initialValues={this.props.verifiedMember} initialValuesToPassThru={this.props.verifiedMember} />
+            <IndividualPurchaseForm shirtSizes={shirtSizes} initialValues={verifiedMember} initialValuesToPassThru={verifiedMember} />
 
           </Grid>
         </Grid>
@@ -136,15 +139,21 @@ const mapStateToProps = createStructuredSelector({
   verifiedMember: makeSelectVerifyMember(),
   isVerified: makeSelectIsVerified(),
   initialValues: makeSelectVerifyMember(),
+  shirtSizes: makeSelectShirtSizes(),
   meta: makeSelectShirtsMeta()
 });
 
 
 const mapDispatchToProps = {
-  verifyMember
+  verifyMember,
+  fetchSizes
 };
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchSizes();
+});
 
 export default compose(
   reduxForm({
@@ -154,5 +163,6 @@ export default compose(
     validate
   }),
   withRedux,
+  withFetchInitialData,
   withStyles(styles)
 )(Individual);

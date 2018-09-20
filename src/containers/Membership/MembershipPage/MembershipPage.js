@@ -23,6 +23,10 @@ class MembershipPage extends React.Component {
     members: PropTypes.array
   }
 
+  static defaultProps = {
+    members: []
+  };
+
   state = {
     columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Address']
   };
@@ -38,7 +42,7 @@ class MembershipPage extends React.Component {
       filter: true,
       selectableRows: true,
       filterType: 'dropdown',
-      responsive: 'scroll',
+      responsive: 'stacked',
       rowsPerPage: 5,
       resizableColumns: false,
       customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
