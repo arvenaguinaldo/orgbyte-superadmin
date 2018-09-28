@@ -5,6 +5,7 @@ import * as usersService from 'services/api/users';
 import {push} from 'react-router-redux';
 import {USERS} from 'constants/actions/users';
 import {callErrorNotification} from './notification';
+import {callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
 
@@ -36,8 +37,10 @@ function* addMember(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(usersActions.addMemberSuccess(response));
-      push('/memberships');
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      console.log(response);
+      yield put(usersActions.addMemberSuccess(response.data));
+      yield put(push('/memberships'));
     }
   }
 }
@@ -49,6 +52,17 @@ function* fetchMembers(action) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
       yield put(usersActions.fetchMembersSuccess(response));
+    }
+  }
+}
+
+function* addUser(action) {
+  const response = yield call(usersService.addUser, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(usersActions.addUserSuccess(response));
     }
   }
 }
@@ -71,11 +85,16 @@ function* watchRequestFetchMembers() {
   yield* takeEvery(USERS.FETCH_MEMBERS, fetchMembers);
 }
 
+function* watchRequestAddUser() {
+  yield* takeEvery(USERS.ADD_USER, addUser);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchPresidents),
     fork(watchRequestAddMember),
-    fork(watchRequestFetchMembers)
+    fork(watchRequestFetchMembers),
+    fork(watchRequestAddUser)
   ];
 }

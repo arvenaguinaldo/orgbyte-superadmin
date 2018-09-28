@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import style from './OrganizationList.scss';
+import style from './OrganizationalShirtPage.scss';
 
 import EditOrganizationData from './EditOrganizationData';
 
@@ -34,7 +34,7 @@ class CustomToolbarSelect extends React.Component {
     for (let i = this.props.selectedRows.data.length - 1; i >= 0; i -= 1) {
       tableData.splice(selectedData[i].index, 1);
     }
-    const cols = ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation'];
+    const cols = ['No', 'Full Name', 'Position', 'Organization', 'Email', 'Contact Number'];
     this.props.changeHandler(cols);
   }
 
@@ -46,7 +46,10 @@ class CustomToolbarSelect extends React.Component {
     const selectedRowsLength = Object.keys(selectedRows.data);
     return (
       <div className={style.iconsDiv}>
-        {open ? (<EditOrganizationData id={4} open={open} handleClose={this.handleClose} />) : (null)}
+        {console.log(selectedRows)}
+
+        {open ? (<EditOrganizationData id={67} open={open} handleClose={this.handleClose} />) : (null)}
+
         {selectedRowsLength < 1 ? (
           <Tooltip title={'Edit'}>
             <IconButton className={classes.iconButton} onClick={this.handleClickOpen}>

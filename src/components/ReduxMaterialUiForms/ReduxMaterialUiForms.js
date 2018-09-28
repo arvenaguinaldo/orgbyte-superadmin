@@ -9,6 +9,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 // Date picker
@@ -132,3 +134,16 @@ export const renderRadioButton = (
   </FormControl>
 );
 
+export const renderCheckbox = (
+  {input, label}, // eslint-disable-line react/prop-types
+) => (
+  <FormControlLabel
+    control={
+      <Checkbox
+        checked={input.checked}
+        onChange={input.onChange}
+      />
+    }
+    label={label}
+  />
+);

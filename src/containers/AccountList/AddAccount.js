@@ -6,7 +6,8 @@ import {createStructuredSelector} from 'reselect';
 import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
 import {fetchOrganizations} from 'redux/actions/organizations';
 import Typography from '@material-ui/core/Typography';
-import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import MenuItem from '@material-ui/core/MenuItem';
+import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {Field, reduxForm} from 'redux-form';
 import {compose} from 'recompose';
 
@@ -79,10 +80,13 @@ class AddAccount extends React.Component {
                       <Grid item xs={12} sm={12} md={3}>
                         <Field
                           name="position"
-                          component={renderTextField}
+                          component={renderSelectField}
                           label="Position"
                           fullWidth
-                        />
+                        >
+                          <MenuItem value={1}>Admin</MenuItem>
+                          <MenuItem value={2}>Sub Admin</MenuItem>
+                        </Field>
                       </Grid>
                       <Grid item xs={12} sm={12} md={3}>
                         <div className={mystyle.bottomButton}>

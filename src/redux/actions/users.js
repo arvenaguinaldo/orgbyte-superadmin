@@ -39,3 +39,13 @@ export const fetchMembersSuccess = response => ({
   type: USERS.FETCH_MEMBERS_SUCCESS,
   response
 });
+
+export const addUser = params => ({
+  type: USERS.ADD_USER,
+  params
+});
+
+export const addUserSuccess = response => ({
+  type: USERS.ADD_USER_SUCCESS,
+  response
+});

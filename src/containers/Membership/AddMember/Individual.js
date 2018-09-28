@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
@@ -7,6 +11,8 @@ import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderRadioButton} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
 
+import {makeSelectUsersMeta} from 'redux/selectors/users';
+
 // material ui
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,13 +20,19 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
-import {validate} from 'utils/AddMemberIndividualValidations';
+import {validate} from 'utils/Validations/AddMemberIndividual';
+
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 import style from './Individual.scss';
 
-export class Individual extends Component {
+class Individual extends Component {
+  static propTypes = {
+    meta: PropTypes.object.isRequired
+  };
 
   onSubmit = (values, dispatch) => {
+    console.log(values);
     dispatch(addMember(values));
   };
 
@@ -40,10 +52,11 @@ export class Individual extends Component {
     });
     const studentNumberMask = createTextMask({
       pattern: '9999-999999',
-      placeholder: ' '
+      placeholder: ' ',
+      guide: false
     });
 
-    const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -185,9 +198,9 @@ export class Individual extends Component {
               Cancel
             </Button>
 
-            <Button variant="raised" color="primary" type="submit" className={style.button} disabled={!valid}>
-              Add a member
-            </Button>
+            <SubmitButton loading={meta.isLoading} valid={!valid}>
+              ADD A MEMBER
+            </SubmitButton>
           </div>
         </form>
       </div>
@@ -195,9 +208,17 @@ export class Individual extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'AddMember',
-  destroyOnUnmount: false,
-  validate
-}, null, {addMember}
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectUsersMeta()
+});
+
+const withRedux = connect(mapStateToProps, {addMember});
+
+export default compose(
+  withRedux,
+  reduxForm({
+    form: 'AddMember',
+    destroyOnUnmount: false,
+    validate
+  })
 )(Individual);

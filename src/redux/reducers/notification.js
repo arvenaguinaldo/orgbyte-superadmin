@@ -24,7 +24,7 @@ const notification = (state = initialState, action) => {
         message,
         type: notificationOptions.type || null,
         source: notificationOptions.source || null,
-        alert: notificationOptions.alert || false
+        alert: notificationOptions.alert || true
       });
     }
     case NOTIFICATION.CLEAR_MESSAGE:

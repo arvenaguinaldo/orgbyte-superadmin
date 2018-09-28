@@ -3,9 +3,10 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
-  currentOrg: [],
-  selectedOrg: [],
+  currentOrg: {},
+  selectedOrg: {},
   meta: {
+    open: false,
     loading: false
   }
 });
@@ -19,7 +20,7 @@ const organizations = (state = initialState, action) => {
     }
     case ORGANIZATIONS.FETCH_ORGANIZATIONS_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         list: data,
         meta: {
           loading: false
@@ -33,9 +34,10 @@ const organizations = (state = initialState, action) => {
     }
     case ORGANIZATIONS.FETCH_ORGANIZATION_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         selectedOrg: data,
         meta: {
+          open: true,
           loading: false
         }
       }));
@@ -47,7 +49,7 @@ const organizations = (state = initialState, action) => {
     }
     case ORGANIZATIONS.FETCH_CURRENT_ORGANIZATION_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         currentOrg: data,
         meta: {
           loading: false
@@ -61,7 +63,7 @@ const organizations = (state = initialState, action) => {
     }
     case ORGANIZATIONS.ADD_ORGANIZATION_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
         list: data,
         meta: {
           loading: false
@@ -69,20 +71,6 @@ const organizations = (state = initialState, action) => {
       }));
     }
 
-    case ORGANIZATIONS.ADD_ORGANIZATION_USER: {
-      return state.mergeIn(['meta'], fromJS({
-        isLoading: true
-      }));
-    }
-    case ORGANIZATIONS.ADD_ORGANIZATION_USER_SUCCESS: {
-      const {data} = action.response;
-      return initialState.merge(fromJS({
-        list: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
     default:
       return state;
   }

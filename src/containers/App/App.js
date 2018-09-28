@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Notification from 'containers/Notification/Notification';
+import EditModals from 'containers/EditModals/EditModals';
 import MainRoutes from 'router/MainRoutes';
 
 class App extends Component {
@@ -7,6 +8,7 @@ class App extends Component {
     return (
       <div>
         <Notification />
+        <EditModals />
         <MainRoutes />
       </div>
     );

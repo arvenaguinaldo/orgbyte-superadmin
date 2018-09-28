@@ -16,12 +16,13 @@ import BackupList from 'containers/BackupList/BackupList';
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
 import AddMember from 'containers/Membership/AddMember/AddMember';
 import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
+import OrganizationalShirts from 'containers/OrganizationalShirts/OrganizationalShirtsPage/OrganizationalShirtPage';
+import AddOrganizationalShirt from 'containers/OrganizationalShirts/AddOrganizationalShirt/AddOrganizationalShirt';
+import Purchase from 'containers/OrganizationalShirts/Purchase/Purchase';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
-import Test from 'containers/ConfirmationDialogs/Test';
-import Prompts from 'containers/Prompts/Test';
 
 class MainRoutes extends Component {
   render() {
@@ -40,10 +41,11 @@ class MainRoutes extends Component {
         <PrivateRoute path="/memberships" component={Memberships} />
         <PrivateRoute path="/email" component={Email} />
         <PrivateRoute path="/sms" component={SendSMS} />
-        <PrivateRoute path="/test" component={Test} />
         <PrivateRoute path="/accounts" component={AddAccount} />
-        <PrivateRoute path="/prompts" component={Prompts} />
         <PrivateRoute path="/logs" component={UserActivityLogs} />
+        <PrivateRoute path="/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
+        <PrivateRoute path="/shirts/purchase" component={Purchase} />
+        <PrivateRoute path="/shirts" component={OrganizationalShirts} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     );

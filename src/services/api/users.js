@@ -9,9 +9,9 @@ export const fetchPresidents = () => {
 };
 
 export const addMember = (params) => {
-  return api.callPost('/users/add_member', params);
+  return api.callPost('/members', params);
 };
 
 export const fetchMembers = () => {
-  return api.callGet('/users/members');
+  return api.callGet('/members');
 };

@@ -1,10 +1,12 @@
 import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as organizationsActions from 'redux/actions/organizations';
+import * as usersActions from 'redux/actions/users';
 import * as organizationsService from 'services/api/organizations';
+import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
-import {callErrorNotification} from './notification';
+import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
 
@@ -44,24 +46,14 @@ function* fetchCurrentOrganization(action) {
 function* addOrganization(action) {
   const response = yield call(organizationsService.addOrganization, action.params);
   if (response) {
-    console.log(action.params);
     if (response.error) {
-      yield call(callErrorNotification, `Could not add data: ${response.error}`);
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-
-      const userResponse = yield call(organizationsService.addOrganizationUser, action.params);
-      if (userResponse) {
-        console.log(action.params);
-        if (userResponse.error) {
-          yield call(callErrorNotification, `Could not add data: ${userResponse.error}`);
-        } else {
-          const params = {organizations_id: response.data.id, user_id: userResponse.data.id};
-          yield call(organizationsService.addUserToOrg, params);
-          yield call(organizationsService.addOrgToUser, params);
-          yield put(push('/organizations'));
-        }
-      }
-
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
+      yield put(usersActions.addUserSuccess(response.data.user));
+      yield put(reset('AddOrganizationForm'));
+      yield put(push('/organizations'));
     }
   }
 }
@@ -106,6 +98,5 @@ export default function* organizations() {
     fork(watchRequestFetchOrganization),
     fork(watchRequestFetchCurrentOrganization),
     fork(watchRequestAddOrganization)
-    // fork(watchRequestAddOrganizationUser)
   ];
 }

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+
 // import _ from 'lodash';
 import Topbar from 'layouts/sections/Topbar/Topbar';
 import Sidebar from 'layouts/sections/Sidebar/Sidebar';
+
+import Hidden from '@material-ui/core/Hidden';
 
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
@@ -34,9 +37,14 @@ const styles = theme => ({
     backgroundColor: '#EEEEEE',
     padding: theme.spacing.unit * 3
   },
+
   mobileContent: {
-    marginLeft: 5,
-    width: `calc(100% - ${drawerWidth}px)`
+    flexGrow: 1,
+    marginLeft: '4%',
+    height: '100%',
+    backgroundColor: '#EEEEEE',
+    width: `calc(100% - ${drawerWidth}px)`,
+    padding: theme.spacing.unit * 5
   }
 });
 
@@ -45,7 +53,7 @@ class LayoutWithTopbarAndSidebar extends Component {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
     user: PropTypes.object.isRequired,
-    organization: PropTypes.array
+    organization: PropTypes.object
   }
 
   state = {
@@ -61,15 +69,32 @@ class LayoutWithTopbarAndSidebar extends Component {
   render() {
     const {mobileOpen} = this.state;
     const {classes, children, user, organization} = this.props;
+
     return (
       <div className={classes.root}>
         <Sidebar user={user} mobileOpen={mobileOpen} onHandleDrawerToggle={this.handleDrawerToggle} />
         <div className={classes.appFrame}>
           <Topbar organization={organization} user={user} onHandleDrawerToggle={this.handleDrawerToggle} />
-          <main className={classes.content}>
+
+          <Hidden mdUp>
+            <main className={classes.mobileContent}>
+              <div className={classes.toolbar} />
+              {children}
+            </main>
+          </Hidden>
+
+          <Hidden smDown implementation="js">
+            <main className={classes.content}>
+              <div className={classes.toolbar} />
+              {children}
+            </main>
+          </Hidden>
+
+          {/* <main className={classes.content}>
             <div className={classes.toolbar} />
             {children}
-          </main>
+          </main> */}
+
         </div>
       </div>
     );

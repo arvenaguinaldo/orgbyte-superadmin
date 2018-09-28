@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 });
 
-export class AddMember extends Component {
+class AddMember extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired
   }

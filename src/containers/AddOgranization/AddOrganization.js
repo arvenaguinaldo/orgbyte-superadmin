@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import {Field, reduxForm, FormSection, change} from 'redux-form';
-import {addOrganization} from 'redux/actions/organizations';
+import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
+import {connect} from 'react-redux';
+
+import {Field, reduxForm, FormSection, change} from 'redux-form';
+
+import {addOrganization} from 'redux/actions/organizations';
+import {makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
 import {createTextMask} from 'redux-form-input-masks';
+import {validate, warn} from 'utils/Validations/AddOrganization';
 
 // Redux Material UI Forms
 import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
@@ -20,15 +26,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {validate, warn} from 'utils/AddOrgValidations';
-
 import generator from 'generate-password';
 
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormControl from '@material-ui/core/FormControl';
-
-// Color Picker
-// import {CirclePicker} from 'react-color';
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 // layout & styles
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
@@ -66,7 +66,8 @@ class AddOrganization extends Component {
   static propTypes = {
     addOrganization: PropTypes.func,
     classes: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    meta: PropTypes.object.isRequired
   };
 
   state = {
@@ -291,36 +292,36 @@ class AddOrganization extends Component {
     const {color, selectedColor} = this.state;
 
     return (
-      <FormSection name="organization">
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={12}>
-            <Grid container spacing={24}>
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={12} md={12}>
+          <Grid container spacing={24}>
 
 
-              <Grid item xs={12} sm={12} md={6} >
-                <Typography variant="display1" gutterBottom>
+            <Grid item xs={12} sm={12} md={6} >
+              <Typography variant="display1" gutterBottom>
                     Upload your logo
-                </Typography>
+              </Typography>
 
 
-                <Grid container spacing={24}>
-                  <Grid item xs={12} sm={12} md={7}>
-                    <FileUpload paramName="file" maxFilesize={200} uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Upload a image" />
-                  </Grid>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={7}>
+                  <FileUpload paramName="file" maxFilesize={200} uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Upload a image" />
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Typography variant="display1" gutterBottom>
+                    Choose a color
+              </Typography>
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={6} >
+                  <Paper style={{backgroundColor: selectedColor}} className={style.colorPreviewBox} elevation={0} square={false} />
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={12} md={6}>
-                <Typography variant="display1" gutterBottom>
-                    Choose a color
-                </Typography>
-
-                <Grid container spacing={24}>
-                  <Grid item xs={12} sm={12} md={6} >
-                    <Paper style={{backgroundColor: selectedColor}} className={style.colorPreviewBox} elevation={0} square={false} />
-                  </Grid>
-                </Grid>
-
+              <FormSection name="organization">
                 <Grid container spacing={24} >
                   <Grid item xs={12} sm={12} md={6} >
                     <Field
@@ -333,13 +334,13 @@ class AddOrganization extends Component {
                     />
                   </Grid>
                 </Grid>
-
-              </Grid>
+              </FormSection>
 
             </Grid>
+
           </Grid>
         </Grid>
-      </FormSection>
+      </Grid>
     );
   }
 
@@ -365,7 +366,7 @@ class AddOrganization extends Component {
 
   render() {
     const {activeStep} = this.state;
-    const {classes} = this.props;
+    const {classes, meta} = this.props;
     const steps = this.getSteps();
 
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
@@ -394,29 +395,25 @@ class AddOrganization extends Component {
 
               <div className={style.bottomButton}>
                 {activeStep === steps.length ? (
-                  <div>
-                    <Button onClick={this.handleReset}>Reset</Button>
-                  </div>
+                  <Button onClick={this.handleReset}>Reset</Button>
                 ) : (
                   <div>
-                    <div>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                        className={classes.backButton}
-                      >
-                      Back
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={this.handleBack}
+                      className={classes.backButton}
+                    >
+                    Back
+                    </Button>
+                    {activeStep === steps.length - 1 ? (
+                      <SubmitButton loading={meta.isLoading} valid={!valid}>
+                      SUBMIT
+                      </SubmitButton>
+                    ) : (
+                      <Button variant="raised" color="primary" onClick={this.handleNext} disabled={!valid}>
+                        Next
                       </Button>
-                      {activeStep === steps.length - 1 ? (
-                        <Button variant="contained" color="primary" disabled={!valid} type="submit">
-                        Submit
-                        </Button>
-                      ) : (
-                        <Button variant="raised" color="primary" onClick={this.handleNext} disabled={!valid}>
-                          Next
-                        </Button>
-                      )}
-                    </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -428,7 +425,14 @@ class AddOrganization extends Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectOrganizationsMeta()
+});
+
+const withRedux = connect(mapStateToProps, {addOrganization});
+
 export default compose(
+  withRedux,
   reduxForm({
     form: 'AddOrganizationForm',
     fields: ['password'],
@@ -441,6 +445,6 @@ export default compose(
     destroyOnUnmount: false,
     validate,
     warn
-  }, null, {addOrganization}),
+  }),
   withStyles(styles)
 )(AddOrganization);

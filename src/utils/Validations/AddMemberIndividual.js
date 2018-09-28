@@ -11,7 +11,12 @@ export const validate = (values) => {
     errors.contact_number = 'Invalid phone number, must be 10 digits or not starting with 0';
   }
 
+  if (!/^(0|[0-9][0-9]{9})$/i.test(values.student_number)) {
+    errors.student_number = 'Invalid Student Number, must be 10 digits';
+  }
+
   const requiredFields = [
+    'student_number',
     'college_id',
     'last_name',
     'first_name',
