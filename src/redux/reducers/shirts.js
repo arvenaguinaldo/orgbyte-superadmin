@@ -31,7 +31,7 @@ const shirts = (state = initialState, action) => {
 
     case SHIRTS.VERIFY_MEMBER: {
       return state.mergeIn(['meta'], fromJS({
-        isLoading: true
+        isVerifyMemberLoading: true
       }));
     }
     case SHIRTS.VERIFY_MEMBER_SUCCESS: {
@@ -40,7 +40,7 @@ const shirts = (state = initialState, action) => {
         verifyMember: data,
         isVerified: true,
         meta: {
-          loading: true
+          loading: false
         }
       }));
     }
@@ -55,7 +55,7 @@ const shirts = (state = initialState, action) => {
       return state.merge(fromJS({
         orgshirt: data,
         meta: {
-          loading: true
+          loading: false
         }
       }));
     }

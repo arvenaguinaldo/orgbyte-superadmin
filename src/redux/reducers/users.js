@@ -74,6 +74,22 @@ const users = (state = initialState, action) => {
       }));
     }
 
+    case USERS.ADD_USER: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.ADD_USER_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
 
     default:
       return state;

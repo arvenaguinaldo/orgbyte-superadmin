@@ -20,7 +20,7 @@ import style from './MembershipPage.scss';
 
 class MembershipPage extends React.Component {
   static propTypes = {
-    members: PropTypes.array
+    members: PropTypes.array.isRequired
   }
 
   static defaultProps = {

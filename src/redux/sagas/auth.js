@@ -21,7 +21,7 @@ function* login(action) {
       authenticate.authenticateToken(response.data.token);
       yield put(authActions.setCurrentUser(jwt.decode(response.data.token)));
 
-      if (response.data.organization_id !== null) {
+      if (response.data.organizations_id !== null) {
         yield put(orgActions.fetchCurrentOrganization());
       }
 
@@ -33,6 +33,7 @@ function* login(action) {
 function* logout() {
   authenticate.deauthenticateUser();
   yield put(authActions.setCurrentUser({}));
+  // yield put(orgActions.fetchCurrentOrganization());
   yield put(push('/login'));
 }
 

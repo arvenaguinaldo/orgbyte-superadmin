@@ -40,7 +40,7 @@ class Spinner extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <div>
+      <div className={style.wrapper}>
         <CircularProgress
           className={classNames(classes.progress, style.spinner)}
           color="primary"

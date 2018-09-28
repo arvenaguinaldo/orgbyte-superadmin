@@ -1,31 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+
+import {fetchEdit} from 'redux/actions/edit';
+
+import {withStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {withStyles} from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
+
+// import {EditModal} from 'containers/EditModal/EditModal';
+
 import style from './OrganizationList.scss';
 
-import EditOrganizationData from './EditOrganizationData';
 
 class CustomToolbarSelect extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     selectedRows: PropTypes.object.isRequired,
-    data: PropTypes.array,
-    changeHandler: PropTypes.func
+    fetchEdit: PropTypes.func.isRequired,
+    dbTable: PropTypes.string.isRequired,
+    data: PropTypes.array
   }
-  state = {
-    open: false
-  };
 
-  handleClickOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleClose = () => {
-    this.setState({open: false});
+  handleEdit = () => {
+    const {data, selectedRows, dbTable} = this.props;
+    const tableData = data;
+    const selectedIndex = selectedRows.data[0].index;
+    const selectedId = tableData[selectedIndex]['id'];
+    this.props.fetchEdit({table: dbTable, id: selectedId});
   };
 
   handleDelete = () => {
@@ -34,22 +39,17 @@ class CustomToolbarSelect extends React.Component {
     for (let i = this.props.selectedRows.data.length - 1; i >= 0; i -= 1) {
       tableData.splice(selectedData[i].index, 1);
     }
-    const cols = ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation'];
-    this.props.changeHandler(cols);
   }
 
   render() {
     const {classes, selectedRows} = this.props;
 
-    const {open} = this.state;
-
     const selectedRowsLength = Object.keys(selectedRows.data);
     return (
       <div className={style.iconsDiv}>
-        {open ? (<EditOrganizationData id={4} open={open} handleClose={this.handleClose} />) : (null)}
         {selectedRowsLength < 1 ? (
           <Tooltip title={'Edit'}>
-            <IconButton className={classes.iconButton} onClick={this.handleClickOpen}>
+            <IconButton className={classes.iconButton} onClick={this.handleEdit}>
               <EditIcon className={classes.deleteIcon} />
             </IconButton>
           </Tooltip>
@@ -64,4 +64,9 @@ class CustomToolbarSelect extends React.Component {
   }
 }
 
-export default withStyles({name: 'CustomToolbarSelect'})(CustomToolbarSelect);
+const withRedux = connect(null, {fetchEdit});
+
+export default compose(
+  withRedux,
+  withStyles({name: 'CustomToolbarSelect'})
+)(CustomToolbarSelect);

@@ -3,35 +3,34 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
+import {makeSelectOrganizationsList, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
 import {fetchOrganizations} from 'redux/actions/organizations';
 
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import CustomToolbar from './CustomToolbarSelect';
+
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 class OrganizationTable extends React.Component {
   static propTypes = {
-    organizations: PropTypes.array,
-    fetchOrganizations: PropTypes.func.isRequired
+    organizations: PropTypes.array.isRequired
   }
 
-  state = {
-    columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type']
+  static defaultProps = {
+    organizations: []
   };
 
-  componentWillMount() {
-    this.props.fetchOrganizations();
-  }
-
-  changeStuff(newcolumns) {
-    this.setState({columns: newcolumns});
-  }
+  state = {
+    columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type'],
+    dbTable: 'organizations'
+  };
 
   render() {
+    const {columns, dbTable} = this.state;
     const {organizations} = this.props;
-    const {columns} = this.state;
     const options = {
       filter: true,
       selectableRows: true,
@@ -39,7 +38,13 @@ class OrganizationTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={organizations}
+          columns={this.state.columns}
+        />)
     };
     return (
       <LayoutWithTopbarAndSidebar>
@@ -65,12 +70,27 @@ class OrganizationTable extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  organizations: makeSelectOrganizationsList()
+  organizations: makeSelectOrganizationsList(),
+  meta: makeSelectOrganizationsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchOrganizations});
+const mapDispatchToProps = {
+  fetchOrganizations
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchOrganizations();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
+});
 
 
 export default compose(
   withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout
 )(OrganizationTable);

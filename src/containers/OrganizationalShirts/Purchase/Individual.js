@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import classNames from 'classnames';
+
+// import classNames from 'classnames';
 import {createStructuredSelector} from 'reselect';
 import fetchInitialData from 'hoc/fetchInitialData';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
+import {validate} from 'utils/Validations/VerifyMember';
 
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+
 
 // actions
 import {verifyMember} from 'redux/actions/shirts';
@@ -19,51 +21,17 @@ import {fetchSizes} from 'redux/actions/shirts';
 import {makeSelectVerifyMember, makeSelectIsVerified, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
 
 // material ui
-import {withStyles} from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import green from '@material-ui/core/colors/green';
 
-import {validate} from 'utils/Validations/VerifyMember';
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 import IndividualPurchaseForm from './IndividualPurchaseForm';
 
-const styles = ({
-  root: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  wrapper: {
-    marginTop: 25,
-    position: 'relative'
-  },
-  buttonSuccess: {
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700]
-    }
-  },
-  fabProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: -6,
-    left: -6,
-    zIndex: 1
-  },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -52
-  }
-});
+import style from './Individual.scss';
+
 
 class Individual extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     verifiedMember: PropTypes.object,
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
@@ -79,11 +47,7 @@ class Individual extends Component {
   };
 
   render() {
-    const {classes, isVerified, verifiedMember, shirtSizes} = this.props;
-
-    const buttonClassname = classNames({
-      [classes.buttonSuccess]: isVerified
-    });
+    const {isVerified, verifiedMember, shirtSizes} = this.props;
 
     const studentNumberMask = createTextMask({
       pattern: '9999-999999',
@@ -110,18 +74,9 @@ class Individual extends Component {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={3}>
-                  <div className={classes.wrapper}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={buttonClassname}
-                      disabled={meta.isLoading || !valid}
-                      type="submit"
-                    >
+                  <SubmitButton className={style.verifyMember} loading={meta.isVerifyMemberLoading} valid={!valid} success={isVerified}>
                     Verify Member
-                    </Button>
-                    {meta.isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                  </div>
+                  </SubmitButton>
                 </Grid>
               </Grid>
             </form>
@@ -163,6 +118,5 @@ export default compose(
     validate
   }),
   withRedux,
-  withFetchInitialData,
-  withStyles(styles)
+  withFetchInitialData
 )(Individual);

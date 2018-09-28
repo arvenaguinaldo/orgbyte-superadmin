@@ -28,9 +28,13 @@ const styles = theme => ({
 class Topbar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    organization: PropTypes.array,
+    organization: PropTypes.object,
     onHandleDrawerToggle: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    organization: {}
   };
 
   render() {
@@ -56,13 +60,10 @@ class Topbar extends Component {
           </IconButton>
 
           {user.user_type_id === 'admin' ? (
-            organization.map((org) => {
-              return (
-                <Typography key={org.id} variant="title" color="inherit" noWrap >
-                  {org.name}
-                </Typography>
-              );
-            })) :
+            <Typography variant="title" color="inherit" noWrap >
+              {organization.name}
+            </Typography>
+          ) :
             <Typography key={user.id} variant="title" color="inherit" noWrap >
               SUPER ADMIN
             </Typography>

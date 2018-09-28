@@ -53,7 +53,7 @@ class LayoutWithTopbarAndSidebar extends Component {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
     user: PropTypes.object.isRequired,
-    organization: PropTypes.array
+    organization: PropTypes.object
   }
 
   state = {

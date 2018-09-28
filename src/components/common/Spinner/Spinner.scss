@@ -6,6 +6,10 @@
   height: 100%;
 }
 
+.wrapper {
+  @extend %utility-fit-parent;
+}
+
 .spinner {
   @extend %utility-middle-align;
   height: 50px;

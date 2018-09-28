@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
@@ -6,6 +10,8 @@ import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderRadioButton} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
+
+import {makeSelectUsersMeta} from 'redux/selectors/users';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
@@ -16,9 +22,14 @@ import Button from '@material-ui/core/Button';
 
 import {validate} from 'utils/Validations/AddMemberIndividual';
 
+import SubmitButton from 'components/SubmitButton/SubmitButton';
+
 import style from './Individual.scss';
 
 class Individual extends Component {
+  static propTypes = {
+    meta: PropTypes.object.isRequired
+  };
 
   onSubmit = (values, dispatch) => {
     console.log(values);
@@ -45,7 +56,7 @@ class Individual extends Component {
       guide: false
     });
 
-    const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -187,9 +198,9 @@ class Individual extends Component {
               Cancel
             </Button>
 
-            <Button variant="raised" color="primary" type="submit" className={style.button} disabled={!valid}>
-              Add a member
-            </Button>
+            <SubmitButton loading={meta.isLoading} valid={!valid}>
+              ADD A MEMBER
+            </SubmitButton>
           </div>
         </form>
       </div>
@@ -197,9 +208,17 @@ class Individual extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'AddMember',
-  destroyOnUnmount: false,
-  validate
-}, null, {addMember}
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectUsersMeta()
+});
+
+const withRedux = connect(mapStateToProps, {addMember});
+
+export default compose(
+  withRedux,
+  reduxForm({
+    form: 'AddMember',
+    destroyOnUnmount: false,
+    validate
+  })
 )(Individual);
