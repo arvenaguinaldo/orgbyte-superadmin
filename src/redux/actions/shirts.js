@@ -1,12 +1,12 @@
 import {SHIRTS} from 'constants/actions/shirts';
 
-export const fetchShirts = params => ({
-  type: SHIRTS.FETCH_SHIRTS,
+export const fetchShirt = params => ({
+  type: SHIRTS.FETCH_SHIRT,
   params
 });
 
-export const fetchShirtsSuccess = response => ({
-  type: SHIRTS.FETCH_SHIRTS_SUCCESS,
+export const fetchShirtSuccess = response => ({
+  type: SHIRTS.FETCH_SHIRT_SUCCESS,
   response
 });
 

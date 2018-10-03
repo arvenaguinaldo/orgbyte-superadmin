@@ -7,13 +7,13 @@ import {callErrorNotification} from './notification';
 
 //* *********** Subroutines ************//
 
-function* fetchShirts(action) {
-  const response = yield call(shirtsService.fetchShirts, action.params);
+function* fetchShirt(action) {
+  const response = yield call(shirtsService.fetchShirt, action.params);
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(shirtsActions.fetchShirtsSuccess(response));
+      yield put(shirtsActions.fetchShirtSuccess(response));
     }
   }
 }
@@ -21,8 +21,9 @@ function* fetchShirts(action) {
 function* verifyMember(action) {
   const response = yield call(shirtsService.verifyMember, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(shirtsActions.verifyMemberSuccess(response));
     } else {
       yield put(shirtsActions.verifyMemberSuccess(response));
     }
@@ -77,7 +78,7 @@ function* purchaseShirt(action) {
 //* *********** Watchers ************//
 
 function* watchRequest() {
-  yield* takeEvery(SHIRTS.FETCH_SHIRTS, fetchShirts);
+  yield* takeEvery(SHIRTS.FETCH_SHIRT, fetchShirt);
 }
 
 function* watchRequestVerifyMember() {
