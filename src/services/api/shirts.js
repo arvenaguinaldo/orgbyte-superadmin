@@ -1,7 +1,7 @@
 import api from './api';
 
-export const fetchShirts = () => {
-  return api.callGet('/shirts');
+export const fetchShirt = () => {
+  return api.callGet('/shirts/org_shirt');
 };
 
 export const verifyMember = (params) => {

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createTextMask} from 'redux-form-input-masks';
 
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, change} from 'redux-form';
 import {purchaseShirt} from 'redux/actions/shirts';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,10 +15,16 @@ import style from './Individual.scss';
 
 class IndividualPurchaseForm extends Component {
   static propTypes = {
+    shirt: PropTypes.object.isRequired,
     shirtSizes: PropTypes.array
   }
 
+  componentDidMount() {
+    this.props.dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id)); // eslint-disable-line react/prop-types
+  }
+
   onSubmit = (values, dispatch) => {
+    dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id));
     console.log(values);
     dispatch(purchaseShirt(values));
   };
