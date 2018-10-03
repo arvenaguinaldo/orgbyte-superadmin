@@ -56,10 +56,13 @@ class LayoutWithTopbarAndSidebar extends Component {
     organization: PropTypes.object
   }
 
+  static defaultProps = {
+    organization: {}
+  };
+
   state = {
     mobileOpen: false,
-    user: {},
-    organization: []
+    user: {}
   };
 
   handleDrawerToggle = () => {

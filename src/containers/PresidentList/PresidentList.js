@@ -3,35 +3,33 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {makeSelectPresidentsList} from 'redux/selectors/users';
+import {makeSelectPresidentsList, makeSelectUsersMeta} from 'redux/selectors/users';
 import {fetchPresidents} from 'redux/actions/users';
+
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
-import CustomToolbar from './CustomToolbarSelect';
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 class PresidentsTable extends React.Component {
   static propTypes = {
-    presidents: PropTypes.array,
-    fetchPresidents: PropTypes.func.isRequired
+    presidents: PropTypes.array
   }
 
+  static defaultProps = {
+    presidents: []
+  };
   state = {
-    columns: ['Id', 'Full Name', 'Organization', 'Email', 'Contact Number']
+    columns: ['Id', 'Full Name', 'Organization', 'Email', 'Contact Number'],
+    dbTable: 'users'
   };
 
-  componentWillMount() {
-    this.props.fetchPresidents();
-  }
-
-  changeStuff(newcolumns) {
-    this.setState({columns: newcolumns});
-  }
-
   render() {
+    const {columns, dbTable} = this.state;
     const {presidents} = this.props;
-    const {columns} = this.state;
     const options = {
       filter: true,
       selectableRows: true,
@@ -39,12 +37,18 @@ class PresidentsTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={presidents}
+          columns={this.state.columns}
+        />)
     };
     return (
       <LayoutWithTopbarAndSidebar>
         <MUIDataTable
-          title={'Presidents List'}
+          title={'Presidents'}
           data={presidents.map((president) => {
             return [
               president.id,
@@ -63,12 +67,27 @@ class PresidentsTable extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  presidents: makeSelectPresidentsList()
+  presidents: makeSelectPresidentsList(),
+  meta: makeSelectUsersMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchPresidents});
+const mapDispatchToProps = {
+  fetchPresidents
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchPresidents();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
+});
 
 
 export default compose(
   withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout
 )(PresidentsTable);

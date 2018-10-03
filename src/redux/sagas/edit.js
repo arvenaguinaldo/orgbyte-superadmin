@@ -2,6 +2,7 @@ import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as editActions from 'redux/actions/edit';
 import * as editService from 'services/api/edit';
+import {reset} from 'redux-form';
 import {EDIT} from 'constants/actions/edit';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
@@ -13,6 +14,7 @@ function* fetchEdit(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
+      yield put(reset('EditForm'));
       const successResponse = {table: action.params.table, response};
       yield put(editActions.fetchEditSuccess(successResponse));
     }
@@ -27,6 +29,7 @@ function* saveEdit(action) {
     } else {
       const successResponse = {table: action.params.table, response};
       yield call(callSuccessNotification, 'Updated Successfully');
+      yield put(reset('EditForm'));
       yield put(editActions.saveEditSuccess(successResponse));
     }
   }

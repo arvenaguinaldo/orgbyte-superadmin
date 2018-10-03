@@ -25,7 +25,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import generator from 'generate-password';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
@@ -33,7 +32,6 @@ import SubmitButton from 'components/SubmitButton/SubmitButton';
 // layout & styles
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import style from './AddOrganization.scss';
-
 
 const styles = theme => ({
   root: {
@@ -69,7 +67,6 @@ class AddOrganization extends Component {
     handleSubmit: PropTypes.func.isRequired,
     meta: PropTypes.object.isRequired
   };
-
   state = {
     selectedDate: new Date(),
     selectedLogo: null,
@@ -125,12 +122,12 @@ class AddOrganization extends Component {
       pattern: '99-999',
       placeholder: ' '
     });
-
+    const moment = require('moment');
+    const currentDate = moment().format('YYYY-MM-DD');
     return (
       <FormSection name="organization">
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={12}>
-
             <Grid container spacing={40}>
               <Grid item xs={12} sm={12} md={6}>
                 <Field
@@ -193,6 +190,8 @@ class AddOrganization extends Component {
                   selected={this.state.selectedDate}
                   label="Date of Formation"
                   fullWidth
+                  maxDate={currentDate}
+                  maxDateMessage="Date should not be after maximal date"
                 />
               </Grid>
 
