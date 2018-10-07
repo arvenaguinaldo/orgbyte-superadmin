@@ -44,8 +44,10 @@ class Individual extends Component {
   onSubmit = (values) => {
     if (!this.props.meta.isLoading) {
       this.props.verifyMember(values.student_number);
+      // dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id));
     }
   };
+
 
   render() {
     const {isVerified, verifiedMember, shirtSizes} = this.props;
@@ -114,8 +116,7 @@ const withFetchInitialData = fetchInitialData((props) => {
 export default compose(
   reduxForm({
     form: 'VerifyMemberForm',
-    overwriteOnInitialValuesChange: true,
-    destroyOnUnmount: false,
+    overwriteOnInitialValuesChange: false,
     validate
   }),
   withRedux,

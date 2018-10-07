@@ -27,3 +27,7 @@ export const fetchSizes = () => {
 export const purchaseShirt = (params) => {
   return api.callPost('/purchased_shirts', params);
 };
+
+export const fetchPurchaseShirts = () => {
+  return api.callGet('/purchased_shirts/org_shirts');
+};
