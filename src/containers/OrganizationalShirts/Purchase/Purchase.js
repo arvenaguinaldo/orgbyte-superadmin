@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 
 import {createStructuredSelector} from 'reselect';
@@ -45,7 +46,7 @@ const styles = theme => ({
 class Purchase extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    shirt: PropTypes.object.isRequired
+    shirt: PropTypes.object
   }
 
   state = {
@@ -60,6 +61,10 @@ class Purchase extends Component {
   render() {
     const {classes, shirt} = this.props;
     const {value} = this.state;
+
+    if (!shirt) {
+      return <Redirect to={'/shirts/addorganizationalshirt'} />;
+    }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="display1" gutterBottom>
