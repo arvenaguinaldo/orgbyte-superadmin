@@ -23,6 +23,8 @@ import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
+import MediaCard from 'containers/OrganizationList/ViewModal';
+
 
 class MainRoutes extends Component {
   render() {
@@ -32,6 +34,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
+        <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/presidents" component={PresidentList} />
         <PrivateRoute path="/events" component={EventList} />
