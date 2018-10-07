@@ -116,7 +116,7 @@ class SuperAdminMenuItemData extends Component {
                 <ListItemIcon>
                   <SupervisorAccount className={style.listIcon} />
                 </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Presidents List</Typography>} />
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Presidents</Typography>} />
               </MenuItem>
 
             </MenuList>

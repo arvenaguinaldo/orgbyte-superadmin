@@ -11,6 +11,8 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
@@ -24,7 +26,71 @@ class OrganizationTable extends React.Component {
   };
 
   state = {
-    columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type'],
+    columns: [
+      {
+        name: 'Id',
+        options: {
+          display: false
+        }
+      },
+      {
+        name: 'Name',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Acronym',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Recognition No.',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Date of Formation',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'College',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Type',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Active',
+        options: {
+          filter: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <FormControlLabel
+                label={value ? 'Active' : 'Inactive'}
+                value={value ? 'Active' : 'Inactive'}
+                control={
+                  <Switch color="primary" checked={value} value={value ? 'Active' : 'Inactive'} />
+                }
+                onChange={(event) => {
+                  updateValue(event.target.value !== 'Active');
+                }}
+              />
+            );
+
+          }
+        }
+      }
+    ],
     dbTable: 'organizations'
   };
 
@@ -58,7 +124,8 @@ class OrganizationTable extends React.Component {
               org.recognition_number,
               org.formation,
               org.college_name,
-              org.organization_type_name
+              org.organization_type_name,
+              org.status
             ];
           })}
           columns={columns}

@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 import {createTextMask} from 'redux-form-input-masks';
-import {renderTextField, renderSelectField, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
-
-import {validate, warn} from 'utils/EditValidations/Organization';
+import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import {validate, warn} from 'utils/EditValidations/Presidents';
 
 class EditForm extends React.Component {
   static propTypes = {
@@ -19,13 +19,9 @@ class EditForm extends React.Component {
     selectedDate: new Date()
   };
 
-  handleDateChange = (date) => {
-    this.setState({selectedDate: date});
-  }
-
   render() {
-    const recognitionNumberMask = createTextMask({
-      pattern: '99-999',
+    const contactNumberMask = createTextMask({
+      pattern: '+63 (999) 999-9999',
       placeholder: ' '
     });
 
@@ -40,64 +36,49 @@ class EditForm extends React.Component {
               <Grid container spacing={40}>
                 <Grid item xs={10} sm={10} md={4}>
                   <Field
-                    name="name"
+                    name="last_name"
                     component={renderTextField}
-                    label="Organization Name"
+                    label="Last Name"
                     fullWidth
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={10} sm={10} md={4}>
                   <Field
-                    name="organization_type_id"
-                    component={renderSelectField}
-                    label="Type of Organization"
+                    name="first_name"
+                    component={renderTextField}
+                    label="First Name"
                     fullWidth
-                  >
-                    <MenuItem value={1}>Univesity Based</MenuItem>
-                    <MenuItem value={2}>College Based</MenuItem>
-                  </Field>
+                  />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid item xs={10} sm={10} md={4}>
                   <Field
-                    name="organization_nature_id"
-                    component={renderSelectField}
-                    label="Nature of Organiation"
+                    name="middle_name"
+                    component={renderTextField}
+                    label="Middle Name"
                     fullWidth
-                  >
-                    <MenuItem value={1}>Academic</MenuItem>
-                  </Field>
+                  />
                 </Grid>
               </Grid>
 
               <Grid container spacing={32}>
-                <Grid item xs={6} sm={6} md={2}>
+                <Grid item xs={10} sm={10} md={4}>
                   <Field
-                    name="acronym"
+                    name="email"
                     component={renderTextField}
-                    label="Acronym"
+                    label="Email"
                     fullWidth
                   />
                 </Grid>
 
-                <Grid item xs={10} sm={10} md={3}>
+                <Grid item xs={6} sm={12} md={4}>
                   <Field
-                    name="recognition_number"
+                    name="contact_number"
                     component={renderTextField}
-                    label="Recognition Number"
+                    label="Contact Number"
                     fullWidth
-                    {...recognitionNumberMask}
-                  />
-                </Grid>
-
-                <Grid item xs={11} sm={11} md={3}>
-                  <Field
-                    name="formation"
-                    component={renderDatePicker}
-                    selected={this.state.selectedDate}
-                    label="Date of Formation"
-                    fullWidth
+                    {...contactNumberMask}
                   />
                 </Grid>
 
@@ -105,7 +86,7 @@ class EditForm extends React.Component {
                   <Field
                     name="college_id"
                     component={renderSelectField}
-                    label="College"
+                    label="college"
                     fullWidth
                   >
                     <MenuItem value={1}>College of Information and Communications Technology</MenuItem>

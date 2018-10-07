@@ -53,7 +53,7 @@ export const renderSelectField = (
 
 
 export const renderDatePicker = (
-  {input, label, fullWidth, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+  {input, label, fullWidth, maxDate, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
     <DatePicker
@@ -61,6 +61,7 @@ export const renderDatePicker = (
       label={label}
       format="DD/MM/YYYY"
       placeholder="10/10/2018"
+      maxDate={maxDate}
       value={selected}
       mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/] : [])}
       disableOpenOnEnter

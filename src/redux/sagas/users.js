@@ -51,7 +51,7 @@ function* fetchMembers(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(usersActions.fetchMembersSuccess(response));
+      yield put(usersActions.fetchMembersSuccess(response.data));
     }
   }
 }
