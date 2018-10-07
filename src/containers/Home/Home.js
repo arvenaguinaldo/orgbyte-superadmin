@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
+import UserPage from 'containers/UserPage/Main';
 
 class Home extends Component {
   render() {
     return (
-      <LoginAdmin />
+      <UserPage />
     );
   }
 }

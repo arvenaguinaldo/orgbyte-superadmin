@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Topbar from 'layouts/sections/Topbar/Topbar';
-import Sidebar from 'layouts/sections/Sidebar/Sidebar';
+import Topbar from 'layouts/Admin/sections/Topbar/Topbar';
+import Sidebar from 'layouts/Admin/sections/Sidebar/Sidebar';
 
 const styles = theme => ({
   root: {
