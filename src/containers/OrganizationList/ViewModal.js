@@ -16,6 +16,8 @@ import Avatar from '@material-ui/core/Avatar';
 import FaceIcon from '@material-ui/icons/Face';
 import EventIcon from '@material-ui/icons/Event';
 import CheckCircle from '@material-ui/icons/CheckCircle';
+// import {withStyles} from '@material-ui/core/styles';
+
 
 const styles = theme => ({
   root: {
