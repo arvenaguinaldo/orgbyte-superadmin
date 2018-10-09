@@ -24,6 +24,7 @@ import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
+import Announcements from 'containers/Announcements/Announcements';
 
 
 class MainRoutes extends Component {
@@ -36,6 +37,7 @@ class MainRoutes extends Component {
         <Route path="/login" component={LoginAdmin} exact />
         <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
+        <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/presidents" component={PresidentList} />
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
