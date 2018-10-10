@@ -8,6 +8,8 @@ import PrivateRoute from 'router/routes/PrivateRoute';
 import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
 import Home from 'containers/Home/Home';
+import UserPage from 'containers/UserPage/Main';
+import Events from 'containers/Events/Events';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
@@ -28,7 +30,6 @@ class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-
         <PrivateRoute path="/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
@@ -46,6 +47,11 @@ class MainRoutes extends Component {
         <PrivateRoute path="/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
+
+        {/* User Sides */}
+        <Route path="/Main" component={UserPage} exact />
+        <Route path="/Events" component={Events} exact />
+
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
