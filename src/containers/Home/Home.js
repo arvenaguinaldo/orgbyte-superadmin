@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import UserPage from 'containers/UserPage/Main';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 class Home extends Component {
   render() {
     return (
-      <UserPage />
+      <LayoutWithTopbarAndSidebar>
+        this is home page
+      </LayoutWithTopbarAndSidebar>
     );
   }
 }

@@ -1,73 +1,73 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
+// import * as currentOrg from 'utils/SetCurrentOrganization';
 
-
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const styles = theme => ({
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    backgroundColor: '#373737'
-  },
-  appBarShift: {
+    backgroundColor: '#363736',
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    [theme.breakpoints.up('md')]: {
+      width: `calc(100% - ${drawerWidth}px)`
+    }
   },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36
-  },
-  hide: {
-    display: 'none'
+  navIconHide: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none'
+    }
   }
 });
 
 class Topbar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired,
-    onRequestSidebarOpen: PropTypes.func.isRequired
+    organization: PropTypes.object,
+    onHandleDrawerToggle: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    organization: {}
   };
 
   render() {
-    const {
-      classes,
-      open,
-      onRequestSidebarOpen
-    } = this.props;
+    const {classes, onHandleDrawerToggle, user, organization} = this.props;
 
     return (
       <AppBar
         position="absolute"
-        className={classNames(classes.appBar, open && classes.appBarShift)}
+        className={classes.appBar}
+        color="secondary"
       >
-        <Toolbar disableGutters={!open}>
+        <Toolbar>
+          <Typography variant="title" color="inherit" noWrap >
+            {user.name}
+          </Typography>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
-            onClick={onRequestSidebarOpen}
-            className={classNames(classes.menuButton, open && classes.hide)}
+            aria-label="Open drawer"
+            onClick={onHandleDrawerToggle}
+            className={classes.navIconHide}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" noWrap>
-            SUPER ADMIN
-          </Typography>
+
+          {user.user_type_id === 'admin' ? (
+            <Typography variant="title" color="inherit" noWrap >
+              {organization.name}
+            </Typography>
+          ) :
+            <Typography key={user.id} variant="title" color="inherit" noWrap >
+              SUPER ADMIN
+            </Typography>
+          }
         </Toolbar>
       </AppBar>
     );
@@ -75,3 +75,14 @@ class Topbar extends Component {
 }
 
 export default withStyles(styles, {withTheme: true})(Topbar);
+
+
+// {user.user_type_id === 'admin' ? (
+//   <Typography variant="title" color="inherit" noWrap >
+//     {currentOrg.getOrganizationName()}
+//   </Typography>
+// ) : (
+//   <Typography key={user.id} variant="title" color="inherit" noWrap >
+//     SUPER ADMIN
+//   </Typography>
+// )}

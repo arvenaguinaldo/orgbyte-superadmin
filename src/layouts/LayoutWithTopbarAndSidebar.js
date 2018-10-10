@@ -1,65 +1,117 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+
+// import _ from 'lodash';
 import Topbar from 'layouts/sections/Topbar/Topbar';
 import Sidebar from 'layouts/sections/Sidebar/Sidebar';
 
+import Hidden from '@material-ui/core/Hidden';
+
+import {connect} from 'react-redux';
+import {compose} from 'recompose';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectCurrentUser} from 'redux/selectors/auth';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+
+const drawerWidth = 250;
+
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    height: '100%',
+    flexGrow: 1
+  },
+  appFrame: {
     zIndex: 1,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     position: 'relative',
-    display: 'flex'
+    display: 'flex',
+    width: '100%'
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
     ...theme.mixins.toolbar
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    marginLeft: drawerWidth,
+    height: '100%',
+    backgroundColor: '#EEEEEE',
     padding: theme.spacing.unit * 3
+  },
+
+  mobileContent: {
+    flexGrow: 1,
+    marginLeft: '4%',
+    height: '100%',
+    backgroundColor: '#EEEEEE',
+    width: `calc(100% - ${drawerWidth}px)`,
+    padding: theme.spacing.unit * 5
   }
 });
 
 class LayoutWithTopbarAndSidebar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    user: PropTypes.object.isRequired,
+    organization: PropTypes.object
   }
 
+  static defaultProps = {
+    organization: {}
+  };
+
   state = {
-    open: false
+    mobileOpen: false,
+    user: {}
   };
 
-  handleSidebarOpen = () => {
-    this.setState({open: true});
-  };
-
-  handleSidebarClose = () => {
-    this.setState({open: false});
+  handleDrawerToggle = () => {
+    this.setState(state => ({mobileOpen: !state.mobileOpen}));
   };
 
   render() {
-    const {open} = this.state;
-    const {classes, children} = this.props;
+    const {mobileOpen} = this.state;
+    const {classes, children, user, organization} = this.props;
+
     return (
       <div className={classes.root}>
-        <Topbar open={open} onRequestSidebarOpen={this.handleSidebarOpen} />
-        <Sidebar open={open} onRequestSidebarClose={this.handleSidebarClose} />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          {children}
-        </main>
+        <Sidebar user={user} mobileOpen={mobileOpen} onHandleDrawerToggle={this.handleDrawerToggle} />
+        <div className={classes.appFrame}>
+          <Topbar organization={organization} user={user} onHandleDrawerToggle={this.handleDrawerToggle} />
+
+          <Hidden mdUp>
+            <main className={classes.mobileContent}>
+              <div className={classes.toolbar} />
+              {children}
+            </main>
+          </Hidden>
+
+          <Hidden smDown implementation="js">
+            <main className={classes.content}>
+              <div className={classes.toolbar} />
+              {children}
+            </main>
+          </Hidden>
+
+          {/* <main className={classes.content}>
+            <div className={classes.toolbar} />
+            {children}
+          </main> */}
+
+        </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectCurrentUser(),
+  organization: makeSelectCurrentOrganization()
+});
 
-export default withStyles(styles, {withTheme: true})(LayoutWithTopbarAndSidebar);
+const withRedux = connect(mapStateToProps, null);
+
+export default compose(
+  withRedux,
+  withStyles(styles, {withTheme: true})
+)(LayoutWithTopbarAndSidebar);
