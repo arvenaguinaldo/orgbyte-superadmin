@@ -4,6 +4,8 @@ import {Field, reduxForm} from 'redux-form';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
+import {validate, warn} from 'utils/EditValidations/Organization';
+
 // Material UI
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -123,5 +125,7 @@ class EditForm extends React.Component {
 export default reduxForm({
   form: 'EditForm',
   overwriteOnInitialValuesChange: true,
-  destroyOnUnmount: false
+  destroyOnUnmount: false,
+  validate,
+  warn
 })(EditForm);

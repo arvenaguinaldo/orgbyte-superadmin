@@ -8,6 +8,7 @@ const initialState = fromJS({
   isVerified: false,
   orgshirt: '',
   purchaseShirt: '',
+  fetchPurchaseShirts: [],
   meta: {
     loading: false
   }
@@ -85,6 +86,21 @@ const shirts = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         purchaseShirt: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case SHIRTS.FETCH_PURCHASE_SHIRTS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.FETCH_PURCHASE_SHIRTS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        fetchPurchaseShirts: data,
         meta: {
           loading: false
         }

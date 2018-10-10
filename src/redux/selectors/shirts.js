@@ -32,6 +32,11 @@ export const makeSelectShirtSizes = () => createSelector(
   shirts => shirts.sizes
 );
 
+export const makeSelectShirtPurchaseShirts = () => createSelector(
+  makeSelectShirts(),
+  shirts => shirts.fetchPurchaseShirts
+);
+
 export const makeSelectShirtsMeta = () => createSelector(
   makeSelectShirts(),
   shirts => shirts.meta

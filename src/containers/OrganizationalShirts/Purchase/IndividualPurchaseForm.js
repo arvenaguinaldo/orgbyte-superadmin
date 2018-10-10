@@ -1,31 +1,38 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import _ from 'lodash';
 import {Link} from 'react-router-dom';
+import {createStructuredSelector} from 'reselect';
+
+import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createTextMask} from 'redux-form-input-masks';
 
-import {Field, reduxForm, change} from 'redux-form';
 import {purchaseShirt} from 'redux/actions/shirts';
+
+import {makeSelectShirtsMeta} from 'redux/selectors/shirts';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 import style from './Individual.scss';
 
 class IndividualPurchaseForm extends Component {
   static propTypes = {
     shirt: PropTypes.object.isRequired,
-    shirtSizes: PropTypes.array
-  }
-
-  componentDidMount() {
-    this.props.dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id)); // eslint-disable-line react/prop-types
+    shirtSizes: PropTypes.array,
+    meta: PropTypes.object.isRequired
   }
 
   onSubmit = (values, dispatch) => {
-    dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id));
-    console.log(values);
+    const {shirt} = this.props;
+    _.set(values, 'shirt_id', shirt.id);
+    _.set(values, 'member_id', values.id);
     dispatch(purchaseShirt(values));
   };
 
@@ -46,7 +53,7 @@ class IndividualPurchaseForm extends Component {
 
     const required = value => (value ? undefined : 'This field is Required');
 
-    const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -188,18 +195,27 @@ class IndividualPurchaseForm extends Component {
                   Cancel
           </Button>
 
-          <Button variant="raised" color="primary" type="submit" className={style.button} disabled={!valid}>
+          <SubmitButton loading={meta.isLoading} valid={!valid}>
                   Purchase
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     );
   }
 }
 
-export default reduxForm({
-  form: 'IndividualPurchase',
-  overwriteOnInitialValuesChange: true,
-  enableReinitialize: true,
-  destroyOnUnmount: false
-})(IndividualPurchaseForm);
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectShirtsMeta()
+});
+
+const withRedux = connect(mapStateToProps, null);
+
+export default compose(
+  withRedux,
+  reduxForm({
+    form: 'IndividualPurchase',
+    overwriteOnInitialValuesChange: true,
+    enableReinitialize: true,
+    destroyOnUnmount: false
+  })
+)(IndividualPurchaseForm);
