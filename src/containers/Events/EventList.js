@@ -3,12 +3,34 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
+import Moment from 'moment';
+import {Field, reduxForm} from 'redux-form';
+import 'rc-pagination/assets/index.css';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import EventIcon from '@material-ui/icons/Event';
+import LocationIcon from '@material-ui/icons/LocationOn';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import TablePagination from '@material-ui/core/TablePagination';
+
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import Button from '@material-ui/core/Button';
+import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+
+import styles from './EventList.scss';
 
 class EventList extends Component {
   static propTypes = {
@@ -20,32 +42,127 @@ class EventList extends Component {
   };
 
   render() {
-    const styles = require('./EventList.scss');
+    Moment.locale('en');
     return (
       <LayoutWithTopbarAndSidebar>
-        <div className={styles.root}>
-          <header className={styles.topbar}>
-            <h1>Events</h1>
-          </header>
-          <main className={styles.main}>
-            <div>
-              {this.props.events.map((event) => {
-                return (
-                  <div key={event.id}>
-                    <span>{event.name}</span>
+        <Typography variant="display1">
+            Events
+        </Typography>
+        <div className={styles.sortContainer}>
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={12} md={12}>
+
+              <Grid container spacing={40}>
+
+                <Grid item xs={10} sm={10} md={2}>
+                  <Field
+                    name="time_period"
+                    component={renderSelectField}
+                    label="Time Period"
+                    fullWidth
+                  >
+                    <MenuItem value={1}>Past</MenuItem>
+                    <MenuItem value={2}>Incoming</MenuItem>
+                  </Field>
+                </Grid>
+
+                <Grid item xs={10} sm={10} md={2}>
+                  <Field
+                    name="cost"
+                    component={renderSelectField}
+                    label="Cost"
+                    fullWidth
+                  >
+                    <MenuItem value={1}>Paid</MenuItem>
+                    <MenuItem value={2}>Free</MenuItem>
+                  </Field>
+                </Grid>
+                <Grid item xs={10} sm={10} md={2}>
+                  <Field
+                    name="type_of_event"
+                    component={renderSelectField}
+                    label="Type of Event"
+                    fullWidth
+                  >
+                    <MenuItem value={1}>Curricular</MenuItem>
+                    <MenuItem value={2}>Co-curricular</MenuItem>
+                  </Field>
+                </Grid>
+
+                <Grid item xs={10} sm={10} md={3} >
+                  <Field
+                    name="search"
+                    component={renderTextField}
+                    label="Search"
+                    fullWidth
+                    className={styles.searchField}
+                  />
+                </Grid>
+              </Grid>
+
+            </Grid>
+          </Grid>
+        </div>
+        <div className={styles.eventContainer}>
+          {this.props.events.map((event) => {
+            return (
+              <div key={event.id}>
+                {/* <span>{event.name}</span>
                     <span>{event.venue}</span>
                     <span>{event.ticket_price}</span>
-                    <span>{event.date_time}</span>
-                  </div>
-                );
-              })}
-
-              <Button variant="outlined" color="primary">
-                Default
-              </Button>
-            </div>
-          </main>
+                    <span>{Moment(event.date_time).format('YYYY-MM-DD')}</span> */}
+                <Card className={styles.card}>
+                  <CardMedia
+                    component="img"
+                    alt="Event Image"
+                    height="200"
+                    width="140"
+                    image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                    title="Event Image"
+                    className={styles.cardMedia}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="headline" component="h2">
+                      {event.name}
+                    </Typography>
+                    <List disablePadding dense className={styles.list}>
+                      <ListItem >
+                        <ListItemIcon>
+                          <EventIcon className={styles.listIcon} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography variant="body2" component="p">{Moment(event.date_time).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon>
+                          <LocationIcon className={styles.listIcon} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography variant="body2" component="p">KB-Gym, Malolos Bulacan</Typography>
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon>
+                          <Typography variant="body2" component="p" className={styles.listIcon}>₱</Typography>
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography variant="body2" component="p">{event.ticket_price}</Typography>
+                        </ListItemText>
+                      </ListItem>
+                    </List>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary" className={styles.actionsDiv}>
+                          View Details
+                    </Button>
+                  </CardActions>
+                </Card>
+              </div>
+            );
+          })}
         </div>
+        <TablePagination />
       </LayoutWithTopbarAndSidebar>
     );
   }
@@ -73,5 +190,9 @@ const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataIns
 export default compose(
   withRedux,
   withFetchInitialData,
-  withLoadingWhileFetchingDataInsideLayout
+  withLoadingWhileFetchingDataInsideLayout,
+  reduxForm({
+    form: 'EmailForm',
+    destroyOnUnmount: false
+  }, null),
 )(EventList);
