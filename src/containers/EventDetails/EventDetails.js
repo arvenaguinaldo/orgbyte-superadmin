@@ -104,7 +104,7 @@ class EventDetails extends Component {
                       Import
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
-                      Send
+                      Edit Event
             </Button>
           </div>
         </Paper>

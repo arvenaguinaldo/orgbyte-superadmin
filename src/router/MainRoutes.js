@@ -26,13 +26,14 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
+import EventCards from 'containers/EventCards/EventCards';
 
 
 class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-
+        <Route path="/eventcards" component={EventCards} />
         <PrivateRoute path="/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
