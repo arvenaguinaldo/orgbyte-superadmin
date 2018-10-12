@@ -10,6 +10,7 @@ import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
+import Button from '@material-ui/core/Button';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -26,6 +27,7 @@ class OrganizationTable extends React.Component {
   };
 
   state = {
+    open: false,
     columns: [
       {
         name: 'Id',
@@ -70,7 +72,7 @@ class OrganizationTable extends React.Component {
         }
       },
       {
-        name: 'Active',
+        name: 'Status',
         options: {
           filter: true,
           customBodyRender: (value, tableMeta, updateValue) => {
@@ -89,9 +91,30 @@ class OrganizationTable extends React.Component {
 
           }
         }
+      },
+      {
+        name: 'View',
+        options: {
+          filter: false,
+          customBodyRender: () => {
+            return (
+              <Button
+                color="primary"
+                variant="contained"
+                mini
+                style={{fontSize: '11px'}}
+                onClick={this.handleClickOpen}
+              > View </Button>
+            );
+          }
+        }
       }
     ],
     dbTable: 'organizations'
+  };
+  handleClickOpen = () => {
+    this.setState({open: true});
+    console.log(this.state);
   };
 
   render() {
@@ -125,6 +148,7 @@ class OrganizationTable extends React.Component {
               org.formation,
               org.college_name,
               org.organization_type_name,
+              org.status,
               org.status
             ];
           })}

@@ -15,3 +15,7 @@ export const addMember = (params) => {
 export const fetchMembers = () => {
   return api.callGet('/members');
 };
+
+export const addUser = (params) => {
+  return api.callPost('/users', params);
+};
