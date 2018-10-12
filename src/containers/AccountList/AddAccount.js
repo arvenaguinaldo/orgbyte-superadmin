@@ -3,43 +3,50 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
-import {fetchOrganizations} from 'redux/actions/organizations';
+// import {makeSelectOrganizationsList} from 'redux/selectors/organizations';
+// import {fetchOrganizations} from 'redux/actions/organizations';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {Field, reduxForm} from 'redux-form';
 import {compose} from 'recompose';
+import generator from 'generate-password';
+import {validate, warn} from 'utils/Validations/AddAccount';
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 
+import {addUser} from 'redux/actions/users';
+import {makeSelectUsersMeta, makeSelectUsersList} from 'redux/selectors/users';
+
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 import CustomToolbar from './CustomToolbarSelect';
 import mystyle from './AccountList.scss';
 
+const generatedPassword = generator.generate({
+  length: 10,
+  numbers: true
+});
+
 class AddAccount extends React.Component {
   static propTypes = {
-    organizations: PropTypes.array,
-    fetchOrganizations: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired
   }
 
   state = {
     columns: ['Id', 'Name', 'Acronym', 'Recogniton No.', 'Date of Formation', 'College', 'Type']
   };
+  onSubmit = (values, dispatch) => {
+    dispatch(addUser(values));
+  };
 
-  componentWillMount() {
-    this.props.fetchOrganizations();
-  }
-
-  changeStuff(newcolumns) {
-    this.setState({columns: newcolumns});
-  }
-
+  // changeStuff(newcolumns) {
+  //   this.setState({columns: newcolumns});
+  // }
   render() {
-    const {organizations} = this.props;
+    const {handleSubmit} = this.props;
     const {columns} = this.state;
     const options = {
       filter: true,
@@ -56,12 +63,20 @@ class AddAccount extends React.Component {
           Add an Account
           <div>
             <Paper className={mystyle.Paper}>
-              <form>
-                <Grid container spacing={32}>
+              <form onSubmit={handleSubmit(this.onSubmit)} name="addUser">
+                <Grid container spacing={40}>
                   <Grid item xs={12} sm={12} md={12}>
 
                     <Grid container spacing={40}>
                       <Grid item xs={12} sm={12} md={3}>
+                        <Field
+                          name="email"
+                          component={renderTextField}
+                          label="Email"
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={2}>
                         <Field
                           name="last_name"
                           component={renderTextField}
@@ -69,7 +84,7 @@ class AddAccount extends React.Component {
                           fullWidth
                         />
                       </Grid>
-                      <Grid item xs={12} sm={12} md={3}>
+                      <Grid item xs={12} sm={12} md={2}>
                         <Field
                           name="first_name"
                           component={renderTextField}
@@ -77,25 +92,20 @@ class AddAccount extends React.Component {
                           fullWidth
                         />
                       </Grid>
-                      <Grid item xs={12} sm={12} md={3}>
+                      <Grid item xs={12} sm={12} md={2}>
                         <Field
-                          name="position"
+                          name="user_type_id"
                           component={renderSelectField}
                           label="Position"
                           fullWidth
                         >
-                          <MenuItem value={1}>Admin</MenuItem>
-                          <MenuItem value={2}>Sub Admin</MenuItem>
+                          <MenuItem value={2}>Vice President</MenuItem>
+                          <MenuItem value={3}>Sub Admin</MenuItem>
                         </Field>
                       </Grid>
                       <Grid item xs={12} sm={12} md={3}>
-                        <div className={mystyle.bottomButton}>
-                          <Button variant="raised" color="primary" type="submit" className={mystyle.button}>
-                                Add a member
-                          </Button>
-                        </div>
+                        <SubmitButton className={mystyle.bottomButton}>Add officer</SubmitButton>
                       </Grid>
-
                     </Grid>
                   </Grid>
                 </Grid>
@@ -105,17 +115,6 @@ class AddAccount extends React.Component {
         </Typography>
         <MUIDataTable
           title={'Account List'}
-          data={organizations.map((org) => {
-            return [
-              org.id,
-              org.name,
-              org.acronym,
-              org.recognition_number,
-              org.formation,
-              org.college_name,
-              org.organization_type_name
-            ];
-          })}
           columns={columns}
           options={options}
         />
@@ -125,17 +124,26 @@ class AddAccount extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  organizations: makeSelectOrganizationsList()
+  users: makeSelectUsersList(),
+  meta: makeSelectUsersMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchOrganizations});
+const mapDispatchToProps = {
+  addUser
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 
 export default compose(
   reduxForm({
-    form: 'AddMember',
-    destroyOnUnmount: false
-  }
-  ),
+    form: 'AddUser',
+    destroyOnUnmount: false,
+    initialValues: {
+      password: generatedPassword
+    },
+    validate,
+    warn
+  }),
   withRedux,
 )(AddAccount);

@@ -107,7 +107,7 @@ class Email extends Component {
                       label="Message"
                       fullWidth
                       multiline
-                      rows="15"
+                      rows="11"
                     />
                   </Grid>
                 </Grid>
