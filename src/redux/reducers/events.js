@@ -17,7 +17,22 @@ const events = (state = initialState, action) => {
     }
     case EVENTS.FETCH_EVENTS_SUCCESS: {
       const {data} = action.response;
-      return initialState.merge(fromJS({
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.CREATE_EVENT: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case EVENTS.CREATE_EVENT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
         list: data,
         meta: {
           loading: false

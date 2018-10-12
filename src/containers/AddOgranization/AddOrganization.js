@@ -112,11 +112,6 @@ class AddOrganization extends Component {
   };
 
 
-  handleDateChange = (date) => {
-    this.setState({selectedDate: date});
-  }
-
-
   orgnazationProfile = () => {
     const recognitionNumberMask = createTextMask({
       pattern: '99-999',

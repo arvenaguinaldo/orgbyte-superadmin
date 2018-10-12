@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Material UI
 import TextField from '@material-ui/core/TextField';
@@ -12,21 +13,28 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+// import MenuItem from '@material-ui/core/MenuItem';
+
+// import PlacesAutocomplete from 'react-places-autocomplete';
+
+import MUIPlacesAutocomplete from 'mui-places-autocomplete';
+
 
 // Date picker
 import {DatePicker} from 'material-ui-pickers';
+import {DateTimePicker} from 'material-ui-pickers';
 
 import {CirclePicker} from 'react-color';
 
 export const renderTextField = (
-  {input, label, fullWidth, multiline, defaultValue, meta: {touched, error}, ...custom} // eslint-disable-line react/prop-types
+  {input, label, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <TextField
     label={label}
     defaultValue={defaultValue}
     placeholder={label}
     error={!!touched && !!error}
-    helperText={!!touched && error}
+    helperText={(touched && error) || warning}
     margin="normal"
     fullWidth={fullWidth}
     multiline={multiline}
@@ -65,7 +73,25 @@ export const renderDatePicker = (
       value={selected}
       mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/] : [])}
       disableOpenOnEnter
-      animateYearScrolling={false}
+      animateYearScrolling
+      {...input}
+      {...custom}
+    />
+    <FormHelperText>{touched && error}</FormHelperText>
+  </FormControl>
+);
+
+export const renderDateTimePicker = (
+  {input, label, fullWidth, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
+    <DateTimePicker
+      keyboard
+      label={label}
+      placeholder="10/10/2018"
+      value={selected}
+      disableOpenOnEnter
+      animateYearScrolling
       {...input}
       {...custom}
     />
@@ -138,13 +164,31 @@ export const renderRadioButton = (
 export const renderCheckbox = (
   {input, label}, // eslint-disable-line react/prop-types
 ) => (
-  <FormControlLabel
-    control={
-      <Checkbox
-        checked={input.checked}
-        onChange={input.onChange}
-      />
-    }
-    label={label}
+  <div style={{display: 'inline-table', padding: '0px'}}>
+    <FormControlLabel
+      control={
+        <Checkbox
+          checked={input.checked}
+          onChange={input.onChange}
+        />
+      }
+      label={label}
+    />
+  </div>
+);
+
+export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) => (
+  <MUIPlacesAutocomplete
+    onSuggestionSelected={onSuggestionSelected}
+    suggestionsContainerProps={{style: {width: '0px'}}}
+    renderTarget={() => (
+      <div />
+    )}
+    textFieldProps={{...other}}
   />
 );
+
+renderMUIPlacesAutocomplete.propTypes = {
+  onSuggestionSelected: PropTypes.func.isRequired,
+  input: PropTypes.object.isRequired
+};

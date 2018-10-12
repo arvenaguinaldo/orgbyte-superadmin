@@ -9,3 +9,13 @@ export const fetchEventsSuccess = response => ({
   type: EVENTS.FETCH_EVENTS_SUCCESS,
   response
 });
+
+export const createEvent = params => ({
+  type: EVENTS.CREATE_EVENT,
+  params
+});
+
+export const createEventSuccess = response => ({
+  type: EVENTS.CREATE_EVENT_SUCCESS,
+  response
+});
