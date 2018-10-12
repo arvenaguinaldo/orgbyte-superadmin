@@ -2,18 +2,20 @@ import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as shirtsActions from 'redux/actions/shirts';
 import * as shirtsService from 'services/api/shirts';
+import {reset} from 'redux-form';
+import {push} from 'react-router-redux';
 import {SHIRTS} from 'constants/actions/shirts';
-import {callErrorNotification} from './notification';
+import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
 
-function* fetchShirts(action) {
-  const response = yield call(shirtsService.fetchShirts, action.params);
+function* fetchShirt(action) {
+  const response = yield call(shirtsService.fetchShirt, action.params);
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(shirtsActions.fetchShirtsSuccess(response));
+      yield put(shirtsActions.fetchShirtSuccess(response));
     }
   }
 }
@@ -21,8 +23,9 @@ function* fetchShirts(action) {
 function* verifyMember(action) {
   const response = yield call(shirtsService.verifyMember, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(shirtsActions.verifyMemberSuccess(response));
     } else {
       yield put(shirtsActions.verifyMemberSuccess(response));
     }
@@ -69,7 +72,22 @@ function* purchaseShirt(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(shirtsActions.purchaseShirtSuccess(response));
+      yield put(shirtsActions.purchaseShirtSuccess(response.data));
+      yield call(callSuccessNotification, 'Purchased Successfully');
+      yield put(reset('IndividualPurchaseForm'));
+      yield put(reset('VerifyMemberForm'));
+      yield put(push('/shirts'));
+    }
+  }
+}
+
+function* fetchPurchaseShirts(action) {
+  const response = yield call(shirtsService.fetchPurchaseShirts, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(shirtsActions.fetchPurchaseShirtsSuccess(response));
     }
   }
 }
@@ -77,7 +95,7 @@ function* purchaseShirt(action) {
 //* *********** Watchers ************//
 
 function* watchRequest() {
-  yield* takeEvery(SHIRTS.FETCH_SHIRTS, fetchShirts);
+  yield* takeEvery(SHIRTS.FETCH_SHIRT, fetchShirt);
 }
 
 function* watchRequestVerifyMember() {
@@ -96,12 +114,17 @@ function* watchRequestPurchaseShirt() {
   yield* takeEvery(SHIRTS.PURCHASE_SHIRT, purchaseShirt);
 }
 
+function* watchRequestFetchPurchaseShirts() {
+  yield* takeEvery(SHIRTS.FETCH_PURCHASE_SHIRTS, fetchPurchaseShirts);
+}
+
 export default function* shirts() {
   yield [
     fork(watchRequest),
     fork(watchRequestVerifyMember),
     fork(watchRequestAddOrgShirt),
     fork(watchRequestfetchSizes),
-    fork(watchRequestPurchaseShirt)
+    fork(watchRequestPurchaseShirt),
+    fork(watchRequestFetchPurchaseShirts)
   ];
 }

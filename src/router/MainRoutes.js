@@ -8,6 +8,8 @@ import PrivateRoute from 'router/routes/PrivateRoute';
 import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
 import Home from 'containers/Home/Home';
+import UserPage from 'containers/UserPage/Main';
+import Events from 'containers/Events/Events';
 import EventList from 'containers/Events/EventList';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
@@ -26,24 +28,21 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
-import EventCards from 'containers/EventCards/EventCards';
-
 
 class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-        <Route path="/eventcards" component={EventCards} />
         <PrivateRoute path="/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
-        <Route path="/card" component={MediaCard} />
         <Route path="/eventdetails" component={EventDetails} />
+        <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
-        <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/presidents" component={PresidentList} />
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
+        <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
         <PrivateRoute path="/memberships/addmember" component={AddMember} />
         <PrivateRoute path="/memberships" component={Memberships} />
@@ -54,6 +53,11 @@ class MainRoutes extends Component {
         <PrivateRoute path="/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
+
+        {/* User Sides */}
+        <Route path="/Main" component={UserPage} exact />
+        <Route path="/Events" component={Events} exact />
+
         <Route path="" component={NotFoundPage} />
       </Switch>
     );

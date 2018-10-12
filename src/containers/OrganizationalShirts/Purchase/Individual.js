@@ -32,6 +32,7 @@ import style from './Individual.scss';
 
 class Individual extends Component {
   static propTypes = {
+    shirt: PropTypes.object.isRequired,
     verifiedMember: PropTypes.object,
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
@@ -43,8 +44,10 @@ class Individual extends Component {
   onSubmit = (values) => {
     if (!this.props.meta.isLoading) {
       this.props.verifyMember(values.student_number);
+      // dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id));
     }
   };
+
 
   render() {
     const {isVerified, verifiedMember, shirtSizes} = this.props;
@@ -55,7 +58,7 @@ class Individual extends Component {
       guide: false
     });
 
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {shirt, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
         <Grid container spacing={24}>
@@ -81,7 +84,7 @@ class Individual extends Component {
               </Grid>
             </form>
 
-            <IndividualPurchaseForm shirtSizes={shirtSizes} initialValues={verifiedMember} initialValuesToPassThru={verifiedMember} />
+            <IndividualPurchaseForm shirtSizes={shirtSizes} shirt={shirt} initialValues={verifiedMember} initialValuesToPassThru={verifiedMember} />
 
           </Grid>
         </Grid>
@@ -112,9 +115,8 @@ const withFetchInitialData = fetchInitialData((props) => {
 
 export default compose(
   reduxForm({
-    form: 'PurchaseIndividual',
-    overwriteOnInitialValuesChange: true,
-    destroyOnUnmount: false,
+    form: 'VerifyMemberForm',
+    overwriteOnInitialValuesChange: false,
     validate
   }),
   withRedux,

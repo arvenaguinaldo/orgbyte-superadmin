@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+
+
+import {createStructuredSelector} from 'reselect';
+import {makeSelectShirt} from 'redux/selectors/shirts';
+import fetchInitialData from 'hoc/fetchInitialData';
+import {fetchShirt} from 'redux/actions/shirts';
 
 
 // Material UI
@@ -36,7 +45,8 @@ const styles = theme => ({
 
 class Purchase extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    shirt: PropTypes.object
   }
 
   state = {
@@ -49,8 +59,12 @@ class Purchase extends Component {
 
 
   render() {
-    const {classes} = this.props;
+    const {classes, shirt} = this.props;
     const {value} = this.state;
+
+    if (!shirt) {
+      return <Redirect to={'/shirts/addorganizationalshirt'} />;
+    }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="display1" gutterBottom>
@@ -70,7 +84,7 @@ class Purchase extends Component {
               <Tab label="Section" />
             </Tabs>
           </AppBar>
-          {value === 0 && <TabContainer> <Individual /> </TabContainer>}
+          {value === 0 && <TabContainer> <Individual shirt={shirt} /> </TabContainer>}
           {value === 1 && <TabContainer>Section</TabContainer>}
         </div>
       </LayoutWithTopbarAndSidebar>
@@ -78,4 +92,22 @@ class Purchase extends Component {
   }
 }
 
-export default withStyles(styles)(Purchase);
+const mapStateToProps = createStructuredSelector({
+  shirt: makeSelectShirt()
+});
+
+const mapDispatchToProps = {
+  fetchShirt
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchShirt();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  withStyles(styles)
+)(Purchase);

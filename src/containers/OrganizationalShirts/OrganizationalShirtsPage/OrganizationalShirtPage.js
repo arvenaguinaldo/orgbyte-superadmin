@@ -1,41 +1,42 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {createStructuredSelector} from 'reselect';
-// import {makeSelectMembersList} from 'redux/selectors/users';
-import {fetchMembers} from 'redux/actions/users';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 
+import {createStructuredSelector} from 'reselect';
+import {makeSelectShirtPurchaseShirts, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchPurchaseShirts} from 'redux/actions/shirts';
+
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
+
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import CustomToolbar from './CustomToolbarSelect';
-import style from './OrganizationalShirtPage.scss';
+
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 class OrganizationalShirtPage extends React.Component {
-  // static propTypes = {
-  //   members: PropTypes.array,
-  //   fetchMembers: PropTypes.func.isRequired
-  // }
-
-  state = {
-    columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Size', 'Status']
-  };
-
-  // componentWillMount() {
-  //   this.props.fetchMembers();
-  // }
-
-  changeStuff(newcolumns) {
-    this.setState({columns: newcolumns});
+  static propTypes = {
+    purchasedShirts: PropTypes.array.isRequired
   }
 
+  static defaultProps = {
+    purchasedShirts: []
+  };
+
+  state = {
+    columns: ['Id', 'Name', 'Size', 'Year and Section', 'Contact Number', 'Email'],
+    dbTable: 'purchased_shirts'
+  };
+
   render() {
-    // const {members} = this.props;
-    const {columns} = this.state;
+    const {columns, dbTable} = this.state;
+    const {purchasedShirts} = this.props;
     const options = {
       filter: true,
       selectableRows: true,
@@ -43,7 +44,13 @@ class OrganizationalShirtPage extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={purchasedShirts}
+          columns={this.state.columns}
+        />)
     };
     return (
       <LayoutWithTopbarAndSidebar>
@@ -51,12 +58,22 @@ class OrganizationalShirtPage extends React.Component {
           Organizational Shirts
         </Typography>
 
-        <Button component={Link} to="/shirts/purchase" variant="raised" color="primary" className={style.button} >
+        <Button component={Link} to="/shirts/purchase" variant="raised" color="primary" style={{margin: 20}}>
           Purchase
         </Button>
 
         <MUIDataTable
-          title={'Organizational Shirts'}
+          title={'Organization List'}
+          data={purchasedShirts.map((shirt) => {
+            return [
+              shirt.id,
+              shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+              shirt.size,
+              shirt.year_level + shirt.section + ' - G' + shirt.group,
+              shirt.contact_number,
+              shirt.email
+            ];
+          })}
           columns={columns}
           options={options}
         />
@@ -66,12 +83,28 @@ class OrganizationalShirtPage extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  // members: makeSelectMembersList()
+  purchasedShirts: makeSelectShirtPurchaseShirts(),
+  meta: makeSelectShirtsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchMembers});
+const mapDispatchToProps = {
+  fetchPurchaseShirts
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchPurchaseShirts();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
+});
 
 
 export default compose(
   withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout
 )(OrganizationalShirtPage);
+
