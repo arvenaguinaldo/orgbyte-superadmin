@@ -8,7 +8,6 @@ import {Field, reduxForm} from 'redux-form';
 import 'rc-pagination/assets/index.css';
 
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
@@ -21,7 +20,6 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import TablePagination from '@material-ui/core/TablePagination';
 
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
@@ -106,7 +104,7 @@ class EventList extends Component {
         <div className={styles.eventContainer}>
           {this.props.events.map((event) => {
             return (
-              <div key={event.id}>
+              <div key={event.id} className={styles.eventsDiv}>
                 {/* <span>{event.name}</span>
                     <span>{event.venue}</span>
                     <span>{event.ticket_price}</span>
@@ -139,7 +137,7 @@ class EventList extends Component {
                           <LocationIcon className={styles.listIcon} />
                         </ListItemIcon>
                         <ListItemText>
-                          <Typography variant="body2" component="p">KB-Gym, Malolos Bulacan</Typography>
+                          <Typography variant="body2" component="p">{event.venue}</Typography>
                         </ListItemText>
                       </ListItem>
                       <ListItem>
@@ -152,17 +150,16 @@ class EventList extends Component {
                       </ListItem>
                     </List>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary" className={styles.actionsDiv}>
-                          View Details
+                  <div className={styles.actionsDiv}>
+                    <Button size="small" color="primary">
+                            View Details
                     </Button>
-                  </CardActions>
+                  </div>
                 </Card>
               </div>
             );
           })}
         </div>
-        <TablePagination />
       </LayoutWithTopbarAndSidebar>
     );
   }
