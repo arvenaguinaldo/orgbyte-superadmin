@@ -4,15 +4,12 @@
   float: left;
   margin-right: 3%;
   margin-bottom: 2%;
-  height: 480px;
+  max-height: 500px;
+  height: 500px;
 }
 
 .cardMedia {
   object-fit: contain;
-}
-
-.actionsButton {
-  margin-right: 10px;
 }
 
 .Paper {
@@ -31,9 +28,14 @@
   margin-top: 5%;
 }
 
-.actionsDiv {
+.eventDiv {
   position: relative;
-  left: 60%;
+}
+
+.actionsDiv {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .listIcon {
