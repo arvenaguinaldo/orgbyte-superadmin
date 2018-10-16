@@ -19,6 +19,7 @@ const theme = createMuiTheme({
       divider: 'rgba(0, 0, 0, 0.12)'
     },
     typography: {
+      useNextVariants: true,
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',

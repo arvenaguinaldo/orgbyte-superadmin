@@ -28,6 +28,7 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
+import OrganizationalShirtDetails from 'containers/OrganizationalShirts/OrganizationalShirtDetails/OrganizationalShirtDetails';
 
 class MainRoutes extends Component {
   render() {
@@ -37,6 +38,7 @@ class MainRoutes extends Component {
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
         <Route path="/eventdetails" component={EventDetails} />
+        <Route path="/organizationalshirt" component={OrganizationalShirtDetails} />
         <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/presidents" component={PresidentList} />
