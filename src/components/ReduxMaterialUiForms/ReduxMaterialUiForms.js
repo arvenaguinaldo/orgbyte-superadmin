@@ -88,7 +88,6 @@ export const renderDateTimePicker = (
     <DateTimePicker
       keyboard
       label={label}
-      placeholder="10/10/2018"
       value={selected}
       disableOpenOnEnter
       animateYearScrolling
@@ -168,6 +167,7 @@ export const renderCheckbox = (
     <FormControlLabel
       control={
         <Checkbox
+          {...input}
           checked={input.checked}
           onChange={input.onChange}
         />

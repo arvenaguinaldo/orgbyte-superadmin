@@ -3,6 +3,7 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {createStructuredSelector} from 'reselect';
+// import moment from 'moment';
 
 import {makeSelectEventsMeta} from 'redux/selectors/events';
 
@@ -11,7 +12,7 @@ import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderDateTimePicker, renderRadioButton, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import FileUpload from 'components/FileUpload/FileUpload';
 import {createNumberMask} from 'redux-form-input-masks';
-import {validate} from 'utils/Validations/CreateEvent';
+import {validate, warn} from 'utils/Validations/CreateEvent';
 
 import {createEvent} from 'redux/actions/events';
 // import GoogleSearchPlaces from 'components/GoogleSearchPlaces/GoogleSearchPlaces';
@@ -46,13 +47,22 @@ class CreateEvent extends Component {
   // }
 
   state = {
-    selectedDate: new Date('2018-01-01T00:00:00.000Z')
+    startsDate: new Date(),
+    endsDate: new Date()
   };
 
   onSubmit = (values, dispatch) => {
     dispatch(createEvent(values));
   };
 
+  handleStartsDateChange = (date) => {
+    this.setState({startsDate: date});
+    console.log(this.state.startsDate);
+  }
+
+  handleEndsDateChange = (date) => {
+    this.setState({endsDate: date});
+  }
 
   render() {
 
@@ -60,7 +70,8 @@ class CreateEvent extends Component {
 
     const checkboxLabel = [
       {label: 'Members', name: 'members'},
-      {label: 'Non - Members', name: 'non_members'}
+      {label: 'Bulsuans', name: 'bulsuans'},
+      {label: 'Non - Bulsuans', name: 'non_bulsuans'}
     ];
 
     const priceMask = createNumberMask({
@@ -124,8 +135,10 @@ class CreateEvent extends Component {
                     <Field
                       name="starts"
                       component={renderDateTimePicker}
-                      selected={this.state.selectedDate}
                       label="Date Starts"
+                      selected={this.state.startsDate}
+                      onChange={this.handleStartsDateChange}
+                      disablePast
                       fullWidth
                     />
                   </Grid>
@@ -134,12 +147,26 @@ class CreateEvent extends Component {
                     <Field
                       name="ends"
                       component={renderDateTimePicker}
-                      selected={this.state.selectedDate}
                       label="Date Ends"
+                      selected={this.state.endsDate}
+                      minDate={this.state.startsDate}
                       fullWidth
                     />
                   </Grid>
                 </Grid>
+
+                <Grid container spacing={32}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Field
+                      name="number_of_attendees"
+                      component={renderTextField}
+                      label="Number of Attendees"
+                      type="number"
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+
 
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -165,13 +192,31 @@ class CreateEvent extends Component {
                 <Grid container spacing={0}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
-                      name="event_type"
+                      name="nature_of_event"
                       component={renderRadioButton}
-                      label="Event Type"
+                      label="Nature of Event"
                       fullWidth
                     >
                       <FormControlLabel value="curricular" control={<Radio color="primary" />} label="Curricular" />
                       <FormControlLabel value="co_curricular" control={<Radio color="primary" />} label="Co - Curricular" />
+                    </Field>
+                  </Grid>
+                </Grid>
+
+                <Typography variant="headline" gutterBottom>
+                  Create Ticket
+                </Typography>
+
+                <Grid container spacing={0}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Field
+                      name="ticket_price_type"
+                      component={renderRadioButton}
+                      label="Ticket Price Type"
+                      fullWidth
+                    >
+                      <FormControlLabel value="free" control={<Radio color="primary" />} label="Free Ticket" />
+                      <FormControlLabel value="paid" control={<Radio color="primary" />} label="Paid Ticket" />
                     </Field>
                   </Grid>
                 </Grid>
@@ -191,27 +236,14 @@ class CreateEvent extends Component {
                 </Grid>
 
                 <br />
-                <Grid container spacing={0}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Field
-                      name="ticket_price_type"
-                      component={renderRadioButton}
-                      label="Ticket Price Type"
-                      fullWidth
-                    >
-                      <FormControlLabel value="free" control={<Radio color="primary" />} label="Free Ticket" />
-                      <FormControlLabel value="paid" control={<Radio color="primary" />} label="Paid Ticket" />
-                    </Field>
-                  </Grid>
-                </Grid>
-
-                <FormLabel component="legend">{'Event Price'}</FormLabel>
+                <br />
+                <FormLabel component="legend">{'Ticket Price'}</FormLabel>
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={3}>
                     <Field
-                      name="member_price"
+                      name="members_price"
                       component={renderTextField}
-                      label="Member Price"
+                      label="Members Price"
                       fullWidth
                       {...priceMask}
                     />
@@ -219,9 +251,19 @@ class CreateEvent extends Component {
 
                   <Grid item xs={12} sm={12} md={3}>
                     <Field
-                      name="non_member_price"
+                      name="bulsuans_price"
                       component={renderTextField}
-                      label="Non-Member Price"
+                      label="Bulsuans Price"
+                      fullWidth
+                      {...priceMask}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={12} md={3}>
+                    <Field
+                      name="non_bulsuans_price"
+                      component={renderTextField}
+                      label="Non - Bulsuans Price"
                       fullWidth
                       {...priceMask}
                     />
@@ -254,8 +296,9 @@ const withRedux = connect(mapStateToProps, null);
 export default compose(
   withRedux,
   reduxForm({
-    form: 'CreateEvent',
+    form: 'CreateEventForm',
     destroyOnUnmount: false,
-    validate
+    validate,
+    warn
   })
 )(CreateEvent);

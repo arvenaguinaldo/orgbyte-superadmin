@@ -230,7 +230,7 @@ class AdminMenuItemData extends Component {
             </MenuList>
           </Collapse>
 
-          <MenuItem button onClick={this.handleClickEvents} selected={pathname === '/events'} >
+          <MenuItem button onClick={this.handleClickEvents} component={Link} to="/events" selected={pathname === '/events'} >
             <ListItemIcon>
               <Event className={style.listIcon} />
             </ListItemIcon>
