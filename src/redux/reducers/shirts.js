@@ -3,10 +3,12 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
+  shirt: {},
   sizes: [],
   isVerified: false,
   orgshirt: '',
   purchaseShirt: '',
+  fetchPurchaseShirts: [],
   meta: {
     loading: false
   }
@@ -14,15 +16,15 @@ const initialState = fromJS({
 
 const shirts = (state = initialState, action) => {
   switch (action.type) {
-    case SHIRTS.FETCH_SHIRTS: {
+    case SHIRTS.FETCH_SHIRT: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true
       }));
     }
-    case SHIRTS.FETCH_SHIRTS_SUCCESS: {
+    case SHIRTS.FETCH_SHIRT_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        list: data,
+        shirt: data,
         meta: {
           loading: false
         }
@@ -38,7 +40,7 @@ const shirts = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         verifyMember: data,
-        isVerified: true,
+        isVerified: !action.response.data.error,
         meta: {
           loading: false
         }
@@ -84,6 +86,21 @@ const shirts = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         purchaseShirt: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case SHIRTS.FETCH_PURCHASE_SHIRTS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.FETCH_PURCHASE_SHIRTS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        fetchPurchaseShirts: data,
         meta: {
           loading: false
         }

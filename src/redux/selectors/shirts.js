@@ -12,6 +12,11 @@ export const makeSelectShirtsList = () => createSelector(
   shirts => shirts.list
 );
 
+export const makeSelectShirt = () => createSelector(
+  makeSelectShirts(),
+  shirts => shirts.shirt
+);
+
 export const makeSelectVerifyMember = () => createSelector(
   makeSelectShirts(),
   shirts => shirts.verifyMember
@@ -25,6 +30,11 @@ export const makeSelectIsVerified = () => createSelector(
 export const makeSelectShirtSizes = () => createSelector(
   makeSelectShirts(),
   shirts => shirts.sizes
+);
+
+export const makeSelectShirtPurchaseShirts = () => createSelector(
+  makeSelectShirts(),
+  shirts => shirts.fetchPurchaseShirts
 );
 
 export const makeSelectShirtsMeta = () => createSelector(

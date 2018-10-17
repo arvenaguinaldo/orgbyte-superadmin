@@ -21,6 +21,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
+import {CardMedia} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 // validation
 import validateInput from 'utils/LoginValidations';
@@ -38,7 +41,7 @@ const styles = theme => ({
   },
   card: {
     minWidth: 275,
-    width: 300,
+    maxWidth: 500,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '100px',
@@ -46,6 +49,13 @@ const styles = theme => ({
   },
   title: {
     textAlign: 'center'
+  },
+  mainBg: {
+    background: 'https://preview.ibb.co/h8vmvU/BGLOGIN.jpg'
+  },
+  logo: {
+    minWidth: '200px',
+    minHeight: '200px'
   }
 });
 
@@ -79,68 +89,86 @@ class LoginAdmin extends Component {
     return isValid;
   }
 
-  handleChange = name => ({target: {value}}) => {
-    this.setState({
-      [name]: value
-    });
-  };
+handleChange = name => ({target: {value}}) => {
+  this.setState({
+    [name]: value
+  });
+};
 
-  render() {
-    const {from} = this.props.location.state || {from: {pathname: '/'}};
-    const {errors, email, password} = this.state;
-    const {classes} = this.props;
+render() {
+  const {from} = this.props.location.state || {from: {pathname: '/'}};
+  const {errors, email, password} = this.state;
+  const {classes} = this.props;
 
-    if (authenticate.isUserAuthenticated()) {
-      return <Redirect to={from} />;
-    }
-
-    return (
-      <div>
-        <form className={classes.container} noValidate autoComplete="on" onSubmit={this.onSubmit}>
-          <Card className={classes.card}>
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} color="textSecondary" variant="display1">
-                LOGIN
-              </Typography>
-
-              <TextField
-                label="Email"
-                value={email}
-                placeholder="Email"
-                fullWidth
-                margin="normal"
-                type="email"
-                autoComplete="email"
-                error={!!errors.email}
-                helperText={errors.email}
-                onChange={this.handleChange('email')}
-              />
-
-              <TextField
-                label="Password"
-                value={password}
-                placeholder="Enter Password"
-                fullWidth
-                margin="normal"
-                type="password"
-                error={!!errors.password}
-                helperText={errors.password}
-                onChange={this.handleChange('password')}
-              />
-
-            </CardContent>
-            <CardActions>
-              <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={this.onSubmit}>
-                <Typography color="inherit" variant="button">
-                  Login
-                </Typography>
-              </Button>
-            </CardActions>
-          </Card>
-        </form>
-      </div>
-    );
+  if (authenticate.isUserAuthenticated()) {
+    return <Redirect to={from} />;
   }
+
+  return (
+    <div className={classes.root}>
+      <form className={classes.container} noValidate autoComplete="on" onSubmit={this.onSubmit}>
+        <Grid container spacing={0} className={classes.mainBg}>
+          <Grid item xs={12} xl={2} />
+          <Grid item xs={12} xl={6}>
+            <Card className={classes.card}>
+              <Grid container spacing={0}>
+                <Grid item xs={6} xl={6} >
+                  <CardMedia
+                    className={classes.logo}
+                    image="https://postimg.cc/image/5yu2s01fl/"
+                  />
+                </Grid>
+                <Divider />
+                <Grid item xs={6} xl={6}>
+                  <CardContent className={classes.content}>
+                    <Typography className={classes.title} color="primary" variant="display1">
+                    Login
+                    </Typography>
+                    <TextField
+                      label="Email"
+                      value={email}
+                      placeholder="Email"
+                      fullWidth
+                      margin="normal"
+                      type="email"
+                      autoComplete="email"
+                      error={!!errors.email}
+                      helperText={errors.email}
+                      onChange={this.handleChange('email')}
+                    />
+
+                    <TextField
+                      label="Password"
+                      value={password}
+                      placeholder="Enter Password"
+                      fullWidth
+                      margin="normal"
+                      type="password"
+                      error={!!errors.password}
+                      helperText={errors.password}
+                      onChange={this.handleChange('password')}
+                    />
+                    <Typography variant="caption" className={classes.link}>
+                    Forgot Password?
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={this.onSubmit}>
+                      <Typography color="inherit" variant="button">
+                  Login
+                      </Typography>
+                    </Button>
+                  </CardActions>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+          <Grid item xs={12} xl={2} />
+        </Grid>
+      </form>
+    </div>
+  );
+}
 }
 
 const mapStateToProps = createStructuredSelector({
