@@ -21,13 +21,22 @@ import styles from './ChangePassword.scss';
 
 class PasswordReset extends Component {
   state = {
-    password: '',
-    showPassword: false
+    password1: '',
+    showPassword1: false,
+    password2: '',
+    showPassword2: false,
+    password3: '',
+    showPassword3: false
   };
 
-  handleClickShowPassword = () => {
-    this.setState(state => ({showPassword: !state.showPassword}));
-    console.log('click');
+  handleClickShowPassword1 = () => {
+    this.setState(state => ({showPassword1: !state.showPassword1}));
+  };
+  handleClickShowPassword2 = () => {
+    this.setState(state => ({showPassword2: !state.showPassword2}));
+  };
+  handleClickShowPassword3 = () => {
+    this.setState(state => ({showPassword3: !state.showPassword3}));
   };
   render() {
     return (
@@ -54,15 +63,15 @@ class PasswordReset extends Component {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="Toggle password visibility"
-                              onClick={this.handleClickShowPassword}
+                              onClick={this.handleClickShowPassword1}
                             >
-                              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword1 ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
                         }
                         label="Old Password"
                         fullWidth
-                        type={this.state.showPassword ? 'text' : 'password'}
+                        type={this.state.showPassword1 ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>
@@ -78,15 +87,15 @@ class PasswordReset extends Component {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="Toggle password visibility"
-                              onClick={this.handleClickShowPassword}
+                              onClick={this.handleClickShowPassword2}
                             >
-                              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword2 ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
                         }
                         label="New Password"
                         fullWidth
-                        type={this.state.showPassword ? 'text' : 'password'}
+                        type={this.state.showPassword2 ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>
@@ -102,15 +111,15 @@ class PasswordReset extends Component {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="Toggle password visibility"
-                              onClick={this.handleClickShowPassword}
+                              onClick={this.handleClickShowPassword3}
                             >
-                              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword3 ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
                         }
                         label="Confirm New Password"
                         fullWidth
-                        type={this.state.showPassword ? 'text' : 'password'}
+                        type={this.state.showPassword3 ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>

@@ -26,5 +26,11 @@ export const warn = (values) => {
   if (values.new_password !== values.confirm_new_password) {
     warnings.confirm_new_password = 'Passwords must be same';
   }
+  if (/\s/.test(values.new_password)) {
+    warnings.new_password = 'Spaces are not allowed';
+  }
+  if (/\s/.test(values.confirm_new_password)) {
+    warnings.confirm_new_password = 'Spaces are not allowed';
+  }
   return warnings;
 };
