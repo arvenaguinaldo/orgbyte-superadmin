@@ -4,8 +4,9 @@ import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import RemoteSubmitButton from 'containers/RemoteSubmitButton/RemoteSubmitButton';
 
 import {Field, reduxForm} from 'redux-form';
-import {renderTextField, renderPasswordField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderPasswordField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {compose} from 'recompose';
+import {validate, warn} from 'utils/PasswordValidations/ChangePassword';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -23,6 +24,11 @@ class PasswordReset extends Component {
     password: '',
     showPassword: false
   };
+
+  handleClickShowPassword = () => {
+    this.setState(state => ({showPassword: !state.showPassword}));
+    console.log('click');
+  };
   render() {
     return (
       <LayoutWithTopbarAndSidebar>
@@ -35,7 +41,7 @@ class PasswordReset extends Component {
                   <Grid container spacing={16}>
 
                     <Grid item xs={10} sm={10} md={12}>
-                      <Typography variant="h4" color="secondary" >Password Reset Form</Typography>
+                      <Typography variant="display1" color="secondary" >Password Reset Form</Typography>
                       <Typography variant="subheading" color="textSecondary" >Fill in required fields to change your password</Typography>
                     </Grid>
 
@@ -43,8 +49,7 @@ class PasswordReset extends Component {
                       <Field
                         name="old_password"
                         id="old_password"
-                        type={this.state.showPassword ? 'text' : 'password'}
-                        value={this.state.password}
+                        component={renderPasswordField}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
@@ -55,9 +60,9 @@ class PasswordReset extends Component {
                             </IconButton>
                           </InputAdornment>
                         }
-                        component={renderPasswordField}
                         label="Old Password"
                         fullWidth
+                        type={this.state.showPassword ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>
@@ -67,9 +72,21 @@ class PasswordReset extends Component {
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
                         name="new_password"
-                        component={renderTextField}
+                        id="new_password"
+                        component={renderPasswordField}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="Toggle password visibility"
+                              onClick={this.handleClickShowPassword}
+                            >
+                              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
                         label="New Password"
                         fullWidth
+                        type={this.state.showPassword ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>
@@ -79,9 +96,21 @@ class PasswordReset extends Component {
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
                         name="confirm_new_password"
-                        component={renderTextField}
+                        id="confirm_new_password"
+                        component={renderPasswordField}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="Toggle password visibility"
+                              onClick={this.handleClickShowPassword}
+                            >
+                              {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
                         label="Confirm New Password"
                         fullWidth
+                        type={this.state.showPassword ? 'text' : 'password'}
                       />
                     </Grid>
                   </Grid>
@@ -115,6 +144,8 @@ class PasswordReset extends Component {
 export default compose(
   reduxForm({
     form: 'ChangePasswordForm',
-    destroyOnUnmount: false
+    destroyOnUnmount: false,
+    validate,
+    warn
   })
 )(PasswordReset);
