@@ -26,6 +26,7 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
+import ChangePassword from 'containers/ChangePassword/ChangePassword';
 
 
 class MainRoutes extends Component {
@@ -38,6 +39,7 @@ class MainRoutes extends Component {
         <Route path="/login" component={LoginAdmin} exact />
         <Route path="/card" component={MediaCard} />
         <Route path="/eventdetails" component={EventDetails} />
+        <Route path="/passwordreset" component={ChangePassword} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/presidents" component={PresidentList} />

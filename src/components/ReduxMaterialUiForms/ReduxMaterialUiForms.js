@@ -17,6 +17,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {DatePicker} from 'material-ui-pickers';
 
 import {CirclePicker} from 'react-color';
+import Input from '@material-ui/core';
 
 export const renderTextField = (
   {input, label, fullWidth, multiline, defaultValue, meta: {touched, error}, ...custom} // eslint-disable-line react/prop-types
@@ -33,6 +34,22 @@ export const renderTextField = (
     {...input}
     {...custom}
   />
+);
+
+export const renderPasswordField = (
+  {id, value, fullWidth, onChange, type, endAdornment} // eslint-disable-line react/prop-types
+) => (
+  <FormControl>
+    <InputLabel htmlFor={id}>Password</InputLabel>
+    <Input
+      id={id}
+      type={type}
+      value={value}
+      onChange={onChange}
+      endAdornment={endAdornment}
+      fullWidth={fullWidth}
+    />
+  </FormControl>
 );
 
 export const renderSelectField = (
