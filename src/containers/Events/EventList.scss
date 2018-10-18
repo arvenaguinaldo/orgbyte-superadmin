@@ -1,5 +1,6 @@
 
 .card {
+  position: relative;
   width: 300px;
   float: left;
   margin-right: 3%;
@@ -34,8 +35,8 @@
 
 .actionsDiv {
   position: absolute;
-  bottom: 0;
   right: 0;
+  bottom: 0;
 }
 
 .listIcon {

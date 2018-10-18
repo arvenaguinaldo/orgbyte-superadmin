@@ -5,7 +5,6 @@ import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import Moment from 'moment';
 import {Field, reduxForm} from 'redux-form';
-import 'rc-pagination/assets/index.css';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -20,6 +19,7 @@ import LocationIcon from '@material-ui/icons/LocationOn';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
+import CardActions from '@material-ui/core/CardActions';
 
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
@@ -150,11 +150,11 @@ class EventList extends Component {
                       </ListItem>
                     </List>
                   </CardContent>
-                  <div className={styles.actionsDiv}>
+                  <CardActions className={styles.actionsDiv}>
                     <Button size="small" color="primary">
                             View Details
                     </Button>
-                  </div>
+                  </CardActions>
                 </Card>
               </div>
             );
