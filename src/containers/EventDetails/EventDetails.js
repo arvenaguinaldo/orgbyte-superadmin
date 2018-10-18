@@ -152,7 +152,7 @@ class EventDetails extends Component {
                       Register
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
-                      Check-In
+                      QR Scan
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Import

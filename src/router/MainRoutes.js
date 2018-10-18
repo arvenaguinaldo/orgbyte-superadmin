@@ -28,6 +28,7 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
+import QRScan from 'containers/Events/QRScannerPage/QRScan';
 
 class MainRoutes extends Component {
   render() {
@@ -38,6 +39,7 @@ class MainRoutes extends Component {
         <Route path="/login" component={LoginAdmin} exact />
         <Route path="/eventdetails" component={EventDetails} />
         <Route path="/card" component={MediaCard} />
+        <PrivateRoute path="/qrscan" component={QRScan} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/presidents" component={PresidentList} />
         <PrivateRoute path="/events" component={EventList} />
