@@ -7,6 +7,7 @@
   margin-bottom: 20px;
   margin-top: 20px;
   position: relative;
+  width: 85%;
 }
 
 .submitButtonDiv {
@@ -16,7 +17,8 @@
 }
 
 .Scanner {
-  width: 80%;
+  width: 100%;
+  margin: auto;
 }
 
 .listTitle {
@@ -24,9 +26,9 @@
 }
 
 .list {
-  padding: 5px;
+  padding: 11px;
 }
 
 .detailsDiv {
-  margin-top: 50px;
+  // margin-top: 50px;
 }
