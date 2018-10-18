@@ -10,9 +10,9 @@ import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createTextMask} from 'redux-form-input-masks';
 
-import {purchaseShirt} from 'redux/actions/shirts';
+import {register} from 'redux/actions/events';
 
-import {makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {makeSelectEventsMeta} from 'redux/selectors/events';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -20,20 +20,18 @@ import Button from '@material-ui/core/Button';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
-import style from './Individual.scss';
+import style from './Register.scss';
 
-class IndividualPurchaseForm extends Component {
+class MemberForm extends Component {
   static propTypes = {
-    shirt: PropTypes.object.isRequired,
-    shirtSizes: PropTypes.array,
+    event: PropTypes.object,
     meta: PropTypes.object.isRequired
   }
 
   onSubmit = (values, dispatch) => {
-    const {shirt} = this.props;
-    _.set(values, 'shirt_id', shirt.id);
-    _.set(values, 'member_id', values.id);
-    dispatch(purchaseShirt(values));
+    _.set(values, 'event_id', this.props.event.id);
+    _.set(values, 'event_attendee_type_id', 1);
+    dispatch(register(values));
   };
 
   render() {
@@ -51,32 +49,10 @@ class IndividualPurchaseForm extends Component {
       placeholder: ' '
     });
 
-    const required = value => (value ? undefined : 'This field is Required');
-
     const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
-          <Grid item xs={6} sm={6} md={2}>
-            <Field
-              name="size"
-              component={renderSelectField}
-              label="Size"
-              validate={required}
-              fullWidth
-            >
-              <MenuItem value={'XXS'}>XXS</MenuItem>
-              <MenuItem value={'XS'}>XS</MenuItem>
-              <MenuItem value={'S'}>S</MenuItem>
-              <MenuItem value={'M'}>M</MenuItem>
-              <MenuItem value={'L'}>L</MenuItem>
-              <MenuItem value={'XL'}>XL</MenuItem>
-              <MenuItem value={'2XL'}>2XL</MenuItem>
-              <MenuItem value={'3XL'}>3XL</MenuItem>
-              <MenuItem value={'4XL'}>4XL</MenuItem>
-            </Field>
-          </Grid>
-
           <Grid item xs={12} sm={12} md={3}>
             <Field
               name="last_name"
@@ -104,9 +80,7 @@ class IndividualPurchaseForm extends Component {
               readOnly
             />
           </Grid>
-        </Grid>
 
-        <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={3}>
             <Field
               name="email"
@@ -116,8 +90,10 @@ class IndividualPurchaseForm extends Component {
               readOnly
             />
           </Grid>
+        </Grid>
 
-          <Grid item xs={6} sm={12} md={3}>
+        <Grid container spacing={24}>
+          <Grid item xs={6} sm={12} md={2}>
             <Field
               name="contact_number"
               component={renderTextField}
@@ -128,18 +104,6 @@ class IndividualPurchaseForm extends Component {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6}>
-            <Field
-              name="address"
-              component={renderTextField}
-              label="Address"
-              fullWidth
-              readOnly
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={32}>
           <Grid item xs={6} sm={6} md={2}>
             <Field
               name="year_level"
@@ -177,7 +141,7 @@ class IndividualPurchaseForm extends Component {
             />
           </Grid>
 
-          <Grid item xs={6} sm={6} md={6}>
+          <Grid item xs={6} sm={6} md={4}>
             <Field
               name="major_id"
               component={renderSelectField}
@@ -191,12 +155,12 @@ class IndividualPurchaseForm extends Component {
         </Grid>
 
         <div className={style.bottomButton}>
-          <Button component={Link} to="/memberships" color="primary" className={style.button}>
+          <Button component={Link} to={'/events/'} color="primary" className={style.button}>
                   Cancel
           </Button>
 
-          <SubmitButton loading={meta.isLoading} valid={!valid}>
-                  Purchase
+          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid}>
+                  Register
           </SubmitButton>
         </div>
       </form>
@@ -205,17 +169,17 @@ class IndividualPurchaseForm extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  meta: makeSelectShirtsMeta()
+  meta: makeSelectEventsMeta()
 });
 
-const withRedux = connect(mapStateToProps, null);
+const withRedux = connect(mapStateToProps, {register});
 
 export default compose(
   withRedux,
   reduxForm({
-    form: 'IndividualPurchase',
+    form: 'EventRegisterForm',
     overwriteOnInitialValuesChange: true,
     enableReinitialize: true,
     destroyOnUnmount: false
   })
-)(IndividualPurchaseForm);
+)(MemberForm);

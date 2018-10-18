@@ -28,6 +28,7 @@ import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 import styles from './EventList.scss';
@@ -148,7 +149,7 @@ class EventList extends Component {
                             <Typography variant="body2" component="p" className={styles.listIcon}>₱</Typography>
                           </ListItemIcon>
                           <ListItemText>
-                            <Typography variant="body2" component="p">{event.members_price === null ? 'FREE' : event.member_price }</Typography>
+                            <Typography variant="body2" component="p">{event.members_price === null ? 'FREE' : event.members_price }</Typography>
                           </ListItemText>
                         </ListItem>
                       </List>

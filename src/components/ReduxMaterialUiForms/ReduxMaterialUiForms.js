@@ -27,7 +27,7 @@ import {DateTimePicker} from 'material-ui-pickers';
 import {CirclePicker} from 'react-color';
 
 export const renderTextField = (
-  {input, label, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
+  {input, label, fullWidth, multiline, defaultValue, readOnly, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <TextField
     label={label}
@@ -38,6 +38,9 @@ export const renderTextField = (
     margin="normal"
     fullWidth={fullWidth}
     multiline={multiline}
+    InputProps={{
+      readOnly
+    }}
     {...input}
     {...custom}
   />
@@ -91,6 +94,9 @@ export const renderDateTimePicker = (
       value={selected}
       disableOpenOnEnter
       animateYearScrolling
+      placeholder="2018/01/01 06:54 AM"
+      format="DD/MM/YYYY hh:mm A"
+      mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/, ' ', /a|p/i, 'M'] : [])}
       {...input}
       {...custom}
     />

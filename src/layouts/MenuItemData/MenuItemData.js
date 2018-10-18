@@ -17,8 +17,8 @@ import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
-import AddIcon from '@material-ui/icons/addcircle';
-import People from '@material-ui/icons/people';
+import AddIcon from '@material-ui/icons/AddCircle';
+import People from '@material-ui/icons/People';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';

@@ -49,3 +49,13 @@ export const addUserSuccess = response => ({
   type: USERS.ADD_USER_SUCCESS,
   response
 });
+
+export const verifyMember = params => ({
+  type: USERS.VERIFY_MEMBER,
+  params
+});
+
+export const verifyMemberSuccess = response => ({
+  type: USERS.VERIFY_MEMBER_SUCCESS,
+  response
+});

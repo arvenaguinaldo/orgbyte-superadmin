@@ -45,6 +45,20 @@ function* createEvent(action) {
   }
 }
 
+function* register(action) {
+  const response = yield call(eventsService.register, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield call(callSuccessNotification, 'Register Successfully');
+      yield put(eventsActions.registerSuccess(response));
+      yield put(reset('EventRegisterForm'));
+      // yield put(push('/events'));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -59,11 +73,16 @@ function* watchRequestCreateEvent() {
   yield* takeEvery(EVENTS.CREATE_EVENT, createEvent);
 }
 
+function* watchRequestRegister() {
+  yield* takeEvery(EVENTS.REGISTER, register);
+}
+
 
 export default function* events() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchEvent),
-    fork(watchRequestCreateEvent)
+    fork(watchRequestCreateEvent),
+    fork(watchRequestRegister)
   ];
 }

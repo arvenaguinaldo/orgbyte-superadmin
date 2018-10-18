@@ -15,6 +15,22 @@
   margin-bottom: 20px;
 }
 
+.listIcon {
+  font-size: 20px;
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.listTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.listText {
+  color: aqua;
+  font-size: 25px;
+}
+
 .icons {
   display: block;
 }
@@ -25,9 +41,19 @@
 }
 
 .eventDescription {
-  margin-top: 5%;
+  margin-top: 2%;
 }
 
 .detailsDiv {
   margin-top: 5%;
+}
+
+.nested {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 80px;
+}
+
+.bold {
+  font-weight: bold;
 }

@@ -3,7 +3,7 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {createStructuredSelector} from 'reselect';
-// import moment from 'moment';
+import moment from 'moment';
 
 import {makeSelectEventsMeta} from 'redux/selectors/events';
 
@@ -47,7 +47,7 @@ class CreateEvent extends Component {
   // }
 
   state = {
-    startsDate: new Date(),
+    startsDate: new Date('2018-01-01T00:00:00.000Z'),
     endsDate: new Date()
   };
 
@@ -57,7 +57,6 @@ class CreateEvent extends Component {
 
   handleStartsDateChange = (date) => {
     this.setState({startsDate: date});
-    console.log(this.state.startsDate);
   }
 
   handleEndsDateChange = (date) => {
@@ -149,7 +148,7 @@ class CreateEvent extends Component {
                       component={renderDateTimePicker}
                       label="Date Ends"
                       selected={this.state.endsDate}
-                      minDate={this.state.startsDate}
+                      minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
                       fullWidth
                     />
                   </Grid>

@@ -28,7 +28,8 @@ import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
-import EventDetails from 'containers/EventDetails/EventDetails';
+import EventDetails from 'containers/Events/EventDetails/EventDetails';
+import EventRegister from 'containers/Events/Register/Register';
 
 class MainRoutes extends Component {
   render() {
@@ -38,7 +39,7 @@ class MainRoutes extends Component {
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
-        <Route path="/eventdetails" component={EventDetails} />
+        {/* <Route path="/eventdetails" component={EventDetails} /> */}
         <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/presidents" component={PresidentList} />
@@ -53,7 +54,8 @@ class MainRoutes extends Component {
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
         <PrivateRoute path="/events/createevent" component={CreateEvent} />
-        {/* <PrivateRoute path="/events/:id" component={EventList} /> */}
+        <PrivateRoute path="/events/register/:id" component={EventRegister} />
+        <PrivateRoute path="/events/:id" component={EventDetails} />
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/email" component={Email} />
         <PrivateRoute path="/sms" component={SendSMS} />

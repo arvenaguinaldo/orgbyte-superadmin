@@ -3,6 +3,7 @@ import {fromJS} from 'immutable';
 
 const initialState = fromJS({
   list: [],
+  event: {},
   meta: {
     loading: false
   }
@@ -33,7 +34,7 @@ const events = (state = initialState, action) => {
     case EVENTS.FETCH_EVENT_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        list: data,
+        event: data,
         meta: {
           loading: false
         }
@@ -46,6 +47,21 @@ const events = (state = initialState, action) => {
       }));
     }
     case EVENTS.CREATE_EVENT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.REGISTER: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoadingSubmit: true
+      }));
+    }
+    case EVENTS.REGISTER_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
         list: data,

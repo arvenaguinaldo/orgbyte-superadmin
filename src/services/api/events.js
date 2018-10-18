@@ -5,9 +5,12 @@ export const fetchEvents = () => {
 };
 
 export const fetchEvent = (params) => {
-  return api.callGet('/events' + params);
+  return api.callGet('/events/' + params);
 };
 
 export const createEvent = (params) => {
   return api.callPost('/events', params);
+};
+export const register = (params) => {
+  return api.callPost('/event_attendees', params);
 };

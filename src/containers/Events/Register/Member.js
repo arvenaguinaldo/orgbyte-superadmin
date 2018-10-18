@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 
 // import classNames from 'classnames';
 import {createStructuredSelector} from 'reselect';
-import fetchInitialData from 'hoc/fetchInitialData';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
@@ -17,41 +16,39 @@ import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiFo
 
 // actions
 import {verifyMember} from 'redux/actions/users';
-import {fetchSizes} from 'redux/actions/shirts';
-import {makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
 import {makeSelectVerifyMember, makeSelectIsVerified} from 'redux/selectors/users';
+import {makeSelectUsersMeta} from 'redux/selectors/users';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
-import IndividualPurchaseForm from './IndividualPurchaseForm';
+import MemberForm from './MemberForm';
 
-import style from './Individual.scss';
+import style from './Register.scss';
 
 
-class Individual extends Component {
+class Member extends Component {
   static propTypes = {
-    shirt: PropTypes.object.isRequired,
+    event: PropTypes.object,
     verifiedMember: PropTypes.object,
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
     isVerified: PropTypes.bool,
-    shirtSizes: PropTypes.array,
     meta: PropTypes.object.isRequired
   }
 
   onSubmit = (values) => {
     if (!this.props.meta.isLoading) {
       this.props.verifyMember(values.student_number);
-      // dispatch(change('IndividualPurchase', 'shirts_id', this.props.shirt.id));
+      // dispatch(change('MemberPurchase', 'shirts_id', this.props.shirt.id));
     }
   };
 
 
   render() {
-    const {isVerified, verifiedMember, shirtSizes} = this.props;
+    const {isVerified, verifiedMember, event} = this.props;
 
     const studentNumberMask = createTextMask({
       pattern: '9999-999999',
@@ -59,7 +56,7 @@ class Individual extends Component {
       guide: false
     });
 
-    const {shirt, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
         <Grid container spacing={24}>
@@ -85,7 +82,7 @@ class Individual extends Component {
               </Grid>
             </form>
 
-            <IndividualPurchaseForm shirtSizes={shirtSizes} shirt={shirt} initialValues={verifiedMember} initialValuesToPassThru={verifiedMember} />
+            <MemberForm event={event} initialValues={verifiedMember} initialValuesToPassThru={verifiedMember} />
 
           </Grid>
         </Grid>
@@ -98,21 +95,15 @@ const mapStateToProps = createStructuredSelector({
   verifiedMember: makeSelectVerifyMember(),
   isVerified: makeSelectIsVerified(),
   initialValues: makeSelectVerifyMember(),
-  shirtSizes: makeSelectShirtSizes(),
-  meta: makeSelectShirtsMeta()
+  meta: makeSelectUsersMeta()
 });
 
 
 const mapDispatchToProps = {
-  verifyMember,
-  fetchSizes
+  verifyMember
 };
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
-
-const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchSizes();
-});
 
 export default compose(
   reduxForm({
@@ -120,6 +111,5 @@ export default compose(
     overwriteOnInitialValuesChange: false,
     validate
   }),
-  withRedux,
-  withFetchInitialData
-)(Individual);
+  withRedux
+)(Member);
