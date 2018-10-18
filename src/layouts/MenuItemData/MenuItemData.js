@@ -291,7 +291,7 @@ class AdminMenuItemData extends Component {
           <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
-              <MenuItem className={style.nested} component={Link} to="/changepassword">
+              <MenuItem className={style.nested} component={Link} to="/passwordreset" selected={pathname === '/passwordreset'}>
                 <ListItemIcon>
                   <Lock className={style.listIcon} />
                 </ListItemIcon>
