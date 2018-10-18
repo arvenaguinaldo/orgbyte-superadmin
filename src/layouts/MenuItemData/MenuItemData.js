@@ -254,7 +254,7 @@ class AdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Communication</ListSubheader>}
         >
-          <MenuItem>
+          <MenuItem component={Link} to="/announcements" selected={pathname === '/announcements'}>
             <ListItemIcon>
               <Info className={style.listIcon} />
             </ListItemIcon>

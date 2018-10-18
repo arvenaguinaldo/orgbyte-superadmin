@@ -27,6 +27,9 @@ import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import Announcement from 'containers/UserSide/Announcements/Announcement';
 import Orgs from 'containers/UserSide/Organizations/Main';
+import MediaCard from 'containers/OrganizationList/ViewModal';
+import Announcements from 'containers/Announcements/Announcements';
+import EventDetails from 'containers/EventDetails/EventDetails';
 
 class MainRoutes extends Component {
   render() {
@@ -35,10 +38,13 @@ class MainRoutes extends Component {
         <PrivateRoute path="/a/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
+        <Route path="/eventdetails" component={EventDetails} />
+        <Route path="/card" component={MediaCard} />
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/presidents" component={PresidentList} />
         <PrivateRoute path="/a/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
+        <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
         <PrivateRoute path="/memberships/addmember" component={AddMember} />
         <PrivateRoute path="/memberships" component={Memberships} />

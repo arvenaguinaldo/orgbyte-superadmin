@@ -1,16 +1,62 @@
 
-.root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+.card {
+  width: 300px;
+  float: left;
+  margin-right: 3%;
+  margin-bottom: 2%;
+  max-height: 500px;
+  height: 500px;
 }
 
-.topbar {
-  flex: 0 0 70px;
+.cardMedia {
+  object-fit: contain;
 }
 
-.main {
-  display: flex;
-  flex: 1;
+.Paper {
+  padding: 20px;
+  padding-bottom: 50px;
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
+.icons {
+  display: block;
+}
+
+.eventImage {
+  margin-left: 50%;
+  margin-top: 5%;
+}
+
+.eventDiv {
+  position: relative;
+}
+
+.actionsDiv {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.listIcon {
+  font-size: 20px;
+}
+
+.list {
+  position: relative;
+  right: 10%;
+}
+
+.eventContainer {
+  margin-left: 12%;
+}
+
+.sortContainer {
+  padding-left: 20px;
+  margin-bottom: 1%;
+  margin-left: 11%;
+}
+
+.searchField {
+  margin-left: 70%;
 }
