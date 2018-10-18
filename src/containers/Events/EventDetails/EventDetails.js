@@ -160,8 +160,8 @@ class EventDetails extends Component {
             <Button component={Link} to={'/events/register/' + event.id} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
-            <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
-                      Check-In
+            <Button component={Link} to="/events/qrscanner/" size="small" variant="contained" color="primary" className={styles.actionsButton}>
+                      QR Scanner
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Import

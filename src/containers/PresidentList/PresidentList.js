@@ -23,7 +23,39 @@ class PresidentsTable extends React.Component {
     presidents: []
   };
   state = {
-    columns: ['Id', 'Full Name', 'Organization', 'Email', 'Contact Number'],
+    columns: [
+      {
+        name: 'Id',
+        options: {
+          display: false,
+          filter: false
+        }
+      },
+      {
+        name: 'Full Name',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Organization',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Email',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Contact Number',
+        options: {
+          filter: false
+        }
+      }
+    ],
     dbTable: 'users'
   };
 
@@ -31,7 +63,7 @@ class PresidentsTable extends React.Component {
     const {columns, dbTable} = this.state;
     const {presidents} = this.props;
     const options = {
-      filter: true,
+      filter: false,
       selectableRows: true,
       filterType: 'dropdown',
       responsive: 'scroll',

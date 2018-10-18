@@ -13,6 +13,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+
 // import MenuItem from '@material-ui/core/MenuItem';
 
 // import PlacesAutocomplete from 'react-places-autocomplete';
@@ -27,7 +33,7 @@ import {DateTimePicker} from 'material-ui-pickers';
 import {CirclePicker} from 'react-color';
 
 export const renderTextField = (
-  {input, label, fullWidth, multiline, defaultValue, readOnly, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
+  {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, readOnly, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <TextField
     label={label}
@@ -41,9 +47,50 @@ export const renderTextField = (
     InputProps={{
       readOnly
     }}
+    type={type}
+    endadornment={
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="Toggle password visibility"
+          onClick={handler}
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    }
     {...input}
     {...custom}
   />
+);
+
+export const renderPasswordField = (
+  {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" fullWidth={fullWidth}>
+    <Input
+      label={label}
+      defaultValue={defaultValue}
+      placeholder={label}
+      error={!!touched && !!error}
+      margin="none"
+      fullWidth={fullWidth}
+      multiline={multiline}
+      type={type}
+      endAdornment={
+        <InputAdornment position="end">
+          <IconButton
+            aria-label="Toggle password visibility"
+            onClick={handler}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </InputAdornment>
+      }
+      {...input}
+      {...custom}
+    />
+    <FormHelperText>{(touched && error) || warning}</FormHelperText>
+  </FormControl>
 );
 
 export const renderSelectField = (
