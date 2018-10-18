@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Top from './Try';
-import Banner from './Banner';
-import Orgs from './Orgs';
-import Events from './Event';
-import Announce from './Announcements';
-import Footer from './Footer';
+import Top from './TopBar';
+import Soon from './Soonest';
+import Foot from './Footer';
 
 const styles = {
   root: {
@@ -20,11 +17,8 @@ function Main(props) {
   return (
     <div className={classes.root}>
       <Top />
-      <Banner />
-      <Announce />
-      <Events />
-      <Orgs />
-      <Footer />
+      <Soon />
+      <Foot />
     </div>
   );
 }

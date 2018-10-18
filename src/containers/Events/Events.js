@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Top from './TopBar';
+import Banner from './Banner';
+import Soon from './Soonest';
+import Footer from './Footer';
 
 const styles = {
   root: {
@@ -15,6 +18,9 @@ function Main(props) {
   return (
     <div className={classes.root}>
       <Top />
+      <Banner />
+      <Soon />
+      <Footer />
     </div>
   );
 }

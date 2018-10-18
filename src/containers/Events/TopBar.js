@@ -20,10 +20,12 @@ function SimpleAppBar(props) {
         logo="ORGBYTE"
         url={window.location.pathname}
         links={[
-          {title: 'HOME', url: './Main'},
+
+          {title: 'HOME', url: './'},
+          {title: 'ANNOUNCEMENTS', url: '/announcement'},
           {title: 'EVENTS', url: '/Events'},
-          {title: 'ORGANIZATIONS', url: '/another'},
-          {title: 'ANNOUNCEMENTS', url: '/another'}
+          {title: 'ORGANIZATIONS', url: '/orgs'}
+
         ]}
       />
     </div>

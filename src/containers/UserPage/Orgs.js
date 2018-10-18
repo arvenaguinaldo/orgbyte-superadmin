@@ -13,7 +13,8 @@ const styles = {
   card: {
     minWidth: 275,
     paddingBottom: 20,
-    paddingTop: 20
+    paddingTop: 20,
+    backgroundColor: 'transparent'
   },
   cardinner: {
     minWidth: 200,
@@ -49,6 +50,10 @@ const styles = {
   },
   butt: {
     float: 'right'
+  },
+  pad: {
+    paddingLeft: 10,
+    paddingRight: 10
   }
 };
 
@@ -66,107 +71,111 @@ function SimpleCard(props) {
         <Grid item lg={6} md={6} sm={6} xs={6} >
           <Button className={classes.butt}>SEE MORE</Button>
         </Grid>
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+        <div className={classes.pad}>
+          <Grid container spacing={8}>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="caption" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="caption" className={classes.type}>
                 SOCIETY FOR THE WELFARE OF INFORMATION TECHNOLOGY STUDENTS
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
 
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/bYgRyct8/CICT.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="body2" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/bYgRyct8/CICT.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="body2" className={classes.type}>
                 COLLEGE OF INFORMATION AND COMMUNICATIONS TECHNOLOGY
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
 
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="body2" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="body2" className={classes.type}>
                 COLLEGE OF ARTS AND LETTERS
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
 
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="body2" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="body2" className={classes.type}>
                 COLLEGE OF ARTS AND LETTERS
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
 
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="body2" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="body2" className={classes.type}>
                 COLLEGE OF ARTS AND LETTERS
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
 
-        <Grid item lg={2} md={2} sm={6} xs={6}>
-          <Card className={classes.cardinner}>
-            <Center>
-              <CardContent>
+            <Grid item lg={2} md={2} sm={6} xs={6}>
+              <Card className={classes.cardinner}>
                 <Center>
-                  <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
-                </Center>,
-                <Center>
-                  <Typography variant="body2" className={classes.type}>
+                  <CardContent>
+                    <Center>
+                      <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/rFpNzn14/CAL.png" />
+                    </Center>,
+                    <Center>
+                      <Typography variant="body2" className={classes.type}>
                 COLLEGE OF ARTS AND LETTERS
-                  </Typography>
+                      </Typography>
+                    </Center>,
+                  </CardContent>
                 </Center>,
-              </CardContent>
-            </Center>,
-          </Card>
-        </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
       </Grid>
     </Card>
   );

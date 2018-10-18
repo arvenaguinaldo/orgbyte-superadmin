@@ -7,9 +7,8 @@ import {Grid, CardMedia, Paper} from '@material-ui/core';
 
 const styles = {
   card: {
-    minWidth: 275,
-    padding: 10,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    boxShadow: 'none'
   },
   paper: {
     marginTop: 10,
@@ -52,7 +51,7 @@ const styles = {
     width: '100%'
   },
   paper2: {
-    margin: '10px',
+    margin: '5px',
     padding: '0px',
     '&:hover': {
       boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
@@ -80,14 +79,9 @@ function SimpleCard(props) {
 
   return (
     <Card className={classes.card}>
-      <Grid container spacing={8}>
+      <Grid container spacing={0}>
 
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="display1" className={classes.Heading}>
-ANNOUNCEMENTS
-          </Typography>
-        </Grid>
-        <Grid item lg={6} md={6} sm={12} xs={12}>
           <Card className={classes.paper2}>
             <Grid container spacing={16}>
               <Grid item xs={3}>
@@ -114,8 +108,7 @@ ANNOUNCEMENTS
             </Grid>
           </Card>
         </Grid>
-
-        <Grid item lg={6} md={6} sm={12} xs={12}>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
           <Card className={classes.paper2}>
             <Grid container spacing={16}>
               <Grid item xs={3}>
@@ -142,8 +135,7 @@ ANNOUNCEMENTS
             </Grid>
           </Card>
         </Grid>
-
-        <Grid item lg={6} md={6} sm={12} xs={12}>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
           <Card className={classes.paper2}>
             <Grid container spacing={16}>
               <Grid item xs={3}>
@@ -170,8 +162,115 @@ ANNOUNCEMENTS
             </Grid>
           </Card>
         </Grid>
-
-        <Grid item lg={6} md={6} sm={12} xs={12}>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Announcement Title
+                  </Typography>
+                  <Typography variant="caption">
+                Posted by:
+                  </Typography>
+                  <Typography variant="body1">
+                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Announcement Title
+                  </Typography>
+                  <Typography variant="caption">
+                Posted by:
+                  </Typography>
+                  <Typography variant="body1">
+                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Announcement Title
+                  </Typography>
+                  <Typography variant="caption">
+                Posted by:
+                  </Typography>
+                  <Typography variant="body1">
+                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Announcement Title
+                  </Typography>
+                  <Typography variant="caption">
+                Posted by:
+                  </Typography>
+                  <Typography variant="body1">
+                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
           <Card className={classes.paper2}>
             <Grid container spacing={16}>
               <Grid item xs={3}>

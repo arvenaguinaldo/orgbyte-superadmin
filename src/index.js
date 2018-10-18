@@ -25,6 +25,10 @@ import {fetchCurrentOrganization} from 'redux/actions/organizations';
 // Global Styles
 import 'styles/base.scss';
 
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import './styles/index.css';
 
 function startApp() {
 

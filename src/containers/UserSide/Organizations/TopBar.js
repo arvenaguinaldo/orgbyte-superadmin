@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink} from 'mdbreact';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 class NavbarFeatures extends React.Component {
   constructor(props) {
@@ -28,13 +28,13 @@ class NavbarFeatures extends React.Component {
           <Collapse isOpen={this.state.collapse} navbar>
             <NavbarNav left>
               <NavItem>
-                <Link exact to="/announcement"><NavLink to="/announcement" href="announcement">Announcements</NavLink></Link>
+                <NavLink to="/announcement" >Announcements</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/orgs">Organizations</NavLink>
+                <NavLink to="#">Organizations</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/Events">Events</NavLink>
+                <NavLink to="#">Events</NavLink>
               </NavItem>
             </NavbarNav>
             <NavbarNav right>
