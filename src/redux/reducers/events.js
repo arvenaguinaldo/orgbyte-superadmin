@@ -4,6 +4,8 @@ import {fromJS} from 'immutable';
 const initialState = fromJS({
   list: [],
   event: {},
+  attendee: {},
+  success: false,
   meta: {
     loading: false
   }
@@ -70,6 +72,55 @@ const events = (state = initialState, action) => {
         }
       }));
     }
+
+    case EVENTS.FETCH_ATTENDEE: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.FETCH_ATTENDEE_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        attendee: data,
+        success: !action.response.error,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.ATTEND: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.ATTEND_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        attendee: data,
+        success: !action.response.error,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.SETTLE_PAYMENT: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.SETTLE_PAYMENT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        attendee: data,
+        success: !action.response.error,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

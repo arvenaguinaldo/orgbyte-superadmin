@@ -12,7 +12,8 @@ import {createTextMask} from 'redux-form-input-masks';
 
 import {register} from 'redux/actions/events';
 
-import {makeSelectEventsMeta} from 'redux/selectors/events';
+import {makeSelectSuccess, makeSelectEventsMeta} from 'redux/selectors/events';
+import {makeSelectVerifyMember} from 'redux/selectors/users';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -25,6 +26,8 @@ import style from './Register.scss';
 class MemberForm extends Component {
   static propTypes = {
     event: PropTypes.object,
+    verifiedMember: PropTypes.object,
+    sucess: PropTypes.bool,
     meta: PropTypes.object.isRequired
   }
 
@@ -49,7 +52,7 @@ class MemberForm extends Component {
       placeholder: ' '
     });
 
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, verifiedMember, success, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -159,7 +162,7 @@ class MemberForm extends Component {
                   Cancel
           </Button>
 
-          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid}>
+          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid || !verifiedMember} success={success}>
                   Register
           </SubmitButton>
         </div>
@@ -169,6 +172,8 @@ class MemberForm extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  success: makeSelectSuccess(),
+  verifiedMember: makeSelectVerifyMember(),
   meta: makeSelectEventsMeta()
 });
 

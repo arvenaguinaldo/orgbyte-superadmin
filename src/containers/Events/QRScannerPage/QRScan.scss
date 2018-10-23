@@ -7,7 +7,7 @@
   margin-bottom: 20px;
   margin-top: 20px;
   position: relative;
-  width: 85%;
+  width: 90%;
 }
 
 .submitButtonDiv {
@@ -29,6 +29,21 @@
   padding: 11px;
 }
 
+.loadingProgress {
+  position: absolute;
+  margin: auto;
+  top: 40%;
+  left: 70%;
+}
+
 .detailsDiv {
-  // margin-top: 50px;
+  position: absolute;
+}
+
+.buttonSuccess {
+  background-color: #4caf50;
+}
+
+.buttonSuccess:hover {
+  background-color: #388e3c;
 }

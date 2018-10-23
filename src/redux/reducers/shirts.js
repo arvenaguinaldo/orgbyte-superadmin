@@ -4,7 +4,7 @@ import {fromJS} from 'immutable';
 const initialState = fromJS({
   list: [],
   shirt: {},
-  sizes: [],
+  sizes: {},
   orgshirt: '',
   purchaseShirt: '',
   fetchPurchaseShirts: [],

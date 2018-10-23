@@ -13,6 +13,7 @@ import {createTextMask} from 'redux-form-input-masks';
 import {purchaseShirt} from 'redux/actions/shirts';
 
 import {makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {makeSelectVerifyMember} from 'redux/selectors/users';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -25,9 +26,10 @@ import style from './Individual.scss';
 class IndividualPurchaseForm extends Component {
   static propTypes = {
     shirt: PropTypes.object.isRequired,
-    shirtSizes: PropTypes.array,
+    verifiedMember: PropTypes.object,
+    shirtSizes: PropTypes.object,
     meta: PropTypes.object.isRequired
-  }
+  };
 
   onSubmit = (values, dispatch) => {
     const {shirt} = this.props;
@@ -53,7 +55,7 @@ class IndividualPurchaseForm extends Component {
 
     const required = value => (value ? undefined : 'This field is Required');
 
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, verifiedMember, shirtSizes, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -65,15 +67,15 @@ class IndividualPurchaseForm extends Component {
               validate={required}
               fullWidth
             >
-              <MenuItem value={'XXS'}>XXS</MenuItem>
-              <MenuItem value={'XS'}>XS</MenuItem>
-              <MenuItem value={'S'}>S</MenuItem>
-              <MenuItem value={'M'}>M</MenuItem>
-              <MenuItem value={'L'}>L</MenuItem>
-              <MenuItem value={'XL'}>XL</MenuItem>
-              <MenuItem value={'2XL'}>2XL</MenuItem>
-              <MenuItem value={'3XL'}>3XL</MenuItem>
-              <MenuItem value={'4XL'}>4XL</MenuItem>
+              {shirtSizes.xxsmall && <MenuItem value={'XXS'}>XXS</MenuItem>}
+              {shirtSizes.xsmall && <MenuItem value={'XS'}>XS</MenuItem>}
+              {shirtSizes.small && <MenuItem value={'S'}>S</MenuItem>}
+              {shirtSizes.medium && <MenuItem value={'M'}>M</MenuItem>}
+              {shirtSizes.large && <MenuItem value={'L'}>L</MenuItem>}
+              {shirtSizes.xlarge && <MenuItem value={'XL'}>XL</MenuItem>}
+              {shirtSizes.xxlarge && <MenuItem value={'2XL'}>2XL</MenuItem>}
+              {shirtSizes.xxxlarge && <MenuItem value={'3XL'}>3XL</MenuItem>}
+              {shirtSizes.xxxxlarge && <MenuItem value={'4XL'}>4XL</MenuItem>}
             </Field>
           </Grid>
 
@@ -195,7 +197,7 @@ class IndividualPurchaseForm extends Component {
                   Cancel
           </Button>
 
-          <SubmitButton loading={meta.isLoading} valid={!valid}>
+          <SubmitButton loading={meta.isLoading} valid={!valid || !verifiedMember}>
                   Purchase
           </SubmitButton>
         </div>
@@ -205,6 +207,7 @@ class IndividualPurchaseForm extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  verifiedMember: makeSelectVerifyMember(),
   meta: makeSelectShirtsMeta()
 });
 

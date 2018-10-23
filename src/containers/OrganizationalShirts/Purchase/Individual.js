@@ -38,7 +38,7 @@ class Individual extends Component {
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
     isVerified: PropTypes.bool,
-    shirtSizes: PropTypes.array,
+    shirtSizes: PropTypes.object.isRequired,
     meta: PropTypes.object.isRequired
   }
 

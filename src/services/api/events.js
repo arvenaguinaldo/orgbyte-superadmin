@@ -11,6 +11,19 @@ export const fetchEvent = (params) => {
 export const createEvent = (params) => {
   return api.callPost('/events', params);
 };
+
 export const register = (params) => {
   return api.callPost('/event_attendees', params);
+};
+
+export const fetchAttendee = (params) => {
+  return api.callGet('/event_attendees/fetch_attendee_qr/' + params.qr_result + '/' + params.event_id);
+};
+
+export const attend = (params) => {
+  return api.callPut('/event_attendees/attend/', params);
+};
+
+export const settlePayment = (params) => {
+  return api.callPut('/event_attendees/settle_payment/', params);
 };

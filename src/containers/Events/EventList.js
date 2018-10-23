@@ -68,9 +68,9 @@ class EventList extends Component {
 
                 <Grid item xs={10} sm={10} md={2}>
                   <Field
-                    name="cost"
+                    name="ticket_price_type"
                     component={renderSelectField}
-                    label="Cost"
+                    label="Ticket Price type"
                     fullWidth
                   >
                     <MenuItem value={1}>Paid</MenuItem>
@@ -79,9 +79,9 @@ class EventList extends Component {
                 </Grid>
                 <Grid item xs={10} sm={10} md={2}>
                   <Field
-                    name="type_of_event"
+                    name="nature_of_event"
                     component={renderSelectField}
-                    label="Type of Event"
+                    label="Nature of Event"
                     fullWidth
                   >
                     <MenuItem value={1}>Curricular</MenuItem>
@@ -106,12 +106,8 @@ class EventList extends Component {
         <div className={styles.eventContainer}>
           {this.props.events.map((event) => {
             return (
-              <Link to={'/events/' + event.id}>
+              <Link key={event.id} to={'/events/' + event.id}>
                 <div key={event.id}>
-                  {/* <span>{event.name}</span>
-                    <span>{event.venue}</span>
-                    <span>{event.ticket_price}</span>
-                    <span>{Moment(event.date_time).format('YYYY-MM-DD')}</span> */}
                   <Card className={styles.card}>
                     <CardMedia
                       component="img"
@@ -145,7 +141,7 @@ class EventList extends Component {
                         </ListItem>
                         <ListItem>
                           <ListItemIcon>
-                            <Typography variant="body2" component="p" className={styles.listIcon}>₱</Typography>
+                            <Typography variant="body2" component="p" className={styles.listIconPeso}>₱</Typography>
                           </ListItemIcon>
                           <ListItemText>
                             <Typography variant="body2" component="p">{event.members_price === null ? 'FREE' : event.members_price }</Typography>
@@ -154,7 +150,7 @@ class EventList extends Component {
                       </List>
                     </CardContent>
                     <CardActions className={styles.actionsDiv}>
-                      <Button component={Link} to={'/events/' + event.id} size="small" color="primary">
+                      <Button size="small" color="primary">
                           View Details
                       </Button>
                     </CardActions>

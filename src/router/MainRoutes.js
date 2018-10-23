@@ -59,8 +59,8 @@ class MainRoutes extends Component {
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
         <PrivateRoute path="/events/createevent" component={CreateEvent} />
-        <PrivateRoute path="/events/register/:id" component={EventRegister} />
-        <PrivateRoute path="/events/qrscanner" component={QRScan} />
+        <PrivateRoute path="/events/:id/register" component={EventRegister} />
+        <PrivateRoute path="/events/:id/qrscanner" component={QRScan} />
         <PrivateRoute path="/events/:id" component={EventDetails} />
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/email" component={Email} />

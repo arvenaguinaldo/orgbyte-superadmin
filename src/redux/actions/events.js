@@ -39,3 +39,33 @@ export const registerSuccess = response => ({
   type: EVENTS.REGISTER_SUCCESS,
   response
 });
+
+export const fetchAttendee = params => ({
+  type: EVENTS.FETCH_ATTENDEE,
+  params
+});
+
+export const fetchAttendeeSuccess = response => ({
+  type: EVENTS.FETCH_ATTENDEE_SUCCESS,
+  response
+});
+
+export const attend = params => ({
+  type: EVENTS.ATTEND,
+  params
+});
+
+export const attendSuccess = response => ({
+  type: EVENTS.ATTEND_SUCCESS,
+  response
+});
+
+export const settlePayment = params => ({
+  type: EVENTS.SETTLE_PAYMENT,
+  params
+});
+
+export const settlePaymentSuccess = response => ({
+  type: EVENTS.SETTLE_PAYMENT_SUCCESS,
+  response
+});
