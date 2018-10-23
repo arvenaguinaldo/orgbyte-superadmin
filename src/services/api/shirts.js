@@ -4,10 +4,6 @@ export const fetchShirt = () => {
   return api.callGet('/shirts/org_shirt');
 };
 
-export const verifyMember = (params) => {
-  return api.callGet('/members/verify_member/' + params);
-};
-
 export const addOrgShirt = (params) => {
   return api.callPost('/shirts', params);
 };

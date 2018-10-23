@@ -17,8 +17,8 @@ import AdvanceIcon from '@material-ui/icons/Settings';
 import BackupIcon from '@material-ui/icons/Backup';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
-import AddIcon from '@material-ui/icons/addcircle';
-import People from '@material-ui/icons/people';
+import AddIcon from '@material-ui/icons/AddCircle';
+import People from '@material-ui/icons/People';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';
@@ -27,6 +27,7 @@ import SMS from '@material-ui/icons/Sms';
 import Add from '@material-ui/icons/Add';
 import Lock from '@material-ui/icons/Lock';
 import Shop from '@material-ui/icons/ShoppingBasket';
+import Event from '@material-ui/icons/Event';
 
 import Typography from '@material-ui/core/Typography';
 import style from './MenuItemData.scss';
@@ -229,9 +230,9 @@ class AdminMenuItemData extends Component {
             </MenuList>
           </Collapse>
 
-          <MenuItem button onClick={this.handleClickEvents} selected={pathname === '/events'} >
+          <MenuItem button onClick={this.handleClickEvents} component={Link} to="/events" selected={pathname === '/events'} >
             <ListItemIcon>
-              <AdvanceIcon className={style.listIcon} />
+              <Event className={style.listIcon} />
             </ListItemIcon>
             <ListItemText inset primary={<Typography variant="subheading" className={style.list}>Event</Typography>} />
             {advancedEventsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
@@ -240,11 +241,11 @@ class AdminMenuItemData extends Component {
           <Collapse in={advancedEventsOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
-              <MenuItem component={Link} to="/backups" selected={pathname === '/backups'} className={style.nested}>
+              <MenuItem component={Link} to="/events/createevent" selected={pathname === '/events/createevent'} className={style.nested}>
                 <ListItemIcon>
                   <Add className={style.listIcon} />
                 </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Event</Typography>} />
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Create Event</Typography>} />
               </MenuItem>
 
             </MenuList>

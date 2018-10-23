@@ -10,16 +10,6 @@ export const fetchShirtSuccess = response => ({
   response
 });
 
-export const verifyMember = params => ({
-  type: SHIRTS.VERIFY_MEMBER,
-  params
-});
-
-export const verifyMemberSuccess = response => ({
-  type: SHIRTS.VERIFY_MEMBER_SUCCESS,
-  response
-});
-
 export const addOrgShirt = params => ({
   type: SHIRTS.ADD_ORGSHIRT,
   params
