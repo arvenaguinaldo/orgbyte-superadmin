@@ -24,6 +24,8 @@ import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
+import Announcement from 'containers/UserSide/Announcements/Announcement';
+import Orgs from 'containers/UserSide/Organizations/Main';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
@@ -37,7 +39,7 @@ class MainRoutes extends Component {
   render() {
     return (
       <Switch>
-
+        <PrivateRoute path="/a/" component={Home} exact />
         <PrivateRoute path="/" component={Home} exact />
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
@@ -48,6 +50,7 @@ class MainRoutes extends Component {
         <PrivateRoute path="/organizations" component={OrganizationList} />
         <PrivateRoute path="/announcements" component={Announcements} />
         <PrivateRoute path="/presidents" component={PresidentList} />
+        <PrivateRoute path="/a/events" component={EventList} />
         <PrivateRoute path="/backups" component={BackupList} />
 
         {/* Admin */}
@@ -70,6 +73,13 @@ class MainRoutes extends Component {
         <PrivateRoute path="/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
         <PrivateRoute path="/shirts/purchase" component={Purchase} />
         <PrivateRoute path="/shirts" component={OrganizationalShirts} />
+
+        {/* User Sides */}
+        <Route path="/" component={UserPage} exact />
+        <Route path="/events" component={Events} exact />
+        <Route path="/announcement" component={Announcement} exact />
+        <Route path="/orgs" component={Orgs} exact />
+
         <Route path="" component={NotFoundPage} />
       </Switch>
     );
