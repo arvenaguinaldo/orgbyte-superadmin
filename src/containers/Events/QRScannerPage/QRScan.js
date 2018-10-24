@@ -126,10 +126,10 @@ class QRScan extends Component {
                         </ListItem>
                         }
 
-                        {attendee.major_name &&
+                        {attendee.course_name &&
                         <ListItem className={styles.list}>
                           <Typography variant="h6" color="secondary" className={styles.listTitle}>Course:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.major_name}</Typography>} />
+                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.course_name}</Typography>} />
                         </ListItem>
                         }
 

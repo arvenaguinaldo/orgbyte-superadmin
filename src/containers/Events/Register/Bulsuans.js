@@ -11,10 +11,15 @@ import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForm
 import {createTextMask} from 'redux-form-input-masks';
 
 import {register} from 'redux/actions/events';
+import {fetchCourses} from 'redux/actions/courses';
+import {fetchColleges} from 'redux/actions/colleges';
 
 import {makeSelectEventsMeta} from 'redux/selectors/events';
+import {makeSelectCoursesList} from 'redux/selectors/courses';
+import {makeSelectCollegesList} from 'redux/selectors/colleges';
 
-import MenuItem from '@material-ui/core/MenuItem';
+import fetchInitialData from 'hoc/fetchInitialData';
+
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -24,6 +29,9 @@ import style from './Register.scss';
 
 class Bulsuans extends Component {
   static propTypes = {
+    fetchCourses: PropTypes.func,
+    courses: PropTypes.array.isRequired,
+    colleges: PropTypes.array.isRequired,
     event: PropTypes.object,
     meta: PropTypes.object.isRequired
   }
@@ -32,6 +40,11 @@ class Bulsuans extends Component {
     _.set(values, 'event_id', this.props.event.id);
     dispatch(register(values));
   };
+
+  handleFetchCourse = (value) => {
+    const params = {college_id: value};
+    this.props.fetchCourses(params);
+  }
 
   render() {
     const contactNumberMask = createTextMask({
@@ -55,7 +68,7 @@ class Bulsuans extends Component {
       guide: false
     });
 
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {courses, colleges, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -121,10 +134,11 @@ class Bulsuans extends Component {
               label="Year Level"
               fullWidth
             >
-              <MenuItem value={1}>First Year</MenuItem>
-              <MenuItem value={2}>Second Year</MenuItem>
-              <MenuItem value={3}>Third Year</MenuItem>
-              <MenuItem value={4}>Fourth Year</MenuItem>
+              <option value="" />
+              <option value={1}>First Year</option>
+              <option value={2}>Second Year</option>
+              <option value={3}>Third Year</option>
+              <option value={4}>Fourth Year</option>
             </Field>
           </Grid>
 
@@ -156,20 +170,30 @@ class Bulsuans extends Component {
               component={renderSelectField}
               label="College"
               fullWidth
+              onChange={event => this.handleFetchCourse(event.target.value)}
             >
-              <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
-              <MenuItem value={2}>College of Industrial Technology</MenuItem>
+              <option value="" />
+              {colleges.map((college) => {
+                return (
+                  <option key={college.id} value={college.id}> {college.name} </option>
+                );
+              })}
             </Field>
           </Grid>
 
           <Grid item xs={6} sm={6} md={6}>
             <Field
-              name="major_id"
+              name="course_id"
               component={renderSelectField}
-              label="Major"
+              label="Course"
               fullWidth
             >
-              <MenuItem value={2}>Bachelor of Science in Information Technology</MenuItem>
+              <option value="" />
+              {courses.map((course) => {
+                return (
+                  <option key={course.id} value={course.id}> {course.course_name} </option>
+                );
+              })}
             </Field>
           </Grid>
         </Grid>
@@ -189,13 +213,27 @@ class Bulsuans extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  colleges: makeSelectCollegesList(),
+  courses: makeSelectCoursesList(),
   meta: makeSelectEventsMeta()
 });
 
-const withRedux = connect(mapStateToProps, null);
+const mapDispatchToProps = {
+  register,
+  fetchCourses,
+  fetchColleges
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchCourses();
+  props.fetchColleges();
+});
 
 export default compose(
   withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'EventRegisterForm',
     overwriteOnInitialValuesChange: true,

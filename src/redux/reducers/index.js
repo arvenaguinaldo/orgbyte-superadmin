@@ -5,6 +5,9 @@ import organizationsReducer from 'redux/reducers/organizations';
 import usersReducer from 'redux/reducers/users';
 import shirtsReducer from 'redux/reducers/shirts';
 import editReducer from 'redux/reducers/edit';
+import coursesReducer from 'redux/reducers/courses';
+import collegesReducer from 'redux/reducers/colleges';
+import organizationNaturesReducer from 'redux/reducers/organization_natures';
 import notificationReducer from 'redux/reducers/notification';
 import {AUTH} from 'constants/actions/auth';
 import {routerReducer} from 'react-router-redux';
@@ -19,6 +22,9 @@ const appReducer = combineReducers({
   users: usersReducer,
   shirts: shirtsReducer,
   edit: editReducer,
+  courses: coursesReducer,
+  colleges: collegesReducer,
+  organizationNatures: organizationNaturesReducer,
   notification: notificationReducer
 });
 
