@@ -32,31 +32,32 @@ class OrganizationTable extends React.Component {
       {
         name: 'Id',
         options: {
-          display: false
+          display: false,
+          filter: false
         }
       },
       {
         name: 'Name',
         options: {
-          filter: true
+          filter: false
         }
       },
       {
         name: 'Acronym',
         options: {
-          filter: true
+          filter: false
         }
       },
       {
         name: 'Recognition No.',
         options: {
-          filter: true
+          filter: false
         }
       },
       {
         name: 'Date of Formation',
         options: {
-          filter: true
+          filter: false
         }
       },
       {

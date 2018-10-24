@@ -12,6 +12,21 @@ export const makeSelectEventsList = () => createSelector(
   events => events.list
 );
 
+export const makeSelectEvent = () => createSelector(
+  makeSelectEvents(),
+  events => events.event
+);
+
+export const makeSelectAttendee = () => createSelector(
+  makeSelectEvents(),
+  events => events.attendee
+);
+
+export const makeSelectSuccess = () => createSelector(
+  makeSelectEvents(),
+  events => events.success
+);
+
 export const makeSelectEventsMeta = () => createSelector(
   makeSelectEvents(),
   events => events.meta

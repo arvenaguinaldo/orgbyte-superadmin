@@ -10,10 +10,9 @@ import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createTextMask} from 'redux-form-input-masks';
 
-import {purchaseShirt} from 'redux/actions/shirts';
+import {register} from 'redux/actions/events';
 
-import {makeSelectShirtsMeta} from 'redux/selectors/shirts';
-import {makeSelectVerifyMember} from 'redux/selectors/users';
+import {makeSelectEventsMeta} from 'redux/selectors/events';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
@@ -21,21 +20,17 @@ import Button from '@material-ui/core/Button';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
-import style from './Individual.scss';
+import style from './Register.scss';
 
-class IndividualPurchaseForm extends Component {
+class Bulsuans extends Component {
   static propTypes = {
-    shirt: PropTypes.object.isRequired,
-    verifiedMember: PropTypes.object,
-    shirtSizes: PropTypes.object,
+    event: PropTypes.object,
     meta: PropTypes.object.isRequired
-  };
+  }
 
   onSubmit = (values, dispatch) => {
-    const {shirt} = this.props;
-    _.set(values, 'shirt_id', shirt.id);
-    _.set(values, 'member_id', values.id);
-    dispatch(purchaseShirt(values));
+    _.set(values, 'event_id', this.props.event.id);
+    dispatch(register(values));
   };
 
   render() {
@@ -48,44 +43,37 @@ class IndividualPurchaseForm extends Component {
       pattern: 'G-9',
       placeholder: ' '
     });
+
     const sectionMask = createTextMask({
       pattern: 'A',
       placeholder: ' '
     });
 
-    const required = value => (value ? undefined : 'This field is Required');
+    const studentNumberMask = createTextMask({
+      pattern: '9999-999999',
+      placeholder: ' ',
+      guide: false
+    });
 
-    const {valid, handleSubmit, verifiedMember, shirtSizes, meta} = this.props; // eslint-disable-line react/prop-types
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
-          <Grid item xs={6} sm={6} md={2}>
+          <Grid item xs={12} sm={12} md={3}>
             <Field
-              name="size"
-              component={renderSelectField}
-              label="Size"
-              validate={required}
+              name="student_number"
+              component={renderTextField}
+              label="Student Number"
               fullWidth
-            >
-              {shirtSizes.xxsmall && <MenuItem value={'XXS'}>XXS</MenuItem>}
-              {shirtSizes.xsmall && <MenuItem value={'XS'}>XS</MenuItem>}
-              {shirtSizes.small && <MenuItem value={'S'}>S</MenuItem>}
-              {shirtSizes.medium && <MenuItem value={'M'}>M</MenuItem>}
-              {shirtSizes.large && <MenuItem value={'L'}>L</MenuItem>}
-              {shirtSizes.xlarge && <MenuItem value={'XL'}>XL</MenuItem>}
-              {shirtSizes.xxlarge && <MenuItem value={'2XL'}>2XL</MenuItem>}
-              {shirtSizes.xxxlarge && <MenuItem value={'3XL'}>3XL</MenuItem>}
-              {shirtSizes.xxxxlarge && <MenuItem value={'4XL'}>4XL</MenuItem>}
-            </Field>
+              {...studentNumberMask}
+            />
           </Grid>
-
           <Grid item xs={12} sm={12} md={3}>
             <Field
               name="last_name"
               component={renderTextField}
               label="Last Name"
               fullWidth
-              readOnly
             />
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
@@ -94,7 +82,6 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="First Name"
               fullWidth
-              readOnly
             />
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
@@ -103,7 +90,6 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="Middle Name"
               fullWidth
-              readOnly
             />
           </Grid>
         </Grid>
@@ -115,7 +101,6 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="Email"
               fullWidth
-              readOnly
             />
           </Grid>
 
@@ -125,30 +110,16 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="Contact Number"
               fullWidth
-              readOnly
               {...contactNumberMask}
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6}>
-            <Field
-              name="address"
-              component={renderTextField}
-              label="Address"
-              fullWidth
-              readOnly
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={32}>
           <Grid item xs={6} sm={6} md={2}>
             <Field
               name="year_level"
               component={renderSelectField}
               label="Year Level"
               fullWidth
-              readOnly
             >
               <MenuItem value={1}>First Year</MenuItem>
               <MenuItem value={2}>Second Year</MenuItem>
@@ -163,7 +134,6 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="Section"
               fullWidth
-              readOnly
               {...sectionMask}
             />
           </Grid>
@@ -174,9 +144,22 @@ class IndividualPurchaseForm extends Component {
               component={renderTextField}
               label="Group"
               fullWidth
-              readOnly
               {...groupNumberMask}
             />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={32}>
+          <Grid item xs={12} sm={12} md={6}>
+            <Field
+              name="college_id"
+              component={renderSelectField}
+              label="College"
+              fullWidth
+            >
+              <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
+              <MenuItem value={2}>College of Industrial Technology</MenuItem>
+            </Field>
           </Grid>
 
           <Grid item xs={6} sm={6} md={6}>
@@ -185,7 +168,6 @@ class IndividualPurchaseForm extends Component {
               component={renderSelectField}
               label="Major"
               fullWidth
-              readOnly
             >
               <MenuItem value={2}>Bachelor of Science in Information Technology</MenuItem>
             </Field>
@@ -193,12 +175,12 @@ class IndividualPurchaseForm extends Component {
         </Grid>
 
         <div className={style.bottomButton}>
-          <Button component={Link} to="/memberships" color="primary" className={style.button}>
+          <Button component={Link} to={'/events/'} color="primary" className={style.button}>
                   Cancel
           </Button>
 
-          <SubmitButton loading={meta.isLoading} valid={!valid || !verifiedMember}>
-                  Purchase
+          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid}>
+                  Register
           </SubmitButton>
         </div>
       </form>
@@ -207,8 +189,7 @@ class IndividualPurchaseForm extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  verifiedMember: makeSelectVerifyMember(),
-  meta: makeSelectShirtsMeta()
+  meta: makeSelectEventsMeta()
 });
 
 const withRedux = connect(mapStateToProps, null);
@@ -216,9 +197,12 @@ const withRedux = connect(mapStateToProps, null);
 export default compose(
   withRedux,
   reduxForm({
-    form: 'IndividualPurchase',
+    form: 'EventRegisterForm',
     overwriteOnInitialValuesChange: true,
     enableReinitialize: true,
-    destroyOnUnmount: false
+    destroyOnUnmount: false,
+    initialValues: {
+      event_attendee_type_id: 2
+    }
   })
-)(IndividualPurchaseForm);
+)(Bulsuans);

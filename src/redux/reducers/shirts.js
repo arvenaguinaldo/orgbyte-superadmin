@@ -4,8 +4,7 @@ import {fromJS} from 'immutable';
 const initialState = fromJS({
   list: [],
   shirt: {},
-  sizes: [],
-  isVerified: false,
+  sizes: {},
   orgshirt: '',
   purchaseShirt: '',
   fetchPurchaseShirts: [],
@@ -25,22 +24,6 @@ const shirts = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         shirt: data,
-        meta: {
-          loading: false
-        }
-      }));
-    }
-
-    case SHIRTS.VERIFY_MEMBER: {
-      return state.mergeIn(['meta'], fromJS({
-        isVerifyMemberLoading: true
-      }));
-    }
-    case SHIRTS.VERIFY_MEMBER_SUCCESS: {
-      const {data} = action.response;
-      return state.merge(fromJS({
-        verifyMember: data,
-        isVerified: !action.response.data.error,
         meta: {
           loading: false
         }

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import Moment from 'moment';
 import {Field, reduxForm} from 'redux-form';
-import 'rc-pagination/assets/index.css';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -26,6 +27,7 @@ import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 import styles from './EventList.scss';
@@ -66,9 +68,9 @@ class EventList extends Component {
 
                 <Grid item xs={10} sm={10} md={2}>
                   <Field
-                    name="cost"
+                    name="ticket_price_type"
                     component={renderSelectField}
-                    label="Cost"
+                    label="Ticket Price type"
                     fullWidth
                   >
                     <MenuItem value={1}>Paid</MenuItem>
@@ -77,9 +79,9 @@ class EventList extends Component {
                 </Grid>
                 <Grid item xs={10} sm={10} md={2}>
                   <Field
-                    name="type_of_event"
+                    name="nature_of_event"
                     component={renderSelectField}
-                    label="Type of Event"
+                    label="Nature of Event"
                     fullWidth
                   >
                     <MenuItem value={1}>Curricular</MenuItem>
@@ -104,59 +106,57 @@ class EventList extends Component {
         <div className={styles.eventContainer}>
           {this.props.events.map((event) => {
             return (
-              <div key={event.id} className={styles.eventsDiv}>
-                {/* <span>{event.name}</span>
-                    <span>{event.venue}</span>
-                    <span>{event.ticket_price}</span>
-                    <span>{Moment(event.date_time).format('YYYY-MM-DD')}</span> */}
-                <Card className={styles.card}>
-                  <CardMedia
-                    component="img"
-                    alt="Event Image"
-                    height="200"
-                    width="140"
-                    image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
-                    title="Event Image"
-                    className={styles.cardMedia}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="headline" component="h2">
-                      {event.name}
-                    </Typography>
-                    <List disablePadding dense className={styles.list}>
-                      <ListItem >
-                        <ListItemIcon>
-                          <EventIcon className={styles.listIcon} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Typography variant="body2" component="p">{Moment(event.date_time).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <LocationIcon className={styles.listIcon} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Typography variant="body2" component="p">{event.venue}</Typography>
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <Typography variant="body2" component="p" className={styles.listIcon}>₱</Typography>
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Typography variant="body2" component="p">{event.ticket_price}</Typography>
-                        </ListItemText>
-                      </ListItem>
-                    </List>
-                  </CardContent>
-                  <div className={styles.actionsDiv}>
-                    <Button size="small" color="primary">
-                            View Details
-                    </Button>
-                  </div>
-                </Card>
-              </div>
+              <Link key={event.id} to={'/events/' + event.id}>
+                <div key={event.id}>
+                  <Card className={styles.card}>
+                    <CardMedia
+                      component="img"
+                      alt="Event Image"
+                      height="200"
+                      width="140"
+                      image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                      title="Event Image"
+                      className={styles.cardMedia}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="headline" component="h2">
+                        {event.name}
+                      </Typography>
+                      <List disablePadding dense className={styles.list}>
+                        <ListItem >
+                          <ListItemIcon>
+                            <EventIcon className={styles.listIcon} />
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Typography variant="body2" component="p">{Moment(event.date_time).format('MMMM Do YYYY, h:mm a')}</Typography>
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <LocationIcon className={styles.listIcon} />
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Typography variant="body2" component="p">{event.venue}</Typography>
+                          </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <Typography variant="body2" component="p" className={styles.listIconPeso}>₱</Typography>
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Typography variant="body2" component="p">{event.members_price === null ? 'FREE' : event.members_price }</Typography>
+                          </ListItemText>
+                        </ListItem>
+                      </List>
+                    </CardContent>
+                    <CardActions className={styles.actionsDiv}>
+                      <Button size="small" color="primary">
+                          View Details
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </div>
+              </Link>
             );
           })}
         </div>

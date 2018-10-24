@@ -1,10 +1,10 @@
 
 .card {
+  position: relative;
   width: 300px;
   float: left;
   margin-right: 3%;
   margin-bottom: 2%;
-  max-height: 500px;
   height: 500px;
 }
 
@@ -34,12 +34,20 @@
 
 .actionsDiv {
   position: absolute;
-  bottom: 0;
   right: 0;
+  bottom: 0;
 }
 
 .listIcon {
   font-size: 20px;
+  margin-left: 5px;
+}
+
+.listIconPeso {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 2px;
+  color: #757575;
 }
 
 .list {

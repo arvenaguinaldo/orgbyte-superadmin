@@ -1,0 +1,42 @@
+.searchAddress {
+  .marker {
+    color: #ff5252;
+  }
+
+  .autocompleteContainer {
+    z-index: 5;
+    width: 100%;
+    margin-top: 1px;
+    border-left: 1px solid #757575;
+    border-right: 1px solid #757575;
+  }
+
+  .input {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 0;
+  }
+
+  .autocompleteItem {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    color: #555;
+    cursor: pointer;
+  }
+
+  .autocompleteItemActive {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .searchFooter {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px;
+
+    .image {
+      display: inline-block;
+      width: 150px;
+    }
+  }
+}

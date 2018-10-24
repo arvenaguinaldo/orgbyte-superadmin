@@ -1,0 +1,49 @@
+
+.Paper {
+  padding: 20px;
+  padding-bottom: 50px;
+  padding-left: 40px;
+  padding-top: 40px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  position: relative;
+  width: 90%;
+}
+
+.submitButtonDiv {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.Scanner {
+  width: 100%;
+  margin: auto;
+}
+
+.listTitle {
+  font-weight: bold;
+}
+
+.list {
+  padding: 11px;
+}
+
+.loadingProgress {
+  position: absolute;
+  margin: auto;
+  top: 40%;
+  left: 70%;
+}
+
+.detailsDiv {
+  position: absolute;
+}
+
+.buttonSuccess {
+  background-color: #4caf50;
+}
+
+.buttonSuccess:hover {
+  background-color: #388e3c;
+}

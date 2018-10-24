@@ -9,3 +9,63 @@ export const fetchEventsSuccess = response => ({
   type: EVENTS.FETCH_EVENTS_SUCCESS,
   response
 });
+
+export const fetchEvent = params => ({
+  type: EVENTS.FETCH_EVENT,
+  params
+});
+
+export const fetchEventSuccess = response => ({
+  type: EVENTS.FETCH_EVENT_SUCCESS,
+  response
+});
+
+export const createEvent = params => ({
+  type: EVENTS.CREATE_EVENT,
+  params
+});
+
+export const createEventSuccess = response => ({
+  type: EVENTS.CREATE_EVENT_SUCCESS,
+  response
+});
+
+export const register = params => ({
+  type: EVENTS.REGISTER,
+  params
+});
+
+export const registerSuccess = response => ({
+  type: EVENTS.REGISTER_SUCCESS,
+  response
+});
+
+export const fetchAttendee = params => ({
+  type: EVENTS.FETCH_ATTENDEE,
+  params
+});
+
+export const fetchAttendeeSuccess = response => ({
+  type: EVENTS.FETCH_ATTENDEE_SUCCESS,
+  response
+});
+
+export const attend = params => ({
+  type: EVENTS.ATTEND,
+  params
+});
+
+export const attendSuccess = response => ({
+  type: EVENTS.ATTEND_SUCCESS,
+  response
+});
+
+export const settlePayment = params => ({
+  type: EVENTS.SETTLE_PAYMENT,
+  params
+});
+
+export const settlePaymentSuccess = response => ({
+  type: EVENTS.SETTLE_PAYMENT_SUCCESS,
+  response
+});

@@ -26,3 +26,13 @@ export const makeSelectMembersList = () => createSelector(
   makeSelectUsers(),
   users => users.members
 );
+
+export const makeSelectVerifyMember = () => createSelector(
+  makeSelectUsers(),
+  users => users.verifyMember
+);
+
+export const makeSelectIsVerified = () => createSelector(
+  makeSelectUsers(),
+  users => users.isVerified
+);

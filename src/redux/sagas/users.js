@@ -67,6 +67,18 @@ function* addUser(action) {
   }
 }
 
+function* verifyMember(action) {
+  const response = yield call(usersService.verifyMember, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(usersActions.verifyMemberSuccess(response));
+    } else {
+      yield put(usersActions.verifyMemberSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -89,12 +101,17 @@ function* watchRequestAddUser() {
   yield* takeEvery(USERS.ADD_USER, addUser);
 }
 
+function* watchRequestVerifyMember() {
+  yield* takeEvery(USERS.VERIFY_MEMBER, verifyMember);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchPresidents),
     fork(watchRequestAddMember),
     fork(watchRequestFetchMembers),
-    fork(watchRequestAddUser)
+    fork(watchRequestAddUser),
+    fork(watchRequestVerifyMember)
   ];
 }
