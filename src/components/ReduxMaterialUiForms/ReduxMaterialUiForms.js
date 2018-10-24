@@ -94,17 +94,30 @@ export const renderPasswordField = (
 );
 
 export const renderSelectField = (
-  {input, label, fullWidth, multiple, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
+  {input, label, fullWidth, multiple, readOnly, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
-    <InputLabel htmlFor="age-simple">{label}</InputLabel>
-    <Select
-      onChange={(event, index, value) => input.onChange(value)}
-      {...input}
-      {...custom}
-    >
-      {children}
-    </Select>
+    <InputLabel htmlFor={readOnly ? 'name-readonly' : 'age-native-simple'}>{label}</InputLabel>
+    {readOnly ? (
+      <Select
+        native
+        {...input}
+        onChange={(event, index, value) => input.onChange(value)}
+        input={<Input name="name" id="name-readonly" readOnly />}
+        {...custom}
+      >
+        {children}
+      </Select>
+    ) : (
+      <Select
+        native
+        onChange={(event, index, value) => input.onChange(value)}
+        {...input}
+        {...custom}
+      >
+        {children}
+      </Select>
+    )}
     <FormHelperText>{(touched && error) || warning}</FormHelperText>
   </FormControl>
 );

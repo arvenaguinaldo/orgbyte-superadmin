@@ -8,9 +8,17 @@ import {connect} from 'react-redux';
 import {Field, reduxForm, FormSection, change} from 'redux-form';
 
 import {addOrganization} from 'redux/actions/organizations';
+import {fetchColleges} from 'redux/actions/colleges';
+import {fetchOrganizationNatures} from 'redux/actions/organization_natures';
+
 import {makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
+import {makeSelectCollegesList} from 'redux/selectors/colleges';
+import {makeSelectOrganizationNaturesList} from 'redux/selectors/organization_natures';
+
 import {createTextMask} from 'redux-form-input-masks';
 import {validate, warn} from 'utils/Validations/AddOrganization';
+
+import fetchInitialData from 'hoc/fetchInitialData';
 
 // Redux Material UI Forms
 import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
@@ -24,7 +32,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import generator from 'generate-password';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
@@ -65,8 +72,11 @@ class AddOrganization extends Component {
     addOrganization: PropTypes.func,
     classes: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
+    colleges: PropTypes.array.isRequired,
+    organizationNatures: PropTypes.array.isRequired,
     meta: PropTypes.object.isRequired
   };
+
   state = {
     selectedDate: new Date(),
     selectedLogo: null,
@@ -119,6 +129,7 @@ class AddOrganization extends Component {
     });
     const moment = require('moment');
     const currentDate = moment().format('YYYY-MM-DD');
+
     return (
       <FormSection name="organization">
         <Grid container spacing={24}>
@@ -140,8 +151,9 @@ class AddOrganization extends Component {
                   label="Type of Organization"
                   fullWidth
                 >
-                  <MenuItem value={1}>Univesity Based</MenuItem>
-                  <MenuItem value={2}>College Based</MenuItem>
+                  <option value="" />
+                  <option value={1}>Univesity Based</option>
+                  <option value={2}>College Based</option>
                 </Field>
               </Grid>
 
@@ -152,7 +164,12 @@ class AddOrganization extends Component {
                   label="Nature of Organiation"
                   fullWidth
                 >
-                  <MenuItem value={1}>Academic</MenuItem>
+                  <option value="" />
+                  {this.props.organizationNatures.map((nature) => {
+                    return (
+                      <option key={nature.id} value={nature.id}> {nature.name} </option>
+                    );
+                  })}
                 </Field>
 
               </Grid>
@@ -197,8 +214,12 @@ class AddOrganization extends Component {
                   label="College"
                   fullWidth
                 >
-                  <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
-                  <MenuItem value={2}>College of Industrial Technology</MenuItem>
+                  <option value="" />
+                  {this.props.colleges.map((college) => {
+                    return (
+                      <option key={college.id} value={college.id}> {college.name} </option>
+                    );
+                  })}
                 </Field>
               </Grid>
 
@@ -271,8 +292,12 @@ class AddOrganization extends Component {
                   label="College"
                   fullWidth
                 >
-                  <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
-                  <MenuItem value={2}>College of Industrial Technology</MenuItem>
+                  <option value="" />
+                  {this.props.colleges.map((college) => {
+                    return (
+                      <option key={college.id} value={college.id}> {college.name} </option>
+                    );
+                  })}
                 </Field>
               </Grid>
             </Grid>
@@ -420,13 +445,27 @@ class AddOrganization extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  organizationNatures: makeSelectOrganizationNaturesList(),
+  colleges: makeSelectCollegesList(),
   meta: makeSelectOrganizationsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {addOrganization});
+const mapDispatchToProps = {
+  addOrganization,
+  fetchColleges,
+  fetchOrganizationNatures
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchOrganizationNatures();
+  props.fetchColleges();
+});
 
 export default compose(
   withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'AddOrganizationForm',
     fields: ['password'],
