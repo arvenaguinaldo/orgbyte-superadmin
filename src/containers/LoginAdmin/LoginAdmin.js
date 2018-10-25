@@ -121,7 +121,7 @@ render() {
                 <Divider />
                 <Grid item xs={6} xl={6}>
                   <CardContent className={classes.content}>
-                    <Typography className={classes.title} color="primary" variant="display1">
+                    <Typography className={classes.title} color="primary" variant="h4">
                     Login
                     </Typography>
                     <TextField

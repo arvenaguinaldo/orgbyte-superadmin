@@ -54,11 +54,11 @@ class OrganizationalShirtPage extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1">
+        <Typography variant="h4">
           Organizational Shirts
         </Typography>
 
-        <Button component={Link} to="/shirts/purchase" variant="raised" color="primary" style={{margin: 20}}>
+        <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" style={{margin: 20}}>
           Purchase
         </Button>
 

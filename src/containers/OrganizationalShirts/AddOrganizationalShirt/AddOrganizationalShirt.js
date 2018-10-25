@@ -63,7 +63,7 @@ class AddOrganizationalShirt extends Component {
 
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Add a Organizational Shirt
         </Typography>
         <div className={classes.root}>
@@ -75,7 +75,7 @@ class AddOrganizationalShirt extends Component {
                   <Grid container spacing={24}>
 
                     <Grid item xs={12} sm={12} md={6} >
-                      <Typography variant="headline" gutterBottom>
+                      <Typography variant="h5" gutterBottom>
                         Organizational Shirt Design
                       </Typography>
 
@@ -88,7 +88,7 @@ class AddOrganizationalShirt extends Component {
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={6}>
-                      <Typography variant="headline" gutterBottom>
+                      <Typography variant="h5" gutterBottom>
                           Shirt Info
                       </Typography>
 
@@ -158,7 +158,7 @@ class AddOrganizationalShirt extends Component {
                   Cancel
                 </Button>
 
-                <Button variant="raised" color="primary" type="submit" className={style.button} disabled={!valid}>
+                <Button variant="contained" color="primary" type="submit" className={style.button} disabled={!valid}>
                   Save
                 </Button>
               </div>

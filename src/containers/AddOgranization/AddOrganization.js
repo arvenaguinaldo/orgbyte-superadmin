@@ -317,7 +317,7 @@ class AddOrganization extends Component {
 
 
             <Grid item xs={12} sm={12} md={6} >
-              <Typography variant="display1" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                     Upload your logo
               </Typography>
 
@@ -330,7 +330,7 @@ class AddOrganization extends Component {
             </Grid>
 
             <Grid item xs={12} sm={12} md={6}>
-              <Typography variant="display1" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                     Choose a color
               </Typography>
 
@@ -394,7 +394,7 @@ class AddOrganization extends Component {
       <LayoutWithTopbarAndSidebar>
         <form onSubmit={handleSubmit(this.onSubmit)} name="createOrganization">
           <div className={classes.root}>
-            <Typography variant="display1" gutterBottom>
+            <Typography variant="h4" gutterBottom>
             Add Organization
             </Typography>
             <Paper elevation={1} square={false} >
@@ -429,7 +429,7 @@ class AddOrganization extends Component {
                       SUBMIT
                       </SubmitButton>
                     ) : (
-                      <Button variant="raised" color="primary" onClick={this.handleNext} disabled={!valid}>
+                      <Button variant="contained" color="primary" onClick={this.handleNext} disabled={!valid}>
                         Next
                       </Button>
                     )}

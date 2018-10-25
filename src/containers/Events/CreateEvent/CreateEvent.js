@@ -81,7 +81,7 @@ class CreateEvent extends Component {
 
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Create Event
         </Typography>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -89,7 +89,7 @@ class CreateEvent extends Component {
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12} md={12}>
 
-                <Typography variant="headline">
+                <Typography variant="h5">
                   Event Details
                 </Typography>
 
@@ -202,7 +202,7 @@ class CreateEvent extends Component {
                   </Grid>
                 </Grid>
 
-                <Typography variant="headline" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                   Create Ticket
                 </Typography>
 

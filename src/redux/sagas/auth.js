@@ -20,12 +20,19 @@ function* login(action) {
       yield put(authActions.loginSuccess(response));
       authenticate.authenticateToken(response.data.token);
       yield put(authActions.setCurrentUser(jwt.decode(response.data.token)));
+      const loginData = jwt.decode(response.data.token);
 
       if (response.data.organizations_id !== null) {
         yield put(orgActions.fetchCurrentOrganization());
       }
 
-      yield put(push('/'));
+      if (loginData.user_type_id === 'admin') {
+        yield put(push('/admin/'));
+      }
+
+      if (loginData.user_type_id === 'super_admin') {
+        yield put(push('/superadmin/'));
+      }
     }
   }
 }

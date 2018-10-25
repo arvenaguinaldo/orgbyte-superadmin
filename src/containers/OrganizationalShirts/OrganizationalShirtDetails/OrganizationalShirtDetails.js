@@ -28,7 +28,7 @@ class Home extends Component {
     return (
       <LayoutWithTopbarAndSidebar>
         <Paper className={styles.Paper}>
-          <Typography variant="display1" color="secondary" >OrganizationalShirt</Typography>
+          <Typography variant="h4" color="secondary" >OrganizationalShirt</Typography>
           <Grid container spacing={0}>
 
             <Grid item xs={12} sm={12} md={12}>
@@ -37,16 +37,16 @@ class Home extends Component {
                 <Grid item xs={10} sm={10} md={5} >
                   <div className={styles.detailsDiv}>
                     <ListItem>
-                      <Typography variant="title" className={styles.listTitle}>Name:</Typography>
-                      <ListItemText primary={<Typography variant="title">SWITS ORG SHIRT</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Name:</Typography>
+                      <ListItemText primary={<Typography variant="h6">SWITS ORG SHIRT</Typography>} />
                     </ListItem>
                     <ListItem>
-                      <Typography variant="title" className={styles.listTitle}>Sizes:</Typography>
-                      <ListItemText primary={<Typography variant="title">S, M, L, XL, XXL</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Sizes:</Typography>
+                      <ListItemText primary={<Typography variant="h6">S, M, L, XL, XXL</Typography>} />
                     </ListItem>
                     <ListItem>
-                      <Typography variant="title" className={styles.listTitle}>Price:</Typography>
-                      <ListItemText primary={<Typography variant="title">400.00</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Price:</Typography>
+                      <ListItemText primary={<Typography variant="h6">400.00</Typography>} />
                     </ListItem>
                   </div>
                   <Typography variant="body1" color="secondary" align="justify" className={styles.eventDescription}>

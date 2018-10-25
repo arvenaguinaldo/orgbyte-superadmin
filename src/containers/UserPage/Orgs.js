@@ -64,7 +64,7 @@ function SimpleCard(props) {
     <Card className={classes.card}>
       <Grid container spacing={8}>
         <Grid item lg={6} md={6} sm={6} xs={6}>
-          <Typography variant="display1" className={classes.Heading}>
+          <Typography variant="h4" className={classes.Heading}>
             ORGANIZATIONS
           </Typography>
         </Grid>

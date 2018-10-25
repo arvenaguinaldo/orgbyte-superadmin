@@ -53,7 +53,7 @@ class AddMember extends Component {
     const {value} = this.state;
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Add a Member
         </Typography>
         <div className={classes.root}>

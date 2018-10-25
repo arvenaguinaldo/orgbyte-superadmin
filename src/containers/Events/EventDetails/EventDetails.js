@@ -70,73 +70,73 @@ class EventDetails extends Component {
               <Grid container spacing={40}>
 
                 <Grid item xs={10} sm={10} md={6} >
-                  <Typography variant="display1" color="secondary" >{event.name}</Typography>
+                  <Typography variant="h4" color="secondary" >{event.name}</Typography>
                   <List>
                     <ListItem>
                       <ListItemIcon >
                         <EventIcon />
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.listTitle}>Date Starts:</Typography>
-                      <ListItemText primary={<Typography variant="title">{moment(event.starts).format('MMMM do YYYY, h:mm a')}</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Date Starts:</Typography>
+                      <ListItemText primary={<Typography variant="h6">{moment(event.starts).format('MMMM do YYYY, h:mm a')}</Typography>} />
                     </ListItem>
 
                     <ListItem>
                       <ListItemIcon >
                         <EventIcon />
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.listTitle}>Date Ends:</Typography>
-                      <ListItemText primary={<Typography variant="title">{moment(event.ends).format('MMMM do YYYY, h:mm a')}</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Date Ends:</Typography>
+                      <ListItemText primary={<Typography variant="h6">{moment(event.ends).format('MMMM do YYYY, h:mm a')}</Typography>} />
                     </ListItem>
 
                     <ListItem>
                       <ListItemIcon>
                         <LocationIcon />
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.listTitle}>Venue:</Typography>
-                      <ListItemText primary={<Typography variant="title">{event.venue}</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Venue:</Typography>
+                      <ListItemText primary={<Typography variant="h6">{event.venue}</Typography>} />
                     </ListItem>
 
                     <ListItem>
                       <ListItemIcon>
                         <PeopleIcon />
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.listTitle}>Number of Attendees:</Typography>
-                      <ListItemText primary={<Typography variant="title">{event.number_of_attendees}</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Number of Attendees:</Typography>
+                      <ListItemText primary={<Typography variant="h6">{event.number_of_attendees}</Typography>} />
                     </ListItem>
 
                     <ListItem>
                       <ListItemIcon>
                         <PersonPlusIcon />
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.listTitle}>Available Slots:</Typography>
-                      <ListItemText primary={<Typography variant="title">{event.available_slots}</Typography>} />
+                      <Typography variant="h6" className={styles.listTitle}>Available Slots:</Typography>
+                      <ListItemText primary={<Typography variant="h6">{event.available_slots}</Typography>} />
                     </ListItem>
 
                     <ListItem>
                       <ListItemIcon>
                         <Typography variant="body2" component="p" className={styles.listIcon}>₱</Typography>
                       </ListItemIcon>
-                      <Typography variant="title" className={styles.bold}>Ticket Price:</Typography>
+                      <Typography variant="h6" className={styles.bold}>Ticket Price:</Typography>
                     </ListItem>
 
                     {event.members === true ? (
                       <ListItem className={styles.nested}>
-                        <Typography variant="subheading" className={styles.bold}>Members:</Typography>
-                        <ListItemText primary={<Typography variant="subheading">{event.members_price === null ? 'FREE' : event.members_price }</Typography>} />
+                        <Typography variant="subtitle1" className={styles.bold}>Members:</Typography>
+                        <ListItemText primary={<Typography variant="subtitle1">{event.members_price === null ? 'FREE' : event.members_price }</Typography>} />
                       </ListItem>
                     ) : null}
 
                     {event.bulsuans === true ? (
                       <ListItem className={styles.nested}>
-                        <Typography variant="subheading" className={styles.bold}>Bulsuans:</Typography>
-                        <ListItemText primary={<Typography variant="subheading">{event.bulsuans_price === null ? 'FREE' : event.bulsuans_price }</Typography>} />
+                        <Typography variant="subtitle1" className={styles.bold}>Bulsuans:</Typography>
+                        <ListItemText primary={<Typography variant="subtitle1">{event.bulsuans_price === null ? 'FREE' : event.bulsuans_price }</Typography>} />
                       </ListItem>
                     ) : null}
 
                     {event.non_bulsuans === true ? (
                       <ListItem className={styles.nested}>
-                        <Typography variant="subheading" className={styles.bold}>Non - Bulsuans:</Typography>
-                        <ListItemText primary={<Typography variant="subheading">{event.non_bulsuans_price === null ? 'FREE' : event.non_bulsuans_price }</Typography>} />
+                        <Typography variant="subtitle1" className={styles.bold}>Non - Bulsuans:</Typography>
+                        <ListItemText primary={<Typography variant="subtitle1">{event.non_bulsuans_price === null ? 'FREE' : event.non_bulsuans_price }</Typography>} />
                       </ListItem>
                     ) : null}
                   </List>
@@ -157,10 +157,10 @@ class EventDetails extends Component {
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
             </Button>
-            <Button component={Link} to={'/events/' + event.id + '/register'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
-            <Button component={Link} to={'/events/' + event.id + '/qrscanner'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/qrscanner'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       QR Scanner
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>

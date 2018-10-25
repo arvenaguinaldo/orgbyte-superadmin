@@ -48,7 +48,7 @@ class Email extends Component {
 
       <LayoutWithTopbarAndSidebar>
         <Paper className={myStyles.Paper}>
-          <Typography variant="display1" color="primary" gutterBottom>SMS</Typography>
+          <Typography variant="h4" color="primary" gutterBottom>SMS</Typography>
           <form>
             <Grid container spacing={0}>
               <Grid item xs={12} sm={12} md={12}>

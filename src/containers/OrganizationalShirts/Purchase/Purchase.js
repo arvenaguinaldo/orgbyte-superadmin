@@ -63,11 +63,11 @@ class Purchase extends Component {
     const {value} = this.state;
 
     if (!shirt) {
-      return <Redirect to={'/shirts/addorganizationalshirt'} />;
+      return <Redirect to={'/shirts/superadmin/addorganizationalshirt'} />;
     }
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Purchase
         </Typography>
         <div className={classes.root}>
