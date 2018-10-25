@@ -22,7 +22,6 @@ import style from './Organizations.scss';
 
 class Organizations extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     organizations: PropTypes.array.isRequired
   };
 
@@ -31,7 +30,7 @@ class Organizations extends Component {
   };
 
   render() {
-    const {classes, organizations} = this.props;
+    const {organizations} = this.props;
 
     return (
       <div className={style.ChildContainer}>
@@ -52,7 +51,7 @@ class Organizations extends Component {
                           <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
                         </Center>
                         <Center>
-                          <Typography variant="caption" className={classes.type}>
+                          <Typography variant="caption">
                             {org.acronym}
                           </Typography>
                         </Center>
