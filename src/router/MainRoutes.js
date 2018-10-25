@@ -24,15 +24,18 @@ import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
-import Announcement from 'containers/UserSide/Announcements/Announcement';
-import Orgs from 'containers/UserSide/Organizations/Main';
 import MediaCard from 'containers/OrganizationList/ViewModal';
-import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventRegister from 'containers/Events/Register/Register';
 import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import OrganizationalShirtDetails from 'containers/OrganizationalShirts/OrganizationalShirtDetails/OrganizationalShirtDetails';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
+import Announcements from 'containers/Announcements/Announcements';
+
+// User side
+import UserAnnouncement from 'containers/UserPage/AnnouncementsPage/Announcement';
+import Orgs from 'containers/UserPage/OrganizationsProfilePage/Main';
+import UserPage from 'containers/UserPage/Home/HomePage';
 
 
 class MainRoutes extends Component {
@@ -40,7 +43,7 @@ class MainRoutes extends Component {
     return (
       <Switch>
         <PrivateRoute path="/a/" component={Home} exact />
-        <PrivateRoute path="/" component={Home} exact />
+        {/* <PrivateRoute path="/" component={Home} exact /> */}
         <Route path="/a/login" component={Login} exact />
         <Route path="/login" component={LoginAdmin} exact />
         <PrivateRoute path="/addorganization" component={AddOrganization} />
@@ -76,8 +79,8 @@ class MainRoutes extends Component {
 
         {/* User Sides */}
         <Route path="/" component={UserPage} exact />
-        <Route path="/events" component={Events} exact />
-        <Route path="/announcement" component={Announcement} exact />
+        {/* <Route path="/events" component={Events} exact /> */}
+        <Route path="/u/announcement" component={UserAnnouncement} exact />
         <Route path="/orgs" component={Orgs} exact />
 
         <Route path="" component={NotFoundPage} />

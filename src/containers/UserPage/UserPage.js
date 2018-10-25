@@ -205,7 +205,7 @@ class SimpleTabs extends React.Component {
                   <Grid item xs={4}>
                     <Button color="inherit">
                       <Typography variant="caption">
-                See more
+                        See more
                       </Typography>
                       <More />
                     </Button>
@@ -246,7 +246,7 @@ class SimpleTabs extends React.Component {
                   </MenuList>
                   <Card className={classes.host}>
                     <Typography variant="caption" className={classes.eventIMAGE}>
-                    HOST ORGANIZATION
+                        HOST ORGANIZATION
                     </Typography>
                   </Card>
                 </Paper>

@@ -1,0 +1,24 @@
+
+.ChildContainer {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.SectionHeading {
+  margin-left: 10px;
+}
+
+.OrganizationButton {
+  position: absolute;
+  bottom: -40px;
+  right: 1%;
+}
+
+.OrganizationCard {
+  margin: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

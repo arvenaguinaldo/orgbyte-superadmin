@@ -11,13 +11,6 @@ const styles = {
     padding: 10,
     backgroundColor: 'transparent'
   },
-  paper: {
-    marginTop: 10,
-    '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)',
-      borderRight: 'solid balck 2px'
-    }
-  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -79,12 +72,12 @@ function SimpleCard(props) {
   const {classes} = props;
 
   return (
-    <Card className={classes.card}>
+    <div>
       <Grid container spacing={8}>
 
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="display1" className={classes.Heading}>
-ANNOUNCEMENTS
+              ANNOUNCEMENTS
           </Typography>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -200,7 +193,7 @@ ANNOUNCEMENTS
         </Grid>
 
       </Grid>
-    </Card>
+    </div>
   );
 }
 
