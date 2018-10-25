@@ -66,7 +66,7 @@ class Register extends Component {
 
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Register
         </Typography>
         <div className={classes.root}>

@@ -47,7 +47,7 @@ class Topbar extends Component {
         color="secondary"
       >
         <Toolbar>
-          <Typography variant="title" color="inherit" noWrap >
+          <Typography variant="h6" color="inherit" noWrap >
             {user.name}
           </Typography>
           <IconButton
@@ -60,11 +60,11 @@ class Topbar extends Component {
           </IconButton>
 
           {user.user_type_id === 'admin' ? (
-            <Typography variant="title" color="inherit" noWrap >
+            <Typography variant="h6" color="inherit" noWrap >
               {organization.name}
             </Typography>
           ) :
-            <Typography key={user.id} variant="title" color="inherit" noWrap >
+            <Typography key={user.id} variant="h6" color="inherit" noWrap >
               SUPER ADMIN
             </Typography>
           }
@@ -78,11 +78,11 @@ export default withStyles(styles, {withTheme: true})(Topbar);
 
 
 // {user.user_type_id === 'admin' ? (
-//   <Typography variant="title" color="inherit" noWrap >
+//   <Typography variant="h6" color="inherit" noWrap >
 //     {currentOrg.getOrganizationName()}
 //   </Typography>
 // ) : (
-//   <Typography key={user.id} variant="title" color="inherit" noWrap >
+//   <Typography key={user.id} variant="h6" color="inherit" noWrap >
 //     SUPER ADMIN
 //   </Typography>
 // )}

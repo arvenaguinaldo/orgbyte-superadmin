@@ -27,7 +27,7 @@ export const validate = (values) => {
     'year_level',
     'section',
     'group',
-    'major',
+    'course_id',
     'semester'
   ];
 

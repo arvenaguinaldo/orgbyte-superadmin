@@ -25,7 +25,7 @@ function Main(props) {
   return (
     <div className={classes.root}>
       <Top />
-      <Typography variant="display1" className={classes.header} >ORGANIZATIONS</Typography>
+      <Typography variant="h4" className={classes.header} >ORGANIZATIONS</Typography>
       <Grid container >
         <Grid item lg={3} md={3} sm={12} xs={12} className={classes.content} >
           <Filter />

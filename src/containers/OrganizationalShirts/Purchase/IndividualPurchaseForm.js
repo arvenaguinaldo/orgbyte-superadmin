@@ -11,11 +11,15 @@ import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForm
 import {createTextMask} from 'redux-form-input-masks';
 
 import {purchaseShirt} from 'redux/actions/shirts';
+import {fetchCourses} from 'redux/actions/courses';
 
 import {makeSelectShirtsMeta} from 'redux/selectors/shirts';
 import {makeSelectVerifyMember} from 'redux/selectors/users';
 
-import MenuItem from '@material-ui/core/MenuItem';
+import {makeSelectCoursesList} from 'redux/selectors/courses';
+
+import fetchInitialData from 'hoc/fetchInitialData';
+
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -25,6 +29,7 @@ import style from './Individual.scss';
 
 class IndividualPurchaseForm extends Component {
   static propTypes = {
+    courses: PropTypes.array.isRequired,
     shirt: PropTypes.object.isRequired,
     verifiedMember: PropTypes.object,
     shirtSizes: PropTypes.object,
@@ -55,7 +60,7 @@ class IndividualPurchaseForm extends Component {
 
     const required = value => (value ? undefined : 'This field is Required');
 
-    const {valid, handleSubmit, verifiedMember, shirtSizes, meta} = this.props; // eslint-disable-line react/prop-types
+    const {courses, valid, handleSubmit, verifiedMember, shirtSizes, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -67,15 +72,16 @@ class IndividualPurchaseForm extends Component {
               validate={required}
               fullWidth
             >
-              {shirtSizes.xxsmall && <MenuItem value={'XXS'}>XXS</MenuItem>}
-              {shirtSizes.xsmall && <MenuItem value={'XS'}>XS</MenuItem>}
-              {shirtSizes.small && <MenuItem value={'S'}>S</MenuItem>}
-              {shirtSizes.medium && <MenuItem value={'M'}>M</MenuItem>}
-              {shirtSizes.large && <MenuItem value={'L'}>L</MenuItem>}
-              {shirtSizes.xlarge && <MenuItem value={'XL'}>XL</MenuItem>}
-              {shirtSizes.xxlarge && <MenuItem value={'2XL'}>2XL</MenuItem>}
-              {shirtSizes.xxxlarge && <MenuItem value={'3XL'}>3XL</MenuItem>}
-              {shirtSizes.xxxxlarge && <MenuItem value={'4XL'}>4XL</MenuItem>}
+              <option value="" />
+              {shirtSizes.xxsmall && <option value={'XXS'}>XXS</option>}
+              {shirtSizes.xsmall && <option value={'XS'}>XS</option>}
+              {shirtSizes.small && <option value={'S'}>S</option>}
+              {shirtSizes.medium && <option value={'M'}>M</option>}
+              {shirtSizes.large && <option value={'L'}>L</option>}
+              {shirtSizes.xlarge && <option value={'XL'}>XL</option>}
+              {shirtSizes.xxlarge && <option value={'2XL'}>2XL</option>}
+              {shirtSizes.xxxlarge && <option value={'3XL'}>3XL</option>}
+              {shirtSizes.xxxxlarge && <option value={'4XL'}>4XL</option>}
             </Field>
           </Grid>
 
@@ -150,10 +156,11 @@ class IndividualPurchaseForm extends Component {
               fullWidth
               readOnly
             >
-              <MenuItem value={1}>First Year</MenuItem>
-              <MenuItem value={2}>Second Year</MenuItem>
-              <MenuItem value={3}>Third Year</MenuItem>
-              <MenuItem value={4}>Fourth Year</MenuItem>
+              <option value="" />
+              <option value={1}>First Year</option>
+              <option value={2}>Second Year</option>
+              <option value={3}>Third Year</option>
+              <option value={4}>Fourth Year</option>
             </Field>
           </Grid>
 
@@ -181,13 +188,18 @@ class IndividualPurchaseForm extends Component {
 
           <Grid item xs={6} sm={6} md={6}>
             <Field
-              name="major_id"
+              name="course_id"
               component={renderSelectField}
-              label="Major"
+              label="Course"
               fullWidth
               readOnly
             >
-              <MenuItem value={2}>Bachelor of Science in Information Technology</MenuItem>
+              <option value="" />
+              {courses.map((course) => {
+                return (
+                  <option key={course.id} value={course.id}> {course.course_name} </option>
+                );
+              })}
             </Field>
           </Grid>
         </Grid>
@@ -207,14 +219,20 @@ class IndividualPurchaseForm extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  courses: makeSelectCoursesList(),
   verifiedMember: makeSelectVerifyMember(),
   meta: makeSelectShirtsMeta()
 });
 
-const withRedux = connect(mapStateToProps, null);
+const withRedux = connect(mapStateToProps, {fetchCourses});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchCourses();
+});
 
 export default compose(
   withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'IndividualPurchase',
     overwriteOnInitialValuesChange: true,

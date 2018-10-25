@@ -38,9 +38,8 @@ function* addMember(action) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
-      console.log(response);
       yield put(usersActions.addMemberSuccess(response.data));
-      yield put(push('/memberships'));
+      yield put(push('/admin/memberships'));
     }
   }
 }

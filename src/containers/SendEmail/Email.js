@@ -55,7 +55,7 @@ class Email extends Component {
 
         <LayoutWithTopbarAndSidebar>
           <Paper className={myStyles.Paper}>
-            <Typography variant="display1" color="primary" gutterBottom>Email</Typography>
+            <Typography variant="h4" color="primary" gutterBottom>Email</Typography>
             <form>
               <Grid container spacing={0}>
                 <Grid item xs={12} sm={12} md={12}>
@@ -107,7 +107,7 @@ class Email extends Component {
                     </Grid>
                   </Grid>
 
-                  <Button size="small" variant="raised" color="primary">
+                  <Button size="small" variant="contained" color="primary">
                     <AttechmentIcon className={classNames(classes.leftIcon, classes.iconSmall)} /> Add attachment
                   </Button>
 

@@ -40,7 +40,7 @@ function* createEvent(action) {
       yield call(callSuccessNotification, 'Event Created Successfully');
       yield put(eventsActions.createEventSuccess(response.data));
       yield put(reset('CreateEventForm'));
-      yield put(push('/events'));
+      yield put(push('/admin/events'));
     }
   }
 }

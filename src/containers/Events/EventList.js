@@ -20,7 +20,6 @@ import EventIcon from '@material-ui/icons/Event';
 import LocationIcon from '@material-ui/icons/LocationOn';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
@@ -45,7 +44,7 @@ class EventList extends Component {
     Moment.locale('en');
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1">
+        <Typography variant="h4">
             Events
         </Typography>
         <div className={styles.sortContainer}>
@@ -61,8 +60,9 @@ class EventList extends Component {
                     label="Time Period"
                     fullWidth
                   >
-                    <MenuItem value={1}>Past</MenuItem>
-                    <MenuItem value={2}>Incoming</MenuItem>
+                    <option value="" />
+                    <option value={1}>Past</option>
+                    <option value={2}>Incoming</option>
                   </Field>
                 </Grid>
 
@@ -73,8 +73,9 @@ class EventList extends Component {
                     label="Ticket Price type"
                     fullWidth
                   >
-                    <MenuItem value={1}>Paid</MenuItem>
-                    <MenuItem value={2}>Free</MenuItem>
+                    <option value="" />
+                    <option value={1}>Paid</option>
+                    <option value={2}>Free</option>
                   </Field>
                 </Grid>
                 <Grid item xs={10} sm={10} md={2}>
@@ -84,8 +85,9 @@ class EventList extends Component {
                     label="Nature of Event"
                     fullWidth
                   >
-                    <MenuItem value={1}>Curricular</MenuItem>
-                    <MenuItem value={2}>Co-curricular</MenuItem>
+                    <option value="" />
+                    <option value={1}>Curricular</option>
+                    <option value={2}>Co-curricular</option>
                   </Field>
                 </Grid>
 
@@ -106,7 +108,7 @@ class EventList extends Component {
         <div className={styles.eventContainer}>
           {this.props.events.map((event) => {
             return (
-              <Link key={event.id} to={'/events/' + event.id}>
+              <Link key={event.id} to={'/admin/events/' + event.id}>
                 <div key={event.id}>
                   <Card className={styles.card}>
                     <CardMedia
@@ -119,7 +121,7 @@ class EventList extends Component {
                       className={styles.cardMedia}
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="headline" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2">
                         {event.name}
                       </Typography>
                       <List disablePadding dense className={styles.list}>

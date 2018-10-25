@@ -99,7 +99,7 @@ class Login extends Component {
         <form className={classes.container} noValidate autoComplete="on" onSubmit={this.onSubmit}>
           <Card className={classes.card}>
             <CardContent className={classes.content}>
-              <Typography className={classes.title} color="textSecondary" variant="display1">
+              <Typography className={classes.title} color="textSecondary" variant="h4">
                 LOGIN
               </Typography>
 

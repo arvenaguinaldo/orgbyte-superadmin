@@ -4,7 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import TopBarAndFooter from '../layouts/TopBarAndFooter';
 import Events from './EventSection/Event';
 import Organizations from './OrganizationSection/Organizations';
-import style from './HomePage.scss';
+import style from './index.scss';
 
 class HomePage extends Component {
   render() {

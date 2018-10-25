@@ -49,11 +49,11 @@ class MembershipPage extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1">
+        <Typography variant="h4">
           Memberships
         </Typography>
 
-        <Button component={Link} to="/memberships/addmember" variant="raised" color="primary" className={style.button} >
+        <Button component={Link} to="/admin/memberships/addmember" variant="contained" color="primary" className={style.button} >
           Add a member
         </Button>
 

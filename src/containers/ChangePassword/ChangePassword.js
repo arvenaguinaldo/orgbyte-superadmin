@@ -50,8 +50,8 @@ class PasswordReset extends Component {
                   <Grid container spacing={16}>
 
                     <Grid item xs={10} sm={10} md={12}>
-                      <Typography variant="display1" color="secondary" >Password Reset Form</Typography>
-                      <Typography variant="subheading" color="textSecondary" >Fill in required fields to change your password</Typography>
+                      <Typography variant="h4" color="secondary" >Password Reset Form</Typography>
+                      <Typography variant="subtitle1" color="textSecondary" >Fill in required fields to change your password</Typography>
                     </Grid>
 
                     <Grid item xs={10} sm={10} md={11}>

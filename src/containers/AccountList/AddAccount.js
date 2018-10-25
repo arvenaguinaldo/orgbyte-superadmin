@@ -59,7 +59,7 @@ class AddAccount extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <Typography variant="display1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Add an Account
           <div>
             <Paper className={mystyle.Paper}>

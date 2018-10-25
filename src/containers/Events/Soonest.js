@@ -77,7 +77,7 @@ function SimpleCard(props) {
     <Card className={classes.card}>
       <Grid container spacing={8}>
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="display1" className={classes.Heading}>
+          <Typography variant="h4" className={classes.Heading}>
             UPCOMING EVENTS
           </Typography>
         </Grid>
@@ -99,7 +99,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -147,7 +147,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -195,7 +195,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -243,7 +243,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -291,7 +291,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -339,7 +339,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -387,7 +387,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -435,7 +435,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -483,7 +483,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -531,7 +531,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -580,7 +580,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>
@@ -628,7 +628,7 @@ function SimpleCard(props) {
                     <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                   </Center>
                   <Center>
-                    <Typography variant="display1">28</Typography>
+                    <Typography variant="h4">28</Typography>
                   </Center>
                 </Grid>
               </Center>

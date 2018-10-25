@@ -78,7 +78,7 @@ class ResponsiveDialog extends React.Component {
                 <Typography className={styles.title} color="textSecondary">
                 Society for the Welfare of Information Technolohy Students
                 </Typography>
-                <Typography variant="headline" component="h2">
+                <Typography variant="h5" component="h2">
                 SWITS
                 </Typography>
                 <Typography color="textSecondary">
