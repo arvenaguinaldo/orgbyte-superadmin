@@ -10,10 +10,6 @@ import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
 import Home from 'containers/Home/Home';
 
-// User Side Routes
-import Announcement from 'containers/UserSide/Announcements/Announcement';
-import Orgs from 'containers/UserSide/Organizations/Main';
-
 // Super Admin Routes
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
@@ -46,8 +42,13 @@ import ChangePassword from 'containers/ChangePassword/ChangePassword';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 
-import NotFoundPage from 'containers/NotFound/NotFoundPage';
+// User side Routes
+import HomePage from 'containers/UserPage/Home/index';
+import UserAnnouncement from 'containers/UserPage/AnnouncementsPage/Announcement';
+import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
+import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/OrganizationList';
 
+import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
 class MainRoutes extends Component {
   render() {
@@ -93,10 +94,10 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/logs" component={UserActivityLogs} />
 
         {/* User Sides */}
-        {/* <Route path="/" component={UserPage} exact />
-        <Route path="/events" component={Events} exact /> */}
-        <Route path="/announcements" component={Announcement} exact />
-        <Route path="/orgs" component={Orgs} exact />
+        <Route path="/" component={HomePage} exact />
+        <Route path="/announcements" component={UserAnnouncement} exact />
+        <Route path="/events" component={UserEventList} exact />
+        <Route path="/organizations" component={UserOrganizationList} exact />
 
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />

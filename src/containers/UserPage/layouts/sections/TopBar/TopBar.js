@@ -1,34 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
+
 import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink} from 'mdbreact';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-class NavbarFeatures extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapse: false,
-      isWideEnough: false
-    };
-    this.onClick = this.onClick.bind(this);
-  }
+class TopBar extends Component {
+  state = {
+    collapse: false,
+    isWideEnough: false
+  };
 
-  onClick() {
+  onClick = () => {
     this.setState({
       collapse: !this.state.collapse
     });
-  }
+  };
+
   render() {
     return (
       <Router>
         <Navbar className="navbatop" dark expand="md" scrolling>
           <NavbarBrand href="/">
-            <img src="https://i.postimg.cc/d3wznzMb/logo.png" className="logo" alt="jeck" />
+            <img src="https://i.postimg.cc/d3wznzMb/logo.png" className="logo" alt="SystemLogo" />
           </NavbarBrand>
-          { !this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
+          {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
+
           <Collapse isOpen={this.state.collapse} navbar>
+
             <NavbarNav left>
               <NavItem>
-                <Link exact to="/announcement"><NavLink to="/announcement" href="announcement">Announcements</NavLink></Link>
+                <NavLink to="/announcement" href="announcement">Announcements</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="/orgs">Organizations</NavLink>
@@ -37,6 +37,7 @@ class NavbarFeatures extends React.Component {
                 <NavLink to="/Events">Events</NavLink>
               </NavItem>
             </NavbarNav>
+
             <NavbarNav right>
               <NavItem>
                 <form className="form-inline md-form mt-0">
@@ -44,11 +45,13 @@ class NavbarFeatures extends React.Component {
                 </form>
               </NavItem>
             </NavbarNav>
+
           </Collapse>
         </Navbar>
       </Router>
     );
   }
 }
-export default NavbarFeatures;
+
+export default TopBar;
 

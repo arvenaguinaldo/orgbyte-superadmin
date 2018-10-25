@@ -1,0 +1,47 @@
+
+.ParentContainer {
+  flex-grow: 1;
+  background-color: #fff;
+}
+
+.ChildContainer {
+  margin-top: 50px;
+}
+
+.SectionHeading {
+  margin-left: 1.5%;
+}
+
+.EventCard {
+  height: 200px;
+}
+
+.EventPaper {
+  margin: 10px;
+
+  &:hover {
+    background-color: yellow;
+  }
+}
+
+.EventVenue {
+  padding: 1px;
+  line-height: 20px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.EventImage {
+  height: 100%;
+  width: 100%;
+}
+
+.EventDateContainer {
+  padding: 10px;
+}
+
+.EventMonth {
+  color: red;
+}
