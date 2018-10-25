@@ -83,7 +83,7 @@ function SimpleCard(props) {
       <Grid container spacing={8}>
 
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="display1" className={classes.Heading}>
+          <Typography variant="h4" className={classes.Heading}>
 ANNOUNCEMENTS
           </Typography>
         </Grid>
@@ -100,7 +100,7 @@ ANNOUNCEMENTS
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -128,7 +128,7 @@ ANNOUNCEMENTS
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -156,7 +156,7 @@ ANNOUNCEMENTS
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -184,7 +184,7 @@ ANNOUNCEMENTS
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">

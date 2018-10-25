@@ -53,7 +53,7 @@ class EditModal extends React.Component {
           aria-labelledby="form-dialog-title"
           maxWidth="md"
         >
-          <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="display1">Edit</Typography></DialogTitle>
+          <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="h4">Edit</Typography></DialogTitle>
           <DialogContent>
             <EditForm initialValues={edit.formValues} onSubmit={this.handleSubmit} />
           </DialogContent>

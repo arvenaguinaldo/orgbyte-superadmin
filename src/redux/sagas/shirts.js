@@ -64,7 +64,7 @@ function* purchaseShirt(action) {
       yield call(callSuccessNotification, 'Purchased Successfully');
       yield put(reset('IndividualPurchaseForm'));
       yield put(reset('VerifyMemberForm'));
-      yield put(push('/shirts'));
+      yield put(push('/admin/shirts'));
     }
   }
 }

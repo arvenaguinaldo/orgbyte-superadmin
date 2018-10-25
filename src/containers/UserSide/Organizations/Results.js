@@ -94,7 +94,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -121,7 +121,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -148,7 +148,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -175,7 +175,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -202,7 +202,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -229,7 +229,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -256,7 +256,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">
@@ -283,7 +283,7 @@ function SimpleCard(props) {
               </Grid>
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
-                  <Typography variant="title">
+                  <Typography variant="h6">
                 Announcement Title
                   </Typography>
                   <Typography variant="caption">

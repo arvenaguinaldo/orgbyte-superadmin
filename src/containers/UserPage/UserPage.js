@@ -194,7 +194,7 @@ class SimpleTabs extends React.Component {
           <Toolbar className={classes.divide}>
             <Grid container spacing={0}>
               <Grid item xs={6}>
-                <Typography variant="headline">
+                <Typography variant="h5">
                  EVENTS
                 </Typography>
               </Grid>
@@ -433,7 +433,7 @@ class SimpleTabs extends React.Component {
           <Toolbar className={classes.divide}>
             <Grid container spacing={0}>
               <Grid item xs={6}>
-                <Typography variant="headline">
+                <Typography variant="h5">
                  Announcements
                 </Typography>
               </Grid>
@@ -464,7 +464,7 @@ class SimpleTabs extends React.Component {
                 </Card>
               </Grid>
               <Grid item xs={9}>
-                <Typography variant="title">
+                <Typography variant="h6">
                 Announcement Title
                 </Typography>
                 <Typography variant="caption">
@@ -487,7 +487,7 @@ class SimpleTabs extends React.Component {
                 </Card>
               </Grid>
               <Grid item xs={9}>
-                <Typography variant="title">
+                <Typography variant="h6">
                 Announcement Title
                 </Typography>
                 <Typography variant="caption">
@@ -510,7 +510,7 @@ class SimpleTabs extends React.Component {
                 </Card>
               </Grid>
               <Grid item xs={9}>
-                <Typography variant="title">
+                <Typography variant="h6">
                 Announcement Title
                 </Typography>
                 <Typography variant="caption">
@@ -533,7 +533,7 @@ class SimpleTabs extends React.Component {
                 </Card>
               </Grid>
               <Grid item xs={9}>
-                <Typography variant="title">
+                <Typography variant="h6">
                 Announcement Title
                 </Typography>
                 <Typography variant="caption">

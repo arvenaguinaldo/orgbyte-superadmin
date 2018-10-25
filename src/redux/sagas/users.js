@@ -39,7 +39,7 @@ function* addMember(action) {
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(usersActions.addMemberSuccess(response.data));
-      yield put(push('/memberships'));
+      yield put(push('/admin/memberships'));
     }
   }
 }
