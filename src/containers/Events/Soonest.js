@@ -23,11 +23,6 @@ const styles = {
       boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
     }
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
   title: {
     marginBottom: 16,
     fontSize: 14

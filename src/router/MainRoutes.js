@@ -30,6 +30,8 @@ import Orgs from 'containers/UserSide/Organizations/Main';
 import MediaCard from 'containers/OrganizationList/ViewModal';
 import Announcements from 'containers/Announcements/Announcements';
 import EventDetails from 'containers/EventDetails/EventDetails';
+import AnnounceView from 'containers/UserSide/Announcements/AnnounceView';
+import EventView from 'containers/Events/EventView';
 
 class MainRoutes extends Component {
   render() {
@@ -61,6 +63,8 @@ class MainRoutes extends Component {
         <Route path="/events" component={Events} exact />
         <Route path="/announcement" component={Announcement} exact />
         <Route path="/orgs" component={Orgs} exact />
+        <Route path="/announceview" component={AnnounceView} exact />
+        <Route path="/eventview" component={EventView} exact />
 
         <Route path="" component={NotFoundPage} />
       </Switch>

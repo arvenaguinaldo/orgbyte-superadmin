@@ -63,7 +63,7 @@ const styles = {
   },
   annou: {
     width: '100%',
-    height: '100%'
+    height: '150%'
   },
   image2: {
     backgroundColor: 'blue',
@@ -107,7 +107,7 @@ ANNOUNCEMENTS
                 Posted by:
                   </Typography>
                   <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                Announcement Summary asjdbawubaskaaudhba
                   </Typography>
                 </Paper>
               </Grid>
@@ -135,7 +135,7 @@ ANNOUNCEMENTS
                 Posted by:
                   </Typography>
                   <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                Announcement Summary asjdbawubaskaaudhba
                   </Typography>
                 </Paper>
               </Grid>
@@ -163,7 +163,7 @@ ANNOUNCEMENTS
                 Posted by:
                   </Typography>
                   <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                Announcement Summary asjdbawubaskaaudhba
                   </Typography>
                 </Paper>
               </Grid>
@@ -191,7 +191,7 @@ ANNOUNCEMENTS
                 Posted by:
                   </Typography>
                   <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                Announcement Summary asjdbawubaskaaudhba
                   </Typography>
                 </Paper>
               </Grid>

@@ -95,202 +95,13 @@ function SimpleCard(props) {
               <Grid item xs={9} >
                 <Paper className={classes.title2}>
                   <Typography variant="title">
-                Announcement Title
+                Organization Name
                   </Typography>
                   <Typography variant="caption">
-                Posted by:
+                Established:
                   </Typography>
                   <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="title">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Posted by:
-                  </Typography>
-                  <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
                   </Typography>
                 </Paper>
               </Grid>
@@ -298,6 +109,341 @@ function SimpleCard(props) {
           </Card>
         </Grid>
 
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Card className={classes.paper2}>
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Card className={classes.image2}>
+                  <CardMedia
+                    className={classes.annou}
+                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={9} >
+                <Paper className={classes.title2}>
+                  <Typography variant="title">
+                Organization Name
+                  </Typography>
+                  <Typography variant="caption">
+                Established:
+                  </Typography>
+                  <Typography variant="body1">
+               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
       </Grid>
     </Card>
   );
