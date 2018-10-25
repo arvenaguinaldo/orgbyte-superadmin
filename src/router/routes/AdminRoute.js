@@ -31,7 +31,7 @@ class AdminRoute extends Component {
             return (
               <Redirect
                 to={{
-                  pathname: '/login',
+                  pathname: '/NotFound',
                   state: {from: props.location} // eslint-disable-line react/prop-types
                 }}
               />
