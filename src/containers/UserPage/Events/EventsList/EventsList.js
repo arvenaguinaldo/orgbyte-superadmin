@@ -1,387 +1,124 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
+import Center from 'react-center';
+import Moment from 'moment';
+
+import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
+import {fetchEvents} from 'redux/actions/events';
+import fetchInitialData from 'hoc/fetchInitialData';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {compose} from 'recompose';
+
+
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import {Grid, CardMedia, Paper} from '@material-ui/core';
-import TopBarAndFooter from '../layouts/TopBarAndFooter';
+import {Grid, CardMedia, Paper, ListItem} from '@material-ui/core';
+import Venue from '@material-ui/icons/PinDrop';
+import Event from '@material-ui/icons/Event';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
 import style from './EventList.scss';
 
-const styles = {
-  card: {
-    minWidth: 275,
-    padding: 10,
-    backgroundColor: 'transparent'
-  },
-  paper: {
-    marginTop: 10,
-    '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)',
-      borderRight: 'solid balck 2px'
-    }
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14
-  },
-  pos: {
-    marginBottom: 12
-  },
-  type: {
-    color: 'black'},
-  media: {
-    height: 120,
-    width: '100%'
-  },
-  list: {
-    padding: '0px',
-    lineHeight: '10',
-    paddingLeft: 0
-  },
-  listName: {
-    padding: '0px',
-    fontWeight: 'bold',
-    lineHeight: '10',
-    paddingLeft: 0
-  },
-  events1: {
-    height: '100%',
-    width: '100%'
-  },
-  paper2: {
-    margin: '10px',
-    padding: '0px',
-    '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
-    }
-  },
-  butt: {
-    float: 'right'
-  },
-  annou: {
-    width: '100%',
-    height: '100%'
-  },
-  image2: {
-    backgroundColor: 'blue',
-    height: '100px  '
-  },
-  title2: {
-    paddingTop: 10,
-    boxShadow: 'none'
-  }
-};
-
 class EventList extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    events: PropTypes.array
   };
+  static defaultProps = {
+    events: []
+  };
+  state = {
+    pageCount: 20
+  };
+
   render() {
-    const {classes} = this.props;
+    const {events} = this.props;
+    Moment.locale('en');
     return (
       <TopBarAndFooter>
-        <div className={style.Children}>
-          <Card className={classes.card}>
-            <Grid container spacing={8}>
+        <div className={style.ChildContainer}>
+          <Grid container spacing={8}>
 
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <Typography variant="display1" className={classes.Heading}>
-                    ANNOUNCEMENTS
-                </Typography>
-              </Grid>
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                            Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                            Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                             Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                            Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                            Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                             Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                            Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                            Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                            Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                            Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                            Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                            Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
-              <Grid item lg={6} md={6} sm={12} xs={12}>
-                <Card className={classes.paper2}>
-                  <Grid container spacing={16}>
-                    <Grid item xs={3}>
-                      <Card className={classes.image2}>
-                        <CardMedia
-                          className={classes.annou}
-                          image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                        />
-                      </Card>
-                    </Grid>
-                    <Grid item xs={9} >
-                      <Paper className={classes.title2}>
-                        <Typography variant="title">
-                Announcement Title
-                        </Typography>
-                        <Typography variant="caption">
-                Posted by:
-                        </Typography>
-                        <Typography variant="body1">
-                Announcement Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Typography variant="h4" className={style.SectionHeading}>
+                Events
+              </Typography>
             </Grid>
-          </Card>
+            <Grid container spacing={0}>
+              {events.map((event) => {
+                return (
+                  <Grid item lg={3} md={3} sm={12} xs={12} key={event.id}>
+
+                    <Paper elevation={0} className={style.EventPaper}>
+
+                      <Card className={style.EventCard}>
+                        <CardMedia
+                          className={style.EventImage}
+                          image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                        />
+                      </Card>
+
+                      <Grid container className={style.EventDateContainer}>
+                        <Center>
+                          <Grid item lg={4} md={4} sm={4} xs={4} >
+                            <Center>
+                              <Typography variant="body1" className={style.EventMonth}>{Moment(event.starts).format('MMM')}</Typography>
+                            </Center>
+                            <Center>
+                              <Typography variant="h5">{Moment(event.starts).format('DD')}</Typography>
+                            </Center>
+                          </Grid>
+                        </Center>
+                        <Grid item lg={10} md={10} sm={10} xs={10} >
+                          <ListItem>
+                            <ListItemIcon>
+                              <Event />
+                            </ListItemIcon>
+                            <ListItemText inset primary={<Typography variant="body1" className={style.EventName}>{event.name}</Typography>} />
+                          </ListItem>
+                          <ListItem>
+                            <ListItemIcon>
+                              <Venue />
+                            </ListItemIcon>
+                            <ListItemText inset primary={<Typography variant="body1" className={style.EventVenue}>{event.venue}</Typography>} />
+                          </ListItem>
+                          <Typography variant="caption" className={style.EventHost}>
+                            {event.organization_name}
+                          </Typography>
+
+                        </Grid>
+                      </Grid>
+                    </Paper>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </Grid>
         </div>
       </TopBarAndFooter>
     );
   }
 }
 
-export default withStyles(styles)(EventList);
+const mapStateToProps = createStructuredSelector({
+  events: makeSelectEventsList(),
+  meta: makeSelectEventsMeta()
+});
+
+const mapDispatchToProps = {
+  fetchEvents
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchEvents();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData
+)(EventList);

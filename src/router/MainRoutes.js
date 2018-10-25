@@ -34,6 +34,8 @@ import Announcements from 'containers/Announcements/Announcements';
 
 // User side
 import UserAnnouncement from 'containers/UserPage/AnnouncementsPage/Announcement';
+import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
+import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/OrganizationList';
 import Orgs from 'containers/UserPage/OrganizationsProfilePage/Main';
 import UserPage from 'containers/UserPage/Home/HomePage';
 
@@ -81,6 +83,8 @@ class MainRoutes extends Component {
         <Route path="/" component={UserPage} exact />
         {/* <Route path="/events" component={Events} exact /> */}
         <Route path="/u/announcement" component={UserAnnouncement} exact />
+        <Route path="/u/eventlist" component={UserEventList} exact />
+        <Route path="/u/organizationlist" component={UserOrganizationList} exact />
         <Route path="/orgs" component={Orgs} exact />
 
         <Route path="" component={NotFoundPage} />
