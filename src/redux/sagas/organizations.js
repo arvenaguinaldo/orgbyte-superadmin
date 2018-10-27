@@ -53,7 +53,7 @@ function* addOrganization(action) {
       yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
       yield put(usersActions.addUserSuccess(response.data.user));
       yield put(reset('AddOrganizationForm'));
-      yield put(push('/admin/organizations'));
+      yield put(push('/superadmin/organizations'));
     }
   }
 }
