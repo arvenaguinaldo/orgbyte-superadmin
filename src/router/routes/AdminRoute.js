@@ -8,17 +8,25 @@ import {compose} from 'recompose';
 import {createStructuredSelector} from 'reselect';
 
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 
 class AdminRoute extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
+    organization: PropTypes.object,
     component: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    organization: {},
+    user: {}
   };
 
   render() {
     const {
       component: RouteComponent,
       user,
+      organization,
       ...rest
     } = this.props;
 
@@ -26,8 +34,8 @@ class AdminRoute extends Component {
       <Route
         {...rest}
         render={(props) => {
-          if (!authenticate.isUserAuthenticated() || user.user_type_id !== 'admin') {
-            authenticate.deauthenticateUser();
+          if (!authenticate.isUserAuthenticated() || user.user_type_id !== 'admin' || user.user_type_id !== 'sub_admin') {
+
             return (
               <Redirect
                 to={{
@@ -45,7 +53,8 @@ class AdminRoute extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  user: makeSelectCurrentUser()
+  user: makeSelectCurrentUser(),
+  organization: makeSelectCurrentOrganization()
 });
 
 const withRedux = connect(mapStateToProps, null);
