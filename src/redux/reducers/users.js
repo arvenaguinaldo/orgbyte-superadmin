@@ -5,6 +5,7 @@ const initialState = fromJS({
   list: [],
   presidents: [],
   members: [],
+  isVerified: false,
   meta: {
     loading: false
   }
@@ -84,6 +85,22 @@ const users = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case USERS.VERIFY_MEMBER: {
+      return state.mergeIn(['meta'], fromJS({
+        isVerifyMemberLoading: true
+      }));
+    }
+    case USERS.VERIFY_MEMBER_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        verifyMember: data,
+        isVerified: !action.response.data.error,
         meta: {
           loading: false
         }

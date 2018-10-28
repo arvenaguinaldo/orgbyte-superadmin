@@ -10,12 +10,15 @@ import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderRadioButton} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
+import {fetchCourses} from 'redux/actions/courses';
 
 import {makeSelectUsersMeta} from 'redux/selectors/users';
+import {makeSelectCoursesList} from 'redux/selectors/courses';
+
+import fetchInitialData from 'hoc/fetchInitialData';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
@@ -28,11 +31,12 @@ import style from './Individual.scss';
 
 class Individual extends Component {
   static propTypes = {
+    courses: PropTypes.array.isRequired,
+    fetchCourses: PropTypes.func,
     meta: PropTypes.object.isRequired
   };
 
   onSubmit = (values, dispatch) => {
-    console.log(values);
     dispatch(addMember(values));
   };
 
@@ -56,7 +60,7 @@ class Individual extends Component {
       guide: false
     });
 
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {courses, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <div>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -138,10 +142,11 @@ class Individual extends Component {
                     label="Year Level"
                     fullWidth
                   >
-                    <MenuItem value={1}>First Year</MenuItem>
-                    <MenuItem value={2}>Second Year</MenuItem>
-                    <MenuItem value={3}>Third Year</MenuItem>
-                    <MenuItem value={4}>Fourth Year</MenuItem>
+                    <option value="" />
+                    <option value={1}>First Year</option>
+                    <option value={2}>Second Year</option>
+                    <option value={3}>Third Year</option>
+                    <option value={4}>Fourth Year</option>
                   </Field>
                 </Grid>
 
@@ -167,12 +172,17 @@ class Individual extends Component {
 
                 <Grid item xs={6} sm={6} md={6}>
                   <Field
-                    name="major_id"
+                    name="course_id"
                     component={renderSelectField}
-                    label="Major"
+                    label="Course"
                     fullWidth
                   >
-                    <MenuItem value={2}>Bachelor of Science in Information Technology</MenuItem>
+                    <option value="" />
+                    {courses.map((course) => {
+                      return (
+                        <option key={course.id} value={course.id}> {course.course_name} </option>
+                      );
+                    })}
                   </Field>
                 </Grid>
               </Grid>
@@ -209,13 +219,24 @@ class Individual extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  courses: makeSelectCoursesList(),
   meta: makeSelectUsersMeta()
 });
 
-const withRedux = connect(mapStateToProps, {addMember});
+const mapDispatchToProps = {
+  addMember,
+  fetchCourses
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchCourses();
+});
 
 export default compose(
   withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'AddMember',
     destroyOnUnmount: false,

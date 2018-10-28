@@ -5,7 +5,7 @@ import LayoutwithTopbarAndSidebar from 'layouts/Admin/LayoutWithTopbarAndSidebar
 function DenseAppBar() {
   return (
     <LayoutwithTopbarAndSidebar>
-      <Typography color="primary" variant="display1">
+      <Typography color="primary" variant="h4">
       HELLO
       </Typography>
     </LayoutwithTopbarAndSidebar>

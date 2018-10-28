@@ -20,18 +20,6 @@ function* fetchShirt(action) {
   }
 }
 
-function* verifyMember(action) {
-  const response = yield call(shirtsService.verifyMember, action.params);
-  if (response) {
-    if (response.data.error) {
-      yield call(callErrorNotification, response.data.error);
-      yield put(shirtsActions.verifyMemberSuccess(response));
-    } else {
-      yield put(shirtsActions.verifyMemberSuccess(response));
-    }
-  }
-}
-
 function* addOrgShirt(action) {
   const responseSizes = yield call(shirtsService.addOrgShirtSizes, action.params);
 
@@ -76,7 +64,7 @@ function* purchaseShirt(action) {
       yield call(callSuccessNotification, 'Purchased Successfully');
       yield put(reset('IndividualPurchaseForm'));
       yield put(reset('VerifyMemberForm'));
-      yield put(push('/shirts'));
+      yield put(push('/admin/shirts'));
     }
   }
 }
@@ -98,10 +86,6 @@ function* watchRequest() {
   yield* takeEvery(SHIRTS.FETCH_SHIRT, fetchShirt);
 }
 
-function* watchRequestVerifyMember() {
-  yield* takeEvery(SHIRTS.VERIFY_MEMBER, verifyMember);
-}
-
 function* watchRequestAddOrgShirt() {
   yield* takeEvery(SHIRTS.ADD_ORGSHIRT, addOrgShirt);
 }
@@ -121,7 +105,6 @@ function* watchRequestFetchPurchaseShirts() {
 export default function* shirts() {
   yield [
     fork(watchRequest),
-    fork(watchRequestVerifyMember),
     fork(watchRequestAddOrgShirt),
     fork(watchRequestfetchSizes),
     fork(watchRequestPurchaseShirt),

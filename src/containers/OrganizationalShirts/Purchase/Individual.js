@@ -16,9 +16,10 @@ import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiFo
 
 
 // actions
-import {verifyMember} from 'redux/actions/shirts';
+import {verifyMember} from 'redux/actions/users';
 import {fetchSizes} from 'redux/actions/shirts';
-import {makeSelectVerifyMember, makeSelectIsVerified, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {makeSelectVerifyMember, makeSelectIsVerified} from 'redux/selectors/users';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
@@ -37,7 +38,7 @@ class Individual extends Component {
     verifyMember: PropTypes.func,
     handleSubmit: PropTypes.func,
     isVerified: PropTypes.bool,
-    shirtSizes: PropTypes.array,
+    shirtSizes: PropTypes.object.isRequired,
     meta: PropTypes.object.isRequired
   }
 

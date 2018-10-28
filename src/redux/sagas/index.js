@@ -6,6 +6,9 @@ import organizations from './organizations';
 import users from './users';
 import shirts from './shirts';
 import edit from './edit';
+import courses from './courses';
+import colleges from './colleges';
+import organizationNatures from './organization_natures';
 
 export default function* root() {
   yield [
@@ -14,6 +17,9 @@ export default function* root() {
     fork(organizations),
     fork(users),
     fork(shirts),
-    fork(edit)
+    fork(edit),
+    fork(courses),
+    fork(colleges),
+    fork(organizationNatures)
   ];
 }

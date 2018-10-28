@@ -53,7 +53,7 @@ function* addOrganization(action) {
       yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
       yield put(usersActions.addUserSuccess(response.data.user));
       yield put(reset('AddOrganizationForm'));
-      yield put(push('/organizations'));
+      yield put(push('/admin/organizations'));
     }
   }
 }
@@ -65,7 +65,7 @@ function* addOrganization(action) {
 //     if (response.error) {
 //       yield call(callErrorNotification, `Could not add data: ${response.error}`);
 //     } else {
-//       yield put(push('/addorganization'));
+//       yield put(push('/superadmin/addorganization'));
 //     }
 //   }
 // }

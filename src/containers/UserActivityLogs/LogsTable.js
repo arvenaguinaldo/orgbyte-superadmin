@@ -61,7 +61,7 @@ class LogstTable extends React.Component {
           options={options}
         />
         <div className={myStyles.resetButtonDiv}>
-          <Button color="primary" variant="raised" >RESET</Button>
+          <Button color="primary" variant="contained" >RESET</Button>
         </div>
       </LayoutWithTopbarAndSidebar>
     );

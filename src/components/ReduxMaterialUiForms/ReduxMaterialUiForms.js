@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Material UI
 import TextField from '@material-ui/core/TextField';
@@ -12,48 +13,118 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+
+// import MenuItem from '@material-ui/core/MenuItem';
+
+// import PlacesAutocomplete from 'react-places-autocomplete';
+
+import MUIPlacesAutocomplete from 'mui-places-autocomplete';
+
 
 // Date picker
 import {DatePicker} from 'material-ui-pickers';
+import {DateTimePicker} from 'material-ui-pickers';
 
 import {CirclePicker} from 'react-color';
 
 export const renderTextField = (
-  {input, label, fullWidth, multiline, defaultValue, meta: {touched, error}, ...custom} // eslint-disable-line react/prop-types
+  {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, readOnly, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <TextField
     label={label}
     defaultValue={defaultValue}
     placeholder={label}
     error={!!touched && !!error}
-    helperText={!!touched && error}
+    helperText={(touched && error) || warning}
     margin="normal"
     fullWidth={fullWidth}
     multiline={multiline}
+    InputProps={{
+      readOnly
+    }}
+    type={type}
+    endadornment={
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="Toggle password visibility"
+          onClick={handler}
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    }
     {...input}
     {...custom}
   />
 );
 
-export const renderSelectField = (
-  {input, label, fullWidth, multiple, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
+export const renderPasswordField = (
+  {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
-  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
-    <InputLabel htmlFor="age-simple">{label}</InputLabel>
-    <Select
-      onChange={(event, index, value) => input.onChange(value)}
+  <FormControl margin="normal" fullWidth={fullWidth}>
+    <Input
+      label={label}
+      defaultValue={defaultValue}
+      placeholder={label}
+      error={!!touched && !!error}
+      margin="none"
+      fullWidth={fullWidth}
+      multiline={multiline}
+      type={type}
+      endAdornment={
+        <InputAdornment position="end">
+          <IconButton
+            aria-label="Toggle password visibility"
+            onClick={handler}
+          >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </InputAdornment>
+      }
       {...input}
       {...custom}
-    >
-      {children}
-    </Select>
+    />
+    <FormHelperText>{(touched && error) || warning}</FormHelperText>
+  </FormControl>
+);
+
+export const renderSelectField = (
+  {input, label, fullWidth, multiple, readOnly, meta: {touched, error, warning}, children, ...custom}, // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+    <InputLabel htmlFor={readOnly ? 'name-readonly' : 'age-native-simple'}>{label}</InputLabel>
+    {readOnly ? (
+      <Select
+        native
+        {...input}
+        onChange={(event, index, value) => input.onChange(value)}
+        input={<Input name="name" id="name-readonly" readOnly />}
+        {...custom}
+      >
+        {children}
+      </Select>
+    ) : (
+      <Select
+        native
+        onChange={(event, index, value) => input.onChange(value)}
+        {...input}
+        {...custom}
+      >
+        {children}
+      </Select>
+    )}
     <FormHelperText>{(touched && error) || warning}</FormHelperText>
   </FormControl>
 );
 
 
 export const renderDatePicker = (
-  {input, label, fullWidth, maxDate, maxDateMessage, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+  {input, label, fullWidth, maxDate, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
     <DatePicker
@@ -62,11 +133,30 @@ export const renderDatePicker = (
       format="DD/MM/YYYY"
       placeholder="10/10/2018"
       maxDate={maxDate}
-      maxDateMessage={maxDateMessage}
       value={selected}
       mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/] : [])}
       disableOpenOnEnter
-      animateYearScrolling={false}
+      animateYearScrolling
+      {...input}
+      {...custom}
+    />
+    <FormHelperText>{touched && error}</FormHelperText>
+  </FormControl>
+);
+
+export const renderDateTimePicker = (
+  {input, label, fullWidth, selected, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
+    <DateTimePicker
+      keyboard
+      label={label}
+      value={selected}
+      disableOpenOnEnter
+      animateYearScrolling
+      placeholder="2018/01/01 06:54 AM"
+      format="DD/MM/YYYY hh:mm A"
+      mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ':', /\d/, /\d/, ' ', /a|p/i, 'M'] : [])}
       {...input}
       {...custom}
     />
@@ -139,13 +229,32 @@ export const renderRadioButton = (
 export const renderCheckbox = (
   {input, label}, // eslint-disable-line react/prop-types
 ) => (
-  <FormControlLabel
-    control={
-      <Checkbox
-        checked={input.checked}
-        onChange={input.onChange}
-      />
-    }
-    label={label}
+  <div style={{display: 'inline-table', padding: '0px'}}>
+    <FormControlLabel
+      control={
+        <Checkbox
+          {...input}
+          checked={input.checked}
+          onChange={input.onChange}
+        />
+      }
+      label={label}
+    />
+  </div>
+);
+
+export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) => (
+  <MUIPlacesAutocomplete
+    onSuggestionSelected={onSuggestionSelected}
+    suggestionsContainerProps={{style: {width: '0px'}}}
+    renderTarget={() => (
+      <div />
+    )}
+    textFieldProps={{...other}}
   />
 );
+
+renderMUIPlacesAutocomplete.propTypes = {
+  onSuggestionSelected: PropTypes.func.isRequired,
+  input: PropTypes.object.isRequired
+};

@@ -66,7 +66,7 @@ class EditData extends React.Component {
           aria-labelledby="form-dialog-title"
           maxWidth="md"
         >
-          <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="display1">Edit</Typography></DialogTitle>
+          <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="h4">Edit</Typography></DialogTitle>
           <DialogContent>
             <form initialvalues={organization}>
               <Grid container spacing={24}>
@@ -157,7 +157,7 @@ class EditData extends React.Component {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleClose} variant="raised" color="primary">
+            <Button onClick={handleClose} variant="contained" color="primary">
               Save
             </Button>
           </DialogActions>
