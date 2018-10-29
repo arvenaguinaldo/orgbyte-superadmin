@@ -11,9 +11,6 @@ import Center from 'react-center';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -73,7 +70,6 @@ class QRScan extends Component {
   handleError = (err) => {
     console.error(err);
   };
-
   render() {
     const {attendee, success, meta} = this.props;
 
@@ -99,62 +95,97 @@ class QRScan extends Component {
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     {!meta.isFetchAttendeeLoading &&
-                    <div className={styles.detailsDiv}>
+                    <div>
                       <Typography variant="h4" color="secondary">Attendee Details</Typography>
-                      <List>
-                        <ListItem className={styles.list}>
-                          <Typography variant="h5" color="secondary" className={styles.listTitle}>Name:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.last_name + ', ' + attendee.first_name + ' ' + attendee.middle_name}</Typography>} />
-                        </ListItem>
+                      { Object.keys(attendee).length === 0 ? (
+                        <Center>
+                          <div className={styles.InstructionsDiv}>
+                            <Typography variant="h5" color="secondary">Please scan your qr code.</Typography>
+                          </div>
+                        </Center>
+                      ) : (
+                        <div className={styles.AttendeeDetailsDiv}>
+                          <Grid container spacing={0}>
+                            <Grid item xs={12} sm={12} md={2}>
+                              <Typography variant="h6" color="secondary">Name:</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={10}>
+                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.last_name + ', ' + attendee.first_name + ' ' + attendee.middle_name}</Typography>
+                            </Grid>
+                          </Grid>
 
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Attendee Type:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.event_attendee_type_name}</Typography>} />
-                        </ListItem>
+                          <Grid container spacing={0}>
+                            <Grid item xs={12} sm={12} md={4}>
+                              <Typography variant="h6" color="secondary">Attendee Type:</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={8}>
+                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.event_attendee_type_name}</Typography>
+                            </Grid>
+                          </Grid>
 
-                        {attendee.student_number &&
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Student Number:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.student_number}</Typography>} />
-                        </ListItem>
-                        }
+                          {attendee.student_number &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={4}>
+                                <Typography variant="h6" color="secondary">Student Number:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={8}>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.student_number}</Typography>
+                              </Grid>
+                            </Grid>
+                          }
 
-                        {attendee.college_name &&
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>College:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.college_name}</Typography>} />
-                        </ListItem>
-                        }
+                          {attendee.college_name &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={2}>
+                                <Typography variant="h6" color="secondary">College:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={10}>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.college_name}</Typography>
+                              </Grid>
+                            </Grid>
+                          }
 
-                        {attendee.course_name &&
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Course:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.course_name}</Typography>} />
-                        </ListItem>
-                        }
+                          {attendee.course_name &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={2}>
+                                <Typography variant="h6" color="secondary">Course:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={10}>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_name}</Typography>
+                              </Grid>
+                            </Grid>
+                          }
 
-                        {attendee.year_level &&
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Year/Section/Group:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.year_level + attendee.section + ' - G' + attendee.group}</Typography>} />
-                        </ListItem>
-                        }
+                          {attendee.year_level &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h6" color="secondary">Year/Section/Group:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.year_level + attendee.section + ' - G' + attendee.group}</Typography>
+                              </Grid>
+                            </Grid>
+                          }
 
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Email:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.email}</Typography>} />
-                        </ListItem>
+                          <Grid container spacing={0}>
+                            <Grid item xs={12} sm={12} md={2}>
+                              <Typography variant="h6" color="secondary">Email:</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={10}>
+                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.email}</Typography>
+                            </Grid>
+                          </Grid>
 
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Contact Number:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.contact_number}</Typography>} />
-                        </ListItem>
-
-                        <ListItem className={styles.list}>
-                          <Typography variant="h6" color="secondary" className={styles.listTitle}>Payment Status:</Typography>
-                          <ListItemText primary={<Typography variant="h6" color="secondary">{attendee.payment_status === true ? 'PAID' : 'NOT PAID'}</Typography>} />
-                        </ListItem>
-                      </List>
+                          <Grid container spacing={0}>
+                            <Grid item xs={12} sm={12} md={4}>
+                              <Typography variant="h6" color="secondary">Payment Status:</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={8}>
+                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.payment_status === true ? 'PAID' : 'NOT PAID'}</Typography>
+                            </Grid>
+                          </Grid>
+                        </div>
+                      )}
                     </div>
                     }
                     {meta.isFetchAttendeeLoading && <CircularProgress className={styles.loadingProgress} size={100} />}

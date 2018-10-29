@@ -25,8 +25,9 @@
   font-weight: bold;
 }
 
-.list {
-  padding: 11px;
+.InstructionsDiv {
+  margin-top: 30%;
+  margin-bottom: 20px;
 }
 
 .loadingProgress {
@@ -36,8 +37,13 @@
   left: 70%;
 }
 
-.detailsDiv {
-  position: absolute;
+.AttendeeDetailsDiv {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.AttendeeDetail {
+  padding-top: 5px;
 }
 
 .buttonSuccess {
