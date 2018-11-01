@@ -24,6 +24,7 @@ import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Member from './Member';
 import Bulsuans from './Bulsuans';
 import NonBulsuans from './NonBulsuans';
+import Multiple from './Multiple';
 
 function TabContainer(props) {
   return (
@@ -79,15 +80,16 @@ class Register extends Component {
               scrollable
               scrollButtons="auto"
             >
-              {event.members === true && <Tab label="Member" />}
-              {event.bulsuans === true && <Tab label="Bulsuan" />}
-              {event.non_bulsuans === true && <Tab label="Non - Bulsuan" />}
+              <Tab label="Member" disabled={!event.members} />
+              <Tab label="Bulsuan" disabled={!event.bulsuans} />
+              <Tab label="Non - Bulsuan" disabled={!event.non_bulsuans} />
               <Tab label="CSV" />
             </Tabs>
           </AppBar>
           {value === 0 && event.members === true && <TabContainer> <Member event={event} /> </TabContainer>}
           {value === 1 && event.bulsuans === true && <TabContainer> <Bulsuans event={event} /> </TabContainer>}
           {value === 2 && event.non_bulsuans === true && <TabContainer> <NonBulsuans event={event} /> </TabContainer>}
+          {value === 3 && <TabContainer> <Multiple event={event} /> </TabContainer>}
         </div>
       </LayoutWithTopbarAndSidebar>
     );

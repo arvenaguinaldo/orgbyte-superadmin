@@ -23,3 +23,7 @@ export const addUser = (params) => {
 export const verifyMember = (params) => {
   return api.callGet('/members/verify_member/' + params);
 };
+
+export const addMembers = (params) => {
+  return api.callPost('/members/add_members', params);
+};
