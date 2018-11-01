@@ -15,6 +15,7 @@ import AddOrganization from 'containers/AddOgranization/AddOrganization';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
 import PresidentList from 'containers/PresidentList/PresidentList';
 import BackupList from 'containers/BackupList/BackupList';
+import RenewOrganization from 'containers/RenewOrganization/RenewOrganization';
 
 // Admin Routes
 
@@ -61,6 +62,7 @@ class MainRoutes extends Component {
         {/* Super Admin Routes */}
         <SuperAdminRoute path="/superadmin/" component={Home} exact />
         <SuperAdminRoute path="/superadmin/addorganization" component={AddOrganization} />
+        <SuperAdminRoute path="/superadmin/reneworganization" component={RenewOrganization} />
         <SuperAdminRoute path="/superadmin/organizations" component={OrganizationList} />
         <SuperAdminRoute path="/superadmin/presidents" component={PresidentList} />
         <SuperAdminRoute path="/superadmin/backups" component={BackupList} />
