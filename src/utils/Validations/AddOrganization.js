@@ -13,6 +13,10 @@ export const validate = (values) => {
     errors.user.contact_number = 'Invalid phone number, must be 10 digits or not starting with 0';
   }
 
+  if (!/^[A-Z]*$/gm.test(organization.acronym)) {
+    errors.organization.acronym = 'Invalid Acronym must be Uppercase';
+  }
+
   const requiredFields = [
     'name',
     'organization_type_id',

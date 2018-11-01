@@ -80,6 +80,20 @@ function* fetchPurchaseShirts(action) {
   }
 }
 
+function* purchaseImports(action) {
+  const response = yield call(shirtsService.purchaseImports, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(shirtsActions.purchaseImportsSuccess(response.data));
+    } else {
+      yield put(shirtsActions.purchaseImportsSuccess(response.data));
+      yield call(callSuccessNotification, 'Purchased Successfully');
+      // yield put(push('/admin/shirts'));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -102,12 +116,17 @@ function* watchRequestFetchPurchaseShirts() {
   yield* takeEvery(SHIRTS.FETCH_PURCHASE_SHIRTS, fetchPurchaseShirts);
 }
 
+function* watchRequestPurchaseImports() {
+  yield* takeEvery(SHIRTS.PURCHASE_IMPORTS, purchaseImports);
+}
+
 export default function* shirts() {
   yield [
     fork(watchRequest),
     fork(watchRequestAddOrgShirt),
     fork(watchRequestfetchSizes),
     fork(watchRequestPurchaseShirt),
-    fork(watchRequestFetchPurchaseShirts)
+    fork(watchRequestFetchPurchaseShirts),
+    fork(watchRequestPurchaseImports)
   ];
 }

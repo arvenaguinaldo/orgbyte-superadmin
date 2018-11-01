@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 import Individual from './Individual';
+import Multiple from './Multiple';
 
 function TabContainer(props) {
   return (
@@ -81,11 +82,11 @@ class Purchase extends Component {
               scrollButtons="auto"
             >
               <Tab label="Individual" />
-              <Tab label="Section" />
+              <Tab label="Multiple" />
             </Tabs>
           </AppBar>
           {value === 0 && <TabContainer> <Individual shirt={shirt} /> </TabContainer>}
-          {value === 1 && <TabContainer>Section</TabContainer>}
+          {value === 1 && <TabContainer> <Multiple /> </TabContainer>}
         </div>
       </LayoutWithTopbarAndSidebar>
     );
