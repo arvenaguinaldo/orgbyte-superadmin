@@ -81,7 +81,7 @@ class SuperAdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Administration</ListSubheader>}
         >
-          <MenuItem component={Link} to="/superadmin" selected={pathname === '/superadmin'}>
+          <MenuItem component={Link} to="/superadmin/" selected={pathname === '/superadmin/'}>
             <ListItemIcon>
               <DashBoardIcon className={style.listIcon} />
             </ListItemIcon>
