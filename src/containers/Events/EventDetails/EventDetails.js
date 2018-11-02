@@ -20,6 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 
 import {createStructuredSelector} from 'reselect';
 import {makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
@@ -38,37 +39,126 @@ class EventDetails extends Component {
   static defaultProps = {
     event: {}
   };
-
-  // componentWillMount() {
-  //   this.props.fetchEvent(9);
-  //   // console.log(this.props.location.key);
-  // }
+  state = {
+    columns: [
+      {
+        name: 'Id',
+        options: {
+          display: false,
+          filter: false
+        }
+      },
+      {
+        name: 'Student-No.',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Name\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Email-Address\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Contact No.',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Course',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Course Year Section Group',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Attendee Type',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Payment Status',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Action Button',
+        options: {
+          filter: false,
+          customBodyRender: () => {
+            return (
+              <Button
+                color="primary"
+                variant="contained"
+                mini
+                style={{fontSize: '11px'}}
+                onClick={this.handleClickOpen}
+              >
+              Attend
+              </Button>
+            );
+          }
+        }
+      }
+    ]
+  };
+  getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MUIDataTableHeadCell: {
+        root: {
+          backgroundColor: '#eee',
+          padding: '0px 10px 0px 10px'
+        }
+      },
+      MUIDataTableBodyCell: {
+        root: {
+          backgroundColor: '#eee',
+          padding: '0px 10px 0px 10px'
+        }
+      }
+    }
+  })
 
   render() {
-
     const {event} = this.props;
+    const options = {
+      filter: true,
+      selectableRows: true,
+      filterType: 'dropdown',
+      responsive: 'scroll',
+      rowsPerPage: 5,
+      resizableColumns: false
+    };
 
     const style = {
       height: 400
     };
-    const columns = ['No', 'Student No.', 'Name', 'Section', 'Contact No.'];
-
     const data = [
-      ['1', 'Officers', '2014-120436', 'Jeremiah Robles', '09163130373'],
-      ['2', 'Officers', '2014-120436', 'Arven Aguinaldo', '0912345879']
-
+      ['1', '2014-120436', 'Robles Jeremiah B.', 'jeremiahrobles13@gmail.com', '09163130373', 'BSIT', '3B G1', 'BULSUAN', 'PAID', '']
     ];
     const image = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
 
     return (
-      <LayoutWithTopbarAndSidebar>
+      <LayoutWithTopbarAndSidebar>{console.log(this.props)}
         <Paper className={styles.Paper}>
           <Grid container spacing={0}>
-
             <Grid item xs={12} sm={12} md={12}>
-
               <Grid container spacing={40}>
-
                 <Grid item xs={10} sm={10} md={6} >
                   <Typography variant="h4" color="secondary" >{event.name}</Typography>
                   <List>
@@ -171,11 +261,14 @@ class EventDetails extends Component {
             </Button>
           </div>
         </Paper>
-        <MUIDataTable
-          title={'Attendees'}
-          data={data}
-          columns={columns}
-        />
+        <MuiThemeProvider theme={this.getMuiTheme()}>
+          <MUIDataTable
+            title={'Attendees'}
+            data={data}
+            columns={this.state.columns}
+            options={options}
+          />
+        </MuiThemeProvider>
       </LayoutWithTopbarAndSidebar>
     );
   }
