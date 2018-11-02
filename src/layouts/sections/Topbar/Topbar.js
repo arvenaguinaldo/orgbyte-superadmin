@@ -12,7 +12,7 @@ const drawerWidth = 250;
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: '#363736',
+    // backgroundColor: '#e9e9e9',
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`
@@ -47,9 +47,6 @@ class Topbar extends Component {
         color="secondary"
       >
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap >
-            {user.name}
-          </Typography>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
