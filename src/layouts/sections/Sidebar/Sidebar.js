@@ -8,12 +8,16 @@ import {logout} from 'redux/actions/auth';
 
 // Material UI Styles
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 
 import {SuperAdminMenuItemData} from 'layouts/MenuItemData/MenuItemData';
 import {AdminMenuItemData} from '../../MenuItemData/MenuItemData';
+import styles from './Sidebar.scss';
 
 const drawerWidth = 250;
 
@@ -62,7 +66,43 @@ class Sidebar extends Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+          {user.user_type_id === 'admin' &&
+          <div className={styles.NameContainer}>
+            <Grid container spacing={0}>
+              <Grid item xs={12} sm={12} md={2}>
+                <Avatar
+                  alt="Organization_logo"
+                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  className={styles.Avatar}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={10}>
+                <Typography variant="h6" noWrap className={styles.LastName}>{user.last_name}</Typography>
+                <Typography variant="h6" noWrap className={styles.FirstName}>{user.first_name}</Typography>
+                <Typography variant="subtitle1" noWrap className={styles.Position}>{user.user_type_id}</Typography>
+              </Grid>
+            </Grid>
+          </div>
+          }
+          {user.user_type_id === 'super_admin' &&
+          <div className={styles.NameContainer}>
+            <Grid container spacing={0}>
+              <Grid item xs={12} sm={12} md={2}>
+                <Avatar
+                  alt="Organization_logo"
+                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  className={styles.Avatar}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={10}>
+                <Typography variant="h6" noWrap className={styles.LastName}>Orgbyte</Typography>
+              </Grid>
+            </Grid>
+          </div>
+          }
+
+        </div>
         {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
         {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
       </div>
