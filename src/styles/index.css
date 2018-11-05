@@ -51,5 +51,6 @@
 }
 
 body {
-	background: #e9e9e9;
+	overflow-x: hidden;
+	background: url("https://i.postimg.cc/d1VLPTtd/Untitled-1.png");
 }

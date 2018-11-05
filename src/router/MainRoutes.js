@@ -48,7 +48,8 @@ import AnnounceView from 'containers/UserPage/Announcements/AnnouncementPage/Ann
 import EventView from 'containers/UserPage/Events/EventPage/EventView';
 import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementPage/Announcement';
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
-import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/OrganizationList';
+import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/Main';
+import UserOrganizationProf from 'containers/UserPage/OrganizationsProfilePage/Main';
 
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
@@ -102,6 +103,7 @@ class MainRoutes extends Component {
         <Route path="/organizations" component={UserOrganizationList} exact />
         <Route path="/announceview" component={AnnounceView} exact />
         <Route path="/eventview" component={EventView} exact />
+        <Route path="/orgProfile" component={UserOrganizationProf} exact />
 
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />
