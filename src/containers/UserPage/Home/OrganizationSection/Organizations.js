@@ -51,7 +51,7 @@ class Organizations extends Component {
                           <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
                         </Center>
                         <Center>
-                          <Typography variant="caption">
+                          <Typography variant="caption" >
                             {org.acronym}
                           </Typography>
                         </Center>
