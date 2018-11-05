@@ -50,3 +50,13 @@ export const fetchPurchaseShirtsSuccess = response => ({
   response
 });
 
+export const purchaseImports = params => ({
+  type: SHIRTS.PURCHASE_IMPORTS,
+  params
+});
+
+export const purchaseImportsSuccess = response => ({
+  type: SHIRTS.PURCHASE_IMPORTS_SUCCESS,
+  response
+});
+

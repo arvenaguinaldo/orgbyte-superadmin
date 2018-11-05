@@ -96,6 +96,21 @@ function* settlePayment(action) {
   }
 }
 
+function* registerImports(action) {
+  const response = yield call(eventsService.registerImports, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.registerImportsSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Register Successfully');
+      yield put(eventsActions.registerImportsSuccess(response.data));
+      yield put(reset('EventRegisterForm'));
+      // yield put(push('/events'));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -126,6 +141,10 @@ function* watchRequestSettlePayment() {
   yield* takeEvery(EVENTS.SETTLE_PAYMENT, settlePayment);
 }
 
+function* watchRequestRegisterImports() {
+  yield* takeEvery(EVENTS.REGISTER_IMPORTS, registerImports);
+}
+
 
 export default function* events() {
   yield [
@@ -135,6 +154,7 @@ export default function* events() {
     fork(watchRequestRegister),
     fork(watchRequestFetchAttendee),
     fork(watchRequestAttend),
-    fork(watchRequestSettlePayment)
+    fork(watchRequestSettlePayment),
+    fork(watchRequestRegisterImports)
   ];
 }

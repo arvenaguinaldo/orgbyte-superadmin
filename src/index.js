@@ -18,17 +18,18 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 // Authentications
 import * as authenticate from 'utils/AuthService';
+import * as theme from 'utils/ThemeService';
 import jwt from 'jsonwebtoken';
 import {setCurrentUser} from 'redux/actions/auth';
 import {fetchCurrentOrganization} from 'redux/actions/organizations';
 
 // Global Styles
-import 'styles/base.scss';
-
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import './styles/index.css';
+import 'styles/base.scss';
+
+// import './styles/index.css';
 
 function startApp() {
 
@@ -46,6 +47,9 @@ function startApp() {
     store.dispatch(fetchCurrentOrganization());
   }
 
+  if (theme.getThemeColor()) {
+    store.dispatch(fetchCurrentOrganization());
+  }
 
   ReactDOM.render(
     <JssProvider jss={jss} generateClassName={generateClassName}>

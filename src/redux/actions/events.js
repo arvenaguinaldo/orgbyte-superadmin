@@ -69,3 +69,13 @@ export const settlePaymentSuccess = response => ({
   type: EVENTS.SETTLE_PAYMENT_SUCCESS,
   response
 });
+
+export const registerImports = params => ({
+  type: EVENTS.REGISTER_IMPORTS,
+  params
+});
+
+export const registerImportsSuccess = response => ({
+  type: EVENTS.REGISTER_IMPORTS_SUCCESS,
+  response
+});
