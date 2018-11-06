@@ -19,6 +19,7 @@ import LogoutIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import AddIcon from '@material-ui/icons/AddCircle';
 import People from '@material-ui/icons/People';
+import Update from '@material-ui/icons/Update';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';
@@ -80,7 +81,7 @@ class SuperAdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Administration</ListSubheader>}
         >
-          <MenuItem component={Link} to="/events" selected={pathname === '/events'}>
+          <MenuItem component={Link} to="/superadmin/" selected={pathname === '/superadmin/'}>
             <ListItemIcon>
               <DashBoardIcon className={style.listIcon} />
             </ListItemIcon>
@@ -103,6 +104,13 @@ class SuperAdminMenuItemData extends Component {
                   <AddIcon className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Organization</Typography>} />
+              </MenuItem>
+
+              <MenuItem component={Link} to="/superadmin/reneworganization" selected={pathname === '/superadmin/reneworganization'} className={style.nested}>
+                <ListItemIcon>
+                  <Update className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Renew Organization</Typography>} />
               </MenuItem>
 
               <MenuItem component={Link} to="/superadmin/organizations" selected={pathname === '/superadmin/organizations'} className={style.nested}>
