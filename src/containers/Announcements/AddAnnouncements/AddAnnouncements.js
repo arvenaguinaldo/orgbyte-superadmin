@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import {Field, reduxForm} from 'redux-form';
 import {compose} from 'recompose';
-import {renderTextField, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import Typography from '@material-ui/core/Typography';
 import myStyles from './Announcements.scss';
 
@@ -45,14 +45,20 @@ class AddAnnouncements extends Component {
       classes: PropTypes.object
     };
     state = {
-      selectedDate: new Date()
+      startsDate: new Date('YYYY-MM-DDT00:00:00.000Z'),
+      endsDate: new Date()
+    }
+
+    handleStartsDateChange = (date) => {
+      this.setState({startsDate: date});
+    }
+    handleEndsDateChange = (date) => {
+      this.setState({endsDate: date});
     }
     render() {
       const {classes} = this.props;
       const moment = require('moment');
-      const currentDate = moment().format('YYYY-MM-DD');
       return (
-
         <LayoutWithTopbarAndSidebar>
           <Typography variant="h4" gutterBottom>Announcements</Typography>
           <Paper className={myStyles.Paper}>
@@ -72,24 +78,23 @@ class AddAnnouncements extends Component {
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
-                        name="date_start"
-                        component={renderDatePicker}
-                        selected={this.state.selectedDate}
-                        label="Date of posting"
+                        name="starts"
+                        component={renderDateTimePicker}
+                        label="Date Starts"
+                        selected={this.state.startsDate}
+                        onChange={this.handleStartsDateChange}
+                        disablePast
                         fullWidth
-                        minDate={currentDate}
-                        minDateMessage="Date should not be after minimum date"
                       />
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
-                        name="date_end"
-                        component={renderDatePicker}
-                        selected={this.state.selectedDate}
-                        label="Expiration"
+                        name="ends"
+                        component={renderDateTimePicker}
+                        label="Date Ends"
+                        selected={this.state.endsDate}
+                        minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
                         fullWidth
-                        minDate={currentDate}
-                        minDateMessage="Date should not be after minimum date"
                       />
                     </Grid>
                   </Grid>
@@ -107,7 +112,7 @@ class AddAnnouncements extends Component {
                         label="Message"
                         fullWidth
                         multiline
-                        rows="13"
+                        rows="15"
                       />
                     </Grid>
                   </Grid>
