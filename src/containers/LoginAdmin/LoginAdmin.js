@@ -22,12 +22,16 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
-import {CardMedia} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Center from 'react-center';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Password from '@material-ui/icons/Lock';
 
 // validation
 import validateInput from 'utils/LoginValidations';
 
+import Car from './Carrousel';
 
 const styles = theme => ({
   container: {
@@ -45,7 +49,8 @@ const styles = theme => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '100px',
-    paddingBottom: '10px'
+    borderRight: 'solid #7b180f 5px',
+    borderLeft: 'solid #7b180f 5px'
   },
   title: {
     textAlign: 'center'
@@ -54,8 +59,12 @@ const styles = theme => ({
     background: 'https://preview.ibb.co/h8vmvU/BGLOGIN.jpg'
   },
   logo: {
-    minWidth: '200px',
-    minHeight: '200px'
+    Width: '200px',
+    Height: '100px'
+  },
+  log: {
+    height: '100%',
+    width: '100%'
   }
 });
 
@@ -113,17 +122,19 @@ render() {
             <Card className={classes.card}>
               <Grid container spacing={0}>
                 <Grid item xs={6} xl={6} >
-                  <CardMedia
-                    className={classes.logo}
-                    image="https://postimg.cc/image/5yu2s01fl/"
-                  />
+                  <div className={classes.left}>
+                    <Center>
+                      <Car />
+                    </Center>
+                  </div>
                 </Grid>
                 <Divider />
                 <Grid item xs={6} xl={6}>
+                  <div className={classes.logo}>
+                    <img src="https://i.postimg.cc/sX2XJDHd/newbannerlogo.png" alt="logo" className={classes.log} />
+                  </div>
+
                   <CardContent className={classes.content}>
-                    <Typography className={classes.title} color="primary" variant="h4">
-                    Login
-                    </Typography>
                     <TextField
                       label="Email"
                       value={email}
@@ -135,18 +146,32 @@ render() {
                       error={!!errors.email}
                       helperText={errors.email}
                       onChange={this.handleChange('email')}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        )
+                      }}
                     />
 
                     <TextField
                       label="Password"
                       value={password}
-                      placeholder="Enter Password"
+                      placeholder="Password"
                       fullWidth
                       margin="normal"
                       type="password"
                       error={!!errors.password}
                       helperText={errors.password}
                       onChange={this.handleChange('password')}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Password />
+                          </InputAdornment>
+                        )
+                      }}
                     />
                     <Typography variant="caption" className={classes.link}>
                     Forgot Password?

@@ -78,6 +78,20 @@ function* verifyMember(action) {
   }
 }
 
+function* addMembers(action) {
+  const response = yield call(usersService.addMembers, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(usersActions.addMembersSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      yield put(usersActions.addMembersSuccess(response.data));
+      // yield put(push('/admin/memberships'));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -104,6 +118,10 @@ function* watchRequestVerifyMember() {
   yield* takeEvery(USERS.VERIFY_MEMBER, verifyMember);
 }
 
+function* watchRequestAddMembers() {
+  yield* takeEvery(USERS.ADD_MEMBERS, addMembers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -111,6 +129,7 @@ export default function* users() {
     fork(watchRequestAddMember),
     fork(watchRequestFetchMembers),
     fork(watchRequestAddUser),
-    fork(watchRequestVerifyMember)
+    fork(watchRequestVerifyMember),
+    fork(watchRequestAddMembers)
   ];
 }

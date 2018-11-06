@@ -1,57 +1,68 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import TabBar from './Tab';
 
-import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink} from 'mdbreact';
-import {BrowserRouter as Router} from 'react-router-dom';
-
-class TopBar extends Component {
-  state = {
-    collapse: false,
-    isWideEnough: false
-  };
-
-  onClick = () => {
-    this.setState({
-      collapse: !this.state.collapse
-    });
-  };
-
-  render() {
-    return (
-      <Router>
-        <Navbar className="navbatop" dark expand="md" scrolling>
-          <NavbarBrand href="/">
-            <img src="https://i.postimg.cc/d3wznzMb/logo.png" className="logo" alt="SystemLogo" />
-          </NavbarBrand>
-          {!this.state.isWideEnough && <NavbarToggler onClick={this.onClick} />}
-
-          <Collapse isOpen={this.state.collapse} navbar>
-
-            <NavbarNav left>
-              <NavItem>
-                <NavLink to="/announcement" href="announcement">Announcements</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/orgs">Organizations</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/Events">Events</NavLink>
-              </NavItem>
-            </NavbarNav>
-
-            <NavbarNav right>
-              <NavItem>
-                <form className="form-inline md-form mt-0">
-                  <input className="form-control mr-sm-2 mb-0 text-white" type="text" placeholder="Search" aria-label="Search" />
-                </form>
-              </NavItem>
-            </NavbarNav>
-
-          </Collapse>
-        </Navbar>
-      </Router>
-    );
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginLeft: -18,
+    marginRight: 10
+  },
+  app: {
+    backgroundColor: 'white',
+    borderBottom: 'solid 5px #5C181D',
+    padding: 'none'
+  },
+  logo: {
+    Width: '100%',
+    Height: '100%',
+    padding: 10
+  },
+  log: {
+    height: '45%',
+    width: '50%'
+  },
+  menu: {
+    width: '100%',
+    margin: 'none'
+  },
+  right: {
+    padding: 'none'
   }
+};
+
+
+function DenseAppBar(props) {
+  const {classes} = props;
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" className={classes.app}>
+        <Toolbar variant="dense">
+          <Grid container spacing={0}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+              <div className={classes.logo}>
+                <img src="https://i.postimg.cc/59CnSdDj/logo23.png" alt="logo" className={classes.log} />
+              </div>
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12} className={classes.right}>
+              <TabBar className={classes.menu} />
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
-export default TopBar;
+DenseAppBar.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
+export default withStyles(styles)(DenseAppBar);

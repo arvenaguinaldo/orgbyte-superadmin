@@ -15,12 +15,12 @@ import Hidden from '@material-ui/core/Hidden';
 import {SuperAdminMenuItemData} from 'layouts/MenuItemData/MenuItemData';
 import {AdminMenuItemData} from '../../MenuItemData/MenuItemData';
 
-const drawerWidth = 250;
+// const drawerWidth = 250;
 
 const Styles = theme => ({
   drawerPaper: {
-    backgroundColor: '#5E1619',
-    width: drawerWidth,
+    // backgroundColor: this.props.organization.color_theme,
+    // width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       position: 'fixed'
     }
@@ -38,6 +38,7 @@ class Sidebar extends Component {
     onHandleDrawerToggle: PropTypes.func.isRequired,
     mobileOpen: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
+    // organization: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
   };
 
@@ -63,8 +64,8 @@ class Sidebar extends Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
-        {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
-        {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        {user.user_type_id === 'super_admin' && <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} />}
+        {user.user_type_id === 'admin' && <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} />}
       </div>
     );
 

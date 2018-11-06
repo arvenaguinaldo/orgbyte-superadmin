@@ -90,6 +90,21 @@ const shirts = (state = initialState, action) => {
       }));
     }
 
+    case SHIRTS.PURCHASE_IMPORTS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.PURCHASE_IMPORTS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        purchaseShirt: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

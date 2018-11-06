@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
-import Top from './TopBar';
+import Top from '../layouts/TopBarAndFooter';
 import Filter from './Filter';
 import Results from './Results';
 
@@ -24,16 +23,16 @@ function Main(props) {
 
   return (
     <div className={classes.root}>
-      <Top />
-      <Typography variant="h4" className={classes.header} >ORGANIZATIONS</Typography>
-      <Grid container >
-        <Grid item lg={3} md={3} sm={12} xs={12} className={classes.content} >
-          <Filter />
+      <Top>
+        <Grid container spacing={8} >
+          <Grid item lg={3} md={3} sm={12} xs={12} className={classes.content} >
+            <Filter />
+          </Grid>
+          <Grid item lg={9} md={9} sm={12} xs={12} className={classes.content} >
+            <Results />
+          </Grid>
         </Grid>
-        <Grid item lg={9} md={9} sm={12} xs={12} className={classes.content} >
-          <Results />
-        </Grid>
-      </Grid>
+      </Top>
     </div>
   );
 }

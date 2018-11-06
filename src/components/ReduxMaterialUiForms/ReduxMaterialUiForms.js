@@ -164,13 +164,13 @@ export const renderDateTimePicker = (
   </FormControl>
 );
 
-export const renderInputImage = (
-  {input, label, fullWidth, className, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+export const renderInput = (
+  {input, label, fullWidth, accept, className, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <div>
     <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
       <input
-        accept="image/*"
+        accept={accept}
         id="contained-button-file"
         multiple
         type="file"

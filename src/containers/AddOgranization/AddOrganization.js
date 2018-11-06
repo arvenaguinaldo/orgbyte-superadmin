@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import _ from 'lodash';
 
 import {Field, reduxForm, FormSection, change} from 'redux-form';
 
@@ -32,7 +33,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import generator from 'generate-password';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
@@ -62,11 +62,6 @@ const styles = theme => ({
   }
 });
 
-const generatedPassword = generator.generate({
-  length: 10,
-  numbers: true
-});
-
 class AddOrganization extends Component {
   static propTypes = {
     addOrganization: PropTypes.func,
@@ -88,6 +83,8 @@ class AddOrganization extends Component {
   };
 
   onSubmit = (values, dispatch) => {
+    _.set(values.user, 'password', values.user.last_name + values.organization.acronym);
+    console.log(values);
     dispatch(addOrganization(values));
   };
 
@@ -471,7 +468,6 @@ export default compose(
     fields: ['password'],
     initialValues: {
       user: {
-        password: generatedPassword,
         user_type_id: 2
       }
     },
