@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import FileUpload from 'components/FileUpload/FileUpload';
+import {createStructuredSelector} from 'reselect';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -9,6 +11,13 @@ import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import {Field, reduxForm} from 'redux-form';
 import {compose} from 'recompose';
 import {renderSelectField, renderTextField, renderCheckbox, renderChip} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+
+import {createEmail} from 'redux/actions/emails';
+import {makeSelectEmailsMeta} from 'redux/selectors/emails';
+
+import {validate} from 'utils/Validations/SendEmail';
+
+
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 import {Typography} from '../../../node_modules/@material-ui/core';
 import myStyles from './Email.scss';
@@ -47,11 +56,17 @@ const styles = theme => ({
 
 class Email extends Component {
   static propTypes = {
-    onPaste: PropTypes.func
+    onPaste: PropTypes.func,
+    meta: PropTypes.object
   }
   state = {
     chips: []
   };
+
+  onSubmit = (values, dispatch) => {
+    dispatch(createEmail(values));
+  };
+
   onBeforeAdd = () => {
     return true;
   }
@@ -67,23 +82,25 @@ class Email extends Component {
   }
   render() {
     const checkboxLabel = [
-      {label: 'All Members', name: 'allmembers'},
-      {label: '1st year', name: 'firstyear'},
-      {label: '2nd year', name: 'secondyear'},
-      {label: '3rd year', name: 'thirdyear'},
-      {label: '4th year', name: 'fourthyear'}
+      {label: 'All Members', name: 'all_members'},
+      {label: '1st year', name: 'first_year'},
+      {label: '2nd year', name: 'second_year'},
+      {label: '3rd year', name: 'third_year'},
+      {label: '4th year', name: 'fourth_year'}
     ];
+
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
 
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4" gutterBottom>Email</Typography>
-        <form>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
           <Paper className={myStyles.Paper}>
             <Grid container spacing={0}>
               <Grid item xs={12} sm={12} md={12}>
 
                 <Grid container spacing={40}>
-                  <Grid item xs={10} sm={10} md={9}>
+                  <Grid item xs={10} sm={10} md={6}>
                     <Field
                       name="subject"
                       component={renderTextField}
@@ -93,14 +110,15 @@ class Email extends Component {
                   </Grid>
                   <Grid item xs={10} sm={10} md={3} >
                     <Field
-                      name="email_type_id"
+                      name="email_type"
                       component={renderSelectField}
                       label="Type of Email"
                       fullWidth
                     >
                       <option value="" />
-                      <option value={1}>Announcement</option>
-                      <option value={2}>Invitations</option>
+                      <option value="ANNOUNCEMENT">Announcements</option>
+                      <option value="INVITATION">Invitations</option>
+                      <option value="REMINDER">Reminder</option>
                     </Field>
                   </Grid>
                 </Grid>
@@ -108,7 +126,7 @@ class Email extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid item xs={12} sm={12} md={11}>
                       <Field
-                        name="chips"
+                        name="recipients"
                         value={this.state.chips}
                         onPaste={(event) => {
                           const clipboardText = event.clipboardData.getData('Text');
@@ -121,6 +139,7 @@ class Email extends Component {
                         onAdd={chip => this.handleAddChip(chip)}
                         onDelete={(chip, index) => this.handleDeleteChip(chip, index)}
                         label="Recipients"
+                        helper="Enter a valid email and press Enter"
                         component={renderChip}
                         floatingLabelText="Please enter valid email"
                         fullWidth
@@ -139,7 +158,7 @@ class Email extends Component {
                       ))}
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
+                  <Grid item xs={12} sm={12} md={5}>
                     <FileUpload
                       paramName="file"
                       maxFilesize={200}
@@ -166,7 +185,9 @@ class Email extends Component {
                   <Button size="small" color="secondary" className={myStyles.actionsButton}>
                       Cancel
                   </Button>
-                  <SubmitButton>Send</SubmitButton>
+                  <SubmitButton loading={meta.isLoading} valid={!valid}>
+                    SEND
+                  </SubmitButton>
                 </div>
 
               </Grid>
@@ -178,10 +199,18 @@ class Email extends Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectEmailsMeta()
+});
+
+const withRedux = connect(mapStateToProps, {createEmail});
+
 export default compose(
+  withRedux,
   reduxForm({
     form: 'EmailForm',
-    destroyOnUnmount: false
-  }, null),
+    destroyOnUnmount: false,
+    validate
+  }),
   withStyles(styles)
 )(Email);

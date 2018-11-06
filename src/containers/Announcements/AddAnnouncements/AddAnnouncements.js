@@ -20,7 +20,7 @@ import {makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
 import FileUpload from 'components/FileUpload/FileUpload';
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
-import {validate} from 'utils/Validations/LoginAdmin';
+import {validate} from 'utils/Validations/AddAnnouncements';
 
 import myStyles from './Announcements.scss';
 
