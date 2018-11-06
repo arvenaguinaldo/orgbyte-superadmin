@@ -91,12 +91,12 @@ class Sidebar extends Component {
               <Grid item xs={12} sm={12} md={2}>
                 <Avatar
                   alt="Organization_logo"
-                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png"
                   className={styles.Avatar}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={10}>
-                <Typography variant="h6" noWrap className={styles.LastName}>Orgbyte</Typography>
+                <Typography variant="h6" noWrap className={styles.SuperAdminLabel}>Orgbyte</Typography>
               </Grid>
             </Grid>
           </div>
