@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
-import MUIDataTable from 'mui-datatables';
 import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import moment from 'moment';
+
+import MUIDataTable from 'mui-datatables';
 import {withStyles} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import Typography from '@material-ui/core/Typography';
+
+import {createStructuredSelector} from 'reselect';
+import {makeSelectAnnouncementsList, makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
+import {fetchAnnouncements} from 'redux/actions/announcements';
+
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -40,26 +51,34 @@ const styles = theme => ({
 
 class AnnouncementsPage extends Component {
   static propTypes = {
-    classes: PropTypes.object
+    classes: PropTypes.object,
+    announcements: PropTypes.array.isRequired
+  };
+
+  static defaultProps = {
+    announcements: []
   };
   render() {
-    const columns = ['Subject', 'Recipients', 'Date', 'Author', 'Status'];
-    const {classes} = this.props;
-    const data = [
-      ['Meeting for IT congress 2018', 'Officers', '12-21-2018', 'Lara Beatrice Hilario', 'Ongoing'],
-      ['Meeting for IT congress 2018', 'Officers', '12-21-2018', 'Lara Beatrice Hilario', 'Ongoing']
-    ];
+    const columns = ['Title', 'Announcements Starts', 'Announcements Ends'];
+    const {classes, announcements} = this.props;
+
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4">
-            Add Announcement
+            Announcements
         </Typography>
-        <Button component={Link} to="/admin/addannouncements" variant="contained" color="primary" className={classes.button} >
+        <Button component={Link} to="/admin/announcements/add" variant="contained" color="primary" className={classes.button} >
           Add announcement
         </Button>
         <MUIDataTable
-          title={'Existing Announcements'}
-          data={data}
+          title={'Announcements'}
+          data={announcements.map((announcement) => {
+            return [
+              announcement.title,
+              moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
+              moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+            ];
+          })}
           columns={columns}
         />
       </LayoutWithTopbarAndSidebar>
@@ -67,4 +86,25 @@ class AnnouncementsPage extends Component {
   }
 }
 
-export default withStyles(styles)(AnnouncementsPage);
+const mapStateToProps = createStructuredSelector({
+  announcements: makeSelectAnnouncementsList(),
+  meta: makeSelectAnnouncementsMeta()
+});
+
+const withRedux = connect(mapStateToProps, {fetchAnnouncements});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchAnnouncements();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout,
+  withStyles(styles)
+)(AnnouncementsPage);
+

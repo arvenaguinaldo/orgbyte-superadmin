@@ -92,8 +92,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/events/:id" component={EventDetails} />
         <AdminRoute path="/admin/events" component={EventList} />
 
-        <AdminRoute path="/admin/announcementspage" component={AnnouncementsPage} />
-        <AdminRoute path="/admin/addannouncements" component={AddAnnouncements} />
+        <AdminRoute path="/admin/announcements/add" component={AddAnnouncements} />
+        <AdminRoute path="/admin/announcements" component={AnnouncementsPage} />
         <AdminRoute path="/admin/email" component={Email} />
         <AdminRoute path="/admin/sms" component={SendSMS} />
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />

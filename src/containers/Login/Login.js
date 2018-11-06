@@ -92,7 +92,7 @@ render() {
         <Card className={classes.card}>
           <CardContent className={classes.content}>
             <Typography className={classes.title} color="textSecondary" variant="h4">
-              LOGIN
+LOGIN
             </Typography>
 
             <Field
@@ -135,7 +135,7 @@ render() {
           </CardContent>
           <CardActions>
             <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}>
-              LOGIN
+LOGIN
             </SubmitButton>
           </CardActions>
         </Card>
