@@ -9,6 +9,7 @@ import edit from './edit';
 import courses from './courses';
 import colleges from './colleges';
 import organizationNatures from './organization_natures';
+import announcements from './announcements';
 
 export default function* root() {
   yield [
@@ -20,6 +21,7 @@ export default function* root() {
     fork(edit),
     fork(courses),
     fork(colleges),
-    fork(organizationNatures)
+    fork(organizationNatures),
+    fork(announcements)
   ];
 }

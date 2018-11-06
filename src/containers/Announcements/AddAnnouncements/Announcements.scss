@@ -1,6 +1,7 @@
 
 .actionsDiv {
   position: absolute;
+  bottom: -20px;
   right: 40px;
 }
 
@@ -13,4 +14,8 @@
   padding-bottom: 50px;
   padding-left: 40px;
   margin-bottom: 20px;
+}
+
+.button {
+  margin: 5px;
 }
