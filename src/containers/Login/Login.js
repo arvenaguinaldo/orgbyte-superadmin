@@ -10,20 +10,28 @@ import * as authenticate from 'utils/AuthService';
 
 import {login} from 'redux/actions/auth';
 import {makeSelectAuthMeta} from 'redux/selectors/auth';
-import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
 
-//  material ui
+import {Field, reduxForm} from 'redux-form';
+import {renderTextField, renderPasswordField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+
+// material ui
 
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Password from '@material-ui/icons/Lock';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 // validation
-import validateInput from 'utils/LoginValidations';
+import {validate} from 'utils/Validations/LoginAdmin';
+
+import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 
 const styles = theme => ({
@@ -46,101 +54,95 @@ const styles = theme => ({
   },
   title: {
     textAlign: 'center'
+  },
+  loginButton: {
+    width: '100%'
   }
 });
 
 class Login extends Component {
-  static propTypes = {
-    login: PropTypes.func.isRequired,
-    location: PropTypes.object,
-    classes: PropTypes.object.isRequired
-  };
+static propTypes = {
+  location: PropTypes.object,
+  classes: PropTypes.object.isRequired
+};
 
-  state = {
-    email: '',
-    password: '',
-    errors: {}
+state = {
+  showPassword1: false
+};
+
+onSubmit = (values, dispatch) => {
+  dispatch(login(values));
+};
+
+handleClickShowPassword1 = () => {
+  this.setState(state => ({showPassword1: !state.showPassword1}));
+};
+
+render() {
+  const {from} = this.props.location.state || {from: {pathname: '/'}};
+  const {classes, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+
+  if (authenticate.isUserAuthenticated()) {
+    return <Redirect to={from} />;
   }
 
-  onSubmit = (event) => {
-    const {email, password} = this.state;
-    event.preventDefault();
-    if (this.isValid()) {
-      this.setState({errors: {}});
-      this.props.login({email, password});
-    }
-  }
+  return (
+    <div>
+      <form className={classes.container} noValidate autoComplete="on" onSubmit={handleSubmit(this.onSubmit)}>
+        <Card className={classes.card}>
+          <CardContent className={classes.content}>
+            <Typography className={classes.title} color="textSecondary" variant="h4">
+              LOGIN
+            </Typography>
 
-  isValid = () => {
-    const {errors, isValid} = validateInput(this.state);
-    if (!isValid) {
-      this.setState({errors});
-    }
-    return isValid;
-  }
+            <Field
+              name="email"
+              component={renderTextField}
+              label="Email"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }}
+            />
 
-  handleChange = name => ({target: {value}}) => {
-    this.setState({
-      [name]: value
-    });
-  };
+            <Field
+              name="password"
+              component={renderPasswordField}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={this.handleClickShowPassword1}
+                  >
+                    {this.state.showPassword1 ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              fullWidth
+              type={this.state.showPassword1 ? 'text' : 'password'}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Password />
+                </InputAdornment>
+              }
+            />
 
-  render() {
-    const {from} = this.props.location.state || {from: {pathname: '/'}};
-    const {errors, email, password} = this.state;
-    const {classes} = this.props;
-
-    if (authenticate.isUserAuthenticated()) {
-      return <Redirect to={from} />;
-    }
-
-    return (
-      <div>
-        <form className={classes.container} noValidate autoComplete="on" onSubmit={this.onSubmit}>
-          <Card className={classes.card}>
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} color="textSecondary" variant="h4">
-                LOGIN
-              </Typography>
-
-              <TextField
-                label="Email"
-                value={email}
-                placeholder="Email"
-                fullWidth
-                margin="normal"
-                type="email"
-                autoComplete="email"
-                error={!!errors.email}
-                helperText={errors.email}
-                onChange={this.handleChange('email')}
-              />
-
-              <TextField
-                label="Password"
-                value={password}
-                placeholder="Enter Password"
-                fullWidth
-                margin="normal"
-                type="password"
-                error={!!errors.password}
-                helperText={errors.password}
-                onChange={this.handleChange('password')}
-              />
-
-            </CardContent>
-            <CardActions>
-              <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={this.onSubmit}>
-                <Typography color="inherit" variant="button">
-                  Login
-                </Typography>
-              </Button>
-            </CardActions>
-          </Card>
-        </form>
-      </div>
-    );
-  }
+          </CardContent>
+          <CardActions>
+            <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}>
+              LOGIN
+            </SubmitButton>
+          </CardActions>
+        </Card>
+      </form>
+    </div>
+  );
+}
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -149,12 +151,12 @@ const mapStateToProps = createStructuredSelector({
 
 const withRedux = connect(mapStateToProps, {login});
 
-const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
-  return props.meta.isLoading;
-});
 export default compose(
   withRedux,
-  withLoadingWhileFetchingData,
+  reduxForm({
+    form: 'LoginSuperAdmin',
+    destroyOnUnmount: false,
+    validate
+  }),
   withStyles(styles)
 )(Login);
-

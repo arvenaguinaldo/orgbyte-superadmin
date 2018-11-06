@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 // Material UI
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,6 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Input from '@material-ui/core/Input';
+import ChipInput from 'material-ui-chip-input';
 
 // import MenuItem from '@material-ui/core/MenuItem';
 
@@ -226,6 +226,35 @@ export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) =>
       <div />
     )}
     textFieldProps={{...other}}
+  />
+);
+
+export const renderChip = (
+  {input, label, fullWidth, floatingLabelText} // eslint-disable-line react/prop-types
+) => (
+  <ChipInput
+    {...input}
+    value={input.value || []}
+    onBeforeAdd={(toAddChip) => {
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(toAddChip)) {
+        return false;
+      } return true;
+    }}
+    onAdd={(addedChip) => {
+      let values = input.value || [];
+      values = values.slice();
+      values.push(addedChip);
+      input.onChange(values);
+    }}
+    onDelete={(deletedChip) => {
+      let values = input.value || [];
+      values = values.filter(v => v !== deletedChip);
+      input.onChange(values);
+    }}
+    onBlur={() => input.onBlur()}
+    label={label}
+    fullWidth={fullWidth}
+    floatingLabelText={floatingLabelText}
   />
 );
 
