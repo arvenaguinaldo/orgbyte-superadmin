@@ -51,7 +51,7 @@ import AnnounceView from 'containers/UserPage/Announcements/AnnouncementPage/Ann
 import EventView from 'containers/UserPage/Events/EventPage/EventView';
 import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementPage/Announcement';
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
-import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/Main';
+import UserOrganizationList from 'containers/UserPage/Organizations/UserOrganizationList/UserOrganizationList';
 import UserOrganizationProf from 'containers/UserPage/OrganizationsProfilePage/Main';
 
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
