@@ -11,6 +11,7 @@ import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
 import Home from 'containers/Home/Home';
 
 // Super Admin Routes
+import Dashboard from 'containers/Dashboard/Dashboard';
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
 import OrganizationList from 'containers/OrganizationList/OrganizationList';
 import PresidentList from 'containers/PresidentList/PresidentList';
@@ -36,7 +37,8 @@ import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
 
-import Announcements from 'containers/Announcements/Announcements';
+import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
+import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
@@ -63,13 +65,12 @@ class MainRoutes extends Component {
         <Route path="/login" component={LoginAdmin} exact />
 
         {/* Super Admin Routes */}
-        <SuperAdminRoute path="/superadmin/" component={Home} exact />
+        <SuperAdminRoute path="/superadmin/" component={Dashboard} exact />
         <SuperAdminRoute path="/superadmin/addorganization" component={AddOrganization} />
         <SuperAdminRoute path="/superadmin/reneworganization" component={RenewOrganization} />
         <SuperAdminRoute path="/superadmin/organizations" component={OrganizationList} />
         <SuperAdminRoute path="/superadmin/presidents" component={PresidentList} />
         <SuperAdminRoute path="/superadmin/backups" component={BackupList} />
-
 
         {/* Admin Routes */}
 
@@ -91,7 +92,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/events/:id" component={EventDetails} />
         <AdminRoute path="/admin/events" component={EventList} />
 
-        <AdminRoute path="/admin/announcements" component={Announcements} />
+        <AdminRoute path="/admin/announcementspage" component={AnnouncementsPage} />
+        <AdminRoute path="/admin/addannouncements" component={AddAnnouncements} />
         <AdminRoute path="/admin/email" component={Email} />
         <AdminRoute path="/admin/sms" component={SendSMS} />
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />

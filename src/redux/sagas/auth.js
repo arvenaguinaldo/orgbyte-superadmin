@@ -15,9 +15,12 @@ import {callErrorNotification} from './notification';
 function* login(action) {
   const response = yield call(authService.login, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      console.log('error');
+      yield put(authActions.loginSuccess(response));
     } else {
+      console.log('success');
       yield put(authActions.loginSuccess(response));
       authenticate.authenticateToken(response.data.token);
       yield put(authActions.setCurrentUser(jwt.decode(response.data.token)));

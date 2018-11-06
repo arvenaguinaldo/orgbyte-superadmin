@@ -60,6 +60,7 @@ export const warn = (values) => {
   const {organization = {}} = values;
   const warnings = {organization: {}};
   if (organization.organization_type_id === 1) {
+    console.log('hehe');
     warnings.organization.college_id = 'University Wide Organization must not contain specific college';
   }
   return warnings;
