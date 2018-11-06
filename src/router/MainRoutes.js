@@ -37,7 +37,8 @@ import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
 
-import Announcements from 'containers/Announcements/Announcements';
+import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
+import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
@@ -91,7 +92,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/events/:id" component={EventDetails} />
         <AdminRoute path="/admin/events" component={EventList} />
 
-        <AdminRoute path="/admin/announcements" component={Announcements} />
+        <AdminRoute path="/admin/announcementspage" component={AnnouncementsPage} />
+        <AdminRoute path="/admin/addannouncements" component={AddAnnouncements} />
         <AdminRoute path="/admin/email" component={Email} />
         <AdminRoute path="/admin/sms" component={SendSMS} />
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />
