@@ -14,7 +14,7 @@ import {makeSelectAuthMeta} from 'redux/selectors/auth';
 import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderPasswordField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
-//  material ui
+// material ui
 
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -61,88 +61,88 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-  static propTypes = {
-    location: PropTypes.object,
-    classes: PropTypes.object.isRequired
-  };
+static propTypes = {
+  location: PropTypes.object,
+  classes: PropTypes.object.isRequired
+};
 
-  state = {
-    showPassword1: false
-  };
+state = {
+  showPassword1: false
+};
 
-  onSubmit = (values, dispatch) => {
-    dispatch(login(values));
-  };
+onSubmit = (values, dispatch) => {
+  dispatch(login(values));
+};
 
-  handleClickShowPassword1 = () => {
-    this.setState(state => ({showPassword1: !state.showPassword1}));
-  };
+handleClickShowPassword1 = () => {
+  this.setState(state => ({showPassword1: !state.showPassword1}));
+};
 
-  render() {
-    const {from} = this.props.location.state || {from: {pathname: '/'}};
-    const {classes, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+render() {
+  const {from} = this.props.location.state || {from: {pathname: '/'}};
+  const {classes, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
 
-    if (authenticate.isUserAuthenticated()) {
-      return <Redirect to={from} />;
-    }
-
-    return (
-      <div>
-        <form className={classes.container} noValidate autoComplete="on" onSubmit={handleSubmit(this.onSubmit)}>
-          <Card className={classes.card}>
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} color="textSecondary" variant="h4">
-                LOGIN
-              </Typography>
-
-              <Field
-                name="email"
-                component={renderTextField}
-                label="Email"
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  )
-                }}
-              />
-
-              <Field
-                name="password"
-                component={renderPasswordField}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="Toggle password visibility"
-                      onClick={this.handleClickShowPassword1}
-                    >
-                      {this.state.showPassword1 ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                fullWidth
-                type={this.state.showPassword1 ? 'text' : 'password'}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Password />
-                  </InputAdornment>
-                }
-              />
-
-            </CardContent>
-            <CardActions>
-              <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}>
-                        LOGIN
-              </SubmitButton>
-            </CardActions>
-          </Card>
-        </form>
-      </div>
-    );
+  if (authenticate.isUserAuthenticated()) {
+    return <Redirect to={from} />;
   }
+
+  return (
+    <div>
+      <form className={classes.container} noValidate autoComplete="on" onSubmit={handleSubmit(this.onSubmit)}>
+        <Card className={classes.card}>
+          <CardContent className={classes.content}>
+            <Typography className={classes.title} color="textSecondary" variant="h4">
+LOGIN
+            </Typography>
+
+            <Field
+              name="email"
+              component={renderTextField}
+              label="Email"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }}
+            />
+
+            <Field
+              name="password"
+              component={renderPasswordField}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={this.handleClickShowPassword1}
+                  >
+                    {this.state.showPassword1 ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              fullWidth
+              type={this.state.showPassword1 ? 'text' : 'password'}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Password />
+                </InputAdornment>
+              }
+            />
+
+          </CardContent>
+          <CardActions>
+            <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}>
+LOGIN
+            </SubmitButton>
+          </CardActions>
+        </Card>
+      </form>
+    </div>
+  );
+}
 }
 
 const mapStateToProps = createStructuredSelector({

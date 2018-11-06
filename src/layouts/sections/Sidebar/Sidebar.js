@@ -106,6 +106,7 @@ class Sidebar extends Component {
         </div>
         {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
         {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        <div className={classes.toolbar} />
       </div>
     );
 
