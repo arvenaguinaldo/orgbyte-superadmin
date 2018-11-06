@@ -21,11 +21,8 @@ import styles from './ChangePassword.scss';
 
 class PasswordReset extends Component {
   state = {
-    password1: '',
     showPassword1: false,
-    password2: '',
     showPassword2: false,
-    password3: '',
     showPassword3: false
   };
 
