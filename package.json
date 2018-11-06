@@ -16,6 +16,7 @@
     "dropzone": "^5.5.1",
     "generate-password": "^1.4.0",
     "history": "^4.7.2",
+    "i": "^0.3.6",
     "immutable": "^3.8.1",
     "immutable-treeutils": "0.1.8",
     "jsonwebtoken": "^8.3.0",
