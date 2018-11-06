@@ -8,7 +8,7 @@ import {createStructuredSelector} from 'reselect';
 import {Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
-import {renderTextField, renderSelectField, renderRadioButton} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
 import {fetchCourses} from 'redux/actions/courses';
 
@@ -19,8 +19,8 @@ import fetchInitialData from 'hoc/fetchInitialData';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Radio from '@material-ui/core/Radio';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
 import {validate} from 'utils/Validations/AddMemberIndividual';
@@ -187,7 +187,7 @@ class Individual extends Component {
                 </Grid>
               </Grid>
 
-              <Grid container spacing={32}>
+              {/* <Grid container spacing={32}>
                 <Grid item xs={12} sm={12} md={4}>
                   <Field
                     name="semester"
@@ -199,12 +199,12 @@ class Individual extends Component {
                     <FormControlLabel value="2" control={<Radio color="primary" />} label="2nd Semester" />
                   </Field>
                 </Grid>
-              </Grid>
+              </Grid> */}
 
             </Grid>
           </Grid>
           <div className={style.bottomButton}>
-            <Button component={Link} to="/memberships" color="primary" className={style.button}>
+            <Button component={Link} to="/admin/memberships" color="primary" className={style.button}>
               Cancel
             </Button>
 

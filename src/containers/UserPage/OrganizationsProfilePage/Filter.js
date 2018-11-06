@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import Center from 'react-center';
+import Icon from './Icon';
+import OrgDetails from './OrgDetails';
 
 const styles = {
   card: {
@@ -24,21 +25,10 @@ function SimpleCard(props) {
   return (
     <Card className={classes.card} nowrap>
       <CardContent>
-        <Typography variant="h6" >
-          FILTER ORGANIZATION
-        </Typography>
-        <TextField
-          id="standard-name"
-          label="TYPE"
-          className={classes.text}
-          margin="normal"
-        />
-        <TextField
-          id="standard-name"
-          label="CATEGORIES"
-          className={classes.text}
-          margin="normal"
-        />
+        <Center>
+          <Icon />
+        </Center>
+        <OrgDetails />
       </CardContent>
     </Card>
   );

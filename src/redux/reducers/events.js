@@ -121,6 +121,21 @@ const events = (state = initialState, action) => {
       }));
     }
 
+    case EVENTS.REGISTER_IMPORTS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoadingSubmit: true
+      }));
+    }
+    case EVENTS.REGISTER_IMPORTS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

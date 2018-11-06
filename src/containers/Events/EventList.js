@@ -130,7 +130,7 @@ class EventList extends Component {
                             <EventIcon className={styles.listIcon} />
                           </ListItemIcon>
                           <ListItemText>
-                            <Typography variant="body2" component="p">{Moment(event.date_time).format('MMMM Do YYYY, h:mm a')}</Typography>
+                            <Typography variant="body2" component="p">{Moment(event.starts).format('MMMM Do YYYY, h:mm a')}</Typography>
                           </ListItemText>
                         </ListItem>
                         <ListItem>

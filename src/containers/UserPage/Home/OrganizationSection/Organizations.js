@@ -43,7 +43,7 @@ class Organizations extends Component {
           <Grid container spacing={0}>
             {organizations.slice(0, 6).map((org) => {
               return (
-                <Grid item lg={2} md={2} sm={6} xs={6}>
+                <Grid key={org.id} item lg={2} md={2} sm={6} xs={6}>
                   <Card className={style.OrganizationCard}>
                     <Center>
                       <CardContent>
@@ -51,7 +51,7 @@ class Organizations extends Component {
                           <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
                         </Center>
                         <Center>
-                          <Typography variant="caption">
+                          <Typography variant="caption" >
                             {org.acronym}
                           </Typography>
                         </Center>

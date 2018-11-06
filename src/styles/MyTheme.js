@@ -1,9 +1,18 @@
 import {createMuiTheme} from '@material-ui/core/styles';
+import * as Theme from 'utils/ThemeService';
+
+const drawerWidth = 250;
+
+const colorTheme = Theme.getThemeColor() ? Theme.getThemeColor() : '#5C181D';
 
 const theme = createMuiTheme({
+  background: {
+    paper: '#fff',
+    default: '#fafafa'
+  },
   palette: {
     primary: {
-      main: '#5C181D'
+      main: colorTheme
     },
     secondary: {
       main: '#363736'
@@ -33,7 +42,21 @@ const theme = createMuiTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"'
     ].join(',')
+  },
+  overrides: {
+    MuiDrawer: { // Name of the component ⚛️ / style sheet
+      paper: { // Name of the rule
+        background: colorTheme, // Some CSS
+        width: drawerWidth
+      }
+    },
+    MuiTypography: { // Name of the component ⚛️ / style sheet
+      h4: { // Name of the rule
+        fontWeight: 'bold'
+      }
+    }
   }
 });
+theme.shadows = [];
 
 export default theme;
