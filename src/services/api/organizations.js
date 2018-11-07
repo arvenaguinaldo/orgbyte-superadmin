@@ -15,3 +15,7 @@ export const fetchCurrentOrganization = () => {
 export const addOrganization = (params) => {
   return api.callPost('/organizations', params);
 };
+
+export const fetchOrganizationToUserSide = (params) => {
+  return api.callGet('/organizations/fetch_organization_to_user_side/' + params);
+};
