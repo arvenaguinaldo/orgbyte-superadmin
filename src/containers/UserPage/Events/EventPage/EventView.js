@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -103,6 +104,7 @@ class EventPage extends Component {
   };
   render() {
     const {classes, event} = this.props;
+    Moment.locale('en');
     return (
       <TopBarAndFooter>
         <div className={classes.EventCoverImage} />
@@ -147,7 +149,7 @@ class EventPage extends Component {
                                 <Center>
                                   <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
                                     <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >28</span>, 2018</Typography>
+                                      <Typography variant="body1" >OCT <span className={classes.date} >28</span> 2018</Typography>
                                     </Center>
                                   </Grid>
                                   <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
@@ -157,7 +159,7 @@ class EventPage extends Component {
                                   </Grid>
                                   <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
                                     <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >29</span>, 2018</Typography>
+                                      <Typography variant="body1" >OCT <span className={classes.date} >29</span> 2018</Typography>
                                     </Center>
                                   </Grid>
                                 </Center>
@@ -183,15 +185,15 @@ class EventPage extends Component {
                             <Typography className={classes.title} gutterBottom>
                               Date and Time
                             </Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>Sat, October 27, 2018</Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>5:00 PM – 8:00 PM</Typography>
+                            <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('ddd MMMM DD, YYYY')}</Typography>
+                            <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('h:mm A')}</Typography>
                           </div>
 
                           <div className={classes.container}>
                             <Typography className={classes.title} gutterBottom>
                                Location
                             </Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>Bitas Covered Court San Roque Bitas Arayat, Pampanga 2012 </Typography>
+                            <Typography variant="subtitle1" className={classes.Text}>{event.venue}</Typography>
                           </div>
 
                         </Grid>
