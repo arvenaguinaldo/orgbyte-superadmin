@@ -28,6 +28,7 @@ import SMS from '@material-ui/icons/Sms';
 import Add from '@material-ui/icons/Add';
 import Lock from '@material-ui/icons/Lock';
 import Shop from '@material-ui/icons/ShoppingBasket';
+import Building from '@material-ui/icons/AccountBalance';
 import Event from '@material-ui/icons/Event';
 
 import Typography from '@material-ui/core/Typography';
@@ -42,18 +43,21 @@ class SuperAdminMenuItemData extends Component {
 
   state = {
     advancedMenuOpen: false,
-    advancedAccountsOpen: false
+    advancedAccountsOpen: false,
+    organizationsAccountsOpen: false
   };
 
   componentWillMount() {
     const {pathname} = this.props;
 
-    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/presidents' || pathname === '/superadmin/addorganization') {
-      this.setState(({advancedAccountsOpen: !this.state.advancedAccountsOpen}));
+    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization') {
+      this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
     }
-
     if (pathname === '/superadmin/backups') {
       this.setState(({advancedMenuOpen: !this.state.advancedMenuOpen}));
+    }
+    if (pathname === '/superadmin/presidents') {
+      this.setState(({advancedAccountsOpen: !this.state.advancedAccountsOpen}));
     }
   }
 
@@ -65,6 +69,10 @@ class SuperAdminMenuItemData extends Component {
     this.setState(({advancedAccountsOpen: !this.state.advancedAccountsOpen}));
   };
 
+  handleClickOrganization = () => {
+    this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
+  };
+
   render() {
     const {
       pathname,
@@ -73,7 +81,8 @@ class SuperAdminMenuItemData extends Component {
 
     const {
       advancedMenuOpen,
-      advancedAccountsOpen
+      advancedAccountsOpen,
+      organizationsAccountsOpen
     } = this.state;
 
     return (
@@ -88,15 +97,15 @@ class SuperAdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Dashboard</Typography>} />
           </MenuItem>
 
-          <MenuItem button onClick={this.handleClickAccounts}>
+          <MenuItem button onClick={this.handleClickOrganization}>
             <ListItemIcon>
-              <ManageIcon className={style.listIcon} />
+              <Building className={style.listIcon} />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Manage Accounts</Typography>} />
-            {advancedAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Organizations</Typography>} />
+            {organizationsAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
           </MenuItem>
 
-          <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
+          <Collapse in={organizationsAccountsOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
               <MenuItem component={Link} to="/superadmin/addorganization" selected={pathname === '/superadmin/addorganization'} className={style.nested}>
@@ -120,6 +129,19 @@ class SuperAdminMenuItemData extends Component {
                 <ListItemText inset primary={<Typography variant="body1" className={style.list}>Organizations List</Typography>} />
               </MenuItem>
 
+            </MenuList>
+          </Collapse>
+
+          <MenuItem button onClick={this.handleClickAccounts}>
+            <ListItemIcon>
+              <ManageIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Manage Accounts</Typography>} />
+            {advancedAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+          </MenuItem>
+
+          <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
 
               <MenuItem component={Link} to="/superadmin/presidents" selected={pathname === '/superadmin/presidents'} className={style.nested}>
                 <ListItemIcon>
