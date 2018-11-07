@@ -167,7 +167,7 @@ class EventDetails extends Component {
                         <EventIcon />
                       </ListItemIcon>
                       <Typography variant="h6" className={styles.listTitle}>Date Starts:</Typography>
-                      <ListItemText primary={<Typography variant="h6">{moment(event.starts).format('MMMM do YYYY, h:mm a')}</Typography>} />
+                      <ListItemText primary={<Typography variant="h6">{event.starts && moment(event.starts).format('MMMM Do YYYY, h:mm a')}</Typography>} />
                     </ListItem>
 
                     <ListItem>
@@ -175,7 +175,7 @@ class EventDetails extends Component {
                         <EventIcon />
                       </ListItemIcon>
                       <Typography variant="h6" className={styles.listTitle}>Date Ends:</Typography>
-                      <ListItemText primary={<Typography variant="h6">{moment(event.ends).format('MMMM do YYYY, h:mm a')}</Typography>} />
+                      <ListItemText primary={<Typography variant="h6">{event.starts && moment(event.ends).format('MMMM Do YYYY, h:mm a')}</Typography>} />
                     </ListItem>
 
                     <ListItem>

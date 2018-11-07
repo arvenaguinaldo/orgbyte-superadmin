@@ -13,6 +13,10 @@ export const validate = (values) => {
     errors.user.contact_number = 'Invalid phone number, must be 10 digits or not starting with 0';
   }
 
+  if (!/^[A-Z]*$/gm.test(organization.acronym)) {
+    errors.organization.acronym = 'Invalid Acronym must be Uppercase';
+  }
+
   const requiredFields = [
     'name',
     'organization_type_id',
@@ -56,6 +60,7 @@ export const warn = (values) => {
   const {organization = {}} = values;
   const warnings = {organization: {}};
   if (organization.organization_type_id === 1) {
+    console.log('hehe');
     warnings.organization.college_id = 'University Wide Organization must not contain specific college';
   }
   return warnings;

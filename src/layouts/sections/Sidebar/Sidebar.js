@@ -19,12 +19,12 @@ import {SuperAdminMenuItemData} from 'layouts/MenuItemData/MenuItemData';
 import {AdminMenuItemData} from '../../MenuItemData/MenuItemData';
 import styles from './Sidebar.scss';
 
-const drawerWidth = 250;
+// const drawerWidth = 250;
 
 const Styles = theme => ({
   drawerPaper: {
-    backgroundColor: '#5E1619',
-    width: drawerWidth,
+    // backgroundColor: this.props.organization.color_theme,
+    // width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       position: 'fixed'
     }
@@ -42,6 +42,7 @@ class Sidebar extends Component {
     onHandleDrawerToggle: PropTypes.func.isRequired,
     mobileOpen: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
+    // organization: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
   };
 
@@ -91,12 +92,12 @@ class Sidebar extends Component {
               <Grid item xs={12} sm={12} md={2}>
                 <Avatar
                   alt="Organization_logo"
-                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png"
                   className={styles.Avatar}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={10}>
-                <Typography variant="h6" noWrap className={styles.LastName}>Orgbyte</Typography>
+                <Typography variant="h6" noWrap className={styles.SuperAdminLabel}>Orgbyte</Typography>
               </Grid>
             </Grid>
           </div>
@@ -105,6 +106,7 @@ class Sidebar extends Component {
         </div>
         {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
         {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        <div className={classes.toolbar} />
       </div>
     );
 

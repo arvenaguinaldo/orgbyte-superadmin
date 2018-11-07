@@ -73,6 +73,7 @@ class SubmitButton extends Component {
           className={buttonClassname}
           disabled={loading || valid}
           type="submit"
+          fullWidth
         >
           {children}
         </Button>

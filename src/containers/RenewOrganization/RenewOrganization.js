@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 import {Field, reduxForm, FormSection, change, propTypes} from 'redux-form';
 
@@ -25,7 +26,7 @@ import {fetchOrganizations} from 'redux/actions/organizations';
 
 
 // Redux Material UI Forms
-import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderSelectField, renderDateTimePicker, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import FileUpload from 'components/FileUpload/FileUpload';
 
 // material ui core
@@ -88,6 +89,8 @@ class RenewOrganization extends Component {
   };
 
   state = {
+    startsDate: new Date('2018-01-01T00:00:00.000Z'),
+    endsDate: new Date(),
     selectedDate: new Date(),
     selectedLogo: null,
     color: ['#5C181D', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
@@ -181,6 +184,13 @@ class RenewOrganization extends Component {
     this.props.array.insert('organization_to_renew', 2, '123123');
     console.log(this.props);
   };
+  handleStartsDateChange = (date) => {
+    this.setState({startsDate: date});
+  }
+
+  handleEndsDateChange = (date) => {
+    this.setState({endsDate: date});
+  }
   renewalList = () => {
     // const columns = this.state;
     const options = {
@@ -232,22 +242,23 @@ class RenewOrganization extends Component {
                   </Grid>
                   <Grid item xs={12} sm={12} md={4}>
                     <Field
-                      name="renewal_start"
-                      component={renderDatePicker}
-                      selected={this.state.selectedDate}
-                      label="Renewal Start"
+                      name="starts"
+                      component={renderDateTimePicker}
+                      label="Date Starts"
+                      selected={this.state.startsDate}
+                      onChange={this.handleStartsDateChange}
+                      disablePast
                       fullWidth
-                      maxDateMessage="Date should not be after maximal date"
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={4}>
                     <Field
-                      name="renewal_end"
-                      component={renderDatePicker}
-                      selected={this.state.selectedDate}
-                      label="Renewal End"
+                      name="ends"
+                      component={renderDateTimePicker}
+                      label="Date Ends"
+                      selected={this.state.endsDate}
+                      minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
                       fullWidth
-                      maxDateMessage="Date should not be after maximal date"
                     />
                   </Grid>
                 </Grid>
@@ -265,7 +276,6 @@ class RenewOrganization extends Component {
       pattern: '99-999',
       placeholder: ' '
     });
-    const moment = require('moment');
     const currentDate = moment().format('YYYY-MM-DD');
 
     return (

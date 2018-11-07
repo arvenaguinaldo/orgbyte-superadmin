@@ -34,7 +34,6 @@ const styles = theme => ({
     flexGrow: 1,
     marginLeft: drawerWidth,
     height: '100%',
-    backgroundColor: '#EEEEEE',
     padding: theme.spacing.unit * 3
   },
 
@@ -75,7 +74,7 @@ class LayoutWithTopbarAndSidebar extends Component {
 
     return (
       <div className={classes.root}>
-        <Sidebar user={user} mobileOpen={mobileOpen} onHandleDrawerToggle={this.handleDrawerToggle} />
+        <Sidebar user={user} organization={organization} mobileOpen={mobileOpen} onHandleDrawerToggle={this.handleDrawerToggle} />
         <div className={classes.appFrame}>
           <Topbar organization={organization} user={user} onHandleDrawerToggle={this.handleDrawerToggle} />
 

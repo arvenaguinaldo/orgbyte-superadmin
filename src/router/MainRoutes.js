@@ -37,7 +37,8 @@ import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
 
-import Announcements from 'containers/Announcements/Announcements';
+import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
+import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
@@ -46,9 +47,12 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
-import UserAnnouncement from 'containers/UserPage/AnnouncementsPage/Announcement';
+import AnnounceView from 'containers/UserPage/Announcements/AnnouncementPage/AnnounceView';
+import EventView from 'containers/UserPage/Events/EventPage/EventView';
+import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementPage/Announcement';
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
-import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/OrganizationList';
+import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/Main';
+import UserOrganizationProf from 'containers/UserPage/OrganizationsProfilePage/Main';
 
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
@@ -88,7 +92,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/events/:id" component={EventDetails} />
         <AdminRoute path="/admin/events" component={EventList} />
 
-        <AdminRoute path="/admin/announcements" component={Announcements} />
+        <AdminRoute path="/admin/announcements/add" component={AddAnnouncements} />
+        <AdminRoute path="/admin/announcements" component={AnnouncementsPage} />
         <AdminRoute path="/admin/email" component={Email} />
         <AdminRoute path="/admin/sms" component={SendSMS} />
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />
@@ -100,6 +105,9 @@ class MainRoutes extends Component {
         <Route path="/announcements" component={UserAnnouncement} exact />
         <Route path="/events" component={UserEventList} exact />
         <Route path="/organizations" component={UserOrganizationList} exact />
+        <Route path="/announceview" component={AnnounceView} exact />
+        <Route path="/eventview" component={EventView} exact />
+        <Route path="/orgProfile" component={UserOrganizationProf} exact />
 
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />

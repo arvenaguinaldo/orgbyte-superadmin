@@ -96,10 +96,12 @@ const styles2 = theme => ({
 class CustomizedSnackbars extends React.Component {
     static propTypes = {
       variant: PropTypes.string,
-      message: PropTypes.string
+      message: PropTypes.string,
+      open: PropTypes.bool
     }
+
   state = {
-    open: true
+    open: this.props.open
   };
 
   handleClick = () => {

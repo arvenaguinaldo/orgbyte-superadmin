@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 // Material UI
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,11 +12,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
+import ChipInput from 'material-ui-chip-input';
 
 // import MenuItem from '@material-ui/core/MenuItem';
 
@@ -47,17 +43,6 @@ export const renderTextField = (
     InputProps={{
       readOnly
     }}
-    type={type}
-    endadornment={
-      <InputAdornment position="end">
-        <IconButton
-          aria-label="Toggle password visibility"
-          onClick={handler}
-        >
-          {showPassword ? <VisibilityOff /> : <Visibility />}
-        </IconButton>
-      </InputAdornment>
-    }
     {...input}
     {...custom}
   />
@@ -66,7 +51,7 @@ export const renderTextField = (
 export const renderPasswordField = (
   {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
-  <FormControl margin="normal" fullWidth={fullWidth}>
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
     <Input
       label={label}
       defaultValue={defaultValue}
@@ -76,16 +61,6 @@ export const renderPasswordField = (
       fullWidth={fullWidth}
       multiline={multiline}
       type={type}
-      endAdornment={
-        <InputAdornment position="end">
-          <IconButton
-            aria-label="Toggle password visibility"
-            onClick={handler}
-          >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </IconButton>
-        </InputAdornment>
-      }
       {...input}
       {...custom}
     />
@@ -164,13 +139,13 @@ export const renderDateTimePicker = (
   </FormControl>
 );
 
-export const renderInputImage = (
-  {input, label, fullWidth, className, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
+export const renderInput = (
+  {input, label, fullWidth, accept, className, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
 ) => (
   <div>
     <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
       <input
-        accept="image/*"
+        accept={accept}
         id="contained-button-file"
         multiple
         type="file"
@@ -251,6 +226,35 @@ export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) =>
       <div />
     )}
     textFieldProps={{...other}}
+  />
+);
+
+export const renderChip = (
+  {input, label, fullWidth, floatingLabelText} // eslint-disable-line react/prop-types
+) => (
+  <ChipInput
+    {...input}
+    value={input.value || []}
+    onBeforeAdd={(toAddChip) => {
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(toAddChip)) {
+        return false;
+      } return true;
+    }}
+    onAdd={(addedChip) => {
+      let values = input.value || [];
+      values = values.slice();
+      values.push(addedChip);
+      input.onChange(values);
+    }}
+    onDelete={(deletedChip) => {
+      let values = input.value || [];
+      values = values.filter(v => v !== deletedChip);
+      input.onChange(values);
+    }}
+    onBlur={() => input.onBlur()}
+    label={label}
+    fullWidth={fullWidth}
+    floatingLabelText={floatingLabelText}
   />
 );
 
