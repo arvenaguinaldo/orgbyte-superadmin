@@ -49,3 +49,8 @@ export const addOrganizationUserSuccess = response => ({
   type: ORGANIZATIONS.ADD_ORGANIZATION_USER_SUCCESS,
   response
 });
+
+export const setCurrentOrganization = response => ({
+  type: ORGANIZATIONS.SET_CURRENT_ORGANIZATION,
+  response
+});

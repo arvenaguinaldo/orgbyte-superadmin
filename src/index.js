@@ -10,7 +10,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiThemeProvider} from '@material-ui/core/styles';
-import myTheme from 'styles/MyTheme';
+import theme from 'styles/MyTheme';
 
 // for datepicker import
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
@@ -18,9 +18,9 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 // Authentications
 import * as authenticate from 'utils/AuthService';
-import * as theme from 'utils/ThemeService';
+import * as themeService from 'utils/ThemeService';
 import jwt from 'jsonwebtoken';
-import {setCurrentUser} from 'redux/actions/auth';
+import {setCurrentUser, setColorTheme} from 'redux/actions/auth';
 import {fetchCurrentOrganization} from 'redux/actions/organizations';
 
 // Global Styles
@@ -47,8 +47,12 @@ function startApp() {
     store.dispatch(fetchCurrentOrganization());
   }
 
-  if (theme.getThemeColor()) {
-    store.dispatch(fetchCurrentOrganization());
+  if (themeService.getThemeColor()) {
+    store.dispatch(setColorTheme(themeService.getThemeColor()));
+  }
+
+  if (themeService.noThemeColor()) {
+    themeService.setThemeColor('#5C181D');
   }
 
   ReactDOM.render(
@@ -56,7 +60,7 @@ function startApp() {
       <Provider store={store}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <ConnectedRouter history={history}>
-            <MuiThemeProvider theme={myTheme}>
+            <MuiThemeProvider theme={theme(themeService.getThemeColor())}>
               <CssBaseline />
               <App />
             </MuiThemeProvider>

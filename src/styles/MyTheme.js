@@ -1,15 +1,16 @@
 import {createMuiTheme} from '@material-ui/core/styles';
-import * as Theme from 'utils/ThemeService';
+// import * as themeService from 'utils/ThemeService';
 
 const drawerWidth = 250;
 
-const colorTheme = Theme.getThemeColor() ? Theme.getThemeColor() : '#5C181D';
+// const colorTheme = Theme.getThemeColor() ? Theme.getThemeColor() : '#5C181D';
 
-const theme = createMuiTheme({
+const theme = colorTheme => createMuiTheme({
   background: {
     paper: '#fff',
     default: '#fafafa'
   },
+  shadows: Array(25).fill('none'),
   palette: {
     primary: {
       main: colorTheme
@@ -53,6 +54,28 @@ const theme = createMuiTheme({
     MuiTypography: { // Name of the component ⚛️ / style sheet
       h4: { // Name of the rule
         fontWeight: 'bold'
+      }
+    },
+    MUIDataTableHeadCell: {
+      root: {
+        backgroundColor: '#eee',
+        padding: '0px 10px 0px 10px'
+      }
+    },
+    MUIDataTableBodyRow: {
+      root: {
+        backgroundColor: '#fff',
+        padding: '0px 10px 0px 10px',
+        '&:hover': {
+          backgroundColor: '#eee',
+          color: '#fff',
+          cursor: 'pointer'
+        }
+      }
+    },
+    MUIDataTableBodyCell: {
+      root: {
+        padding: '0px 10px 0px 10px'
       }
     }
   }

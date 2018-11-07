@@ -3,7 +3,6 @@ import {put, call, fork} from 'redux-saga/effects';
 import * as organizationsActions from 'redux/actions/organizations';
 import * as usersActions from 'redux/actions/users';
 import * as organizationsService from 'services/api/organizations';
-import * as theme from 'utils/ThemeService';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
@@ -39,11 +38,6 @@ function* fetchCurrentOrganization(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      if (response.data) {
-        theme.setThemeColor(response.data.color_theme);
-      } else {
-        theme.setThemeColor('#5C181D');
-      }
       yield put(organizationsActions.fetchCurrentOrganizationSuccess(response));
     }
   }

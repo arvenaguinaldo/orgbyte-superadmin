@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -150,32 +149,6 @@ class RenewOrganization extends Component {
     dispatch(addOrganization(values));
   };
 
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTableHeadCell: {
-        root: {
-          backgroundColor: '#eee',
-          padding: '0px 10px 0px 10px'
-        }
-      },
-      MUIDataTableBodyRow: {
-        root: {
-          backgroundColor: '#fff',
-          padding: '0px 10px 0px 10px',
-          '&:hover': {
-            backgroundColor: '#eee',
-            color: '#fff',
-            cursor: 'pointer'
-          }
-        }
-      },
-      MUIDataTableBodyCell: {
-        root: {
-          padding: '0px 10px 0px 10px'
-        }
-      }
-    }
-  })
   getSteps = () => {
     return ['For Renewal', 'Organization Profile', 'President Profile', 'Personalize'];
   }
@@ -250,24 +223,22 @@ class RenewOrganization extends Component {
 
 
               <Grid item xs={12} sm={12} md={12} >
-                <MuiThemeProvider theme={this.getMuiTheme()}>
-                  <MUIDataTable
-                    title={'Organization Renewal List'}
-                    data={this.props.organizations.map((org) => {
-                      return [
-                        org.id,
-                        org.name,
-                        org.acronym,
-                        org.recognition_number,
-                        org.formation,
-                        org.college_name,
-                        org.organization_type_name
-                      ];
-                    })}
-                    columns={this.state.columns}
-                    options={options}
-                  />
-                </MuiThemeProvider>
+                <MUIDataTable
+                  title={'Organization Renewal List'}
+                  data={this.props.organizations.map((org) => {
+                    return [
+                      org.id,
+                      org.name,
+                      org.acronym,
+                      org.recognition_number,
+                      org.formation,
+                      org.college_name,
+                      org.organization_type_name
+                    ];
+                  })}
+                  columns={this.state.columns}
+                  options={options}
+                />
               </Grid>
 
               <Grid item xs={12} sm={12} md={12}>
