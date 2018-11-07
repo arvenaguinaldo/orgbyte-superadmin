@@ -52,7 +52,7 @@ const styles = {
     WebkitFilter: 'blur(7px)',
     height: '400px ',
     width: '100%',
-    marginTop: '22px'
+    marginTop: '45px'
   },
   card: {
     minWidth: 275
@@ -60,6 +60,11 @@ const styles = {
   title: {
     fontSize: 14,
     fontWeight: 'bold'
+  },
+  Description: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: '10px'
   },
   pos: {
     marginBottom: 12
@@ -169,7 +174,7 @@ class EventPage extends Component {
 
                           <div className={classes.container}>
                             <Typography className={classes.title} gutterBottom>
-                              Price
+                              Ticket Price
                             </Typography>
                             <Typography variant="h6" className={classes.Text}>PHP 1,000.00  </Typography>
                           </div>
@@ -197,11 +202,11 @@ class EventPage extends Component {
 
                     <Grid item lg={9} md={9} sm={12} xs={12}>
                       <CardContent>
-                        <Typography className={classes.title} gutterBottom>
-                           Description
+                        <Typography className={classes.Description} gutterBottom>
+                          Description
                         </Typography>
-                        <Typography variant="subtitle1" component="h2">
-                          Join us on an evening of Christian music for the whole family! Proceeds for this event will go towards the building of our church.
+                        <Typography variant="subtitle1">
+                          {event.description}
                         </Typography>
                       </CardContent>
 
