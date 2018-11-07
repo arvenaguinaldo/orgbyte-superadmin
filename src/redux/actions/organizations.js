@@ -49,3 +49,13 @@ export const addOrganizationUserSuccess = response => ({
   type: ORGANIZATIONS.ADD_ORGANIZATION_USER_SUCCESS,
   response
 });
+
+export const fetchOrganizationToUserSide = params => ({
+  type: ORGANIZATIONS.FETCH_ORGANIZATION_TO_USER_SIDE,
+  params
+});
+
+export const fetchOrganizationToUserSideSuccess = response => ({
+  type: ORGANIZATIONS.FETCH_ORGANIZATION_TO_USER_SIDE_SUCCESS,
+  response
+});
