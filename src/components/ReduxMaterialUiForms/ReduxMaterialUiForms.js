@@ -230,32 +230,36 @@ export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) =>
 );
 
 export const renderChip = (
-  {input, label, fullWidth, floatingLabelText} // eslint-disable-line react/prop-types
+  {input, label, fullWidth, floatingLabelText, helper, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
-  <ChipInput
-    {...input}
-    value={input.value || []}
-    onBeforeAdd={(toAddChip) => {
-      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(toAddChip)) {
-        return false;
-      } return true;
-    }}
-    onAdd={(addedChip) => {
-      let values = input.value || [];
-      values = values.slice();
-      values.push(addedChip);
-      input.onChange(values);
-    }}
-    onDelete={(deletedChip) => {
-      let values = input.value || [];
-      values = values.filter(v => v !== deletedChip);
-      input.onChange(values);
-    }}
-    onBlur={() => input.onBlur()}
-    label={label}
-    fullWidth={fullWidth}
-    floatingLabelText={floatingLabelText}
-  />
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+    <ChipInput
+      {...input}
+      {...custom}
+      value={input.value || []}
+      onBeforeAdd={(toAddChip) => {
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(toAddChip)) {
+          return false;
+        } return true;
+      }}
+      onAdd={(addedChip) => {
+        let values = input.value || [];
+        values = values.slice();
+        values.push(addedChip);
+        input.onChange(values);
+      }}
+      onDelete={(deletedChip) => {
+        let values = input.value || [];
+        values = values.filter(v => v !== deletedChip);
+        input.onChange(values);
+      }}
+      onBlur={() => input.onBlur()}
+      label={label}
+      fullWidth={fullWidth}
+      floatingLabelText={floatingLabelText}
+    />
+    <FormHelperText>{(touched && error) || warning || helper}</FormHelperText>
+  </FormControl>
 );
 
 renderMUIPlacesAutocomplete.propTypes = {
