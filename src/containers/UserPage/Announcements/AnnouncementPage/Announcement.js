@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+// import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Top from './TopBar';
+
+import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 import Soon from './Soonest';
-import Foot from './Footer';
 import Banner from './Banner';
 
 const styles = {
@@ -12,21 +12,19 @@ const styles = {
   }
 };
 
-function Main(props) {
-  const {classes} = props;
-
-  return (
-    <div className={classes.root}>
-      <Top />
-      <Banner />
-      <Soon />
-      <Foot />
-    </div>
-  );
+class AnnouncementList extends Component {
+  static propTypes = {
+    // classes: PropTypes.object.isRequired
+  };
+  render() {
+    // const {classes} = this.props;
+    return (
+      <TopBarAndFooter>
+        <Banner />
+        <Soon />
+      </TopBarAndFooter>
+    );
+  }
 }
 
-Main.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(Main);
+export default withStyles(styles)(AnnouncementList);

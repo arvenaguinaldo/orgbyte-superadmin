@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -38,7 +39,7 @@ const styles = {
     position: 'absolute',
     top: '48%',
     left: '50%',
-    transform: 'translate(-50%, -52%)',
+    transform: 'translate(-50%, -50%)',
     zIndex: '2',
     width: '100%',
     height: '400px',
@@ -53,7 +54,7 @@ const styles = {
     WebkitFilter: 'blur(7px)',
     height: '400px ',
     width: '100%',
-    marginTop: '45px'
+    marginTop: '50px'
   },
   card: {
     minWidth: 275
@@ -90,6 +91,9 @@ const styles = {
     width: '100%',
     height: '80%',
     background: 'blue'
+  },
+  Price: {
+    marginLeft: '10px'
   }
 };
 
@@ -127,67 +131,88 @@ class EventPage extends Component {
                       <CardContent>
 
                         <Grid container>
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Event Name
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}>
-                              {event.name}
-                            </Typography>
-                            <Typography color="textSecondary" gutterBottom>
-                              by: CICT FACULTY
-                            </Typography>
-                          </div>
-
-
-                          <Grid container>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
                             <div className={classes.container}>
-                              <Typography className={classes.title} gutterBottom>
-                                  Duration
+                              <Typography className={classes.title}>
+                                Event Name
                               </Typography>
-                              <Grid container spacing={24}>
-                                <Center>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >28</span> 2018</Typography>
-                                    </Center>
-                                  </Grid>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >to</Typography>
-                                    </Center>
-                                  </Grid>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >29</span> 2018</Typography>
-                                    </Center>
-                                  </Grid>
-                                </Center>
-                              </Grid>
+                              <Typography variant="subtitle1" className={classes.Text}>
+                                {event.name}
+                              </Typography>
+                              <Typography color="textSecondary" component={Link} to={'/organizations/' + event.organization_acronym}gutterBottom>
+                                {event.organization_name}
+                              </Typography>
                             </div>
                           </Grid>
 
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Slots
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}> 400/450</Typography>
-                          </div>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <Grid container>
+                              <div className={classes.container}>
+                                <Typography className={classes.title} gutterBottom>
+                                  Duration
+                                </Typography>
+                                <Grid container spacing={24}>
+                                  <Center>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >{Moment(event.starts).format('MMM')} <span className={classes.date} >{Moment(event.starts).format('DD')}</span> {Moment(event.starts).format('YYYY')}</Typography>
+                                      </Center>
+                                    </Grid>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >to</Typography>
+                                      </Center>
+                                    </Grid>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >{Moment(event.ends).format('MMM')} <span className={classes.date} >{Moment(event.ends).format('DD')}</span> {Moment(event.ends).format('YYYY')}</Typography>
+                                      </Center>
+                                    </Grid>
+                                  </Center>
+                                </Grid>
+                              </div>
+                            </Grid>
+                          </Grid>
 
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Ticket Price
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}>PHP 1,000.00  </Typography>
-                          </div>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title}>
+                                Slots
+                              </Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>
+                                {event.available_slots}/{event.number_of_attendees}
+                              </Typography>
+                            </div>
+                          </Grid>
 
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title} gutterBottom>
+                                Ticket Price
+                              </Typography>
+                              {event.members === true ? (
+                                <Typography variant="subtitle1">Member {event.members_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.members_price}</Typography> }</Typography>
+                              ) : null}
+
+                              {event.bulsuans === true ? (
+                                <Typography variant="subtitle1">BulSUan {event.bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.bulsuans_price}</Typography> }</Typography>
+                              ) : null}
+
+                              {event.non_bulsuans === true ? (
+                                <Typography variant="subtitle1">Non-BulSUan {event.non_bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.non_bulsuans_price}</Typography> }</Typography>
+                              ) : null}
+                            </div>
+                          </Grid>
+
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title} gutterBottom>
                               Date and Time
-                            </Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('ddd MMMM DD, YYYY')}</Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('h:mm A')}</Typography>
-                          </div>
+                              </Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('ddd MMMM DD, YYYY')}</Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('h:mm A')}</Typography>
+                            </div>
+                          </Grid>
 
                           <div className={classes.container}>
                             <Typography className={classes.title} gutterBottom>

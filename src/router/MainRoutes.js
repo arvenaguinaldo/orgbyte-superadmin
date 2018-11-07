@@ -106,7 +106,7 @@ class MainRoutes extends Component {
         <Route path="/events" component={UserEventList} exact />
         <Route path="/organizations" component={UserOrganizationList} exact />
         <Route path="/announceview" component={AnnounceView} exact />
-        <Route path="/organizations/:acronym" component={UserOrganizationProfile} />
+        <Route path="/organizations/:id" component={UserOrganizationProfile} />
         <Route path="/events/:id" component={EventView} />
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />

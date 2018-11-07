@@ -38,9 +38,9 @@ function* createEmail(action) {
       yield call(callErrorNotification, response.data.error);
       yield put(emailsActions.createEmailSuccess(response));
     } else {
-      yield call(callSuccessNotification, 'Email Send Successfully');
+      yield call(callSuccessNotification, 'Email Sent Successfully');
       yield put(emailsActions.createEmailSuccess(response.data));
-      yield put(reset('EmailsForm'));
+      yield put(reset('EmailForm'));
       yield put(push('/admin/email'));
     }
   }
