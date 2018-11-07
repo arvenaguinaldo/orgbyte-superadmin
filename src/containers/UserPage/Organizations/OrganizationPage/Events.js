@@ -95,7 +95,7 @@ function SimpleCard(props) {
                       <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                     </Center>
                     <Center>
-                      <Typography variant="display1">28</Typography>
+                      <Typography variant="h4">28</Typography>
                     </Center>
                   </Grid>
                 </Center>
@@ -142,55 +142,7 @@ function SimpleCard(props) {
                       <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                     </Center>
                     <Center>
-                      <Typography variant="display1">28</Typography>
-                    </Center>
-                  </Grid>
-                </Center>
-                <Grid item lg={8} md={8} sm={8} xs={8} >
-                  <MenuList component="div" disablePadding>
-                    <MenuItem>
-                      <ListItemIcon>
-                        <Event className={classes.icon} />
-                      </ListItemIcon>
-                      <ListItemText inset primary={<Typography variant="body1">EVENT NAME</Typography>} className={classes.listName} component="h2" />
-                    </MenuItem>
-                    <MenuItem>
-                      <ListItemIcon>
-                        <Venue className={classes.icon} />
-                      </ListItemIcon>
-                      <ListItemText inset primary={<Typography variant="body1">EVENT VENUE</Typography>} className={classes.list} />
-                    </MenuItem>
-                  </MenuList>
-                  <Center>
-                    <Card className={classes.host}>
-
-                      <Typography variant="caption" className={classes.eventIMAGE}>
-                    HOST ORGANIZATION
-                      </Typography>
-                    </Card>
-
-                  </Center>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-
-          <Grid item lg={4} md={4} sm={12} xs={12}>
-            <Paper className={classes.paper}>
-              <Card className={classes.image}>
-                <CardMedia
-                  className={classes.events1}
-                  image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
-                />
-              </Card>
-              <Grid container className={classes.date}>
-                <Center>
-                  <Grid item lg={4} md={4} sm={4} xs={4} >
-                    <Center>
-                      <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
-                    </Center>
-                    <Center>
-                      <Typography variant="display1">28</Typography>
+                      <Typography variant="h4">28</Typography>
                     </Center>
                   </Grid>
                 </Center>
@@ -238,54 +190,7 @@ function SimpleCard(props) {
                       <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                     </Center>
                     <Center>
-                      <Typography variant="display1">28</Typography>
-                    </Center>
-                  </Grid>
-                </Center>
-                <Grid item lg={8} md={8} sm={8} xs={8} >
-                  <MenuList component="div" disablePadding>
-                    <MenuItem>
-                      <ListItemIcon>
-                        <Event className={classes.icon} />
-                      </ListItemIcon>
-                      <ListItemText inset primary={<Typography variant="body1">EVENT NAME</Typography>} className={classes.listName} component="h2" />
-                    </MenuItem>
-                    <MenuItem>
-                      <ListItemIcon>
-                        <Venue className={classes.icon} />
-                      </ListItemIcon>
-                      <ListItemText inset primary={<Typography variant="body1">EVENT VENUE</Typography>} className={classes.list} />
-                    </MenuItem>
-                  </MenuList>
-                  <Center>
-                    <Card className={classes.host}>
-
-                      <Typography variant="caption" className={classes.eventIMAGE}>
-                    HOST ORGANIZATION
-                      </Typography>
-                    </Card>
-
-                  </Center>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-          <Grid item lg={4} md={4} sm={12} xs={12}>
-            <Paper className={classes.paper}>
-              <Card className={classes.image}>
-                <CardMedia
-                  className={classes.events1}
-                  image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
-                />
-              </Card>
-              <Grid container className={classes.date}>
-                <Center>
-                  <Grid item lg={4} md={4} sm={4} xs={4} >
-                    <Center>
-                      <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
-                    </Center>
-                    <Center>
-                      <Typography variant="display1">28</Typography>
+                      <Typography variant="h4">28</Typography>
                     </Center>
                   </Grid>
                 </Center>
@@ -333,7 +238,102 @@ function SimpleCard(props) {
                       <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
                     </Center>
                     <Center>
-                      <Typography variant="display1">28</Typography>
+                      <Typography variant="h4">28</Typography>
+                    </Center>
+                  </Grid>
+                </Center>
+                <Grid item lg={8} md={8} sm={8} xs={8} >
+                  <MenuList component="div" disablePadding>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Event className={classes.icon} />
+                      </ListItemIcon>
+                      <ListItemText inset primary={<Typography variant="body1">EVENT NAME</Typography>} className={classes.listName} component="h2" />
+                    </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Venue className={classes.icon} />
+                      </ListItemIcon>
+                      <ListItemText inset primary={<Typography variant="body1">EVENT VENUE</Typography>} className={classes.list} />
+                    </MenuItem>
+                  </MenuList>
+                  <Center>
+                    <Card className={classes.host}>
+
+                      <Typography variant="caption" className={classes.eventIMAGE}>
+                    HOST ORGANIZATION
+                      </Typography>
+                    </Card>
+
+                  </Center>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
+            <Paper className={classes.paper}>
+              <Card className={classes.image}>
+                <CardMedia
+                  className={classes.events1}
+                  image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                />
+              </Card>
+              <Grid container className={classes.date}>
+                <Center>
+                  <Grid item lg={4} md={4} sm={4} xs={4} >
+                    <Center>
+                      <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
+                    </Center>
+                    <Center>
+                      <Typography variant="h4">28</Typography>
+                    </Center>
+                  </Grid>
+                </Center>
+                <Grid item lg={8} md={8} sm={8} xs={8} >
+                  <MenuList component="div" disablePadding>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Event className={classes.icon} />
+                      </ListItemIcon>
+                      <ListItemText inset primary={<Typography variant="body1">EVENT NAME</Typography>} className={classes.listName} component="h2" />
+                    </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Venue className={classes.icon} />
+                      </ListItemIcon>
+                      <ListItemText inset primary={<Typography variant="body1">EVENT VENUE</Typography>} className={classes.list} />
+                    </MenuItem>
+                  </MenuList>
+                  <Center>
+                    <Card className={classes.host}>
+
+                      <Typography variant="caption" className={classes.eventIMAGE}>
+                    HOST ORGANIZATION
+                      </Typography>
+                    </Card>
+
+                  </Center>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+
+          <Grid item lg={4} md={4} sm={12} xs={12}>
+            <Paper className={classes.paper}>
+              <Card className={classes.image}>
+                <CardMedia
+                  className={classes.events1}
+                  image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                />
+              </Card>
+              <Grid container className={classes.date}>
+                <Center>
+                  <Grid item lg={4} md={4} sm={4} xs={4} >
+                    <Center>
+                      <Typography variant="body1" className={classes.month}>OCTOBER</Typography>
+                    </Center>
+                    <Center>
+                      <Typography variant="h4">28</Typography>
                     </Center>
                   </Grid>
                 </Center>

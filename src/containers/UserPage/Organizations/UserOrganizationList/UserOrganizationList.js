@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import {Field, reduxForm} from 'redux-form';
@@ -13,9 +14,8 @@ import fetchInitialData from 'hoc/fetchInitialData';
 
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import {Grid, CardMedia, Paper} from '@material-ui/core';
+import {Grid, Avatar, Paper} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
@@ -76,7 +76,7 @@ const styles = {
   },
   paper2: {
     margin: '5px',
-    padding: '0px',
+    padding: 10,
     '&:hover': {
       boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
     }
@@ -85,9 +85,9 @@ const styles = {
     float: 'right'
   },
   annou: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover'
+    width: 100,
+    height: 100,
+    marginLeft: 30
   },
   image2: {
     height: '100px'
@@ -140,8 +140,9 @@ class UserOrganizationList extends Component {
                       label="Type of Organization"
                       fullWidth
                     >
-                      <MenuItem value={1}>Univesity Based</MenuItem>
-                      <MenuItem value={2}>College Based</MenuItem>
+                      <option value="" />
+                      <option value={1}>Univesity Based</option>
+                      <option value={2}>College Based</option>
                     </Field>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12}>
@@ -151,7 +152,8 @@ class UserOrganizationList extends Component {
                       label="Nature of Organiation"
                       fullWidth
                     >
-                      <MenuItem value={1}>Academic</MenuItem>
+                      <option value="" />
+                      <option value={1}>Academic</option>
                     </Field>
                   </Grid>
                 </form>
@@ -163,31 +165,34 @@ class UserOrganizationList extends Component {
                 {organizations.map((org) => {
                   return (
                     <Grid item lg={12} md={12} sm={12} xs={12} key={org.id}>
-                      <Card className={classes.paper2}>
-                        <Grid container spacing={16}>
-                          <Grid item xs={3}>
-                            <Card className={classes.image2}>
-                              <CardMedia
-                                className={classes.annou}
-                                image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
-                              />
-                            </Card>
-                          </Grid>
-                          <Grid item xs={9} >
-                            <Paper className={classes.title2}>
-                              <Typography variant="h6">
-                                {org.name}
-                              </Typography>
-                              <Typography variant="caption">
+                      <Link key={org.id} to={'/organizations/' + org.acronym}>
+                        <Card className={classes.paper2}>
+                          <Grid container spacing={0}>
+                            <Grid item md={2} xs={5}>
+                              <Card className={classes.image2}>
+                                <Avatar
+                                  alt="Organization Logo"
+                                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                                  className={classes.annou}
+                                />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={7} >
+                              <Paper className={classes.title2}>
+                                <Typography variant="h6">
+                                  {org.name}
+                                </Typography>
+                                <Typography variant="caption">
                                   Established:
-                              </Typography>
-                              <Typography variant="body1">
-                                {Moment(org.formation).format('MMMM DD YYYY')}
-                              </Typography>
-                            </Paper>
+                                </Typography>
+                                <Typography variant="body1">
+                                  {Moment(org.formation).format('MMMM DD YYYY')}
+                                </Typography>
+                              </Paper>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </Card>
+                        </Card>
+                      </Link>
                     </Grid>
                   );
                 })}
