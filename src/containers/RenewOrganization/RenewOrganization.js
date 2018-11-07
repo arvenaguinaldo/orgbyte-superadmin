@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -20,14 +19,13 @@ import {createTextMask} from 'redux-form-input-masks';
 import {validate, warn} from 'utils/Validations/AddOrganization';
 
 import fetchInitialData from 'hoc/fetchInitialData';
-import MUIDataTable from 'mui-datatables';
 
 import {makeSelectOrganizationsList, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
 import {fetchOrganizations} from 'redux/actions/organizations';
 
 
 // Redux Material UI Forms
-import {renderTextField, renderSelectField, renderDateTimePicker, renderDatePicker, renderCircleColorPicker, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import FileUpload from 'components/FileUpload/FileUpload';
 
 // material ui core
@@ -98,92 +96,21 @@ class RenewOrganization extends Component {
       '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107',
       '#ff9800', '#ff5722', '#795548', '#607d8b'],
     selectedColor: '#5C181D',
-    activeStep: 0,
-    columns: [
-      {
-        name: 'Id',
-        options: {
-          display: false,
-          filter: false
-        }
-      },
-      {
-        name: 'Name\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-        options: {
-          filter: false
-        }
-      },
-      {
-        name: 'Acronym',
-        options: {
-          filter: false
-        }
-      },
-      {
-        name: 'Recognition No.',
-        options: {
-          filter: false
-        }
-      },
-      {
-        name: 'Date of Formation',
-        options: {
-          filter: false
-        }
-      },
-      {
-        name: 'College\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-        options: {
-          filter: true
-        }
-      },
-      {
-        name: 'Type\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-        options: {
-          filter: true
-        }
-      }
-    ]
+    activeStep: 0
   };
 
   onSubmit = (values, dispatch) => {
     dispatch(addOrganization(values));
   };
 
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTableHeadCell: {
-        root: {
-          backgroundColor: '#eee',
-          padding: '0px 10px 0px 10px'
-        }
-      },
-      MUIDataTableBodyRow: {
-        root: {
-          backgroundColor: '#fff',
-          padding: '0px 10px 0px 10px',
-          '&:hover': {
-            backgroundColor: '#eee',
-            color: '#fff',
-            cursor: 'pointer'
-          }
-        }
-      },
-      MUIDataTableBodyCell: {
-        root: {
-          padding: '0px 10px 0px 10px'
-        }
-      }
-    }
-  })
   getSteps = () => {
-    return ['For Renewal', 'Organization Profile', 'President Profile', 'Personalize'];
+    return ['Requirements', 'Organization Profile', 'President Profile', 'Personalize'];
   }
 
   getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:
-        return this.renewalList();
+        return this.requirements();
       case 1:
         return this.orgnazationProfile();
       case 2:
@@ -218,113 +145,45 @@ class RenewOrganization extends Component {
   handleEndsDateChange = (date) => {
     this.setState({endsDate: date});
   }
-  renewalList = () => {
-    // const columns = this.state;
-    const options = {
-      filter: true,
-      selectableRows: false,
-      filterType: 'dropdown',
-      responsive: 'scroll',
-      rowsPerPage: 5,
-      resizableColumns: false,
-      rowHover: false,
-      onRowClick: (rowData) => {
-        console.log(rowData[0], rowData[1]);
-      }
-    };
+
+  requirements = () => {
     const checkboxLabel = [
-      {label: 'Copy of Constitution and by-laws(should there be ammendment/s made).\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0', name: '1'},
-      {label: 'List of interim officers.', name: '2'},
-      {label: 'Updated profile of officers and adviser/s, their respective positions, courses and year levels, student/employee number, contact numbers, addresses and signatures.', name: '3'},
-      {label: 'Soft copy of accomplishment report of the preceding year and hard copy of audited financial statement duly signed by the treasurer, auditor, president and adviser/s.', name: '4'},
-      {label: 'Written proposed activites for the entire school year including the tentative dates of implementation and a brief description of each activity.', name: '5'},
-      {label: 'Letter of invitation to faculty/personell to serve as organization adviser signed by the organization president or his/her representatives.', name: '6'},
-      {label: 'Signed letter from the chosen adviser/s addressed to the head for the Office of Student Organizations(OSO) accepting his/her role in the organization.', name: '7'},
-      {label: 'Copies of voluntary membership form signed by the members (Organization with members 50 and above may ONLY submit a hard copy of membership list)', name: '8'}
+      {label: 'Copy of Constitution and by-laws(should there be ammendment/s made).', name: 'checkbox1'},
+      {label: 'List of interim officers.', name: 'checkbox2'},
+      {label: 'Updated profile of officers and adviser/s, their respective positions, courses and year levels, student/employee number, contact numbers, addresses and signatures.', name: 'checkbox3'},
+      {label: 'Soft copy of accomplishment report of the preceding year and hard copy of audited financial statement duly signed by the treasurer, auditor, president and adviser/s.', name: 'checkbox4'},
+      {label: 'Written proposed activites for the entire school year including the tentative dates of implementation and a brief description of each activity.', name: 'checkbox5'},
+      {label: 'Letter of invitation to faculty/personell to serve as organization adviser signed by the organization president or his/her representatives.', name: 'checkbox6'},
+      {label: 'Signed letter from the chosen adviser/s addressed to the head for the Office of Student Organizations(OSO) accepting his/her role in the organization.', name: 'checkbox7'},
+      {label: 'Copies of voluntary membership form signed by the members (Organization with members 50 and above may ONLY submit a hard copy of membership list)', name: 'checkbox8'}
     ];
     return (
-      <FormSection name="organization">
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={12}>
-            <Grid container spacing={24}>
-
-
-              <Grid item xs={12} sm={12} md={12} >
-                <MuiThemeProvider theme={this.getMuiTheme()}>
-                  <MUIDataTable
-                    title={'Organization Renewal List'}
-                    data={this.props.organizations.map((org) => {
-                      return [
-                        org.id,
-                        org.name,
-                        org.acronym,
-                        org.recognition_number,
-                        org.formation,
-                        org.college_name,
-                        org.organization_type_name
-                      ];
-                    })}
-                    columns={this.state.columns}
-                    options={options}
-                  />
-                </MuiThemeProvider>
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={12}>
-                <Grid container spacing={24}>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <Field
-                      name="organization_to_renew"
-                      component={renderTextField}
-                      label="Renew Organization"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <Field
-                      name="starts"
-                      component={renderDateTimePicker}
-                      label="Date Starts"
-                      selected={this.state.startsDate}
-                      onChange={this.handleStartsDateChange}
-                      disablePast
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <Field
-                      name="ends"
-                      component={renderDateTimePicker}
-                      label="Date Ends"
-                      selected={this.state.endsDate}
-                      minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} >
-                <Typography variant="h5">Application Requirements</Typography>
-                <Typography variant="subtitle1">3 copies of the following
-                  (2 originals and 1 photocopy for CollegeBased) and 2 original copies for University Wide.
-                </Typography>
-                {checkboxLabel.map(option => (
+      <FormSection name="requirements">
+        <div>
+          <div className={style.RequirementCaption}>
+            <Typography variant="h5">Application Requirements</Typography>
+            <Typography variant="subtitle1">3 copies of the following (2 originals and 1 photocopy for CollegeBased) and 2 original copies for University Wide.</Typography>
+          </div>
+          <Grid container spacing={0}>
+            {checkboxLabel.map(option => (
+              <Grid container spacing={0}>
+                <Grid item xs={12} sm={12} md={1} />
+                <Grid item xs={12} sm={12} md={11}>
                   <Field
                     key={option.name}
                     name={option.name}
                     component={renderCheckbox}
                     label={option.label}
                   />
-                ))}
+                </Grid>
               </Grid>
-
-            </Grid>
+            ))}
           </Grid>
-        </Grid>
+        </div>
       </FormSection>
     );
   }
+
   orgnazationProfile = () => {
     const recognitionNumberMask = createTextMask({
       pattern: '99-999',
