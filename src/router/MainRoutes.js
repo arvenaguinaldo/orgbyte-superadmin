@@ -51,8 +51,8 @@ import AnnounceView from 'containers/UserPage/Announcements/AnnouncementPage/Ann
 import EventView from 'containers/UserPage/Events/EventPage/EventView';
 import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementPage/Announcement';
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
-import UserOrganizationList from 'containers/UserPage/Organizations/OrganizationList/Main';
-import UserOrganizationProf from 'containers/UserPage/OrganizationsProfilePage/Main';
+import UserOrganizationList from 'containers/UserPage/Organizations/UserOrganizationList/UserOrganizationList';
+import UserOrganizationProfile from 'containers/UserPage/Organizations/OrganizationPage/OrganizationProfile';
 
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
@@ -106,9 +106,8 @@ class MainRoutes extends Component {
         <Route path="/events" component={UserEventList} exact />
         <Route path="/organizations" component={UserOrganizationList} exact />
         <Route path="/announceview" component={AnnounceView} exact />
-        <Route path="/eventview" component={EventView} exact />
-        <Route path="/orgProfile" component={UserOrganizationProf} exact />
-
+        <Route path="/organizations/:acronym" component={UserOrganizationProfile} />
+        <Route path="/events/:id" component={EventView} />
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />
       </Switch>

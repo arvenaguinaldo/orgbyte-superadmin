@@ -5,6 +5,7 @@ const initialState = fromJS({
   list: [],
   currentOrg: {},
   selectedOrg: {},
+  organization: {},
   meta: {
     open: false,
     loading: false
@@ -36,6 +37,7 @@ const organizations = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         selectedOrg: data,
+        organization: data,
         meta: {
           open: true,
           loading: false
