@@ -59,3 +59,23 @@ export const fetchOrganizationToUserSideSuccess = response => ({
   type: ORGANIZATIONS.FETCH_ORGANIZATION_TO_USER_SIDE_SUCCESS,
   response
 });
+
+export const renewOrganization = params => ({
+  type: ORGANIZATIONS.RENEW_ORGANIZATION,
+  params
+});
+
+export const renewOrganizationSuccess = response => ({
+  type: ORGANIZATIONS.RENEW_ORGANIZATION_SUCCESS,
+  response
+});
+
+export const fetchSuspendedOrganizations = params => ({
+  type: ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS,
+  params
+});
+
+export const fetchSuspendedOrganizationsSuccess = response => ({
+  type: ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS_SUCCESS,
+  response
+});

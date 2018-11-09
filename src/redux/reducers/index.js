@@ -10,6 +10,7 @@ import collegesReducer from 'redux/reducers/colleges';
 import organizationNaturesReducer from 'redux/reducers/organization_natures';
 import announcementsReducer from 'redux/reducers/announcements';
 import emailsReducer from 'redux/reducers/emails';
+import renewalReducer from 'redux/reducers/renewal';
 import notificationReducer from 'redux/reducers/notification';
 import {AUTH} from 'constants/actions/auth';
 import {routerReducer} from 'react-router-redux';
@@ -29,6 +30,7 @@ const appReducer = combineReducers({
   organizationNatures: organizationNaturesReducer,
   announcements: announcementsReducer,
   emails: emailsReducer,
+  renewal: renewalReducer,
   notification: notificationReducer
 });
 

@@ -3,7 +3,6 @@ import {put, call, fork} from 'redux-saga/effects';
 import * as organizationsActions from 'redux/actions/organizations';
 import * as usersActions from 'redux/actions/users';
 import * as organizationsService from 'services/api/organizations';
-import * as theme from 'utils/ThemeService';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
@@ -39,11 +38,6 @@ function* fetchCurrentOrganization(action) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      if (response.data) {
-        theme.setThemeColor(response.data.color_theme);
-      } else {
-        theme.setThemeColor('#5C181D');
-      }
       yield put(organizationsActions.fetchCurrentOrganizationSuccess(response));
     }
   }
@@ -87,6 +81,33 @@ function* fetchOrganizationToUserSide(action) {
 //   }
 // }
 
+function* renewOrganization(action) {
+  const response = yield call(organizationsService.renewOrganization, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(organizationsActions.renewOrganizationSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      yield put(organizationsActions.renewOrganizationSuccess(response.data.organization));
+      yield put(usersActions.renewUserSuccess(response.data.user));
+      yield put(reset('RenewOrganizationForm'));
+      yield put(push('/superadmin/reneworganization'));
+    }
+  }
+}
+
+function* fetchSuspendedOrganizations(action) {
+  const response = yield call(organizationsService.fetchSuspendedOrganizations, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(organizationsActions.fetchSuspendedOrganizationsSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -109,6 +130,14 @@ function* watchRequestFetchOrganizationToUserSide() {
   yield* takeEvery(ORGANIZATIONS.FETCH_ORGANIZATION_TO_USER_SIDE, fetchOrganizationToUserSide);
 }
 
+function* watchRequestRenewOrganization() {
+  yield* takeEvery(ORGANIZATIONS.RENEW_ORGANIZATION, renewOrganization);
+}
+
+function* watchRequestFetchSuspendedOrganizations() {
+  yield* takeEvery(ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS, fetchSuspendedOrganizations);
+}
+
 
 // function* watchRequestAddOrganizationUser() {
 //   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
@@ -119,6 +148,8 @@ export default function* organizations() {
     fork(watchRequestFetchOrganization),
     fork(watchRequestFetchCurrentOrganization),
     fork(watchRequestAddOrganization),
-    fork(watchRequestFetchOrganizationToUserSide)
+    fork(watchRequestFetchOrganizationToUserSide),
+    fork(watchRequestRenewOrganization),
+    fork(watchRequestFetchSuspendedOrganizations)
   ];
 }

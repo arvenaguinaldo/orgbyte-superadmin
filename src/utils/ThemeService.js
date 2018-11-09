@@ -2,9 +2,9 @@ export function setThemeColor(color) {
   localStorage.setItem('color', color);
 }
 
-// export function isUserAuthenticated() {
-//   return localStorage.getItem('token') !== null;
-// }
+export function noThemeColor() {
+  return localStorage.getItem('token') === null;
+}
 
 export function removeThemeColor() {
   localStorage.removeItem('color');

@@ -5,10 +5,11 @@ import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import _ from 'lodash';
 
-import {Field, reduxForm, FormSection, change, propTypes} from 'redux-form';
+import {Field, reduxForm, FormSection, change} from 'redux-form';
 
-import {addOrganization} from 'redux/actions/organizations';
+import {renewOrganization, fetchOrganization} from 'redux/actions/organizations';
 import {fetchColleges} from 'redux/actions/colleges';
 import {fetchOrganizationNatures} from 'redux/actions/organization_natures';
 
@@ -16,16 +17,17 @@ import {makeSelectCollegesList} from 'redux/selectors/colleges';
 import {makeSelectOrganizationNaturesList} from 'redux/selectors/organization_natures';
 
 import {createTextMask} from 'redux-form-input-masks';
-import {validate, warn} from 'utils/Validations/AddOrganization';
+import {validate, warn} from 'utils/Validations/RenewOrganization';
 
 import fetchInitialData from 'hoc/fetchInitialData';
 
-import {makeSelectOrganizationsList, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
-import {fetchOrganizations} from 'redux/actions/organizations';
+import {makeSelectOrganizationSelectedOrg, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
+
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 
 // Redux Material UI Forms
-import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderSelectField, renderCircleColorPicker, renderCheckbox, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import FileUpload from 'components/FileUpload/FileUpload';
 
 // material ui core
@@ -36,13 +38,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import generator from 'generate-password';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 // layout & styles
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import style from './RenewOrganization.scss';
+
 
 const styles = theme => ({
   root: {
@@ -66,25 +68,20 @@ const styles = theme => ({
   }
 });
 
-const generatedPassword = generator.generate({
-  length: 10,
-  numbers: true
-});
-
 class RenewOrganization extends Component {
   static propTypes = {
-    ...propTypes,
-    addOrganization: PropTypes.func,
+    renewOrganization: PropTypes.func,
+    fetchOrganization: PropTypes.func,
     classes: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     colleges: PropTypes.array.isRequired,
-    organizations: PropTypes.array.isRequired,
+    organization: PropTypes.object.isRequired,
     organizationNatures: PropTypes.array.isRequired,
     meta: PropTypes.object.isRequired
   };
 
   static defaultProps = {
-    organizations: []
+    organization: {}
   };
 
   state = {
@@ -99,8 +96,15 @@ class RenewOrganization extends Component {
     activeStep: 0
   };
 
+  componentDidMount() {
+    this.handleInitialize();
+  }
+
   onSubmit = (values, dispatch) => {
-    dispatch(addOrganization(values));
+    _.set(values.organization, 'organization_id', this.props.organization.id);
+    _.set(values.user, 'password', values.user.last_name + values.organization.acronym);
+    _.set(values.user, 'user_type_id', 2);
+    dispatch(renewOrganization(values));
   };
 
   getSteps = () => {
@@ -134,16 +138,30 @@ class RenewOrganization extends Component {
     this.setState({selectedColor: color.hex});
     dispatch(change('AddOrganizationForm', 'organization[color_theme]', color.hex));
   };
-  handleFieldChange = () => {
-    this.props.array.insert('organization_to_renew', 2, '123123');
-    console.log(this.props);
-  };
+
   handleStartsDateChange = (date) => {
     this.setState({startsDate: date});
   }
 
   handleEndsDateChange = (date) => {
     this.setState({endsDate: date});
+  }
+
+  handleInitialize() {
+    const initData = {
+      organization: {
+        'name': this.props.organization.name, // eslint-disable-line
+        'organization_type_id': this.props.organization.organization_type_id, // eslint-disable-line
+        'organization_nature_id': this.props.organization.organization_nature_id, // eslint-disable-line
+        'acronym': this.props.organization.acronym, // eslint-disable-line
+        'formation': this.props.organization.formation, // eslint-disable-line
+        'college_id': this.props.organization.college_id, // eslint-disable-line
+        'color_theme': this.props.organization.color_theme // eslint-disable-line
+      }
+    };
+    console.log(initData);
+    this.setState({selectedColor: this.props.organization.color_theme});
+    this.props.initialize(initData); // eslint-disable-line react/prop-types
   }
 
   requirements = () => {
@@ -166,7 +184,7 @@ class RenewOrganization extends Component {
           </div>
           <Grid container spacing={0}>
             {checkboxLabel.map(option => (
-              <Grid container spacing={0}>
+              <Grid key={option.name} container spacing={0}>
                 <Grid item xs={12} sm={12} md={1} />
                 <Grid item xs={12} sm={12} md={11}>
                   <Field
@@ -202,6 +220,7 @@ class RenewOrganization extends Component {
                   component={renderTextField}
                   label="Organization Name"
                   fullWidth
+                  readOnly
                 />
               </Grid>
 
@@ -211,6 +230,7 @@ class RenewOrganization extends Component {
                   component={renderSelectField}
                   label="Type of Organization"
                   fullWidth
+                  readOnly
                 >
                   <option value="" />
                   <option value={1}>Univesity Based</option>
@@ -224,6 +244,7 @@ class RenewOrganization extends Component {
                   component={renderSelectField}
                   label="Nature of Organiation"
                   fullWidth
+                  readOnly
                 >
                   <option value="" />
                   {this.props.organizationNatures.map((nature) => {
@@ -243,6 +264,7 @@ class RenewOrganization extends Component {
                   component={renderTextField}
                   label="Acronym"
                   fullWidth
+                  readOnly
                 />
               </Grid>
 
@@ -265,6 +287,8 @@ class RenewOrganization extends Component {
                   fullWidth
                   maxDate={currentDate}
                   maxDateMessage="Date should not be after maximal date"
+                  readOnly
+                  keyboard={false}
                 />
               </Grid>
 
@@ -274,6 +298,7 @@ class RenewOrganization extends Component {
                   component={renderSelectField}
                   label="College"
                   fullWidth
+                  readOnly
                 >
                   <option value="" />
                   {this.props.colleges.map((college) => {
@@ -449,10 +474,14 @@ class RenewOrganization extends Component {
     const {classes, meta} = this.props;
     const steps = this.getSteps();
 
+    if (this.props.organization === 'undefined') {
+      return null;
+    }
+
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
     return (
       <LayoutWithTopbarAndSidebar>
-        <form onSubmit={handleSubmit(this.onSubmit)} name="createOrganization">
+        <form onSubmit={handleSubmit(this.onSubmit)}>
           <div className={classes.root}>
             <Typography variant="h4" gutterBottom>
             Renew Organization
@@ -481,6 +510,7 @@ class RenewOrganization extends Component {
                       disabled={activeStep === 0}
                       onClick={this.handleBack}
                       className={classes.backButton}
+                      color="primary"
                     >
                     Back
                     </Button>
@@ -505,15 +535,15 @@ class RenewOrganization extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  organizations: makeSelectOrganizationsList(),
+  organization: makeSelectOrganizationSelectedOrg(),
   organizationNatures: makeSelectOrganizationNaturesList(),
   colleges: makeSelectCollegesList(),
   meta: makeSelectOrganizationsMeta()
 });
 
 const mapDispatchToProps = {
-  fetchOrganizations,
-  addOrganization,
+  fetchOrganization,
+  renewOrganization,
   fetchColleges,
   fetchOrganizationNatures
 };
@@ -521,23 +551,23 @@ const mapDispatchToProps = {
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchOrganizations();
+  const {match: {params}} = props;
+  props.fetchOrganization(params.id);
   props.fetchOrganizationNatures();
   props.fetchColleges();
+});
+
+const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
+  return props.meta.isLoading;
 });
 
 export default compose(
   withRedux,
   withFetchInitialData,
+  withLoadingWhileFetchingDataInsideLayout,
   reduxForm({
     form: 'RenewOrganizationForm',
-    fields: ['password', 'organization_to_renew'],
-    initialValues: {
-      user: {
-        password: generatedPassword,
-        user_type_id: 2
-      }
-    },
+    fields: ['password'],
     destroyOnUnmount: false,
     validate,
     warn

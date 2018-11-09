@@ -51,7 +51,7 @@ class SuperAdminMenuItemData extends Component {
   componentWillMount() {
     const {pathname} = this.props;
 
-    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization') {
+    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization' || pathname === '/superadmin/reneworganization') {
       this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
     }
     if (pathname === '/superadmin/backups' || pathname === '/superadmin/renewaldate') {

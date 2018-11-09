@@ -4,7 +4,7 @@ import * as authActions from 'redux/actions/auth';
 import * as orgActions from 'redux/actions/organizations';
 import * as authService from 'services/api/auth';
 import * as authenticate from 'utils/AuthService';
-import * as theme from 'utils/ThemeService';
+import * as themeService from 'utils/ThemeService';
 import {push} from 'react-router-redux';
 import jwt from 'jsonwebtoken';
 import {AUTH} from 'constants/actions/auth';
@@ -17,14 +17,18 @@ function* login(action) {
   if (response) {
     if (response.data.error) {
       yield call(callErrorNotification, response.data.error);
-      console.log('error');
       yield put(authActions.loginSuccess(response));
     } else {
-      console.log('success');
       yield put(authActions.loginSuccess(response));
-      authenticate.authenticateToken(response.data.token);
-      yield put(authActions.setCurrentUser(jwt.decode(response.data.token)));
-      const loginData = jwt.decode(response.data.token);
+      authenticate.authenticateToken(response.data.user.token);
+      yield put(authActions.setCurrentUser(jwt.decode(response.data.user.token)));
+
+      if (response.data.organization) {
+        yield put(authActions.setColorTheme(response.data.organization.color_theme));
+        themeService.setThemeColor(response.data.organization.color_theme);
+      }
+
+      const loginData = jwt.decode(response.data.user.token);
 
       yield put(orgActions.fetchCurrentOrganization());
 
@@ -34,14 +38,13 @@ function* login(action) {
 
       if (loginData.user_type_id === 'super_admin') {
         yield put(push('/superadmin/'));
-        theme.setThemeColor('#5C181D');
       }
     }
   }
 }
 
 function* logout() {
-  theme.removeThemeColor();
+  themeService.removeThemeColor();
   authenticate.deauthenticateUser();
   yield put(authActions.setCurrentUser({}));
   // yield put(orgActions.fetchCurrentOrganization());

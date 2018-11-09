@@ -20,7 +20,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 
 import {createStructuredSelector} from 'reselect';
 import {makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
@@ -117,22 +116,6 @@ class EventDetails extends Component {
       }
     ]
   };
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTableHeadCell: {
-        root: {
-          backgroundColor: '#eee',
-          padding: '0px 10px 0px 10px'
-        }
-      },
-      MUIDataTableBodyCell: {
-        root: {
-          backgroundColor: '#eee',
-          padding: '0px 10px 0px 10px'
-        }
-      }
-    }
-  })
 
   render() {
     const {event} = this.props;
@@ -261,14 +244,12 @@ class EventDetails extends Component {
             </Button>
           </div>
         </Paper>
-        <MuiThemeProvider theme={this.getMuiTheme()}>
-          <MUIDataTable
-            title={'Attendees'}
-            data={data}
-            columns={this.state.columns}
-            options={options}
-          />
-        </MuiThemeProvider>
+        <MUIDataTable
+          title={'Attendees'}
+          data={data}
+          columns={this.state.columns}
+          options={options}
+        />
       </LayoutWithTopbarAndSidebar>
     );
   }

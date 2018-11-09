@@ -43,12 +43,12 @@ export const validate = (values) => {
     }
   });
 
-  if ((organization.organization_type_id !== 1) && (organization.college_id !== user.college_id)) {
+  if ((organization.organization_type_id !== '1') && (organization.college_id !== user.college_id)) {
     errors.user.college_id = 'College must match the college of the organization';
   }
 
-  if (organization.organization_type_id === 1) {
-    organization.college_id = null;
+  if (organization.organization_type_id === '1') {
+    organization.college_id = '';
     errors.organization.college_id = null;
   }
 
@@ -59,8 +59,7 @@ export const validate = (values) => {
 export const warn = (values) => {
   const {organization = {}} = values;
   const warnings = {organization: {}};
-  if (organization.organization_type_id === 1) {
-    console.log('hehe');
+  if (organization.organization_type_id === '1') {
     warnings.organization.college_id = 'University Wide Organization must not contain specific college';
   }
   return warnings;

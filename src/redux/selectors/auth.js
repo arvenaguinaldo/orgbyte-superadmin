@@ -18,6 +18,11 @@ export const makeSelectCurrentUser = () => createSelector(
   auth => auth.user
 );
 
+export const makeSelectColorTheme = () => createSelector(
+  makeSelectAuth(),
+  auth => auth.colorTheme
+);
+
 export const makeSelectAuthMeta = () => createSelector(
   makeSelectAuth(),
   auth => auth.meta

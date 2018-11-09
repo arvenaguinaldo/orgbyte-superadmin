@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 const initialState = fromJS({
   login: {},
   user: {},
+  colorTheme: '#5C181D',
   // logout: false,
   isAuthenticated: false,
   meta: {
@@ -38,6 +39,11 @@ const login = (state = initialState, action) => {
         meta: {
           loading: false
         }
+      }));
+    }
+    case AUTH.SET_COLOR_THEME: {
+      return state.merge(fromJS({
+        colorTheme: action.response
       }));
     }
     default:

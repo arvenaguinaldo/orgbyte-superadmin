@@ -19,3 +19,8 @@ export const loginSuccess = response => ({
   type: AUTH.LOGIN_SUCCESS,
   response
 });
+
+export const setColorTheme = response => ({
+  type: AUTH.SET_COLOR_THEME,
+  response
+});

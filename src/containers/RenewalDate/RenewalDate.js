@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import SubmitButton from 'components/SubmitButton/SubmitButton';
@@ -6,6 +8,11 @@ import moment from 'moment';
 import {compose} from 'recompose';
 import {Field, reduxForm} from 'redux-form';
 import Center from 'react-center';
+
+import {setRenewal} from 'redux/actions/renewal';
+import {makeSelectRenewalMeta} from 'redux/selectors/renewal';
+
+import {validate} from 'utils/Validations/Renewal';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -16,12 +23,25 @@ import styles from './RenewalDate.scss';
 class RenewalDate extends Component {
     state = {
       startsDate: new Date('2018-01-01T00:00:00.000Z'),
-      endsDate: new Date(),
-      selectedDate: new Date()
+      endsDate: new Date()
     };
+
+    onSubmit = (values, dispatch) => {
+      dispatch(setRenewal(values));
+    };
+
+    handleStartsDateChange = (date) => {
+      this.setState({startsDate: date});
+    }
+
+    handleEndsDateChange = (date) => {
+      this.setState({endsDate: date});
+    }
 
     render() {
       moment.locale('en');
+
+      const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
       return (
         <LayoutWithTopbarAndSidebar>
           <Center>
@@ -29,7 +49,7 @@ class RenewalDate extends Component {
               <Typography variant="h4" gutterBottom>
                 Renewal Period
               </Typography>
-              <form>
+              <form onSubmit={handleSubmit(this.onSubmit)}>
                 <Grid container spacing={0}>
                   <Grid item xs={12} sm={12} md={9}>
                     <Paper className={styles.Paper}>
@@ -59,7 +79,7 @@ class RenewalDate extends Component {
                           <Grid container spacing={0}>
                             <Grid item xs={12} sm={12} md={9} />
                             <Grid item xs={12} sm={12} md={3}>
-                              <SubmitButton>
+                              <SubmitButton loading={meta.isLoading} valid={!valid}>
                                 SUBMIT
                               </SubmitButton>
                             </Grid>
@@ -77,10 +97,22 @@ class RenewalDate extends Component {
     }
 }
 
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectRenewalMeta()
+});
+
+// const mapDispatchToProps = {
+
+// };
+
+const withRedux = connect(mapStateToProps, {setRenewal});
+
 export default compose(
+  withRedux,
   reduxForm({
-    form: 'RenewalDate',
-    destroyOnUnmount: false
+    form: 'RenewalDateForm',
+    destroyOnUnmount: false,
+    validate
   }),
 )(RenewalDate);
 

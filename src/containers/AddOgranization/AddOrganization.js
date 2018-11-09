@@ -158,7 +158,7 @@ class AddOrganization extends Component {
                 <Field
                   name="organization_nature_id"
                   component={renderSelectField}
-                  label="Nature of Organiation"
+                  label="Nature of Organization"
                   fullWidth
                 >
                   <option value="" />
@@ -418,6 +418,7 @@ class AddOrganization extends Component {
                       disabled={activeStep === 0}
                       onClick={this.handleBack}
                       className={classes.backButton}
+                      color="primary"
                     >
                     Back
                     </Button>

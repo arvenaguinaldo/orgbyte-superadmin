@@ -7,6 +7,7 @@ const initialState = fromJS({
   selectedOrg: {},
   organization_user_side: {},
   organization: {},
+  suspendedOrganizations: [],
   meta: {
     open: false,
     loading: false
@@ -82,6 +83,36 @@ const organizations = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         organization_user_side: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case ORGANIZATIONS.RENEW_ORGANIZATION: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case ORGANIZATIONS.RENEW_ORGANIZATION_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        suspendedOrganizations: data,
         meta: {
           loading: false
         }
