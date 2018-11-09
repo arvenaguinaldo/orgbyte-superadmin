@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -33,7 +34,7 @@ class Organizations extends Component {
     const {organizations} = this.props;
 
     return (
-      <div className={style.ChildContainer}>
+      <div className={style.ChildContainer}>{console.log(organizations)}
         <Grid container spacing={8}>
           <Grid item lg={6} md={6} sm={6} xs={6}>
             <Typography variant="h4" className={style.SectionHeading}>
@@ -44,20 +45,22 @@ class Organizations extends Component {
             {organizations.slice(0, 6).map((org) => {
               return (
                 <Grid key={org.id} item lg={2} md={2} sm={6} xs={6}>
-                  <Card className={style.OrganizationCard}>
-                    <Center>
-                      <CardContent>
-                        <Center>
-                          <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
-                        </Center>
-                        <Center>
-                          <Typography variant="caption" >
-                            {org.acronym}
-                          </Typography>
-                        </Center>
-                      </CardContent>
-                    </Center>
-                  </Card>
+                  <Link key={org.id} to={'/organizations/' + org.acronym}>
+                    <Card className={style.OrganizationCard}>
+                      <Center>
+                        <CardContent>
+                          <Center>
+                            <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
+                          </Center>
+                          <Center>
+                            <Typography variant="h5" >
+                              {org.acronym}
+                            </Typography>
+                          </Center>
+                        </CardContent>
+                      </Center>
+                    </Card>
+                  </Link>
                 </Grid>
               );
             })}
@@ -66,9 +69,11 @@ class Organizations extends Component {
         </Grid>
 
         <div className={style.OrganizationButton}>
-          <Button size="small" variant="contained" color="primary">
-           See more
-          </Button>
+          <Link to={'/organizations/'}>
+            <Button size="small" variant="contained" color="primary">
+              See more
+            </Button>
+          </Link>
         </div>
 
       </div>

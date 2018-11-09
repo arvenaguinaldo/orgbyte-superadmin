@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -37,7 +39,7 @@ const styles = {
     position: 'absolute',
     top: '48%',
     left: '50%',
-    transform: 'translate(-50%, -52%)',
+    transform: 'translate(-50%, -50%)',
     zIndex: '2',
     width: '100%',
     height: '400px',
@@ -52,7 +54,7 @@ const styles = {
     WebkitFilter: 'blur(7px)',
     height: '400px ',
     width: '100%',
-    marginTop: '22px'
+    marginTop: '50px'
   },
   card: {
     minWidth: 275
@@ -60,6 +62,11 @@ const styles = {
   title: {
     fontSize: 14,
     fontWeight: 'bold'
+  },
+  Description: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: '10px'
   },
   pos: {
     marginBottom: 12
@@ -84,6 +91,9 @@ const styles = {
     width: '100%',
     height: '80%',
     background: 'blue'
+  },
+  Price: {
+    marginLeft: '10px'
   }
 };
 
@@ -98,6 +108,7 @@ class EventPage extends Component {
   };
   render() {
     const {classes, event} = this.props;
+    Moment.locale('en');
     return (
       <TopBarAndFooter>
         <div className={classes.EventCoverImage} />
@@ -120,73 +131,94 @@ class EventPage extends Component {
                       <CardContent>
 
                         <Grid container>
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Event Name
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}>
-                              {event.name}
-                            </Typography>
-                            <Typography color="textSecondary" gutterBottom>
-                              by: CICT FACULTY
-                            </Typography>
-                          </div>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title}>
+                                Event Name
+                              </Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>
+                                {event.name}
+                              </Typography>
+                              <Typography color="textSecondary" component={Link} to={'/organizations/' + event.organization_acronym}gutterBottom>
+                                {event.organization_name}
+                              </Typography>
+                            </div>
+                          </Grid>
 
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <Grid container>
+                              <div className={classes.container}>
+                                <Typography className={classes.title} gutterBottom>
+                                  Duration
+                                </Typography>
+                                <Grid container spacing={24}>
+                                  <Center>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >{Moment(event.starts).format('MMM')} <span className={classes.date} >{Moment(event.starts).format('DD')}</span> {Moment(event.starts).format('YYYY')}</Typography>
+                                      </Center>
+                                    </Grid>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >to</Typography>
+                                      </Center>
+                                    </Grid>
+                                    <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
+                                      <Center>
+                                        <Typography variant="body1" >{Moment(event.ends).format('MMM')} <span className={classes.date} >{Moment(event.ends).format('DD')}</span> {Moment(event.ends).format('YYYY')}</Typography>
+                                      </Center>
+                                    </Grid>
+                                  </Center>
+                                </Grid>
+                              </div>
+                            </Grid>
+                          </Grid>
 
-                          <Grid container>
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title}>
+                                Slots
+                              </Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>
+                                {event.available_slots}/{event.number_of_attendees}
+                              </Typography>
+                            </div>
+                          </Grid>
+
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
                             <div className={classes.container}>
                               <Typography className={classes.title} gutterBottom>
-                                  Duration
+                                Ticket Price
                               </Typography>
-                              <Grid container spacing={24}>
-                                <Center>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >28</span>, 2018</Typography>
-                                    </Center>
-                                  </Grid>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >to</Typography>
-                                    </Center>
-                                  </Grid>
-                                  <Grid item lg={4} md={4} sm={12} xs={12} className={classes.gridpad}>
-                                    <Center>
-                                      <Typography variant="body1" >OCT <span className={classes.date} >29</span>, 2018</Typography>
-                                    </Center>
-                                  </Grid>
-                                </Center>
-                              </Grid>
+                              {event.members === true ? (
+                                <Typography variant="subtitle1">Member {event.members_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.members_price}</Typography> }</Typography>
+                              ) : null}
+
+                              {event.bulsuans === true ? (
+                                <Typography variant="subtitle1">BulSUan {event.bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.bulsuans_price}</Typography> }</Typography>
+                              ) : null}
+
+                              {event.non_bulsuans === true ? (
+                                <Typography variant="subtitle1">Non-BulSUan {event.non_bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.non_bulsuans_price}</Typography> }</Typography>
+                              ) : null}
+                            </div>
+                          </Grid>
+
+                          <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <div className={classes.container}>
+                              <Typography className={classes.title} gutterBottom>
+                              Date and Time
+                              </Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('ddd MMMM DD, YYYY')}</Typography>
+                              <Typography variant="subtitle1" className={classes.Text}>{Moment(event.starts).format('h:mm A')}</Typography>
                             </div>
                           </Grid>
 
                           <div className={classes.container}>
                             <Typography className={classes.title} gutterBottom>
-                              Slots
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}> 400/450</Typography>
-                          </div>
-
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Price
-                            </Typography>
-                            <Typography variant="h6" className={classes.Text}>PHP 1,000.00  </Typography>
-                          </div>
-
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
-                              Date and Time
-                            </Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>Sat, October 27, 2018</Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>5:00 PM – 8:00 PM</Typography>
-                          </div>
-
-                          <div className={classes.container}>
-                            <Typography className={classes.title} gutterBottom>
                                Location
                             </Typography>
-                            <Typography variant="subtitle1" className={classes.Text}>Bitas Covered Court San Roque Bitas Arayat, Pampanga 2012 </Typography>
+                            <Typography variant="subtitle1" className={classes.Text}>{event.venue}</Typography>
                           </div>
 
                         </Grid>
@@ -197,11 +229,11 @@ class EventPage extends Component {
 
                     <Grid item lg={9} md={9} sm={12} xs={12}>
                       <CardContent>
-                        <Typography className={classes.title} gutterBottom>
-                           Description
+                        <Typography className={classes.Description} gutterBottom>
+                          Description
                         </Typography>
-                        <Typography variant="subtitle1" component="h2">
-                          Join us on an evening of Christian music for the whole family! Proceeds for this event will go towards the building of our church.
+                        <Typography variant="subtitle1">
+                          {event.description}
                         </Typography>
                       </CardContent>
 
