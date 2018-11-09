@@ -47,9 +47,9 @@ import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
-import AnnounceView from 'containers/UserPage/Announcements/AnnouncementPage/AnnounceView';
-import EventView from 'containers/UserPage/Events/EventPage/EventView';
-import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementPage/Announcement';
+import UserAnnouncementPage from 'containers/UserPage/Announcements/AnnouncementPage/AnnouncementPage';
+import UserEventPage from 'containers/UserPage/Events/EventPage/EventView';
+import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementList/AnnouncementList';
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
 import UserOrganizationList from 'containers/UserPage/Organizations/UserOrganizationList/UserOrganizationList';
 import UserOrganizationProfile from 'containers/UserPage/Organizations/OrganizationPage/OrganizationProfile';
@@ -105,9 +105,9 @@ class MainRoutes extends Component {
         <Route path="/announcements" component={UserAnnouncement} exact />
         <Route path="/events" component={UserEventList} exact />
         <Route path="/organizations" component={UserOrganizationList} exact />
-        <Route path="/announceview" component={AnnounceView} exact />
-        <Route path="/organizations/:id" component={UserOrganizationProfile} />
-        <Route path="/events/:id" component={EventView} />
+        <Route path="/announcements/:id" component={UserAnnouncementPage} exact />
+        <Route path="/organizations/:acronym" component={UserOrganizationProfile} />
+        <Route path="/events/:id" component={UserEventPage} />
         <Route path="" component={NotFoundPage} />
         <Route path="/NotFound" component={NotFoundPage} />
       </Switch>

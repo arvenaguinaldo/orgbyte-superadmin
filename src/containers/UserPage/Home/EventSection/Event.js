@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import {Link} from 'react-router-dom';
 
 import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvents} from 'redux/actions/events';
@@ -47,55 +48,58 @@ class UserSideEvents extends Component {
           {events.slice(0, 4).map((event) => {
             return (
               <Grid item lg={3} md={3} sm={12} xs={12} key={event.id}>
+                <Link key={event.id} to={'/events/' + event.id}>
+                  <Paper elevation={0} className={style.EventPaper}>
 
-                <Paper elevation={0} className={style.EventPaper}>
+                    <Card className={style.EventCard}>
+                      <CardMedia
+                        className={style.EventImage}
+                        image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                      />
+                    </Card>
 
-                  <Card className={style.EventCard}>
-                    <CardMedia
-                      className={style.EventImage}
-                      image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
-                    />
-                  </Card>
+                    <Grid container className={style.EventDateContainer}>
+                      <Center>
+                        <Grid item lg={4} md={4} sm={4} xs={4} >
+                          <Center>
+                            <Typography variant="body1" className={style.EventMonth}>{Moment(event.starts).format('MMM')}</Typography>
+                          </Center>
+                          <Center>
+                            <Typography variant="h5">{Moment(event.starts).format('DD')}</Typography>
+                          </Center>
+                        </Grid>
+                      </Center>
+                      <Grid item lg={10} md={10} sm={10} xs={10} >
+                        <ListItem>
+                          <ListItemIcon>
+                            <Event />
+                          </ListItemIcon>
+                          <ListItemText inset primary={<Typography variant="body1" className={style.EventName}>{event.name}</Typography>} />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemIcon>
+                            <Venue />
+                          </ListItemIcon>
+                          <ListItemText inset primary={<Typography variant="body1" className={style.EventVenue}>{event.venue}</Typography>} />
+                        </ListItem>
+                        <Typography variant="caption" className={style.EventHost}>
+                          {event.organization_name}
+                        </Typography>
 
-                  <Grid container className={style.EventDateContainer}>
-                    <Center>
-                      <Grid item lg={4} md={4} sm={4} xs={4} >
-                        <Center>
-                          <Typography variant="body1" className={style.EventMonth}>{Moment(event.starts).format('MMM')}</Typography>
-                        </Center>
-                        <Center>
-                          <Typography variant="h5">{Moment(event.starts).format('DD')}</Typography>
-                        </Center>
                       </Grid>
-                    </Center>
-                    <Grid item lg={10} md={10} sm={10} xs={10} >
-                      <ListItem>
-                        <ListItemIcon>
-                          <Event />
-                        </ListItemIcon>
-                        <ListItemText inset primary={<Typography variant="body1" className={style.EventName}>{event.name}</Typography>} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemIcon>
-                          <Venue />
-                        </ListItemIcon>
-                        <ListItemText inset primary={<Typography variant="body1" className={style.EventVenue}>{event.venue}</Typography>} />
-                      </ListItem>
-                      <Typography variant="caption" className={style.EventHost}>
-                        {event.organization_name}
-                      </Typography>
-
                     </Grid>
-                  </Grid>
-                </Paper>
+                  </Paper>
+                </Link>
               </Grid>
             );
           })}
         </Grid>
         <div className={style.EventButton}>
-          <Button size="small" variant="contained" color="primary">
-           See more
-          </Button>
+          <Link to={'/events/'}>
+            <Button size="small" variant="contained" color="primary">
+              See more
+            </Button>
+          </Link>
         </div>
       </div>
     );

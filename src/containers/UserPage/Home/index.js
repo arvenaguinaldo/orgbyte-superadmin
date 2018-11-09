@@ -5,6 +5,7 @@ import TopBarAndFooter from '../layouts/TopBarAndFooter';
 import Events from './EventSection/Event';
 import Organizations from './OrganizationSection/Organizations';
 import style from './index.scss';
+import Announcement from './AnnouncementSection/Announcement';
 
 class HomePage extends Component {
   render() {
@@ -17,6 +18,7 @@ class HomePage extends Component {
             <div><img src="http://bulsu.edu.ph/resources/slider/call_for_papers_2018_revised.jpg" alt="TopNews" /></div>
           </Carousel>
           <Events />
+          <Announcement />
           <Organizations />
         </div>
       </TopBarAndFooter>

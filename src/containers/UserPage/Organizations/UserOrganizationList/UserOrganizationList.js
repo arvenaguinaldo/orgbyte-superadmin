@@ -77,16 +77,17 @@ const styles = {
   paper2: {
     margin: '5px',
     padding: 10,
+    height: '200px',
     '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
+      boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)'
     }
   },
   butt: {
     float: 'right'
   },
   annou: {
-    width: 100,
-    height: 100,
+    width: 190,
+    height: 190,
     marginLeft: 30
   },
   image2: {
@@ -117,7 +118,9 @@ class UserOrganizationList extends Component {
     return (
       <TopBarAndFooter>
         <div className={classes.root}>
-          <Typography variant="h4" className={classes.header} >Organizations</Typography>
+          <Typography variant="h4" className={classes.header} >
+            Organizations
+          </Typography>
           <Grid container >
             <Grid item lg={3} md={3} sm={12} xs={12} className={classes.content} >
               <Paper className={classes.filter}>
@@ -168,8 +171,8 @@ class UserOrganizationList extends Component {
                       <Link key={org.id} to={'/organizations/' + org.acronym}>
                         <Card className={classes.paper2}>
                           <Grid container spacing={0}>
-                            <Grid item md={2} xs={5}>
-                              <Card className={classes.image2}>
+                            <Grid item md={3} xs={5}>
+                              <Card>
                                 <Avatar
                                   alt="Organization Logo"
                                   src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
@@ -179,14 +182,17 @@ class UserOrganizationList extends Component {
                             </Grid>
                             <Grid item xs={7} >
                               <Paper className={classes.title2}>
-                                <Typography variant="h6">
+                                <Typography variant="h5">
                                   {org.name}
                                 </Typography>
-                                <Typography variant="caption">
-                                  Established:
+                                <Typography variant="caption" color="textSecondary">
+                                    Established {Moment(org.formation).format('MMMM DD YYYY')}
                                 </Typography>
-                                <Typography variant="body1">
-                                  {Moment(org.formation).format('MMMM DD YYYY')}
+                                <Typography variant="h6" color="textSecondary">
+                                  {org.organization_type_name} Organization
+                                </Typography>
+                                <Typography variant="h6" color="textSecondary">
+                                 Nature of Organization {org.organization_nature_name}
                                 </Typography>
                               </Paper>
                             </Grid>

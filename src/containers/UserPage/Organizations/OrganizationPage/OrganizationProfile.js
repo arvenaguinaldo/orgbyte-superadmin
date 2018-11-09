@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Center from 'react-center';
 import SwipeableViews from 'react-swipeable-views';
-
+import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -13,8 +13,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import {createStructuredSelector} from 'reselect';
-import {makeSelectOrganization, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
-import {fetchOrganization} from 'redux/actions/organizations';
+import {makeSelectOrganizationToUserSide, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
+import {fetchOrganizationToUserSide} from 'redux/actions/organizations';
 import fetchInitialData from 'hoc/fetchInitialData';
 import {connect} from 'react-redux';
 import {compose} from 'recompose';
@@ -48,7 +48,21 @@ class OrganizationProfile extends Component {
   state = {
     value: 0
   };
+  componentWillReceiveProps(nextProps) {
+    try {
+      if (typeof nextProps.organization.organizations.name !== 'undefined') {
+        this.setState({name: nextProps.organization.organizations.name});
+        this.setState({user: nextProps.organization.user.first_name + ' ' + nextProps.organization.user.last_name});
+        this.setState({contact: nextProps.organization.user.contact_number});
+        this.setState({email: nextProps.organization.user.email});
+        this.setState({nature: nextProps.organization.organizations.organization_nature_name});
+        this.setState({type: nextProps.organization.organizations.organization_type_name});
+      }
+    } catch (err) {
+      console.log('Catch');
+    }
 
+  }
   handleChange = (event, value) => {
     this.setState({value});
   };
@@ -57,7 +71,8 @@ class OrganizationProfile extends Component {
     this.setState({value: index});
   };
   render() {
-    const {theme, organization} = this.props;
+    Moment.locale('en');
+    const {theme} = this.props;
     return (
       <div>
         <TopBarAndFooter>
@@ -72,30 +87,58 @@ class OrganizationProfile extends Component {
                   />
                 </Center>
                 <div className={styles.DetailContainer}>
+                  <Typography variant="subtitle1" className={styles.Text}>
+                    Organization name
+                  </Typography>
                   <Typography variant="h6" className={styles.Text}>
-                    {organization.name}
+                    {this.state.name}
                   </Typography>
                 </div>
 
                 <div className={styles.DetailContainer}>
-                  <Typography variant="subtitle1" className={styles.Text} gutterBottom>
+                  <Typography variant="subtitle1" className={styles.Text}>
                     President
                   </Typography>
-                  <Typography variant="h6" className={styles.Text}>Therelyn May Cruz  </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {this.state.user}
+                  </Typography>
                 </div>
 
                 <div className={styles.DetailContainer}>
-                  <Typography variant="subtitle1" className={styles.Text} gutterBottom>
+                  <Typography variant="subtitle1" className={styles.Text}>
                     Established
                   </Typography>
-                  <Typography variant="h6" className={styles.Text}>2001 </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {Moment(this.state.dateOfFormation).format('MMMM DD, YYYY')}
+                  </Typography>
                 </div>
 
                 <div className={styles.DetailContainer}>
-                  <Typography variant="subtitle1" className={styles.Text} gutterBottom>
+                  <Typography variant="subtitle1" className={styles.Text}>
                     Contact
                   </Typography>
-                  <Typography variant="h6" className={styles.Text}>+63 906 1234 567 </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {this.state.contact}
+                  </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {this.state.email}
+                  </Typography>
+                </div>
+                <div className={styles.DetailContainer}>
+                  <Typography variant="subtitle1" className={styles.Text}>
+                     Type
+                  </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {(this.state.type)}
+                  </Typography>
+                </div>
+                <div className={styles.DetailContainer}>
+                  <Typography variant="subtitle1" className={styles.Text}>
+                    Nature
+                  </Typography>
+                  <Typography variant="h6" className={styles.Text}>
+                    {(this.state.nature)}
+                  </Typography>
                 </div>
               </Card>
             </Grid>
@@ -138,15 +181,15 @@ class OrganizationProfile extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  organization: makeSelectOrganization(),
+  organization: makeSelectOrganizationToUserSide(),
   meta: makeSelectOrganizationsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchOrganization});
+const withRedux = connect(mapStateToProps, {fetchOrganizationToUserSide});
 
 const withFetchInitialData = fetchInitialData((props) => {
   const {match: {params}} = props;
-  props.fetchOrganization(params.id);
+  props.fetchOrganizationToUserSide(params.acronym);
 });
 
 export default compose(
