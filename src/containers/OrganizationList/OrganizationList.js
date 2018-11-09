@@ -12,8 +12,6 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 import MUIDataTable from 'mui-datatables';
 import Button from '@material-ui/core/Button';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
@@ -75,22 +73,7 @@ class OrganizationTable extends React.Component {
       {
         name: 'Status',
         options: {
-          filter: true,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return (
-              <FormControlLabel
-                label={value ? 'Active' : 'Inactive'}
-                value={value ? 'Active' : 'Inactive'}
-                control={
-                  <Switch color="primary" checked={value} value={value ? 'Active' : 'Inactive'} />
-                }
-                onChange={(event) => {
-                  updateValue(event.target.value !== 'Active');
-                }}
-              />
-            );
-
-          }
+          filter: true
         }
       },
       {

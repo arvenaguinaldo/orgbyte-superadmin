@@ -65,8 +65,7 @@ class LayoutWithTopbarAndSidebar extends Component {
 
   state = {
     mobileOpen: false,
-    user: {},
-    colorTheme: this.props.organization.color_theme
+    user: {}
   };
 
   handleDrawerToggle = () => {

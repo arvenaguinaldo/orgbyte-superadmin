@@ -11,6 +11,7 @@ import colleges from './colleges';
 import organizationNatures from './organization_natures';
 import announcements from './announcements';
 import emails from './emails';
+import renewal from './renewal';
 
 export default function* root() {
   yield [
@@ -24,6 +25,7 @@ export default function* root() {
     fork(colleges),
     fork(organizationNatures),
     fork(announcements),
-    fork(emails)
+    fork(emails),
+    fork(renewal)
   ];
 }

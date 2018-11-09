@@ -13,8 +13,8 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import theme from 'styles/MyTheme';
 
 // for datepicker import
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+import {MuiPickersUtilsProvider} from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
 
 // Authentications
 import * as authenticate from 'utils/AuthService';

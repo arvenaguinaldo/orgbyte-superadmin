@@ -58,6 +58,17 @@ function* addOrganization(action) {
   }
 }
 
+function* fetchOrganizationToUserSide(action) {
+  const response = yield call(organizationsService.fetchOrganizationToUserSide, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(organizationsActions.fetchOrganizationToUserSideSuccess(response));
+    }
+  }
+}
+
 // function* addOrganizationUser(action) {
 //   const response = yield call(organizationsService.addUser, action.params);
 //   if (response) {
@@ -69,6 +80,33 @@ function* addOrganization(action) {
 //     }
 //   }
 // }
+
+function* renewOrganization(action) {
+  const response = yield call(organizationsService.renewOrganization, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(organizationsActions.renewOrganizationSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      yield put(organizationsActions.renewOrganizationSuccess(response.data.organization));
+      yield put(usersActions.renewUserSuccess(response.data.user));
+      yield put(reset('RenewOrganizationForm'));
+      yield put(push('/superadmin/reneworganization'));
+    }
+  }
+}
+
+function* fetchSuspendedOrganizations(action) {
+  const response = yield call(organizationsService.fetchSuspendedOrganizations, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(organizationsActions.fetchSuspendedOrganizationsSuccess(response));
+    }
+  }
+}
 
 //* *********** Watchers ************//
 
@@ -88,6 +126,18 @@ function* watchRequestAddOrganization() {
   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION, addOrganization);
 }
 
+function* watchRequestFetchOrganizationToUserSide() {
+  yield* takeEvery(ORGANIZATIONS.FETCH_ORGANIZATION_TO_USER_SIDE, fetchOrganizationToUserSide);
+}
+
+function* watchRequestRenewOrganization() {
+  yield* takeEvery(ORGANIZATIONS.RENEW_ORGANIZATION, renewOrganization);
+}
+
+function* watchRequestFetchSuspendedOrganizations() {
+  yield* takeEvery(ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS, fetchSuspendedOrganizations);
+}
+
 
 // function* watchRequestAddOrganizationUser() {
 //   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
@@ -97,6 +147,9 @@ export default function* organizations() {
     fork(watchRequest),
     fork(watchRequestFetchOrganization),
     fork(watchRequestFetchCurrentOrganization),
-    fork(watchRequestAddOrganization)
+    fork(watchRequestAddOrganization),
+    fork(watchRequestFetchOrganizationToUserSide),
+    fork(watchRequestRenewOrganization),
+    fork(watchRequestFetchSuspendedOrganizations)
   ];
 }

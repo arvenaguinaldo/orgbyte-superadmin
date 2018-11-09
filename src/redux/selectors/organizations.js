@@ -32,3 +32,13 @@ export const makeSelectOrganizationsMeta = () => createSelector(
   makeSelectOrganizations(),
   organizations => organizations.meta
 );
+
+export const makeSelectOrganizationToUserSide = () => createSelector(
+  makeSelectOrganizations(),
+  organizations => organizations.organization_user_side
+);
+
+export const makeSelectSuspendedOrganizationsList = () => createSelector(
+  makeSelectOrganizations(),
+  organizations => organizations.suspendedOrganizations
+);

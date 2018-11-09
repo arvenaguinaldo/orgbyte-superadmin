@@ -29,6 +29,7 @@ import Add from '@material-ui/icons/Add';
 import Lock from '@material-ui/icons/Lock';
 import Shop from '@material-ui/icons/ShoppingBasket';
 import Building from '@material-ui/icons/AccountBalance';
+import Clock from '@material-ui/icons/AccessTime';
 import Event from '@material-ui/icons/Event';
 
 import Typography from '@material-ui/core/Typography';
@@ -50,10 +51,10 @@ class SuperAdminMenuItemData extends Component {
   componentWillMount() {
     const {pathname} = this.props;
 
-    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization') {
+    if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization' || pathname === '/superadmin/reneworganization') {
       this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
     }
-    if (pathname === '/superadmin/backups') {
+    if (pathname === '/superadmin/backups' || pathname === '/superadmin/renewaldate') {
       this.setState(({advancedMenuOpen: !this.state.advancedMenuOpen}));
     }
     if (pathname === '/superadmin/presidents') {
@@ -163,6 +164,13 @@ class SuperAdminMenuItemData extends Component {
 
           <Collapse in={advancedMenuOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
+
+              <MenuItem component={Link} to="/superadmin/renewaldate" selected={pathname === '/superadmin/renewaldate'} className={style.nested}>
+                <ListItemIcon>
+                  <Clock className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Renewal Period</Typography>} />
+              </MenuItem>
 
               <MenuItem component={Link} to="/superadmin/backups" selected={pathname === '/superadmin/backups'} className={style.nested}>
                 <ListItemIcon>
