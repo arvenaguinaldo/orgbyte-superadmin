@@ -48,7 +48,42 @@ const styles = theme => ({
     fontSize: 20
   }
 });
+let tableData = {};
+let tableDataArray = [];
+let tableColumnsArray = [];
+const tableColumnsStatus = [];
+let tableColumns = {};
+const options = {
+  rowsPerPage: 5,
+  onTableChange: (action, tableState) => {
+    // get displayed table data
+    tableDataArray = [];
+    tableData = {...tableState};
+    let counter = 0;
+    tableData.displayData.map((values) => {
+      tableDataArray[counter] = ({...values.data});
+      counter += 1;
+      return (null);
+    });
 
+    // get table column names
+    tableColumnsArray = [];
+    let counterb = 0;
+    tableColumns = {...tableState};
+    tableColumns.columns.map((values) => {
+      if (values.display === 'true') {
+        return (tableColumnsArray[counterb] = (values.name),tableColumnsStatus[counterb] = (values.display), counterb++); // eslint-disable-line
+      }
+      return null;
+    });
+    // get table columnstatus (display: true/false)
+    let counterc = 0;
+    tableColumns.columns.map((values) => {
+        return (tableColumnsStatus[counterc] = (values.display), counterc++); // eslint-disable-line
+    });
+
+  }
+};
 class AnnouncementsPage extends Component {
   static propTypes = {
     classes: PropTypes.object,
@@ -58,6 +93,18 @@ class AnnouncementsPage extends Component {
   static defaultProps = {
     announcements: []
   };
+  printData = () => {
+    tableDataArray.map((values) => {
+      for (let x = 0; x < tableColumnsStatus.length; x += 1) {
+        if (tableColumnsStatus[x] === 'false') {
+          delete values[x] // eslint-disable-line
+        }
+      }
+      return (null);
+    });
+    console.log(tableColumnsArray);
+    console.log(tableDataArray);
+  }
   render() {
     const columns = ['Title', 'Announcements Starts', 'Announcements Ends'];
     const {classes, announcements} = this.props;
@@ -72,6 +119,7 @@ class AnnouncementsPage extends Component {
         </Button>
         <MUIDataTable
           title={'Announcements'}
+          options={options}
           data={announcements.map((announcement) => {
             return [
               announcement.title,
@@ -81,6 +129,9 @@ class AnnouncementsPage extends Component {
           })}
           columns={columns}
         />
+        <Button variant="contained" color="primary" className={classes.button} onClick={this.printData} >
+          Print PDF
+        </Button>
       </LayoutWithTopbarAndSidebar>
     );
   }
