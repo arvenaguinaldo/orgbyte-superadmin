@@ -72,6 +72,18 @@ function* fetchAttendee(action) {
   }
 }
 
+function* fetchAttendees(action) {
+  const response = yield call(eventsService.fetchAttendees, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.fetchAttendeesSuccess(response));
+    } else {
+      yield put(eventsActions.fetchAttendeesSuccess(response));
+    }
+  }
+}
+
 function* attend(action) {
   const response = yield call(eventsService.attend, action.params);
   if (response) {
@@ -79,6 +91,7 @@ function* attend(action) {
       yield call(callErrorNotification, response.data.error);
       yield put(eventsActions.attendSuccess(response));
     } else {
+      yield call(callSuccessNotification, 'Attended Successfully');
       yield put(eventsActions.attendSuccess(response));
     }
   }
@@ -133,6 +146,10 @@ function* watchRequestFetchAttendee() {
   yield* takeEvery(EVENTS.FETCH_ATTENDEE, fetchAttendee);
 }
 
+function* watchRequestFetchAttendees() {
+  yield* takeEvery(EVENTS.FETCH_ATTENDEES, fetchAttendees);
+}
+
 function* watchRequestAttend() {
   yield* takeEvery(EVENTS.ATTEND, attend);
 }
@@ -153,6 +170,7 @@ export default function* events() {
     fork(watchRequestCreateEvent),
     fork(watchRequestRegister),
     fork(watchRequestFetchAttendee),
+    fork(watchRequestFetchAttendees),
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
     fork(watchRequestRegisterImports)

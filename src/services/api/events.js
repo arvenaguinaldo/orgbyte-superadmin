@@ -20,6 +20,10 @@ export const fetchAttendee = (params) => {
   return api.callGet('/event_attendees/fetch_attendee_qr/' + params.qr_result + '/' + params.event_id);
 };
 
+export const fetchAttendees = (params) => {
+  return api.callGet('/event_attendees/fetch_attendees/' + params);
+};
+
 export const attend = (params) => {
   return api.callPut('/event_attendees/attend/', params);
 };
