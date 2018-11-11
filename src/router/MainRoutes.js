@@ -38,6 +38,7 @@ import EventRegister from 'containers/Events/Register/Register';
 import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
+import Attend from 'containers/Events/Attend/Attend';
 
 import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
 import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
@@ -90,6 +91,7 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/shirts" component={OrganizationalShirts} />
 
         {/* Admin - Events Routes */}
+        <AdminRoute path="/admin/events/attend" component={Attend} />
         <AdminRoute path="/admin/events/createevent" component={CreateEvent} />
         <AdminRoute path="/admin/events/:id/register" component={EventRegister} />
         <AdminRoute path="/admin/events/:id/qrscanner" component={QRScan} />

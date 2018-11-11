@@ -6,12 +6,12 @@ const drawerWidth = 250;
 // const colorTheme = Theme.getThemeColor() ? Theme.getThemeColor() : '#5C181D';
 
 const theme = colorTheme => createMuiTheme({
-  background: {
-    paper: '#fff',
-    default: '#fafafa'
-  },
   shadows: Array(25).fill('none'),
   palette: {
+    background: {
+      paper: '#fff',
+      default: '#e9e9e9'
+    },
     primary: {
       main: colorTheme
     },
