@@ -22,8 +22,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
 import {createStructuredSelector} from 'reselect';
-import {makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
-import {fetchEvent} from 'redux/actions/events';
+import {makeSelectEvent, makeSelectAttendees, makeSelectSuccess, makeSelectEventsMeta} from 'redux/selectors/events';
+import {fetchEvent, attend, fetchAttendees} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
@@ -32,12 +32,27 @@ import styles from './EventDetails.scss';
 
 class EventDetails extends Component {
   static propTypes = {
-    event: PropTypes.object
+    event: PropTypes.object,
+    success: PropTypes.bool,
+    attend: PropTypes.func,
+    attendees: PropTypes.array
   };
 
   static defaultProps = {
-    event: {}
+    event: {},
+    attendees: []
   };
+
+  /* eslint-disable */
+  onHandleCheckIn = (event, value) => {
+    event.preventDefault();
+    const {match: {params}} = this.props;
+    const attendee_id = value.event_attendee_type_name === 'Non-Bulsuan' ? value.id : value.student_number;
+    const parameters = {qr_result: attendee_id, event_id: params.id};
+    this.props.attend(parameters);
+  };
+  /* eslint-disable */
+
   state = {
     columns: [
       {
@@ -48,7 +63,7 @@ class EventDetails extends Component {
         }
       },
       {
-        name: 'Student-No.',
+        name: 'Student No.',
         options: {
           filter: false
         }
@@ -99,16 +114,16 @@ class EventDetails extends Component {
         name: 'Action Button',
         options: {
           filter: false,
-          customBodyRender: () => {
+          customBodyRender: (value) => {
             return (
               <Button
+                className={value.attendance ? styles.buttonSuccess : null}
                 color="primary"
                 variant="contained"
-                mini
-                style={{fontSize: '11px'}}
-                onClick={this.handleClickOpen}
+                type="submit"
+                onClick={(e) => this.onHandleCheckIn(e, value)}
               >
-              Attend
+                {this.props.success && value.attendance ? 'ATTENDED' : 'ATTEND'}
               </Button>
             );
           }
@@ -118,7 +133,7 @@ class EventDetails extends Component {
   };
 
   render() {
-    const {event} = this.props;
+    const {event, attendees} = this.props;
     const options = {
       filter: true,
       selectableRows: true,
@@ -131,13 +146,13 @@ class EventDetails extends Component {
     const style = {
       height: 400
     };
-    const data = [
-      ['1', '2014-120436', 'Robles Jeremiah B.', 'jeremiahrobles13@gmail.com', '09163130373', 'BSIT', '3B G1', 'BULSUAN', 'PAID', '']
-    ];
+
     const image = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
 
+    const attendDisable = moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends);
+
     return (
-      <LayoutWithTopbarAndSidebar>{console.log(this.props)}
+      <LayoutWithTopbarAndSidebar>
         <Paper className={styles.Paper}>
           <Grid container spacing={0}>
             <Grid item xs={12} sm={12} md={12}>
@@ -158,7 +173,7 @@ class EventDetails extends Component {
                         <EventIcon />
                       </ListItemIcon>
                       <Typography variant="h6" className={styles.listTitle}>Date Ends:</Typography>
-                      <ListItemText primary={<Typography variant="h6">{event.starts && moment(event.ends).format('MMMM Do YYYY, h:mm a')}</Typography>} />
+                      <ListItemText primary={<Typography variant="h6">{event.ends && moment(event.ends).format('MMMM Do YYYY, h:mm a')}</Typography>} />
                     </ListItem>
 
                     <ListItem>
@@ -233,7 +248,7 @@ class EventDetails extends Component {
             <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
-            <Button component={Link} to={'/admin/events/' + event.id + '/qrscanner'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/qrscanner'} disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       QR Scanner
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
@@ -245,8 +260,21 @@ class EventDetails extends Component {
           </div>
         </Paper>
         <MUIDataTable
-          title={'Attendees'}
-          data={data}
+          title={'Attendees List'}
+          data={attendees.map((attendee) => {
+            return [
+              attendee.id,
+              attendee.student_number,
+              attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name,
+              attendee.email,
+              attendee.contact_number,
+              attendee.course_name,
+              attendee.year_level + attendee.section + ' - G' + attendee.group,
+              attendee.event_attendee_type_name,
+              attendee.payment_status === true ? 'PAID' : 'NOT PAID',
+              attendee
+            ];
+          })}
           columns={this.state.columns}
           options={options}
         />
@@ -257,18 +285,23 @@ class EventDetails extends Component {
 
 const mapStateToProps = createStructuredSelector({
   event: makeSelectEvent(),
+  attendees: makeSelectAttendees(),
+  success: makeSelectSuccess(),
   meta: makeSelectEventsMeta()
 });
 
-// const mapDispatchToProps = {
-//   fetchEvent
-// };
+const mapDispatchToProps = {
+  fetchEvent,
+  fetchAttendees,
+  attend
+};
 
-const withRedux = connect(mapStateToProps, {fetchEvent});
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withFetchInitialData = fetchInitialData((props) => {
   const {match: {params}} = props;
   props.fetchEvent(params.id);
+  props.fetchAttendees(params.id);
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
@@ -278,5 +311,5 @@ const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataIns
 export default compose(
   withRedux,
   withFetchInitialData,
-  withLoadingWhileFetchingDataInsideLayout,
+  withLoadingWhileFetchingDataInsideLayout
 )(EventDetails);

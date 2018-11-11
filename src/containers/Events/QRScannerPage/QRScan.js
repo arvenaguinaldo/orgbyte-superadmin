@@ -38,7 +38,7 @@ class QRScan extends Component {
   };
 
   state = {
-    delay: 300,
+    delay: 100,
     qr_result: ''
   };
 
@@ -58,9 +58,9 @@ class QRScan extends Component {
 
   handleScan = (data) => {
     if (data) {
+      console.log(data);
       const {match: {params}} = this.props;
       const parameters = {qr_result: data, event_id: params.id};
-      console.log(data);
       this.setState({qr_result: data});
       this.props.fetchAttendee(parameters);
     }
@@ -76,6 +76,7 @@ class QRScan extends Component {
     const buttonClassname = classNames({
       [styles.buttonSuccess]: success && attendee.attendance
     });
+
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4" color="secondary"> QR Scanner</Typography>
