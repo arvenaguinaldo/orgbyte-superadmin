@@ -40,6 +40,7 @@ class MemberForm extends Component {
     dispatch(register(values));
   };
 
+
   render() {
     const contactNumberMask = createTextMask({
       pattern: '+63 (999) 999-9999',
@@ -204,7 +205,7 @@ export default compose(
   withRedux,
   withFetchInitialData,
   reduxForm({
-    form: 'EventRegisterForm',
+    form: 'EventRegisterFormMember',
     overwriteOnInitialValuesChange: true,
     enableReinitialize: true,
     destroyOnUnmount: true

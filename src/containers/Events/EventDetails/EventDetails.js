@@ -121,6 +121,7 @@ class EventDetails extends Component {
                 color="primary"
                 variant="contained"
                 type="submit"
+                disabled={moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends) ? false : true}
                 onClick={(e) => this.onHandleCheckIn(e, value)}
               >
                 {this.props.success && value.attendance ? 'ATTENDED' : 'ATTEND'}
@@ -150,6 +151,7 @@ class EventDetails extends Component {
     const image = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
 
     const attendDisable = moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends);
+    const registerDisable = moment().isAfter(this.props.event.ends);
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -245,14 +247,11 @@ class EventDetails extends Component {
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
             </Button>
-            <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable} variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
-            <Button component={Link} to={'/admin/events/' + event.id + '/qrscanner'} disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
-                      QR Scanner
-            </Button>
-            <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
-                      Import
+            <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+                      Check In
             </Button>
             <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Edit Event

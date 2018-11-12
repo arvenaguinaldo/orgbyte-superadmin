@@ -116,7 +116,7 @@ const events = (state = initialState, action) => {
     case EVENTS.ATTEND_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        attendee: data,
+        attendees: data,
         success: !action.response.error,
         meta: {
           loading: false
