@@ -54,7 +54,8 @@ function* register(action) {
     } else {
       yield call(callSuccessNotification, 'Register Successfully');
       yield put(eventsActions.registerSuccess(response.data));
-      yield put(reset('EventRegisterForm'));
+      yield put(reset('EventRegisterFormMember'));
+      yield put(reset('VerifyMemberForm'));
       // yield put(push('/events'));
     }
   }
@@ -92,6 +93,7 @@ function* attend(action) {
       yield put(eventsActions.attendSuccess(response));
     } else {
       yield call(callSuccessNotification, 'Attended Successfully');
+      console.log(response);
       yield put(eventsActions.attendSuccess(response));
     }
   }
