@@ -126,6 +126,18 @@ function* registerImports(action) {
   }
 }
 
+function* fetchWhoAttend(action) {
+  const response = yield call(eventsService.fetchWhoAttend, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
+    } else {
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -164,6 +176,10 @@ function* watchRequestRegisterImports() {
   yield* takeEvery(EVENTS.REGISTER_IMPORTS, registerImports);
 }
 
+function* watchRequestFetchWhoAttend() {
+  yield* takeEvery(EVENTS.FETCH_WHO_ATTEND, fetchWhoAttend);
+}
+
 
 export default function* events() {
   yield [
@@ -175,6 +191,7 @@ export default function* events() {
     fork(watchRequestFetchAttendees),
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
-    fork(watchRequestRegisterImports)
+    fork(watchRequestRegisterImports),
+    fork(watchRequestFetchWhoAttend)
   ];
 }

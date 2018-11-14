@@ -32,6 +32,11 @@ export const makeSelectSuccess = () => createSelector(
   events => events.success
 );
 
+export const makeSelectWhoAttend = () => createSelector(
+  makeSelectEvents(),
+  events => events.fetchWhoAttend
+);
+
 export const makeSelectEventsMeta = () => createSelector(
   makeSelectEvents(),
   events => events.meta

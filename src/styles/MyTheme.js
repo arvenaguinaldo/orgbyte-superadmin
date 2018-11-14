@@ -77,6 +77,11 @@ const theme = colorTheme => createMuiTheme({
       root: {
         padding: '0px 10px 0px 10px'
       }
+    },
+    MuiButton: {
+      containedPrimary: {
+        color: '#fff'
+      }
     }
   }
 });

@@ -155,6 +155,22 @@ const events = (state = initialState, action) => {
       }));
     }
 
+    case EVENTS.FETCH_WHO_ATTEND: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.FETCH_WHO_ATTEND_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        fetchWhoAttend: data,
+        success: !action.response.error,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

@@ -244,7 +244,7 @@ class EventDetails extends Component {
             </Grid>
           </Grid>
           <div className={styles.actionsDiv}>
-            <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
             </Button>
             <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable} variant="contained" color="primary" className={styles.actionsButton}>

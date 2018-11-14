@@ -35,3 +35,7 @@ export const settlePayment = (params) => {
 export const registerImports = (params) => {
   return api.callPost('/event_attendees/register_imports', params);
 };
+
+export const fetchWhoAttend = (params) => {
+  return api.callGet('/event_attendees/fetch_who_attend/' + params);
+};
