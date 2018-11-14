@@ -1,0 +1,58 @@
+
+.actionsDiv {
+  position: absolute;
+  bottom: -20px;
+  right: 40px;
+}
+
+.actionsButton {
+  margin-right: 10px;
+}
+
+.Paper {
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: scroll;
+}
+
+.button {
+  margin: 5px;
+}
+
+.imagePreview {
+  background-color: #525659;
+  width: 1000px;
+  height: 780px;
+  padding-top: 10px;
+  overflow: hidden;
+}
+
+.page {
+  background-color: white;
+  // position: absolute;
+  padding-top: 10px;
+  padding-left: 10px;
+  box-shadow: 1 1px 5px 1 rgba(1, 1, 1, 1.51), 1 2px 2px 1 rgba(1, 1, 1, 1.51), 1 3px 1px -2px rgba(1, 1, 1, 1.51);
+  overflow: hidden;
+}
+
+.yourLogoHere {
+  color: white;
+  line-height: 400px;
+  vertical-align: middle;
+}
+
+.colorPreviewBox {
+  width: 290px;
+  height: 50px;
+}
+
+.pdfPreview {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.pdfPreviewContainer {
+  height: 800px;
+}
