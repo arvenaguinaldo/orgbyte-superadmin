@@ -29,3 +29,14 @@ export const createEmailSuccess = response => ({
   type: EMAILS.CREATE_EMAIL_SUCCESS,
   response
 });
+
+export const sendCertificate = params => ({
+  type: EMAILS.SEND_CERTIFICATE,
+  params
+});
+
+export const sendCertificateSuccess = response => ({
+  type: EMAILS.SEND_CERTIFICATE_SUCCESS,
+  response
+});
+

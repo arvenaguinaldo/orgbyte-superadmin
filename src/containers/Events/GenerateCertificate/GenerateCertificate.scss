@@ -12,7 +12,8 @@
 .Paper {
   padding: 20px;
   margin-bottom: 20px;
-  overflow: scroll;
+  overflow: hidden;
+  height: 900px;
 }
 
 .button {
@@ -23,8 +24,16 @@
   background-color: #525659;
   width: 1000px;
   height: 780px;
-  padding-top: 10px;
+  padding-top: 25px;
   overflow: hidden;
+}
+
+.toolbar {
+  margin-top: 50px;
+  height: 600px;
+  margin-bottom: 34px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .page {
@@ -36,9 +45,10 @@
   overflow: hidden;
 }
 
-.yourLogoHere {
-  color: white;
-  line-height: 400px;
+.a4 {
+  color: #5a5a5a;
+  font-size: 50px;
+  line-height: 600px;
   vertical-align: middle;
 }
 
@@ -55,4 +65,9 @@
 
 .pdfPreviewContainer {
   height: 800px;
+}
+
+.actionsButton {
+  margin-top: 10px;
+  width: 100%;
 }

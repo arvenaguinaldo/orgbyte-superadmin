@@ -11,3 +11,7 @@ export const fetchEmail = (params) => {
 export const createEmail = (params) => {
   return api.callPost('/emails', params);
 };
+
+export const sendCertificate = (params) => {
+  return api.callPost('/emails/send_certificate', params);
+};
