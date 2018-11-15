@@ -6,6 +6,7 @@ import * as organizationsService from 'services/api/organizations';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
+import {EDIT} from 'constants/actions/edit';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -138,6 +139,10 @@ function* watchRequestFetchSuspendedOrganizations() {
   yield* takeEvery(ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS, fetchSuspendedOrganizations);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOrganizations);
+}
+
 
 // function* watchRequestAddOrganizationUser() {
 //   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
@@ -150,6 +155,7 @@ export default function* organizations() {
     fork(watchRequestAddOrganization),
     fork(watchRequestFetchOrganizationToUserSide),
     fork(watchRequestRenewOrganization),
-    fork(watchRequestFetchSuspendedOrganizations)
+    fork(watchRequestFetchSuspendedOrganizations),
+    fork(watchRequestSaveEdit)
   ];
 }

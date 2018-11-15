@@ -3,16 +3,24 @@ import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import fetchInitialData from 'hoc/fetchInitialData';
+
+import {createStructuredSelector} from 'reselect';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+
+import {fetchColleges} from 'redux/actions/colleges';
+import {makeSelectCollegesList} from 'redux/selectors/colleges';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import {validate, warn} from 'utils/EditValidations/Presidents';
 
 class EditForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    colleges: PropTypes.array.isRequired
   };
 
   state = {
@@ -25,7 +33,7 @@ class EditForm extends React.Component {
       placeholder: ' '
     });
 
-    const {handleSubmit} = this.props;
+    const {handleSubmit, colleges} = this.props;
 
     return (
       <div>
@@ -89,8 +97,12 @@ class EditForm extends React.Component {
                     label="college"
                     fullWidth
                   >
-                    <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
-                    <MenuItem value={2}>College of Industrial Technology</MenuItem>
+                    <option value="" />
+                    {colleges.map((college) => {
+                      return (
+                        <option key={college.id} value={college.id}> {college.name} </option>
+                      );
+                    })}
                   </Field>
                 </Grid>
 
@@ -103,10 +115,29 @@ class EditForm extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'EditForm',
-  overwriteOnInitialValuesChange: true,
-  destroyOnUnmount: false,
-  validate,
-  warn
-})(EditForm);
+
+const mapStateToProps = createStructuredSelector({
+  colleges: makeSelectCollegesList()
+});
+
+const mapDispatchToProps = {
+  fetchColleges
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchColleges();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  reduxForm({
+    form: 'EditForm',
+    overwriteOnInitialValuesChange: true,
+    destroyOnUnmount: false,
+    validate,
+    warn
+  })
+)(EditForm);

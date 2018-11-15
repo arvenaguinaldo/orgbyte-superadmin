@@ -19,7 +19,7 @@ export const validate = (values) => {
     }
   });
 
-  if (values.organization_type_id === 1) {
+  if (values.organization_type_id === '1') {
     values.college_id = null; //eslint-disable-line
     errors.college_id = null;
   }
@@ -30,7 +30,7 @@ export const validate = (values) => {
 
 export const warn = (values) => {
   const warnings = {};
-  if (values.organization_type_id === 1) {
+  if (values.organization_type_id === '1') {
     warnings.college_id = 'University Wide Organization must not contain specific college';
   }
   return warnings;

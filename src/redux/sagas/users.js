@@ -2,10 +2,12 @@ import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as usersActions from 'redux/actions/users';
 import * as usersService from 'services/api/users';
+import {EDIT} from 'constants/actions/edit';
 import {push} from 'react-router-redux';
 import {USERS} from 'constants/actions/users';
 import {callErrorNotification} from './notification';
 import {callSuccessNotification} from './notification';
+
 
 //* *********** Subroutines ************//
 
@@ -122,6 +124,10 @@ function* watchRequestAddMembers() {
   yield* takeEvery(USERS.ADD_MEMBERS, addMembers);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchMembers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -130,6 +136,7 @@ export default function* users() {
     fork(watchRequestFetchMembers),
     fork(watchRequestAddUser),
     fork(watchRequestVerifyMember),
-    fork(watchRequestAddMembers)
+    fork(watchRequestAddMembers),
+    fork(watchRequestSaveEdit)
   ];
 }
