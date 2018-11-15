@@ -19,6 +19,7 @@ import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+import style from './OrganizationalShirtPage.scss';
 
 class OrganizationalShirtPage extends React.Component {
   static propTypes = {
@@ -58,12 +59,18 @@ class OrganizationalShirtPage extends React.Component {
           Organizational Shirts
         </Typography>
 
-        <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" style={{margin: 20}}>
+        <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" className={style.Button}>
           Purchase
+        </Button>
+        <Button component={Link} to="/admin/shirts/organizationalshirt" variant="contained" color="primary" className={style.Button}>
+          View
+        </Button>
+        <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
+          Edit
         </Button>
 
         <MUIDataTable
-          title={'Organization List'}
+          title={'Organizational Shirts Availers'}
           data={purchasedShirts.map((shirt) => {
             return [
               shirt.id,

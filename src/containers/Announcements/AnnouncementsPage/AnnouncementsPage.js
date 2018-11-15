@@ -119,7 +119,8 @@ class AnnouncementsPage extends Component {
         </Button>
         <MUIDataTable
           title={'Announcements'}
-          data={announcements.map((announcement) => {
+          options={options}
+          data={this.props.announcements.map((announcement) => {
             return [
               announcement.id,
               announcement.title,
@@ -128,7 +129,6 @@ class AnnouncementsPage extends Component {
             ];
           })}
           columns={columns}
-          options={options}
         />
       </LayoutWithTopbarAndSidebar>
     );

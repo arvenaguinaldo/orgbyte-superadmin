@@ -20,6 +20,7 @@ import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import AddIcon from '@material-ui/icons/AddCircle';
 import People from '@material-ui/icons/People';
 import Update from '@material-ui/icons/Update';
+import LogsIcon from '@material-ui/icons/History';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';
@@ -31,7 +32,8 @@ import Shop from '@material-ui/icons/ShoppingBasket';
 import Building from '@material-ui/icons/AccountBalance';
 import Clock from '@material-ui/icons/AccessTime';
 import Event from '@material-ui/icons/Event';
-
+import Report from '@material-ui/icons/Description';
+import Announcement from '@material-ui/icons/Announcement';
 import Typography from '@material-ui/core/Typography';
 import style from './MenuItemData.scss';
 
@@ -45,7 +47,8 @@ class SuperAdminMenuItemData extends Component {
   state = {
     advancedMenuOpen: false,
     advancedAccountsOpen: false,
-    organizationsAccountsOpen: false
+    organizationsAccountsOpen: false,
+    reportsAccountsOpen: false
   };
 
   componentWillMount() {
@@ -59,6 +62,9 @@ class SuperAdminMenuItemData extends Component {
     }
     if (pathname === '/superadmin/presidents') {
       this.setState(({advancedAccountsOpen: !this.state.advancedAccountsOpen}));
+    }
+    if (pathname === '/superadmin/reports/organizations' || pathname === '/superadmin/reports/presidents') {
+      this.setState(({reportsAccountsOpen: !this.state.reportsAccountsOpen}));
     }
   }
 
@@ -74,6 +80,10 @@ class SuperAdminMenuItemData extends Component {
     this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
   };
 
+  handleClickReports = () => {
+    this.setState(({reportsAccountsOpen: !this.state.reportsAccountsOpen}));
+  }
+
   render() {
     const {
       pathname,
@@ -83,7 +93,8 @@ class SuperAdminMenuItemData extends Component {
     const {
       advancedMenuOpen,
       advancedAccountsOpen,
-      organizationsAccountsOpen
+      organizationsAccountsOpen,
+      reportsAccountsOpen
     } = this.state;
 
     return (
@@ -133,27 +144,6 @@ class SuperAdminMenuItemData extends Component {
             </MenuList>
           </Collapse>
 
-          <MenuItem button onClick={this.handleClickAccounts}>
-            <ListItemIcon>
-              <ManageIcon className={style.listIcon} />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Manage Accounts</Typography>} />
-            {advancedAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
-          </MenuItem>
-
-          <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
-            <MenuList component="div" disablePadding>
-
-              <MenuItem component={Link} to="/superadmin/presidents" selected={pathname === '/superadmin/presidents'} className={style.nested}>
-                <ListItemIcon>
-                  <SupervisorAccount className={style.listIcon} />
-                </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Presidents</Typography>} />
-              </MenuItem>
-
-            </MenuList>
-          </Collapse>
-
           <MenuItem button onClick={this.handleClickAdvanced} selected={pathname === '/superadmin/backups'} >
             <ListItemIcon>
               <AdvanceIcon className={style.listIcon} />
@@ -182,10 +172,69 @@ class SuperAdminMenuItemData extends Component {
             </MenuList>
           </Collapse>
         </MenuList>
+
+        <MenuList
+          subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
+        >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/superadmin/reports/organizations' || pathname === '/superadmin/reports/presidents' || pathname === '/superadmin/reports'} >
+            <ListItemIcon>
+              <Report className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Reports</Typography>} />
+            {reportsAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+          </MenuItem>
+
+          <Collapse in={reportsAccountsOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+
+              <MenuItem className={style.nested} component={Link} to="/superadmin/reports/organizations" selected={pathname === '/superadmin/reports/organizations'}>
+                <ListItemIcon>
+                  <Building className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Organizations List</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/superadmin/reports/presidents" selected={pathname === '/superadmin/reports/presidents'}>
+                <ListItemIcon>
+                  <SupervisorAccount className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Presidents</Typography>} />
+              </MenuItem>
+
+            </MenuList>
+          </Collapse>
+        </MenuList>
+
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">User</ListSubheader>}
         >
 
+          <MenuItem button onClick={this.handleClickAccounts}>
+            <ListItemIcon>
+              <ManageIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Manage Accounts</Typography>} />
+            {advancedAccountsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+          </MenuItem>
+
+          <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+
+              <MenuItem component={Link} to="/superadmin/presidents" selected={pathname === '/superadmin/presidents'} className={style.nested}>
+                <ListItemIcon>
+                  <SupervisorAccount className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Presidents</Typography>} />
+              </MenuItem>
+              <MenuItem component={Link} to="/superadmin/activitylogs" selected={pathname === '/superadmin/activitylogs'} className={style.nested}>
+                <ListItemIcon>
+                  <LogsIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Activity logs</Typography>} />
+              </MenuItem>
+
+            </MenuList>
+          </Collapse>
           <MenuItem button onClick={onLogout}>
             <ListItemIcon>
               <LogoutIcon className={style.listIcon} />
@@ -207,8 +256,16 @@ class AdminMenuItemData extends Component {
   state = {
     advancedEventsOpen: false,
     advancedShirtsOpen: false,
-    advancedAccountsOpen: false
+    advancedAccountsOpen: false,
+    advancedReportsOpen: false
   };
+
+  componentWillMount() {
+    const {pathname} = this.props;
+    if (pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members') {
+      this.setState(({advancedReportsOpen: !this.state.advancedReportsOpen}));
+    }
+  }
 
   handleClickEvents = () => {
     this.setState(state => ({advancedEventsOpen: !state.advancedEventsOpen}));
@@ -222,6 +279,10 @@ class AdminMenuItemData extends Component {
     this.setState(state => ({advancedAccountsOpen: !state.advancedAccountsOpen}));
   };
 
+  handleClickReports = () => {
+    this.setState(({advancedReportsOpen: !this.state.advancedReportsOpen}));
+  };
+
 
   render() {
     const {
@@ -232,7 +293,8 @@ class AdminMenuItemData extends Component {
     const {
       advancedEventsOpen,
       advancedShirtsOpen,
-      advancedAccountsOpen
+      advancedAccountsOpen,
+      advancedReportsOpen
     } = this.state;
 
     return (
@@ -240,6 +302,13 @@ class AdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Administration</ListSubheader>}
         >
+          <MenuItem component={Link} to="/admin/" selected={pathname === '/admin/'}>
+            <ListItemIcon>
+              <DashBoardIcon className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Dashboard</Typography>} />
+          </MenuItem>
+
           <MenuItem component={Link} to="/admin/memberships" selected={pathname === '/admin/memberships'}>
             <ListItemIcon>
               <ManageIcon className={style.listIcon} />
@@ -316,10 +385,49 @@ class AdminMenuItemData extends Component {
         </MenuList>
 
         <MenuList
+          subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
+        >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members'} >
+            <ListItemIcon>
+              <Report className={style.listIcon} />
+            </ListItemIcon>
+            <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Organization Reports</Typography>} />
+            {advancedReportsOpen ? <ExpandLess className={style.expandIcon} /> : <ExpandMore className={style.expandIcon} />}
+          </MenuItem>
+
+          <Collapse in={advancedReportsOpen} timeout="auto" unmountOnExit>
+            <MenuList component="div" disablePadding>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/members" selected={pathname === '/admin/reports/members'}>
+                <ListItemIcon>
+                  <People className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Members</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/announcements" selected={pathname === '/admin/reports/announcements'}>
+                <ListItemIcon>
+                  <Announcement className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Announcements</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/events" selected={pathname === '/admin/reports/events'}>
+                <ListItemIcon>
+                  <Event className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Events</Typography>} />
+              </MenuItem>
+
+            </MenuList>
+          </Collapse>
+        </MenuList>
+
+        <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">User</ListSubheader>}
         >
 
-          <MenuItem button onClick={this.handleClickAccounts} selected={pathname === '/admin/passwordreset' || pathname === '/admin/accounts'} >
+          <MenuItem button onClick={this.handleClickAccounts} selected={pathname === '/admin/passwordreset' || pathname === '/admin/accounts' || pathname === '/admin/useractivitylogs'} >
             <ListItemIcon>
               <ManageIcon className={style.listIcon} />
             </ListItemIcon>
@@ -329,6 +437,13 @@ class AdminMenuItemData extends Component {
 
           <Collapse in={advancedAccountsOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/useractivitylogs" selected={pathname === '/admin/useractivitylogs'}>
+                <ListItemIcon>
+                  <LogsIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>User logs</Typography>} />
+              </MenuItem>
 
               <MenuItem className={style.nested} component={Link} to="/admin/passwordreset" selected={pathname === '/admin/passwordreset'}>
                 <ListItemIcon>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import ChartistGraph from 'react-chartist';
+import Chartist from 'chartist';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 // @material-ui
@@ -9,26 +10,22 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Store from '@material-ui/icons/Store';
-import College from '@material-ui/icons/Contacts';
-import OrganizationIcon from '@material-ui/icons/AccountBalance';
+import Event from '@material-ui/icons/Event';
+import People from '@material-ui/icons/People';
 import Calendar from '@material-ui/icons/CalendarToday';
-import University from '@material-ui/icons/LocalLibrary';
-import Renew from '@material-ui/icons/AutoRenew';
+import Announcement from '@material-ui/icons/Announcement';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-import 'chartist/dist/chartist.min.css';
-import styles from './Dashboard.scss';
+import styles from './AdminDashboard.scss';
 
 class Dashboard extends Component {
   render() {
     const delays = 80;
     const durations = 500;
-    const Chartist = require('chartist');
     const data = {
-      labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       series: [[12, 17, 7, 17, 23, 18, 38]]
     };
     const options = {
@@ -143,22 +140,22 @@ class Dashboard extends Component {
               <Card className={styles.OverViewCard}>
                 <CardHeader
                   avatar={
-                    <Avatar className={styles.CardAvatar}>
-                      <OrganizationIcon className={styles.OverViewIcon} />
+                    <Avatar className={styles.CardAvatar1}>
+                      <People className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active Organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active members</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>1434</Typography>
                 </div>
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <OrganizationIcon />
+                    <People />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations"><Typography variant="subtitle1" color="textSecondary">View Organizations</Typography></Link>} />
+                  <ListItemText primary={<Link to="/superadmin/organizations"><Typography variant="subtitle1" color="textSecondary">View membership list</Typography></Link>} />
                 </ListItem>
               </Card>
             </Grid>
@@ -166,57 +163,64 @@ class Dashboard extends Component {
               <Card className={styles.OverViewCard}>
                 <CardHeader
                   avatar={
-                    <Avatar className={styles.CardAvatar}>
+                    <Avatar className={styles.CardAvatar2}>
+                      <Event className={styles.OverViewIcon} />
+                    </Avatar>
+                  }
+                  className={styles.CardHeader}
+                />
+                <div className={styles.CardUpperText}>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Events created</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>20</Typography>
+                </div>
+                <div className={styles.Divider} />
+                <ListItem className={styles.CardBottomText}>
+                  <ListItemIcon >
+                    <Event />
+                  </ListItemIcon>
+                  <ListItemText primary={<Link to="/superadmin/organizations"><Typography variant="subtitle1" color="textSecondary">View Events</Typography></Link>} />
+                </ListItem>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card className={styles.OverViewCard}>
+                <CardHeader
+                  avatar={
+                    <Avatar className={styles.CardAvatar3}>
+                      <Announcement className={styles.OverViewIcon} />
+                    </Avatar>
+                  }
+                  className={styles.CardHeader}
+                />
+                <div className={styles.CardUpperText}>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Announcements posted</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>10</Typography>
+                </div>
+                <div className={styles.Divider} />
+                <ListItem className={styles.CardBottomText}>
+                  <ListItemIcon >
+                    <Announcement />
+                  </ListItemIcon>
+                  <ListItemText primary={<Link to="/superadmin/organizations"><Typography variant="subtitle1" color="textSecondary">View Announcements</Typography></Link>} />
+                </ListItem>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card className={styles.OverViewCard}>
+                <CardHeader
+                  avatar={
+                    <Avatar className={styles.CardAvatar4}>
                       <Calendar className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Renewal Period</Typography>
-                  <Typography variant="body2" className={styles.DateText}>12/21/1995 to 12/21/1996</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Next renewal date</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>Jan 12 2018</Typography>
                 </div>
                 <div className={styles.Divider} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <Calendar />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Edit Renewal Period</Typography></Link>} />
-                </ListItem>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className={styles.OverViewCard}>
-                <CardHeader
-                  avatar={
-                    <Avatar className={styles.CardAvatar}>
-                      <University className={styles.OverViewIcon} />
-                    </Avatar>
-                  }
-                  className={styles.CardHeader}
-                />
-                <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>University wide organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
-                </div>
-                <div className={styles.Divider} />
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className={styles.OverViewCard}>
-                <CardHeader
-                  avatar={
-                    <Avatar className={styles.CardAvatar}>
-                      <College className={styles.OverViewIcon} />
-                    </Avatar>
-                  }
-                  className={styles.CardHeader}
-                />
-                <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>College based organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
-                </div>
-                <div className={styles.Divider} />
+                <ListItem className={styles.CardBottomText} />
               </Card>
             </Grid>
           </Grid>
@@ -233,14 +237,14 @@ class Dashboard extends Component {
                     listener={animation}
                   />
                 </Card>
-                <Typography variant="body1" className={styles.ChartPrimaryText}>Organization Renewals per year</Typography>
-                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>40% more compared with year 2017</Typography>
+                <Typography variant="body1" className={styles.ChartPrimaryText}>Events held for this year</Typography>
+                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>Month of December having total count of (3) events</Typography>
                 <div className={styles.DividerChart} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <Renew />
+                    <Calendar />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">Manage Renewals</Link>} />
+                  <ListItemText primary={<Link to="/admin/events">Manage Events</Link>} />
                 </ListItem>
               </Card>
             </Grid>
@@ -255,14 +259,14 @@ class Dashboard extends Component {
                     listener={chart2.animation}
                   />
                 </Card>
-                <Typography variant="body1" className={styles.ChartPrimaryText}>Organizations with highest member count</Typography>
-                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>SWITS leading with (69) members</Typography>
+                <Typography variant="body1" className={styles.ChartPrimaryText}>Highest users sign in count</Typography>
+                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>Arven Aguinaldo highest with (200) total sign in</Typography>
                 <div className={styles.DividerChart} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <Store />
+                    <AccountCircle />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">View all Organizations</Link>} />
+                  <ListItemText primary={<Link to="/admin/accounts">View Accounts</Link>} />
                 </ListItem>
               </Card>
             </Grid>
