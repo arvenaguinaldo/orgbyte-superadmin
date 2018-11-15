@@ -5,6 +5,8 @@ const initialState = fromJS({
   list: [],
   event: {},
   attendee: {},
+  attendees: [],
+  attendance: [],
   success: false,
   meta: {
     loading: false
@@ -89,15 +91,32 @@ const events = (state = initialState, action) => {
       }));
     }
 
+    case EVENTS.FETCH_ATTENDEES: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.FETCH_ATTENDEES_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        attendees: data,
+        success: !action.response.error,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     case EVENTS.ATTEND: {
       return state.mergeIn(['meta'], fromJS({
+        success: false,
         isFetchAttendeeLoading: true
       }));
     }
     case EVENTS.ATTEND_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        attendee: data,
+        attendees: data,
         success: !action.response.error,
         meta: {
           loading: false
@@ -130,6 +149,22 @@ const events = (state = initialState, action) => {
       const {data} = action.response;
       return state.merge(fromJS({
         list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.FETCH_WHO_ATTEND: {
+      return state.mergeIn(['meta'], fromJS({
+        isFetchAttendeeLoading: true
+      }));
+    }
+    case EVENTS.FETCH_WHO_ATTEND_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        fetchWhoAttend: data,
+        success: !action.response.error,
         meta: {
           loading: false
         }

@@ -22,9 +22,19 @@ export const makeSelectAttendee = () => createSelector(
   events => events.attendee
 );
 
+export const makeSelectAttendees = () => createSelector(
+  makeSelectEvents(),
+  events => events.attendees
+);
+
 export const makeSelectSuccess = () => createSelector(
   makeSelectEvents(),
   events => events.success
+);
+
+export const makeSelectWhoAttend = () => createSelector(
+  makeSelectEvents(),
+  events => events.fetchWhoAttend
 );
 
 export const makeSelectEventsMeta = () => createSelector(

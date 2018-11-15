@@ -36,11 +36,13 @@ import OrganizationalShirtDetails from 'containers/OrganizationalShirts/Organiza
 import OrganizationalShirts from 'containers/OrganizationalShirts/OrganizationalShirtsPage/OrganizationalShirtPage';
 
 //  Admin - Events Routes
+import GenerateCertificate from 'containers/Events/GenerateCertificate/GenerateCertificate';
 import CreateEvent from 'containers/Events/CreateEvent/CreateEvent';
 import EventRegister from 'containers/Events/Register/Register';
 import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
+import CheckIn from 'containers/Events/CheckIn/CheckIn';
 
 import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
 import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
@@ -105,10 +107,12 @@ class MainRoutes extends Component {
 
         {/* Admin - Events Routes */}
         <AdminRoute path="/admin/events/createevent" component={CreateEvent} />
+        <AdminRoute path="/admin/events/:id/generatecertificate" component={GenerateCertificate} />
+        <AdminRoute path="/admin/events/:id/checkin" component={CheckIn} exact />
         <AdminRoute path="/admin/events/:id/register" component={EventRegister} />
         <AdminRoute path="/admin/events/:id/qrscanner" component={QRScan} />
-        <AdminRoute path="/admin/events/:id" component={EventDetails} />
-        <AdminRoute path="/admin/events" component={EventList} />
+        <AdminRoute path="/admin/events/:id" component={EventDetails} exact />
+        <AdminRoute path="/admin/events" component={EventList} exact />
 
         <AdminRoute path="/admin/announcements/add" component={AddAnnouncements} />
         <AdminRoute path="/admin/announcements" component={AnnouncementsPage} />

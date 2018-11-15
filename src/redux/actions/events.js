@@ -50,6 +50,16 @@ export const fetchAttendeeSuccess = response => ({
   response
 });
 
+export const fetchAttendees = params => ({
+  type: EVENTS.FETCH_ATTENDEES,
+  params
+});
+
+export const fetchAttendeesSuccess = response => ({
+  type: EVENTS.FETCH_ATTENDEES_SUCCESS,
+  response
+});
+
 export const attend = params => ({
   type: EVENTS.ATTEND,
   params
@@ -77,5 +87,15 @@ export const registerImports = params => ({
 
 export const registerImportsSuccess = response => ({
   type: EVENTS.REGISTER_IMPORTS_SUCCESS,
+  response
+});
+
+export const fetchWhoAttend = params => ({
+  type: EVENTS.FETCH_WHO_ATTEND,
+  params
+});
+
+export const fetchWhoAttendSuccess = response => ({
+  type: EVENTS.FETCH_WHO_ATTEND_SUCCESS,
   response
 });

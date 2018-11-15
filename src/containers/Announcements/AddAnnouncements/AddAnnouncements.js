@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {createStructuredSelector} from 'reselect';
-import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
@@ -23,33 +22,6 @@ import SubmitButton from 'components/SubmitButton/SubmitButton';
 import {validate} from 'utils/Validations/AddAnnouncements';
 
 import myStyles from './Announcements.scss';
-
-const styles = theme => ({
-  root: {
-    width: '100%'
-  },
-  Paper: {
-    padding: '50px'
-  },
-  sendButton: {
-    flex: 1
-  },
-  grid: {
-    backgroundColor: '#5F1D24'
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
-  iconSmall: {
-    fontSize: 20
-  },
-  button: {
-    margin: 20
-  }
-});
 
 class AddAnnouncements extends Component {
     static propTypes = {
@@ -163,6 +135,5 @@ export default compose(
     form: 'AnnouncementsForm',
     destroyOnUnmount: false,
     validate
-  }),
-  withStyles(styles)
+  })
 )(AddAnnouncements);

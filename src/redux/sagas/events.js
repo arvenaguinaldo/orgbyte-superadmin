@@ -54,7 +54,8 @@ function* register(action) {
     } else {
       yield call(callSuccessNotification, 'Register Successfully');
       yield put(eventsActions.registerSuccess(response.data));
-      yield put(reset('EventRegisterForm'));
+      yield put(reset('EventRegisterFormMember'));
+      yield put(reset('VerifyMemberForm'));
       // yield put(push('/events'));
     }
   }
@@ -72,6 +73,18 @@ function* fetchAttendee(action) {
   }
 }
 
+function* fetchAttendees(action) {
+  const response = yield call(eventsService.fetchAttendees, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.fetchAttendeesSuccess(response));
+    } else {
+      yield put(eventsActions.fetchAttendeesSuccess(response));
+    }
+  }
+}
+
 function* attend(action) {
   const response = yield call(eventsService.attend, action.params);
   if (response) {
@@ -79,6 +92,8 @@ function* attend(action) {
       yield call(callErrorNotification, response.data.error);
       yield put(eventsActions.attendSuccess(response));
     } else {
+      yield call(callSuccessNotification, 'Attended Successfully');
+      console.log(response);
       yield put(eventsActions.attendSuccess(response));
     }
   }
@@ -111,6 +126,18 @@ function* registerImports(action) {
   }
 }
 
+function* fetchWhoAttend(action) {
+  const response = yield call(eventsService.fetchWhoAttend, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
+    } else {
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -133,6 +160,10 @@ function* watchRequestFetchAttendee() {
   yield* takeEvery(EVENTS.FETCH_ATTENDEE, fetchAttendee);
 }
 
+function* watchRequestFetchAttendees() {
+  yield* takeEvery(EVENTS.FETCH_ATTENDEES, fetchAttendees);
+}
+
 function* watchRequestAttend() {
   yield* takeEvery(EVENTS.ATTEND, attend);
 }
@@ -145,6 +176,10 @@ function* watchRequestRegisterImports() {
   yield* takeEvery(EVENTS.REGISTER_IMPORTS, registerImports);
 }
 
+function* watchRequestFetchWhoAttend() {
+  yield* takeEvery(EVENTS.FETCH_WHO_ATTEND, fetchWhoAttend);
+}
+
 
 export default function* events() {
   yield [
@@ -153,8 +188,10 @@ export default function* events() {
     fork(watchRequestCreateEvent),
     fork(watchRequestRegister),
     fork(watchRequestFetchAttendee),
+    fork(watchRequestFetchAttendees),
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
-    fork(watchRequestRegisterImports)
+    fork(watchRequestRegisterImports),
+    fork(watchRequestFetchWhoAttend)
   ];
 }
