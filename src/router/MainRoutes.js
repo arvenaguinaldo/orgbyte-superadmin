@@ -8,7 +8,6 @@ import AdminRoute from 'router/routes/AdminRoute';
 // Components / Pages
 import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
-import Home from 'containers/Home/Home';
 
 // Super Admin Routes
 import Dashboard from 'containers/Dashboard/Dashboard';
@@ -19,6 +18,9 @@ import BackupList from 'containers/BackupList/BackupList';
 import RenewOrganizationList from 'containers/RenewalList/RenewalList';
 import RenewOrganization from 'containers/RenewOrganization/RenewOrganization';
 import RenewalDate from 'containers/RenewalDate/RenewalDate';
+import SuperAdminOrganizationReport from 'containers/SuperAdminReports/OrganizationList';
+import SuperAdminPresidentReport from 'containers/SuperAdminReports/PresidentList';
+import SuperAdminActivityLogs from 'containers/SuperAdminActivityLogs/SuperAdminActivityLogs';
 
 // Admin Routes
 
@@ -28,6 +30,7 @@ import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
 
 //  Admin - Organizational Shirts Routes
 import AddOrganizationalShirt from 'containers/OrganizationalShirts/AddOrganizationalShirt/AddOrganizationalShirt';
+import EditOrganizationalShirt from 'containers/OrganizationalShirts/EditOrganizationalShirt/EditOrganizationalShirt';
 import Purchase from 'containers/OrganizationalShirts/Purchase/Purchase';
 import OrganizationalShirtDetails from 'containers/OrganizationalShirts/OrganizationalShirtDetails/OrganizationalShirtDetails';
 import OrganizationalShirts from 'containers/OrganizationalShirts/OrganizationalShirtsPage/OrganizationalShirtPage';
@@ -48,6 +51,13 @@ import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
+import AdminDashboard from 'containers/AdminDashboard/AdminDashboard';
+import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
+
+// Reports
+import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
+import OrganizationReport from 'containers/AdminReports/EventList';
+import MembersReport from 'containers/AdminReports/MemberList';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -77,16 +87,20 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/backups" component={BackupList} />
         <SuperAdminRoute path="/superadmin/renewaldate" component={RenewalDate} />
         <SuperAdminRoute path="/superadmin/renew/:id" component={RenewOrganization} />
+        <SuperAdminRoute path="/superadmin/reports/organizations" component={SuperAdminOrganizationReport} />
+        <SuperAdminRoute path="/superadmin/reports/presidents" component={SuperAdminPresidentReport} />
+        <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}
 
         {/* Admin - Membership Routes */}
-        <AdminRoute path="/admin/" component={Home} exact />
+        <AdminRoute path="/admin/" component={AdminDashboard} exact />
         <AdminRoute path="/admin/memberships/addmember" component={AddMember} />
         <AdminRoute path="/admin/memberships" component={Memberships} />
 
         {/* Admin - Organizational Shirts Routes */}
         <AdminRoute path="/admin/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
+        <AdminRoute path="/admin/shirts/editorganizationalshirt" component={EditOrganizationalShirt} />
         <AdminRoute path="/admin/shirts/purchase" component={Purchase} />
         <AdminRoute path="/admin/shirts/organizationalshirt" component={OrganizationalShirtDetails} />
         <AdminRoute path="/admin/shirts" component={OrganizationalShirts} />
@@ -107,6 +121,10 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />
         <AdminRoute path="/admin/accounts" component={AddAccount} />
         <AdminRoute path="/admin/logs" component={UserActivityLogs} />
+        <AdminRoute path="/admin/reports/announcements" component={AnnouncementReport} />
+        <AdminRoute path="/admin/reports/events" component={OrganizationReport} />
+        <AdminRoute path="/admin/reports/members" component={MembersReport} />
+        <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}
         <Route path="/" component={HomePage} exact />
