@@ -80,11 +80,13 @@ const theme = colorTheme => createMuiTheme({
     },
     MuiButton: {
       containedPrimary: {
-        color: '#fff'
+        color: '#fff',
+        textDecoration: 'none'
       }
     }
   }
-});
+}
+);
 theme.shadows = [];
 
 export default theme;

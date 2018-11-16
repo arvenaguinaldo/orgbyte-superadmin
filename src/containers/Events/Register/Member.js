@@ -109,6 +109,7 @@ export default compose(
   reduxForm({
     form: 'VerifyMemberForm',
     overwriteOnInitialValuesChange: false,
+    enableReinitialize: true,
     validate
   }),
   withRedux
