@@ -267,8 +267,8 @@ class EventDetails extends Component {
               attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name,
               attendee.email,
               attendee.contact_number,
-              attendee.course_name,
-              attendee.year_level + attendee.section + ' - G' + attendee.group,
+              attendee.course_namee,
+              attendee.section && attendee.year_level + attendee.section + ' - G' + attendee.group,
               attendee.event_attendee_type_name,
               attendee.payment_status === true ? 'PAID' : 'NOT PAID',
               attendee

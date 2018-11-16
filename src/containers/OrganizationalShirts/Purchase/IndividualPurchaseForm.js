@@ -36,12 +36,17 @@ class IndividualPurchaseForm extends Component {
     meta: PropTypes.object.isRequired
   };
 
+  componentDidMount() {
+    this.props.reset(); // eslint-disable-line react/prop-types
+  }
+
   onSubmit = (values, dispatch) => {
     const {shirt} = this.props;
     _.set(values, 'shirt_id', shirt.id);
     _.set(values, 'member_id', values.id);
     dispatch(purchaseShirt(values));
   };
+
 
   render() {
     const contactNumberMask = createTextMask({
