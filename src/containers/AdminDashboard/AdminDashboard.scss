@@ -1,15 +1,4 @@
 
-.ct-label {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.ct-series-a .ct-bar,
-.ct-series-a .ct-line,
-.ct-series-a .ct-point,
-.ct-series-a .ct-slice-donut {
-  stroke: #fff;
-}
-
 .OverViewDiv {
   margin-top: 40px;
 }
@@ -38,21 +27,37 @@
   font-size: 22px;
 }
 
-.DateText {
-  font-size: 13px;
-}
-
 .SecondaryText {
   font-size: 14px;
 }
 
-.SecondaryTextLong {
-  font-size: 12px;
+.CardAvatar1 {
+  color: #fff;
+  background-color: #52ac56;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
 }
 
-.CardAvatar {
+.CardAvatar2 {
   color: #fff;
-  background-color: #812228;
+  background-color: #fd9a14;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.CardAvatar3 {
+  color: #fff;
+  background-color: #0ab3c7;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.CardAvatar4 {
+  color: #fff;
+  background-color: #9c27b0;
   width: 86px;
   height: 87px;
   border-radius: 3px;

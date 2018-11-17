@@ -59,7 +59,7 @@ const theme = colorTheme => createMuiTheme({
     MUIDataTableHeadCell: {
       root: {
         backgroundColor: '#eee',
-        padding: '0px 10px 0px 10px'
+        padding: '0px 10px 0px 30px'
       }
     },
     MUIDataTableBodyRow: {
@@ -75,16 +75,18 @@ const theme = colorTheme => createMuiTheme({
     },
     MUIDataTableBodyCell: {
       root: {
-        padding: '0px 10px 0px 10px'
+        padding: '0px 10px 0px 30px'
       }
     },
     MuiButton: {
       containedPrimary: {
-        color: '#fff'
+        color: '#fff',
+        textDecoration: 'none'
       }
     }
   }
-});
+}
+);
 theme.shadows = [];
 
 export default theme;

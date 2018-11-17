@@ -12,6 +12,7 @@ import announcementsReducer from 'redux/reducers/announcements';
 import emailsReducer from 'redux/reducers/emails';
 import renewalReducer from 'redux/reducers/renewal';
 import smsReducer from 'redux/reducers/sms';
+import logsReducer from 'redux/reducers/logs';
 import notificationReducer from 'redux/reducers/notification';
 import {AUTH} from 'constants/actions/auth';
 import {routerReducer} from 'react-router-redux';
@@ -33,6 +34,7 @@ const appReducer = combineReducers({
   emails: emailsReducer,
   renewal: renewalReducer,
   sms: smsReducer,
+  logs: logsReducer,
   notification: notificationReducer
 });
 

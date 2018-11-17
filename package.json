@@ -25,6 +25,7 @@
     "immutable-treeutils": "0.1.8",
     "jsonwebtoken": "^8.3.0",
     "jspdf": "^1.4.1",
+    "jspdf-autotable": "^2.3.5",
     "lodash.get": "^4.4.2",
     "lodash.snakecase": "^4.1.1",
     "material-ui-chip-input": "^1.0.0-beta.8",
