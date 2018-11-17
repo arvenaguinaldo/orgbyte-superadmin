@@ -12,6 +12,7 @@ import organizationNatures from './organization_natures';
 import announcements from './announcements';
 import emails from './emails';
 import renewal from './renewal';
+import sms from './sms';
 import logs from './logs';
 
 export default function* root() {
@@ -28,6 +29,7 @@ export default function* root() {
     fork(announcements),
     fork(emails),
     fork(renewal),
+    fork(sms),
     fork(logs)
   ];
 }

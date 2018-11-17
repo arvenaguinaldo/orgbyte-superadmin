@@ -244,9 +244,9 @@ class EventDetails extends Component {
             </Grid>
           </Grid>
           <div className={styles.actionsDiv}>
-            <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            {event.nature_of_event === "curricular" && <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
-            </Button>
+            </Button>}
             <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable} variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>

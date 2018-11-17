@@ -4,6 +4,7 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 import {createStructuredSelector} from 'reselect';
 
 import {Field, reduxForm} from 'redux-form';
@@ -39,6 +40,7 @@ class NonBulsuans extends Component {
     });
 
     const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const registerDisable = moment().isAfter(this.props.event.ends);
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <Grid container spacing={32}>
@@ -94,7 +96,7 @@ class NonBulsuans extends Component {
                   Cancel
           </Button>
 
-          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid}>
+          <SubmitButton loading={meta.isLoadingSubmit} valid={!valid || registerDisable}>
                   Register
           </SubmitButton>
         </div>

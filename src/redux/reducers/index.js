@@ -11,6 +11,7 @@ import organizationNaturesReducer from 'redux/reducers/organization_natures';
 import announcementsReducer from 'redux/reducers/announcements';
 import emailsReducer from 'redux/reducers/emails';
 import renewalReducer from 'redux/reducers/renewal';
+import smsReducer from 'redux/reducers/sms';
 import logsReducer from 'redux/reducers/logs';
 import notificationReducer from 'redux/reducers/notification';
 import {AUTH} from 'constants/actions/auth';
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
   announcements: announcementsReducer,
   emails: emailsReducer,
   renewal: renewalReducer,
+  sms: smsReducer,
   logs: logsReducer,
   notification: notificationReducer
 });

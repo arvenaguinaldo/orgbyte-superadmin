@@ -32,6 +32,7 @@ function* fetchEmail(action) {
 }
 
 function* createEmail(action) {
+  yield call(callInfoNotification, 'This will take a minute...');
   const response = yield call(emailsService.createEmail, action.params);
   if (response) {
     if (response.data.error) {
