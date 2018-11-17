@@ -1,7 +1,11 @@
 deploy:
   provider: s3
   access_key_id: AKIAJSYQLWZMFTNOHH3Q
-  secret_access_key: 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
+  secret_access_key:
+    secure: BpgO7QPduWHfgWFxkQHsorjttAFUcw9FBtDT5sMhx6hnRbpRA+scPEP1DQmMib1RC/PQ7kdFUaG/xpkN5+wo7USwUMT0qT3oU/OKIeP2qDKtn1VuweR6aQmOWqMtmU5EHl+1iHRNOg7bxvXcsfRfygf1kpBj1D+VLPHNv0Q8OplNmu5vtt0c8tNK8N53v2cMXJCT/7hwfBffNiA1Gr+UBefSLru103nd8oOVHdw/jeiV613UC/f7dWJpfXhhH7Gt5O/rh5Kr58j/bWZ5Np3F9n+JzGTm2caLBjeFevulNtYAo4HPNcZIm0LMCoczJag/WJRc85FKrJytDlrKW/3xItaeW3DzxWYpTY3STcozUCtfKyStrWUaAOBKfCY6u4dyfjr9FK21c0Z0OqeY5tlVm7Z8jJg2v1fdH0h/D/if/6zhqEqmXGBqufnB7CLrnllnJnjYJC7e+2sI1wmkvSizKXvKQvS9Ny/Dn8rv+jZ91cRNTiaZMtZM1BKY2v/T7NYcSDz/zFhTHVjGE6efYUvltRUkLod9kijvvAYzDXHawAAVW6ZROSgfyT64ma8ceih+vzERgL9NmLNwrj/S90ZM6TTu8QCWEG+wezAZrkLlh1ATBujI4cGrsXTUw94F9OcItxcHLM2358WU0msO+SrfTrelZQXiOk720vhKBhE6OJ0=
   bucket: orgbyte.com
-  skip_cleanup: true
-  local_dir: build
+  local-dir: build
+  acl: public_read
+  on:
+    repo: arvenaguinaldo/orgbyte-superadmin
+    branch: develop
