@@ -8,4 +8,3 @@ deploy:
   acl: public_read
   on:
     repo: arvenaguinaldo/orgbyte-superadmin
-    branch: develop
