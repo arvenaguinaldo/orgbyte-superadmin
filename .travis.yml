@@ -1,0 +1,7 @@
+deploy:
+  provider: s3
+  access_key_id: AKIAJSYQLWZMFTNOHH3Q
+  secret_access_key: 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
+  bucket: orgbyte.com
+  skip_cleanup: true
+  local_dir: build
