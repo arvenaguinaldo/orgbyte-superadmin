@@ -58,6 +58,7 @@ import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
 import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
 import OrganizationReport from 'containers/AdminReports/EventList';
 import MembersReport from 'containers/AdminReports/MemberList';
+import ShirtsReport from 'containers/AdminReports/ShirtPurchaseList';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -124,6 +125,7 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/reports/announcements" component={AnnouncementReport} />
         <AdminRoute path="/admin/reports/events" component={OrganizationReport} />
         <AdminRoute path="/admin/reports/members" component={MembersReport} />
+        <AdminRoute path="/admin/reports/shirts" component={ShirtsReport} />
         <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}

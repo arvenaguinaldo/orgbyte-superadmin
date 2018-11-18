@@ -387,7 +387,7 @@ class AdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
         >
-          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members'} >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/shirts'} >
             <ListItemIcon>
               <Report className={style.listIcon} />
             </ListItemIcon>
@@ -417,6 +417,13 @@ class AdminMenuItemData extends Component {
                   <Event className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Events</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/shirts" selected={pathname === '/admin/reports/shirts'}>
+                <ListItemIcon>
+                  <Shop className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Shirt Purchase</Typography>} />
               </MenuItem>
 
             </MenuList>

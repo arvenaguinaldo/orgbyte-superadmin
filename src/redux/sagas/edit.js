@@ -9,12 +9,12 @@ import {callErrorNotification, callSuccessNotification} from './notification';
 //* *********** Subroutines ************//
 
 function* fetchEdit(action) {
+  yield put(reset('EditForm'));
   const response = yield call(editService.fetchEdit, action.params);
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(reset('EditForm'));
       const successResponse = {table: action.params.table, response};
       yield put(editActions.fetchEditSuccess(successResponse));
     }

@@ -219,6 +219,7 @@ export default compose(
     form: 'EditForm',
     overwriteOnInitialValuesChange: true,
     destroyOnUnmount: false,
+    enableReinitialize: true,
     validate
   })
 )(EditForm);

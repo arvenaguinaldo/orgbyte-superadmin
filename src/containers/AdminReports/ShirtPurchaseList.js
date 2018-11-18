@@ -2,22 +2,20 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import moment from 'moment';
 import JsPDF from 'jspdf';
 import 'jspdf-autotable';
+import moment from 'moment';
 
 import MUIDataTable from 'mui-datatables';
 import {withStyles} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
-import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
-import Grid from '@material-ui/core/Grid';
-import {Field, reduxForm} from 'redux-form';
-
 import {createStructuredSelector} from 'reselect';
-import {makeSelectAnnouncementsList, makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
+import {makeSelectUsersMeta} from 'redux/selectors/users';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
-import {fetchAnnouncements} from 'redux/actions/announcements';
+
+import {makeSelectShirtPurchaseShirts} from 'redux/selectors/shirts';
+import {fetchPurchaseShirts} from 'redux/actions/shirts';
 
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
@@ -25,7 +23,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
-import Typography from '@material-ui/core/Typography';
+
 // import myStyles from './Announcements.scss';
 
 const styles = theme => ({
@@ -52,167 +50,148 @@ const styles = theme => ({
   },
   iconSmall: {
     fontSize: 20
-  },
-  RangeLabel: {
-    marginTop: 36,
-    marginLeft: 36
   }
 });
 
 let tableData = {};
 let tableDataArray = [];
 let tableColumnsArray = [];
-
 const tableColumnsStatus = [];
 let tableColumns = {};
+
 const columns = [
   {
-    name: 'Title',
+    name: 'Id',
     options: {
+      display: false,
       filter: false
     }
   },
   {
-    name: 'Announcements Starts',
+    name: 'Name',
     options: {
+      display: true,
       filter: false
     }
   },
   {
-    name: 'Announcements Ends',
+    name: 'Size',
     options: {
+      display: true,
+      filter: true
+    }
+  },
+  {
+    name: 'Year and Section',
+    options: {
+      display: true,
+      filter: true
+    }
+  },
+  {
+    name: 'Contact Number',
+    options: {
+      display: true,
+      filter: false
+    }
+  },
+  {
+    name: 'Email',
+    options: {
+      display: true,
       filter: false
     }
   }
 ];
 
 
-class AnnouncementsPage extends Component {
+class ShirtPurchaseList extends Component {
 
-  static propTypes = {
-    announcements: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
-  };
+static propTypes = {
+  purchasedShirts: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
+}
 
-  static defaultProps = {
-    announcements: []
-  };
+static defaultProps = {
+  purchasedShirts: []
+};
 
-  state = {
-    startsDate: new Date('YYYY-MM-DDT00:00:00.000Z'),
-    endsDate: new Date()
-  }
+render() {
+  const {purchasedShirts, user} = this.props;
+  const options = {
+    selectableRows: false,
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5, 10, 15],
+    filter: true,
+    filterType: 'dropdown',
+    print: false,
+    customToolbar: () => {
+      return (
+        <CustomToolbar purchasedShirts={purchasedShirts} user={user} />
+      );
+    },
+    onTableChange: (action, tableState) => {
+      // get displayed table data
+      tableDataArray = [];
+      tableData = {...tableState};
+      let counter = 0;
+      tableData.displayData.map((values) => {
+        tableDataArray[counter] = {...values.data};
+        counter += 1;
+        return null;
+      });
 
-  handleStartsDateChange = (date) => {
-    this.setState({startsDate: date});
-  };
-
-  handleEndsDateChange = (date) => {
-    this.setState({endsDate: date});
-  };
-
-  render() {
-    const {announcements, user, classes} = this.props;
-    const options = {
-      selectableRows: false,
-      rowsPerPage: 5,
-      rowsPerPageOptions: [5, 10, 15],
-      filter: false,
-      print: false,
-      customToolbar: () => {
-        return (
-          <CustomToolbar announcements={announcements} user={user} />
-        );
-      },
-      onTableChange: (action, tableState) => {
-        // get displayed table data
-        tableDataArray = [];
-        tableData = {...tableState};
-        let counter = 0;
-        tableData.displayData.map((values) => {
-          tableDataArray[counter] = {...values.data};
-          counter += 1;
-          return null;
-        });
-
-        // get table column names
-        tableColumnsArray = [];
-        let counterb = 0;
-        tableColumns = {...tableState};
-        tableColumns.columns.map((values, index) => {
+      // get table column names
+      tableColumnsArray = [];
+      let counterb = 0;
+      tableColumns = {...tableState};
+      tableColumns.columns.map((values, index) => {
             return (tableColumnsArray[counterb] = {title: values.name, dataKey:index}, tableColumnsStatus[counterb] = values.display, counterb++); // eslint-disable-line
-        });
-        // get table columnstatus (display: true/false)
-        let counterc = 0;
-        tableColumns.columns.map((values) => {
+      });
+      // get table columnstatus (display: true/false)
+      let counterc = 0;
+      tableColumns.columns.map((values) => {
             return (tableColumnsStatus[counterc] = values.display, counterc++); // eslint-disable-line
-        });
+      });
 
-      }
-    };
+    }
+  };
 
-    return (
-      <LayoutWithTopbarAndSidebar>
-        <form>
-          <Grid container spacing={0}>
-            <Grid item xs={12} sm={12} md={12}>
-              <Grid container spacing={40}>
-                <Grid item xs={10} sm={10} md={6} />
-                <Grid item xs={10} sm={10} md={2}>
-                  <Typography variant="subtitle1" className={classes.RangeLabel}>Date Range:</Typography>
-                </Grid>
-                <Grid item xs={10} sm={10} md={2} >
-                  <Field
-                    name="starts"
-                    component={renderDateTimePicker}
-                    label="Start date"
-                    selected={this.state.startsDate}
-                    onChange={this.handleStartsDateChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={10} sm={10} md={2} >
-                  <Field
-                    name="ends"
-                    component={renderDateTimePicker}
-                    label="End date"
-                    selected={this.state.endsDate}
-                    minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </form>
-        <MUIDataTable
-          title={'Announcements List'}
-          options={options}
-          data={this.props.announcements.map((announcement) => {
-            return [
-              announcement.title,
-              moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-              moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
-            ];
-          })}
-          columns={columns}
-        />
-      </LayoutWithTopbarAndSidebar>
-    );
-  }
+  return (
+    <LayoutWithTopbarAndSidebar>
+      <MUIDataTable
+        title={'Shirt Purchase List'}
+        options={options}
+        data={purchasedShirts.map((shirt) => {
+          return [
+            shirt.id,
+            shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+            shirt.size,
+            shirt.year_level + shirt.section + ' - G' + shirt.group,
+            shirt.contact_number,
+            shirt.email
+          ];
+        })}
+        columns={columns}
+      />
+    </LayoutWithTopbarAndSidebar>
+  );
+}
 }
 
 export class CustomToolbar extends Component {
   static propTypes = {
-    announcements: PropTypes.array.isRequired,
+    purchasedShirts: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired
   };
   printData = () => {
-    const data = this.props.announcements.map(announcement => ({
-      0: announcement.title,
-      1: moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-      2: moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+    const data = this.props.purchasedShirts.map(shirt => ({
+      0: shirt.id,
+      1: shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+      2: shirt.size,
+      3: shirt.year_level + shirt.section + ' - G' + shirt.group,
+      4: shirt.contact_number,
+      5: shirt.email
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -249,17 +228,25 @@ export class CustomToolbar extends Component {
     const doc = new JsPDF('p', 'pt');
     const totalPagesExp = '{total_pages_count_string}';
     doc.setProperties({
-      title: 'Announcement Table'
+      title: 'Shirts Purchase Table'
     });
     doc.page = 1;
-    const orgname = this.props.announcements[0].organization_name;
+    // const orgname = this.props.members[0].organization_name;
     const username = this.props.user.first_name + ' ' + this.props.user.last_name;
+    const orgname = 'Society for the Welfare of Information Technology Students static';
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
-      styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 6},
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
-      columnStyles: {0: {columnWidth: 'auto'}},
+      columnStyles: {
+        0: {columnWidth: 'auto'},
+        1: {columnWidth: 'auto'},
+        2: {columnWidth: 'auto'},
+        3: {columnWidth: 'auto'},
+        4: {columnWidth: 'auto'},
+        5: {columnWidth: 'auto'}
+      },
       alternateRowStyles: {
         fillColor: [220, 220, 220]
       },
@@ -267,7 +254,7 @@ export class CustomToolbar extends Component {
       addPageContent() {
         // HEADER
         doc.setFontSize(15);
-        doc.text('Announcement List', 35, 190);
+        doc.text('Shirt Purchase List', 35, 190);
         doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
         doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
@@ -315,15 +302,15 @@ export class CustomToolbar extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  announcements: makeSelectAnnouncementsList(),
+  purchasedShirts: makeSelectShirtPurchaseShirts(),
   user: makeSelectCurrentUser(),
-  meta: makeSelectAnnouncementsMeta()
+  meta: makeSelectUsersMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchAnnouncements});
+const withRedux = connect(mapStateToProps, {fetchPurchaseShirts});
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchAnnouncements();
+  props.fetchPurchaseShirts();
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
@@ -334,9 +321,5 @@ export default compose(
   withRedux,
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
-  reduxForm({
-    form: 'AnnouncementsForm',
-    destroyOnUnmount: false
-  }),
   withStyles(styles)
-)(AnnouncementsPage);
+)(ShirtPurchaseList);

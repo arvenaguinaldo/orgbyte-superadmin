@@ -28,7 +28,51 @@ class MembershipPage extends React.Component {
   };
 
   state = {
-    columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Address'],
+    columns: [
+      {
+        name: 'id',
+        options: {
+          display: false,
+          filter: false
+        }
+      },
+      {
+        name: 'Student no.',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Name',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Year/Section/Group',
+        options: {
+          filter: true
+        }
+      },
+      {
+        name: 'Contact no.',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Email',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Address',
+        options: {
+          filter: false
+        }
+      }
+    ],
     dbTable: 'members'
   };
 
@@ -41,6 +85,8 @@ class MembershipPage extends React.Component {
     const {columns, dbTable} = this.state;
     const options = {
       filter: true,
+      print: false,
+      download: false,
       selectableRows: true,
       filterType: 'dropdown',
       responsive: 'stacked',
@@ -68,6 +114,7 @@ class MembershipPage extends React.Component {
           title={'Memberships List'}
           data={members.map((member) => {
             return [
+              member.id,
               member.student_number,
               member.last_name + ',  ' + member.first_name + ' ' + member.middle_name,
               member.year_level + member.section + ' - G' + member.group,

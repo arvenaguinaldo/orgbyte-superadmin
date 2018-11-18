@@ -28,7 +28,7 @@ class CustomToolbarSelect extends React.Component {
   handleEdit = () => {
     const {data, selectedRows, dbTable} = this.props;
     const tableData = data;
-    const selectedIndex = selectedRows.data[0].index;
+    const selectedIndex = selectedRows.data[0].dataIndex;
     const selectedId = tableData[selectedIndex]['id'];
     this.props.fetchEdit({table: dbTable, id: selectedId});
   };

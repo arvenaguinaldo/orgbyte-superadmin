@@ -88,13 +88,15 @@ class AnnouncementsPage extends Component {
         }
       }
     ],
-    dbTable: 'organizations'
+    dbTable: 'announcements'
   };
   render() {
     const {classes, announcements} = this.props;
     const {columns, dbTable} = this.state;
     const options = {
-      filter: true,
+      filter: false,
+      print: false,
+      download: false,
       selectableRows: true,
       filterType: 'dropdown',
       responsive: 'scroll',
@@ -139,6 +141,7 @@ const mapStateToProps = createStructuredSelector({
   announcements: makeSelectAnnouncementsList(),
   meta: makeSelectAnnouncementsMeta()
 });
+
 
 const withRedux = connect(mapStateToProps, {fetchAnnouncements});
 
