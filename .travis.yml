@@ -1,16 +1,15 @@
 language: ruby
 rvm:
- - 2.2
- - jruby
-
+- 2.2
+- jruby
 deploy:
   provider: s3
-  access_key_id: AKIAJSYQLWZMFTNOHH3Q
+  access_key_id: AKIAIXZYM2LFSEICRURQ
   secret_access_key:
-    secure: BpgO7QPduWHfgWFxkQHsorjttAFUcw9FBtDT5sMhx6hnRbpRA+scPEP1DQmMib1RC/PQ7kdFUaG/xpkN5+wo7USwUMT0qT3oU/OKIeP2qDKtn1VuweR6aQmOWqMtmU5EHl+1iHRNOg7bxvXcsfRfygf1kpBj1D+VLPHNv0Q8OplNmu5vtt0c8tNK8N53v2cMXJCT/7hwfBffNiA1Gr+UBefSLru103nd8oOVHdw/jeiV613UC/f7dWJpfXhhH7Gt5O/rh5Kr58j/bWZ5Np3F9n+JzGTm2caLBjeFevulNtYAo4HPNcZIm0LMCoczJag/WJRc85FKrJytDlrKW/3xItaeW3DzxWYpTY3STcozUCtfKyStrWUaAOBKfCY6u4dyfjr9FK21c0Z0OqeY5tlVm7Z8jJg2v1fdH0h/D/if/6zhqEqmXGBqufnB7CLrnllnJnjYJC7e+2sI1wmkvSizKXvKQvS9Ny/Dn8rv+jZ91cRNTiaZMtZM1BKY2v/T7NYcSDz/zFhTHVjGE6efYUvltRUkLod9kijvvAYzDXHawAAVW6ZROSgfyT64ma8ceih+vzERgL9NmLNwrj/S90ZM6TTu8QCWEG+wezAZrkLlh1ATBujI4cGrsXTUw94F9OcItxcHLM2358WU0msO+SrfTrelZQXiOk720vhKBhE6OJ0=
+    secure: T/2cIr+QtrmiQ1bIlK9l7RTfxHk4ia/+NRuchJ0yAjSxi7tHBgeCVQZbYSjBVinPxzFWv6FNog6x+bG9aaBavCJhbH7qTNB5YbYPejSa3/nyh4sehLD88trkGdZrCsvNiwvRaERKT+/ZoBcJoe/n63hbLDaOViSA7RFKO1T4x3TGDCujySOXgpmOqveDCAfgtuVM3NX19CPXCoNLOsQzY8xW80QJcNZVnWBnrWWgN405O/0b1NAgomMkD74AwbDQrhJcGsSoi/YWyo0Fi9MdRn0nR/9ogihN2j3Nz+kTMwb5IYrCGUvn10zb4kOXu9Q3q0+lF+PMH5arCWsH4fYgzoQ9ciM54Zpb6b6kzoG+S9JvjZZvVHk8GVcWkr2XU/hFF4yaFb6OAp971YFumbcqpNyErEMzKZcCVJXSS5PqRNyD62cDx3XFMsVsM3RZvzaSu/1UJoPQUJgI4Qr/xMxbojeuzHbhFE1XViQTLhLb67qgaR5So+/Ve4ayR48aSiszG2swapnFMmSKU48DNZes8y/IOq0I0uJU7Nppw+U7UT7Wiy2IzLH76WhJG78iMugewa1M9XoZytVDDSOkx2WqNEIYWSG3MWY4uaLFnvU4fT3IvhVcDiuBPbFT+CjD7gCyQYuVDvMJJ55V6RnR+C0Jr9ytd7biAGsFX/agt+4QASk=
   bucket: orgbyte.com
   local-dir: build
+  upload-dir: orgbyte.com
   acl: public_read
   on:
     repo: arvenaguinaldo/orgbyte-superadmin
-    branch: develop
