@@ -89,3 +89,13 @@ export const registerImportsSuccess = response => ({
   type: EVENTS.REGISTER_IMPORTS_SUCCESS,
   response
 });
+
+export const fetchWhoAttend = params => ({
+  type: EVENTS.FETCH_WHO_ATTEND,
+  params
+});
+
+export const fetchWhoAttendSuccess = response => ({
+  type: EVENTS.FETCH_WHO_ATTEND_SUCCESS,
+  response
+});

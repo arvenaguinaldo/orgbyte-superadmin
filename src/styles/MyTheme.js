@@ -6,12 +6,12 @@ const drawerWidth = 250;
 // const colorTheme = Theme.getThemeColor() ? Theme.getThemeColor() : '#5C181D';
 
 const theme = colorTheme => createMuiTheme({
-  background: {
-    paper: '#fff',
-    default: '#fafafa'
-  },
   shadows: Array(25).fill('none'),
   palette: {
+    background: {
+      paper: '#fff',
+      default: '#e9e9e9'
+    },
     primary: {
       main: colorTheme
     },
@@ -59,7 +59,7 @@ const theme = colorTheme => createMuiTheme({
     MUIDataTableHeadCell: {
       root: {
         backgroundColor: '#eee',
-        padding: '0px 10px 0px 10px'
+        padding: '0px 10px 0px 30px'
       }
     },
     MUIDataTableBodyRow: {
@@ -75,11 +75,18 @@ const theme = colorTheme => createMuiTheme({
     },
     MUIDataTableBodyCell: {
       root: {
-        padding: '0px 10px 0px 10px'
+        padding: '0px 10px 0px 30px'
+      }
+    },
+    MuiButton: {
+      containedPrimary: {
+        color: '#fff',
+        textDecoration: 'none'
       }
     }
   }
-});
+}
+);
 theme.shadows = [];
 
 export default theme;

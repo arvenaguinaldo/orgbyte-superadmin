@@ -3,6 +3,7 @@ import {put, call, fork} from 'redux-saga/effects';
 import * as usersActions from 'redux/actions/users';
 import * as usersService from 'services/api/users';
 import {push} from 'react-router-redux';
+import {reset} from 'redux-form';
 import {USERS} from 'constants/actions/users';
 import {callErrorNotification} from './notification';
 import {callSuccessNotification} from './notification';
@@ -39,6 +40,7 @@ function* addMember(action) {
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(usersActions.addMemberSuccess(response.data));
+      yield put(reset('AddMember'));
       yield put(push('/admin/memberships'));
     }
   }

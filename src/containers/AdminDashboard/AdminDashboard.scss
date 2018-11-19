@@ -1,0 +1,115 @@
+
+.OverViewDiv {
+  margin-top: 40px;
+}
+
+.OverViewCard {
+  height: 135px;
+  width: 281px;
+  position: relative;
+  overflow: visible;
+}
+
+.CardHeader {
+  position: absolute;
+  top: -40px;
+  left: -8px;
+}
+
+.CardUpperText {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  text-align: right;
+}
+
+.PrimaryText {
+  font-size: 22px;
+}
+
+.SecondaryText {
+  font-size: 14px;
+}
+
+.CardAvatar1 {
+  color: #fff;
+  background-color: #52ac56;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.CardAvatar2 {
+  color: #fff;
+  background-color: #fd9a14;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.CardAvatar3 {
+  color: #fff;
+  background-color: #0ab3c7;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.CardAvatar4 {
+  color: #fff;
+  background-color: #9c27b0;
+  width: 86px;
+  height: 87px;
+  border-radius: 3px;
+}
+
+.OverViewIcon {
+  font-size: 36px;
+}
+
+.Divider {
+  margin-left: 20px;
+  margin-right: 20px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  top: 90px;
+}
+
+.CardBottomText {
+  position: absolute;
+  bottom: 0;
+}
+
+.ChartCard {
+  // background: #5e1619;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 180px;
+  position: relative;
+  top: -20px;
+}
+
+.ChartContainer {
+  margin-top: 40px;
+  height: 300px;
+  position: relative;
+  overflow: visible;
+}
+
+.DividerChart {
+  margin-left: 20px;
+  margin-right: 20px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  top: 10px;
+}
+
+.ChartPrimaryText {
+  margin-left: 20px;
+  font-size: 25px;
+}
+
+.ChartSecondaryText {
+  margin-left: 20px;
+  font-size: 15px;
+}

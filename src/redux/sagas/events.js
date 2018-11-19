@@ -54,7 +54,8 @@ function* register(action) {
     } else {
       yield call(callSuccessNotification, 'Register Successfully');
       yield put(eventsActions.registerSuccess(response.data));
-      yield put(reset('EventRegisterForm'));
+      yield put(reset('EventRegisterFormMember'));
+      yield put(reset('VerifyMemberForm'));
       // yield put(push('/events'));
     }
   }
@@ -92,6 +93,7 @@ function* attend(action) {
       yield put(eventsActions.attendSuccess(response));
     } else {
       yield call(callSuccessNotification, 'Attended Successfully');
+      console.log(response);
       yield put(eventsActions.attendSuccess(response));
     }
   }
@@ -120,6 +122,18 @@ function* registerImports(action) {
       yield put(eventsActions.registerImportsSuccess(response.data));
       yield put(reset('EventRegisterForm'));
       // yield put(push('/events'));
+    }
+  }
+}
+
+function* fetchWhoAttend(action) {
+  const response = yield call(eventsService.fetchWhoAttend, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
+    } else {
+      yield put(eventsActions.fetchWhoAttendSuccess(response));
     }
   }
 }
@@ -162,6 +176,10 @@ function* watchRequestRegisterImports() {
   yield* takeEvery(EVENTS.REGISTER_IMPORTS, registerImports);
 }
 
+function* watchRequestFetchWhoAttend() {
+  yield* takeEvery(EVENTS.FETCH_WHO_ATTEND, fetchWhoAttend);
+}
+
 
 export default function* events() {
   yield [
@@ -173,6 +191,7 @@ export default function* events() {
     fork(watchRequestFetchAttendees),
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
-    fork(watchRequestRegisterImports)
+    fork(watchRequestRegisterImports),
+    fork(watchRequestFetchWhoAttend)
   ];
 }

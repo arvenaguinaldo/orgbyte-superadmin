@@ -1,0 +1,47 @@
+.eventName {
+  color: white;
+}
+
+.paper {
+  padding: 5px 20px 20px;
+  margin: 20px;
+  width: 80%;
+}
+
+.searchBar {
+  display: inline;
+  width: 100%;
+}
+
+.listIcon {
+  font-size: 75px;
+}
+
+.secondaryText {
+  font-size: 13px;
+}
+
+.button {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+}
+
+.buttonSuccess {
+  background-color: #4caf50;
+  position: absolute;
+  right: 10px;
+  top: 35%;
+}
+
+.buttonSuccess:hover {
+  background-color: #388e3c;
+}
+
+.qrIcon {
+  display: inline-block;
+  font-size: 50px;
+  margin-top: 17px;
+  margin-left: 35%;
+  // margin: auto;
+}

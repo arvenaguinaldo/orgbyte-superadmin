@@ -5,7 +5,7 @@ import * as emailsService from 'services/api/emails';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EMAILS} from 'constants/actions/emails';
-import {callErrorNotification, callSuccessNotification} from './notification';
+import {callErrorNotification, callInfoNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
 
@@ -32,6 +32,7 @@ function* fetchEmail(action) {
 }
 
 function* createEmail(action) {
+  yield call(callInfoNotification, 'This will take a minute...');
   const response = yield call(emailsService.createEmail, action.params);
   if (response) {
     if (response.data.error) {
@@ -42,6 +43,20 @@ function* createEmail(action) {
       yield put(emailsActions.createEmailSuccess(response.data));
       yield put(reset('EmailForm'));
       yield put(push('/admin/email'));
+    }
+  }
+}
+
+function* sendCertificate(action) {
+  yield call(callInfoNotification, 'This will take a minute...');
+  const response = yield call(emailsService.sendCertificate, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(emailsActions.sendCertificateSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Certificates sent successfully.');
+      yield put(emailsActions.sendCertificateSuccess(response.data));
     }
   }
 }
@@ -60,11 +75,15 @@ function* watchRequestCreateEmail() {
   yield* takeEvery(EMAILS.CREATE_EMAIL, createEmail);
 }
 
+function* watchRequestSendCertificate() {
+  yield* takeEvery(EMAILS.SEND_CERTIFICATE, sendCertificate);
+}
 
 export default function* emails() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchEmail),
-    fork(watchRequestCreateEmail)
+    fork(watchRequestCreateEmail),
+    fork(watchRequestSendCertificate)
   ];
 }

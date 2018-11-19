@@ -12,6 +12,8 @@ import organizationNatures from './organization_natures';
 import announcements from './announcements';
 import emails from './emails';
 import renewal from './renewal';
+import sms from './sms';
+import logs from './logs';
 
 export default function* root() {
   yield [
@@ -26,6 +28,8 @@ export default function* root() {
     fork(organizationNatures),
     fork(announcements),
     fork(emails),
-    fork(renewal)
+    fork(renewal),
+    fork(sms),
+    fork(logs)
   ];
 }

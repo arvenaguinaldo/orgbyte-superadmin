@@ -8,7 +8,6 @@ import AdminRoute from 'router/routes/AdminRoute';
 // Components / Pages
 import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
-import Home from 'containers/Home/Home';
 
 // Super Admin Routes
 import Dashboard from 'containers/Dashboard/Dashboard';
@@ -19,6 +18,9 @@ import BackupList from 'containers/BackupList/BackupList';
 import RenewOrganizationList from 'containers/RenewalList/RenewalList';
 import RenewOrganization from 'containers/RenewOrganization/RenewOrganization';
 import RenewalDate from 'containers/RenewalDate/RenewalDate';
+import SuperAdminOrganizationReport from 'containers/SuperAdminReports/OrganizationList';
+import SuperAdminPresidentReport from 'containers/SuperAdminReports/PresidentList';
+import SuperAdminActivityLogs from 'containers/SuperAdminActivityLogs/SuperAdminActivityLogs';
 
 // Admin Routes
 
@@ -28,16 +30,19 @@ import Memberships from 'containers/Membership/MembershipPage/MembershipPage';
 
 //  Admin - Organizational Shirts Routes
 import AddOrganizationalShirt from 'containers/OrganizationalShirts/AddOrganizationalShirt/AddOrganizationalShirt';
+import EditOrganizationalShirt from 'containers/OrganizationalShirts/EditOrganizationalShirt/EditOrganizationalShirt';
 import Purchase from 'containers/OrganizationalShirts/Purchase/Purchase';
 import OrganizationalShirtDetails from 'containers/OrganizationalShirts/OrganizationalShirtDetails/OrganizationalShirtDetails';
 import OrganizationalShirts from 'containers/OrganizationalShirts/OrganizationalShirtsPage/OrganizationalShirtPage';
 
 //  Admin - Events Routes
+import GenerateCertificate from 'containers/Events/GenerateCertificate/GenerateCertificate';
 import CreateEvent from 'containers/Events/CreateEvent/CreateEvent';
 import EventRegister from 'containers/Events/Register/Register';
 import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
+import CheckIn from 'containers/Events/CheckIn/CheckIn';
 
 import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
 import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
@@ -47,6 +52,14 @@ import ChangePassword from 'containers/ChangePassword/ChangePassword';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import Forgot from 'containers/ForgotPassword/Main';
+import AdminDashboard from 'containers/AdminDashboard/AdminDashboard';
+import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
+
+// Reports
+import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
+import OrganizationReport from 'containers/AdminReports/EventList';
+import MembersReport from 'containers/AdminReports/MemberList';
+
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
 import UserAnnouncementPage from 'containers/UserPage/Announcements/AnnouncementPage/AnnouncementPage';
@@ -75,28 +88,34 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/backups" component={BackupList} />
         <SuperAdminRoute path="/superadmin/renewaldate" component={RenewalDate} />
         <SuperAdminRoute path="/superadmin/renew/:id" component={RenewOrganization} />
+        <SuperAdminRoute path="/superadmin/reports/organizations" component={SuperAdminOrganizationReport} />
+        <SuperAdminRoute path="/superadmin/reports/presidents" component={SuperAdminPresidentReport} />
+        <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}
 
         <Route path="/ForgotPassword" component={Forgot} />
 
         {/* Admin - Membership Routes */}
-        <AdminRoute path="/admin/" component={Home} exact />
+        <AdminRoute path="/admin/" component={AdminDashboard} exact />
         <AdminRoute path="/admin/memberships/addmember" component={AddMember} />
         <AdminRoute path="/admin/memberships" component={Memberships} />
 
         {/* Admin - Organizational Shirts Routes */}
         <AdminRoute path="/admin/shirts/addorganizationalshirt" component={AddOrganizationalShirt} />
+        <AdminRoute path="/admin/shirts/editorganizationalshirt" component={EditOrganizationalShirt} />
         <AdminRoute path="/admin/shirts/purchase" component={Purchase} />
         <AdminRoute path="/admin/shirts/organizationalshirt" component={OrganizationalShirtDetails} />
         <AdminRoute path="/admin/shirts" component={OrganizationalShirts} />
 
         {/* Admin - Events Routes */}
         <AdminRoute path="/admin/events/createevent" component={CreateEvent} />
+        <AdminRoute path="/admin/events/:id/generatecertificate" component={GenerateCertificate} />
+        <AdminRoute path="/admin/events/:id/checkin" component={CheckIn} exact />
         <AdminRoute path="/admin/events/:id/register" component={EventRegister} />
         <AdminRoute path="/admin/events/:id/qrscanner" component={QRScan} />
-        <AdminRoute path="/admin/events/:id" component={EventDetails} />
-        <AdminRoute path="/admin/events" component={EventList} />
+        <AdminRoute path="/admin/events/:id" component={EventDetails} exact />
+        <AdminRoute path="/admin/events" component={EventList} exact />
 
         <AdminRoute path="/admin/announcements/add" component={AddAnnouncements} />
         <AdminRoute path="/admin/announcements" component={AnnouncementsPage} />
@@ -105,6 +124,10 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />
         <AdminRoute path="/admin/accounts" component={AddAccount} />
         <AdminRoute path="/admin/logs" component={UserActivityLogs} />
+        <AdminRoute path="/admin/reports/announcements" component={AnnouncementReport} />
+        <AdminRoute path="/admin/reports/events" component={OrganizationReport} />
+        <AdminRoute path="/admin/reports/members" component={MembersReport} />
+        <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}
         <Route path="/" component={HomePage} exact />

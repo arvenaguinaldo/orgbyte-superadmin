@@ -56,6 +56,21 @@ const emails = (state = initialState, action) => {
       }));
     }
 
+    case EMAILS.SEND_CERTIFICATE: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case EMAILS.SEND_CERTIFICATE_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

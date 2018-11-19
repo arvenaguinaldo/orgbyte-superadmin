@@ -49,6 +49,13 @@ const styles = theme => ({
   }
 });
 
+
+const columns = ['Title', 'Announcements Starts', 'Announcements Ends'];
+
+
+const options = {
+  rowsPerPage: 5
+};
 class AnnouncementsPage extends Component {
   static propTypes = {
     classes: PropTypes.object,
@@ -58,9 +65,9 @@ class AnnouncementsPage extends Component {
   static defaultProps = {
     announcements: []
   };
+
   render() {
-    const columns = ['Title', 'Announcements Starts', 'Announcements Ends'];
-    const {classes, announcements} = this.props;
+    const {classes} = this.props;
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -72,7 +79,8 @@ class AnnouncementsPage extends Component {
         </Button>
         <MUIDataTable
           title={'Announcements'}
-          data={announcements.map((announcement) => {
+          options={options}
+          data={this.props.announcements.map((announcement) => {
             return [
               announcement.title,
               moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),

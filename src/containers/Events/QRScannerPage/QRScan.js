@@ -4,10 +4,12 @@ import {connect} from 'react-redux';
 import {compose} from 'recompose';
 import classNames from 'classnames';
 import QrReader from 'react-qr-reader';
-// import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Center from 'react-center';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -15,15 +17,17 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {createStructuredSelector} from 'reselect';
-import {makeSelectAttendee, makeSelectSuccess, makeSelectEventsMeta} from 'redux/selectors/events';
-import {fetchAttendee, attend, settlePayment} from 'redux/actions/events';
+import {makeSelectAttendee, makeSelectSuccess, makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
+import {fetchEvent, fetchAttendee, attend, settlePayment} from 'redux/actions/events';
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingData from 'hoc/showLoadingWhileFetchingData';
 
-import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 // import SubmitButton from 'components/SubmitButton/SubmitButton';
 import styles from './QRScan.scss';
 
 class QRScan extends Component {
   static propTypes = {
+    event: PropTypes.object.isRequired,
     attendee: PropTypes.object.isRequired,
     meta: PropTypes.object,
     match: PropTypes.object,
@@ -71,15 +75,26 @@ class QRScan extends Component {
     console.error(err);
   };
   render() {
-    const {attendee, success, meta} = this.props;
+    const {attendee, success, event, meta} = this.props;
 
     const buttonClassname = classNames({
       [styles.buttonSuccess]: success && attendee.attendance
     });
 
+    const attendDisable = moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends);
+
     return (
-      <LayoutWithTopbarAndSidebar>
-        <Typography variant="h4" color="secondary"> QR Scanner</Typography>
+      <div>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="default" className={styles.eventName}>
+              {event.name}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Center>
+          <Typography variant="h4" color="secondary">QR Scanner</Typography>
+        </Center>
         <Center>
           <Paper className={styles.Paper}>
             <Grid container spacing={0}>
@@ -101,7 +116,7 @@ class QRScan extends Component {
                       { Object.keys(attendee).length === 0 ? (
                         <Center>
                           <div className={styles.InstructionsDiv}>
-                            <Typography variant="h5" color="secondary">Please scan your qr code.</Typography>
+                            <Typography variant="h5" color="secondary">Please scan the qr code.</Typography>
                           </div>
                         </Center>
                       ) : (
@@ -152,7 +167,7 @@ class QRScan extends Component {
                                 <Typography variant="h6" color="secondary">Course:</Typography>
                               </Grid>
                               <Grid item xs={12} sm={12} md={10}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_name}</Typography>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_namee}</Typography>
                               </Grid>
                             </Grid>
                           }
@@ -197,7 +212,7 @@ class QRScan extends Component {
 
             <div className={styles.submitButtonDiv}>
               {attendee.payment_status === true ? (
-                <Button className={buttonClassname} color="primary" variant="contained" onClick={this.onHandleCheckIn}>
+                <Button className={buttonClassname} disabled={!attendDisable} color="primary" variant="contained" onClick={this.onHandleCheckIn}>
                   {success && attendee.attendance ? 'ATTENDED' : 'ATTEND'}
                 </Button>
               ) : (
@@ -208,25 +223,38 @@ class QRScan extends Component {
             </div>
           </Paper>
         </Center>
-      </LayoutWithTopbarAndSidebar>
+      </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  event: makeSelectEvent(),
   attendee: makeSelectAttendee(),
   success: makeSelectSuccess(),
   meta: makeSelectEventsMeta()
 });
 
 const mapDispatchToProps = {
+  fetchEvent,
   fetchAttendee,
   attend,
   settlePayment
 };
 
+const withFetchInitialData = fetchInitialData((props) => {
+  const {match: {params}} = props;
+  props.fetchEvent(params.id);
+});
+
+const withLoadingWhileFetchingData = showLoadingWhileFetchingData((props) => {
+  return props.meta.isLoading;
+});
+
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   withRedux,
+  withFetchInitialData,
+  withLoadingWhileFetchingData
 )(QRScan);

@@ -10,6 +10,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Store from '@material-ui/icons/Store';
+import College from '@material-ui/icons/Contacts';
+import OrganizationIcon from '@material-ui/icons/AccountBalance';
+import Calendar from '@material-ui/icons/CalendarToday';
+import University from '@material-ui/icons/LocalLibrary';
+import Renew from '@material-ui/icons/AutoRenew';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -139,7 +144,7 @@ class Dashboard extends Component {
                 <CardHeader
                   avatar={
                     <Avatar className={styles.CardAvatar}>
-                      <Store className={styles.OverViewIcon} />
+                      <OrganizationIcon className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
@@ -151,9 +156,9 @@ class Dashboard extends Component {
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <Store />
+                    <OrganizationIcon />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">View Organizations</Link>} />
+                  <ListItemText primary={<Link to="/superadmin/organizations"><Typography variant="subtitle1" color="textSecondary">View Organizations</Typography></Link>} />
                 </ListItem>
               </Card>
             </Grid>
@@ -162,21 +167,21 @@ class Dashboard extends Component {
                 <CardHeader
                   avatar={
                     <Avatar className={styles.CardAvatar}>
-                      <Store className={styles.OverViewIcon} />
+                      <Calendar className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active Organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Renewal Period</Typography>
+                  <Typography variant="body2" className={styles.DateText}>12/21/1995 to 12/21/1996</Typography>
                 </div>
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <Store />
+                    <Calendar />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">View Organizations</Link>} />
+                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Edit Renewal Period</Typography></Link>} />
                 </ListItem>
               </Card>
             </Grid>
@@ -185,22 +190,16 @@ class Dashboard extends Component {
                 <CardHeader
                   avatar={
                     <Avatar className={styles.CardAvatar}>
-                      <Store className={styles.OverViewIcon} />
+                      <University className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active Organizations</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>University wide organizations</Typography>
                   <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
                 </div>
                 <div className={styles.Divider} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <Store />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">View Organizations</Link>} />
-                </ListItem>
               </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -208,22 +207,16 @@ class Dashboard extends Component {
                 <CardHeader
                   avatar={
                     <Avatar className={styles.CardAvatar}>
-                      <Store className={styles.OverViewIcon} />
+                      <College className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active Organizations</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>College based organizations</Typography>
                   <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
                 </div>
                 <div className={styles.Divider} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <Store />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">View Organizations</Link>} />
-                </ListItem>
               </Card>
             </Grid>
           </Grid>
@@ -245,7 +238,7 @@ class Dashboard extends Component {
                 <div className={styles.DividerChart} />
                 <ListItem className={styles.CardBottomText}>
                   <ListItemIcon >
-                    <Store />
+                    <Renew />
                   </ListItemIcon>
                   <ListItemText primary={<Link to="/superadmin/organizations">Manage Renewals</Link>} />
                 </ListItem>
