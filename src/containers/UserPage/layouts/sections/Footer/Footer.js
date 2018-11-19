@@ -25,6 +25,17 @@ const styles = theme => ({
   text: {
     color: 'white',
     padding: 0
+  },
+  content: {
+    color: 'white',
+    fontSize: '10px'
+  },
+  gridrightcont: {
+    height: '30%'
+  },
+  gridRIght: {
+    paddingLeft: 10,
+    paddingRight: 10
   }
 });
 
@@ -77,6 +88,7 @@ class Footer extends Component {
                       </List>
                     </Grid>
 
+
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                       <List component="nav">
                         <ListItem button>
@@ -91,6 +103,25 @@ class Footer extends Component {
                       </List>
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item lg={6} md={6} sm={12} xs={12} className={classes.gridRight}>
+                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                    <Typography variant="overline" className={classes.text}> About Us </Typography>
+                    <Typography variant="caption" component="p" className={classes.content}>OrgByte is a non-profit group that aims for the betterment of students and organizations in Bulacan State University. No officials or members of this university is neglected upon the formulation of this project. We are open for suggestions on how we can make our project better.</Typography>
+                  </Grid>
+
+                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                    <Typography variant="overline" className={classes.text}> Contact Us </Typography>
+                    <Typography variant="caption" component="p" className={classes.content}>You may email us at orgbyte@gmail.com or through our telephone number (044) 794-2468 for your queries and suggestions. You may also like our facebook page facebook/orgbyte for more updates and details.</Typography>
+                  </Grid>
+
+                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                    <Typography variant="overline" className={classes.text}> Location  </Typography>
+                    <Typography variant="caption" component="pre" className={classes.content}>0421 (APT 4) P. Mabini St. Barihan, Malolos City, 3000, Bulacan
+© OrgByte | All rights reserved 2018
+                    </Typography>
+                  </Grid>
+
                 </Grid>
               </Grid>
             </Center>
