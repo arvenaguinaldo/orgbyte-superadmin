@@ -87,7 +87,7 @@ class QRScan extends Component {
       <div>
         <AppBar position="static" color="primary">
           <Toolbar>
-            <Typography variant="h6" color="default" className={styles.eventName}>
+            <Typography variant="h5" color="default" className={styles.eventName}>
               {event.name}
             </Typography>
           </Toolbar>
@@ -122,82 +122,84 @@ class QRScan extends Component {
                       ) : (
                         <div className={styles.AttendeeDetailsDiv}>
                           <Grid container spacing={0}>
-                            <Grid item xs={12} sm={12} md={2}>
-                              <Typography variant="h6" color="secondary">Name:</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={10}>
-                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.last_name + ', ' + attendee.first_name + ' ' + attendee.middle_name}</Typography>
-                            </Grid>
-                          </Grid>
-
-                          <Grid container spacing={0}>
-                            <Grid item xs={12} sm={12} md={4}>
-                              <Typography variant="h6" color="secondary">Attendee Type:</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={8}>
-                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.event_attendee_type_name}</Typography>
-                            </Grid>
-                          </Grid>
-
-                          {attendee.student_number &&
-                            <Grid container spacing={0}>
-                              <Grid item xs={12} sm={12} md={4}>
-                                <Typography variant="h6" color="secondary">Student Number:</Typography>
-                              </Grid>
-                              <Grid item xs={12} sm={12} md={8}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.student_number}</Typography>
-                              </Grid>
-                            </Grid>
-                          }
-
-                          {attendee.college_name &&
-                            <Grid container spacing={0}>
-                              <Grid item xs={12} sm={12} md={2}>
-                                <Typography variant="h6" color="secondary">College:</Typography>
-                              </Grid>
-                              <Grid item xs={12} sm={12} md={10}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.college_name}</Typography>
-                              </Grid>
-                            </Grid>
-                          }
-
-                          {attendee.course_name &&
-                            <Grid container spacing={0}>
-                              <Grid item xs={12} sm={12} md={2}>
-                                <Typography variant="h6" color="secondary">Course:</Typography>
-                              </Grid>
-                              <Grid item xs={12} sm={12} md={10}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_namee}</Typography>
-                              </Grid>
-                            </Grid>
-                          }
-
-                          {attendee.year_level &&
                             <Grid container spacing={0}>
                               <Grid item xs={12} sm={12} md={5}>
-                                <Typography variant="h6" color="secondary">Year/Section/Group:</Typography>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Name:</Typography>
                               </Grid>
                               <Grid item xs={12} sm={12} md={7}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.year_level + attendee.section + ' - G' + attendee.group}</Typography>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.last_name + ', ' + attendee.first_name + ' ' + attendee.middle_name}</Typography>
                               </Grid>
                             </Grid>
-                          }
 
-                          <Grid container spacing={0}>
-                            <Grid item xs={12} sm={12} md={2}>
-                              <Typography variant="h6" color="secondary">Email:</Typography>
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Attendee Type:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.event_attendee_type_name}</Typography>
+                              </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={10}>
-                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.email}</Typography>
-                            </Grid>
-                          </Grid>
 
-                          <Grid container spacing={0}>
-                            <Grid item xs={12} sm={12} md={4}>
-                              <Typography variant="h6" color="secondary">Payment Status:</Typography>
+                            {attendee.student_number &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Student Number:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.student_number}</Typography>
+                              </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={8}>
-                              <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.payment_status === true ? 'PAID' : 'NOT PAID'}</Typography>
+                            }
+
+                            {attendee.college_name &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>College:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.college_name}</Typography>
+                              </Grid>
+                            </Grid>
+                            }
+
+                            {attendee.course_name &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Course:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.course_namee}</Typography>
+                              </Grid>
+                            </Grid>
+                            }
+
+                            {attendee.year_level &&
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Year/Section/Group:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.year_level + attendee.section + ' - G' + attendee.group}</Typography>
+                              </Grid>
+                            </Grid>
+                            }
+
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary"className={styles.Label}>Email:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.email}</Typography>
+                              </Grid>
+                            </Grid>
+
+                            <Grid container spacing={0}>
+                              <Grid item xs={12} sm={12} md={5}>
+                                <Typography variant="h5" color="secondary" className={styles.Label}>Payment Status:</Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={12} md={7}>
+                                <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.payment_status === true ? 'PAID' : 'NOT PAID'}</Typography>
+                              </Grid>
                             </Grid>
                           </Grid>
                         </div>
