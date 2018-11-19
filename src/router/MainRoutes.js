@@ -51,6 +51,7 @@ import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
+import Forgot from 'containers/ForgotPassword/Main';
 import AdminDashboard from 'containers/AdminDashboard/AdminDashboard';
 import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
 
@@ -67,7 +68,7 @@ import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementList
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
 import UserOrganizationList from 'containers/UserPage/Organizations/UserOrganizationList/UserOrganizationList';
 import UserOrganizationProfile from 'containers/UserPage/Organizations/OrganizationPage/OrganizationProfile';
-
+import TrySpinner from 'containers/Spinner/Spinner';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
 class MainRoutes extends Component {
@@ -92,6 +93,8 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}
+
+        <Route path="/ForgotPassword" component={Forgot} />
 
         {/* Admin - Membership Routes */}
         <AdminRoute path="/admin/" component={AdminDashboard} exact />
@@ -134,7 +137,8 @@ class MainRoutes extends Component {
         <Route path="/announcements/:id" component={UserAnnouncementPage} exact />
         <Route path="/organizations/:acronym" component={UserOrganizationProfile} />
         <Route path="/events/:id" component={UserEventPage} />
-        <Route path="" component={NotFoundPage} />
+        <Route path="/tryspin" component={TrySpinner} />
+
         <Route path="/NotFound" component={NotFoundPage} />
       </Switch>
     );

@@ -50,8 +50,9 @@ const styles = theme => ({
     width: 200
   },
   card: {
-    minWidth: 275,
-    maxWidth: 500,
+    width: '100%',
+    minWidth: 300,
+    maxWidth: 600,
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: '100px',

@@ -7,7 +7,8 @@ import Footer from './sections/Footer/Footer';
 
 const styles = ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    padding: 0
   }
 });
 

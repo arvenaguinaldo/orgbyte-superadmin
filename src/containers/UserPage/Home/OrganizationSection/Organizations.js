@@ -37,7 +37,7 @@ class Organizations extends Component {
       <div className={style.ChildContainer}>{console.log(organizations)}
         <Grid container spacing={8}>
           <Grid item lg={6} md={6} sm={6} xs={6}>
-            <Typography variant="h4" className={style.SectionHeading}>
+            <Typography variant="h5" className={style.SectionHeading}>
               ORGANIZATIONS
             </Typography>
           </Grid>
