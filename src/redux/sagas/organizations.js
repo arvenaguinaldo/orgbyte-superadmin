@@ -46,8 +46,8 @@ function* fetchCurrentOrganization(action) {
 function* addOrganization(action) {
   const response = yield call(organizationsService.addOrganization, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
