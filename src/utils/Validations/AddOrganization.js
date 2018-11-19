@@ -27,7 +27,6 @@ export const validate = (values) => {
     'college_id',
     'last_name',
     'first_name',
-    'middle_name',
     'email',
     'contact_number',
     // 'selectedLogo',

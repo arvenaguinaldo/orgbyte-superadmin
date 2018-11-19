@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import _ from 'lodash';
 import {createStructuredSelector} from 'reselect';
+import JsPDF from 'jspdf';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
@@ -14,6 +16,7 @@ import {fetchCourses} from 'redux/actions/courses';
 
 import {makeSelectUsersMeta} from 'redux/selectors/users';
 import {makeSelectCoursesList} from 'redux/selectors/courses';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 
 import fetchInitialData from 'hoc/fetchInitialData';
 
@@ -26,6 +29,7 @@ import Button from '@material-ui/core/Button';
 import {validate} from 'utils/Validations/AddMemberIndividual';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
+import id from 'assets/images/membership-id-template.png';
 
 import style from './Individual.scss';
 
@@ -33,10 +37,57 @@ class Individual extends Component {
   static propTypes = {
     courses: PropTypes.array.isRequired,
     fetchCourses: PropTypes.func,
+    organization: PropTypes.object,
     meta: PropTypes.object.isRequired
   };
 
+  onGenerateId = (e) => {
+    e.preventDefault();
+    // const {organization} = this.props;
+
+    const qrcode = require('yaqrcode');
+    // const base64 = qrcode(member.student_number);
+    const base64 = qrcode('2015169925');
+
+    const doc = new JsPDF('p', 'px', [2054, 3373]);
+
+    const width = doc.internal.pageSize.getWidth();
+    const height = doc.internal.pageSize.getHeight();
+    doc.addImage(id, 'PNG', 0, 0, width, height);
+
+    // Student Name
+    doc.setFontSize(150);
+    doc.setTextColor('#1F1F1F');
+    // doc.text('JUAN DELA CRUZ', 214, 1423, null, null);
+    // doc.text(member.first_name.toUpperCase() + ' ' + member.last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
+    doc.text('JUAN DELA CRUZ', width / 2, 1423, null, null, 'center');
+
+    // Student Number
+    doc.setFontSize(150);
+    doc.setTextColor('#1F1F1F');
+    // doc.text(member.student_number, 600, 1560);
+    doc.text('2015169925', width / 2, 1560, null, null, 'center');
+
+    // Organization Name
+    doc.setFontSize(100);
+    doc.setTextColor('#1F1F1F');
+    // doc.text(organization.name, width / 2, 1671, null, null, 'center');
+    const organizationName = doc.splitTextToSize('Society for the Welfare of Information Technology Students', 1750);
+    doc.text(organizationName, width / 2, 1671, null, null, 'center');
+
+
+    doc.addImage(base64, 'GIF', 625, 2019, 785, 785);
+    doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 930, 2320, 200, 200); // LEFT IMAGE
+
+    window.open(doc.output('bloburl'), '_blank', 'top=10%');
+
+    const membershipId = doc.output('datauristring'); // Display in iframe
+    return membershipId;
+  };
+
   onSubmit = (values, dispatch) => {
+    const membeshipId = this.onGenerateId(values);
+    _.set(values, 'membershipId', membeshipId);
     dispatch(addMember(values));
   };
 
@@ -204,7 +255,11 @@ class Individual extends Component {
             </Grid>
           </Grid>
           <div className={style.bottomButton}>
-            <Button component={Link} to="/admin/memberships" color="primary" className={style.button}>
+            {/* <Button component={Link} to="/admin/memberships" color="primary" className={style.button}>
+              Cancel
+            </Button> */}
+
+            <Button onClick={e => this.onGenerateId(e)} color="primary" className={style.button}>
               Cancel
             </Button>
 
@@ -220,6 +275,7 @@ class Individual extends Component {
 
 const mapStateToProps = createStructuredSelector({
   courses: makeSelectCoursesList(),
+  organization: makeSelectCurrentOrganization(),
   meta: makeSelectUsersMeta()
 });
 
