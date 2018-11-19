@@ -41,13 +41,11 @@ class Individual extends Component {
     meta: PropTypes.object.isRequired
   };
 
-  onGenerateId = (e) => {
-    e.preventDefault();
-    // const {organization} = this.props;
+  onGenerateId = (member) => {
+    const {organization} = this.props;
 
     const qrcode = require('yaqrcode');
-    // const base64 = qrcode(member.student_number);
-    const base64 = qrcode('2015169925');
+    const base64 = qrcode(member.student_number);
 
     const doc = new JsPDF('p', 'px', [2054, 3373]);
 
@@ -58,36 +56,31 @@ class Individual extends Component {
     // Student Name
     doc.setFontSize(150);
     doc.setTextColor('#1F1F1F');
-    // doc.text('JUAN DELA CRUZ', 214, 1423, null, null);
-    // doc.text(member.first_name.toUpperCase() + ' ' + member.last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
-    doc.text('JUAN DELA CRUZ', width / 2, 1423, null, null, 'center');
+    doc.text(member.first_name.toUpperCase() + ' ' + member.last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
 
     // Student Number
     doc.setFontSize(150);
     doc.setTextColor('#1F1F1F');
-    // doc.text(member.student_number, 600, 1560);
-    doc.text('2015169925', width / 2, 1560, null, null, 'center');
+    doc.text(member.student_number, width / 2, 1560, null, null, 'center');
 
     // Organization Name
-    doc.setFontSize(100);
+    doc.setFontSize(125);
     doc.setTextColor('#1F1F1F');
-    // doc.text(organization.name, width / 2, 1671, null, null, 'center');
-    const organizationName = doc.splitTextToSize('Society for the Welfare of Information Technology Students', 1750);
+    const organizationName = doc.splitTextToSize(organization.name, 1750);
     doc.text(organizationName, width / 2, 1671, null, null, 'center');
-
 
     doc.addImage(base64, 'GIF', 625, 2019, 785, 785);
     doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 930, 2320, 200, 200); // LEFT IMAGE
 
-    window.open(doc.output('bloburl'), '_blank', 'top=10%');
+    const membershipIdURI = doc.output('datauristring'); // Display in iframe
+    const membershipId = membershipIdURI.substring(28);
 
-    const membershipId = doc.output('datauristring'); // Display in iframe
     return membershipId;
   };
 
   onSubmit = (values, dispatch) => {
-    const membeshipId = this.onGenerateId(values);
-    _.set(values, 'membershipId', membeshipId);
+    const membershipId = this.onGenerateId(values);
+    _.set(values, 'membershipId', membershipId);
     dispatch(addMember(values));
   };
 
