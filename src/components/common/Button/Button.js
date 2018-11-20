@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Spinner from 'components/common/Spinner/Spinner';
 import classnames from 'classnames';
+import Spinner from '..containers/Spinner/Spinner';
 
 export default class Button extends Component {
   static propTypes = {

@@ -79,7 +79,8 @@
     "reselect": "^3.0.1",
     "typeface-roboto": "0.0.54",
     "unit-to-px": "^1.0.5",
-    "validator": "^10.7.1"
+    "validator": "^10.7.1",
+    "video-react": "^0.13.1"
   },
   "devDependencies": {
     "autoprefixer": "6.7.6",

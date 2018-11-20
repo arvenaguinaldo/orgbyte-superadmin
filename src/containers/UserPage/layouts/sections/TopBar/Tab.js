@@ -29,7 +29,7 @@ const styles = {
     textAlign: 'center',
     margin: 0,
     height: '100%',
-    fontSize: '30%',
+    fontSize: '35%',
     '&:hover': {
       backgroundColor: '#3c080c',
       color: 'white'
