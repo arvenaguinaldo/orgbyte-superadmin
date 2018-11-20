@@ -140,6 +140,7 @@ class MainRoutes extends Component {
         <Route path="/tryspin" component={TrySpinner} />
 
         <Route path="/NotFound" component={NotFoundPage} />
+        <Route path="" component={NotFoundPage} />
       </Switch>
     );
   }

@@ -82,7 +82,6 @@ class Multiple extends Component {
   onSubmit = () => {
     const {members} = this.state;
     const memberships = this.onGenerateId(members);
-    console.log(memberships);
     this.props.addMembers({memberships});
   };
 
