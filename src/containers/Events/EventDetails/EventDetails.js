@@ -236,8 +236,7 @@ class EventDetails extends Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={10} sm={10} md={5} >
-                  <CardMedia className={styles.eventImage}>
-                    <img src={image} style={style} alt={image} />
+                  <CardMedia className={styles.eventImage} image={image} component="img">
                   </CardMedia>
                 </Grid>
               </Grid>
@@ -253,7 +252,7 @@ class EventDetails extends Component {
             <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Check In
             </Button>
-            <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/edit'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Edit Event
             </Button>
           </div>

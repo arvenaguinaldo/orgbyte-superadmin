@@ -6,6 +6,7 @@ import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import Moment from 'moment';
 import {Field, reduxForm} from 'redux-form';
+// import moment from 'moment';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -31,6 +32,10 @@ import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForm
 
 import styles from './EventList.scss';
 
+
+Moment.locale('en');
+// const dateToday = moment(moment().toString()).format('YYYY-MM-DD h:mm a'); .filter(event => new Date(event.ends) > new Date(dateToday)) .filter(event => event.nature_of_event === 'co_curricular')
+
 class EventList extends Component {
   static propTypes = {
     events: PropTypes.array
@@ -40,8 +45,30 @@ class EventList extends Component {
     events: []
   };
 
+  state = {
+    price_type: 'reset'
+  }
+
+  handleTimePeriod = (value) => {
+    const timeperiodvalue = {time_period: value};
+    this.setState({timeperiod: timeperiodvalue}, this.showState);
+  }
+
+  handlePrice = (value) => {
+    const price = {value};
+    console.log(price.value);
+    if (price.value === '1') {
+      this.setState({price_type: 'paid'}, this.showState);
+    } else if (price.value === '2') {
+      this.setState({price_type: 'free'}, this.showState);
+    }
+
+  }
+  showState = () => {
+    console.log(this.state);
+  }
+
   render() {
-    Moment.locale('en');
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4">
@@ -59,6 +86,7 @@ class EventList extends Component {
                     component={renderSelectField}
                     label="Time Period"
                     fullWidth
+                    onChange={event => this.handleTimePeriod(event.target.value)}
                   >
                     <option value="" />
                     <option value={1}>Past</option>
@@ -72,8 +100,9 @@ class EventList extends Component {
                     component={renderSelectField}
                     label="Ticket Price type"
                     fullWidth
+                    onChange={event => this.handlePrice(event.target.value)}
                   >
-                    <option value="" />
+                    <option value={0}> &nbsp; </option>
                     <option value={1}>Paid</option>
                     <option value={2}>Free</option>
                   </Field>
@@ -106,7 +135,7 @@ class EventList extends Component {
           </Grid>
         </div>
         <div className={styles.eventContainer}>
-          {this.props.events.map((event) => {
+          {this.props.events.filter(this.state.price_type !== 'reset' ? event => event.ticket_price_type === this.state.price_type : event => event.ticket_price_type === 'free' && event.ticket_price_type === 'paid').map((event) => {
             return (
               <Link key={event.id} to={'/admin/events/' + event.id}>
                 <div key={event.id}>

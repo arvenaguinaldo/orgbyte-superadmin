@@ -209,6 +209,7 @@ export const renderCheckbox = (
       control={
         <Checkbox
           {...input}
+          defaultChecked={input.value}
           checked={input.checked}
           onChange={input.onChange}
         />
