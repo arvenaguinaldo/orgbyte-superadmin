@@ -8,7 +8,7 @@ import JsPDF from 'jspdf';
 
 // redux form
 import {Field, reduxForm} from 'redux-form';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {addMember} from 'redux/actions/users';
@@ -248,11 +248,7 @@ class Individual extends Component {
             </Grid>
           </Grid>
           <div className={style.bottomButton}>
-            {/* <Button component={Link} to="/admin/memberships" color="primary" className={style.button}>
-              Cancel
-            </Button> */}
-
-            <Button onClick={e => this.onGenerateId(e)} color="primary" className={style.button}>
+            <Button component={Link} to="/admin/memberships" color="primary" className={style.button}>
               Cancel
             </Button>
 
