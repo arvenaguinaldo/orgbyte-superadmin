@@ -113,7 +113,7 @@ const columns = [
     }
   },
   {
-    name: 'Total no. of Attendees',
+    name: 'No. of Attendees',
     options: {
       filter: false
     }
