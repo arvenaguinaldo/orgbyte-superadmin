@@ -112,8 +112,8 @@ class QRScan extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     {!meta.isFetchAttendeeLoading &&
                     <div>
-                      <Typography variant="h4" color="secondary">Attendee Details</Typography>
-                      { Object.keys(attendee).length === 0 ? (
+                      <Typography variant="h4" color="secondary">Attendee Details</Typography>{console.log(attendee.last_name)}
+                      { Object.keys(attendee).length === 0 || typeof attendee.last_name === 'undefined' ? (
                         <Center>
                           <div className={styles.InstructionsDiv}>
                             <Typography variant="h5" color="secondary">Please scan the qr code.</Typography>
@@ -139,8 +139,7 @@ class QRScan extends Component {
                                 <Typography variant="h6" color="secondary" className={styles.AttendeeDetail}>{attendee.event_attendee_type_name}</Typography>
                               </Grid>
                             </Grid>
-
-                            {attendee.student_number &&
+                            {attendee.student_number && attendee.event_attendee_type_name !== 'Non-Bulsuan' &&
                             <Grid container spacing={0}>
                               <Grid item xs={12} sm={12} md={5}>
                                 <Typography variant="h5" color="secondary" className={styles.Label}>Student Number:</Typography>
@@ -211,18 +210,22 @@ class QRScan extends Component {
                 </Grid>
               </Grid>
             </Grid>
-
-            <div className={styles.submitButtonDiv}>
-              {attendee.payment_status === true ? (
-                <Button className={buttonClassname} disabled={!attendDisable} color="primary" variant="contained" onClick={this.onHandleCheckIn}>
-                  {success && attendee.attendance ? 'ATTENDED' : 'ATTEND'}
-                </Button>
-              ) : (
-                <Button color="primary" variant="contained" onClick={this.onHandleSettlePayment}>
+            {Object.keys(attendee).length === 0 || typeof attendee.last_name === 'undefined' ?
+              (null) :
+              (
+                <div className={styles.submitButtonDiv}>
+                  {attendee.payment_status === true ? (
+                    <Button fullWidth className={buttonClassname} disabled={!attendDisable} color="primary" variant="contained" onClick={this.onHandleCheckIn}>
+                      {success && attendee.attendance ? 'ATTENDED' : 'ATTEND'}
+                    </Button>
+                  ) : (
+                    <Button color="primary" variant="contained" onClick={this.onHandleSettlePayment}>
                     SETTLE PAYMENT
-                </Button>
-              )}
-            </div>
+                    </Button>
+                  )}
+                </div>
+              )
+            }
           </Paper>
         </Center>
       </div>
