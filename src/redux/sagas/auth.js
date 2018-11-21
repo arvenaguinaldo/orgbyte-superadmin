@@ -30,10 +30,16 @@ function* login(action) {
 
       const loginData = jwt.decode(response.data.user.token);
 
+      const user = yield call(authService.getUser, loginData.sub);
+
       yield put(orgActions.fetchCurrentOrganization());
 
-      if (loginData.user_type_id === 'admin') {
-        yield put(push('/admin/'));
+      if (loginData.user_type_id === 'admin' || loginData.user_type_id === 'sub_admin') {
+        if (user.data.sign_in_count === 0) {
+          yield put(push('/admin/passwordreset'));
+        } else {
+          yield put(push('/admin/'));
+        }
       }
 
       if (loginData.user_type_id === 'super_admin') {

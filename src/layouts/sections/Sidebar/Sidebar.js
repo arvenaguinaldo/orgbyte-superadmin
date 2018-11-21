@@ -68,7 +68,7 @@ class Sidebar extends Component {
     const drawer = (
       <div>
         <div className={classes.toolbar}>
-          {user.user_type_id === 'admin' &&
+          {(user.user_type_id === 'admin' || user.user_type_id === 'sub_admin') &&
           <div className={styles.NameContainer}>
             <Grid container spacing={0}>
               <Grid item xs={12} sm={12} md={2}>
@@ -81,7 +81,7 @@ class Sidebar extends Component {
               <Grid item xs={12} sm={12} md={10}>
                 <Typography variant="h6" noWrap className={styles.LastName}>{user.last_name}</Typography>
                 <Typography variant="h6" noWrap className={styles.FirstName}>{user.first_name}</Typography>
-                <Typography variant="subtitle1" noWrap className={styles.Position}>{user.user_type_id}</Typography>
+                <Typography variant="subtitle1" noWrap className={styles.Position}>{user.position}</Typography>
               </Grid>
             </Grid>
           </div>
@@ -105,7 +105,7 @@ class Sidebar extends Component {
 
         </div>
         {user.user_type_id === 'super_admin' ? <SuperAdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
-        {user.user_type_id === 'admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
+        {user.user_type_id === 'admin' || user.user_type_id === 'sub_admin' ? <AdminMenuItemData onLogout={this.onLogout} pathname={pathname} /> : null}
         <div className={classes.toolbar} />
       </div>
     );

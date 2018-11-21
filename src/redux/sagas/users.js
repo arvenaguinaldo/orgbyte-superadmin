@@ -60,9 +60,11 @@ function* fetchMembers(action) {
 function* addUser(action) {
   const response = yield call(usersService.addUser, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(usersActions.addUserSuccess(response.data.error));
     } else {
+      yield call(callSuccessNotification, 'Account added successfully');
       yield put(usersActions.addUserSuccess(response));
     }
   }
@@ -90,6 +92,32 @@ function* addMembers(action) {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(usersActions.addMembersSuccess(response.data));
       // yield put(push('/admin/memberships'));
+    }
+  }
+}
+
+function* changePassword(action) {
+  const response = yield call(usersService.changePassword, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(usersActions.changePasswordSuccess(response));
+    } else {
+      yield call(callSuccessNotification, 'Change password successfully');
+      yield put(usersActions.changePasswordSuccess(response.data));
+      yield put(reset('ChangePasswordForm'));
+      // yield put(push('/admin/memberships'));
+    }
+  }
+}
+
+function* fetchOfficers(action) {
+  const response = yield call(usersService.fetchOfficers, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(usersActions.fetchOfficersSuccess(response));
     }
   }
 }
@@ -124,6 +152,14 @@ function* watchRequestAddMembers() {
   yield* takeEvery(USERS.ADD_MEMBERS, addMembers);
 }
 
+function* watchRequestChangePassword() {
+  yield* takeEvery(USERS.CHANGE_PASSWORD, changePassword);
+}
+
+function* watchRequestFetchOfficers() {
+  yield* takeEvery(USERS.FETCH_OFFICERS, fetchOfficers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -132,6 +168,8 @@ export default function* users() {
     fork(watchRequestFetchMembers),
     fork(watchRequestAddUser),
     fork(watchRequestVerifyMember),
-    fork(watchRequestAddMembers)
+    fork(watchRequestAddMembers),
+    fork(watchRequestChangePassword),
+    fork(watchRequestFetchOfficers)
   ];
 }

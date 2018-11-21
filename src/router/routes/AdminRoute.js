@@ -34,7 +34,7 @@ class AdminRoute extends Component {
       <Route
         {...rest}
         render={(props) => {
-          if (!authenticate.isUserAuthenticated() || user.user_type_id !== 'admin') {
+          if (!authenticate.isUserAuthenticated() || (user.user_type_id !== 'admin' && user.user_type_id !== 'sub_admin')) {
 
             return (
               <Redirect

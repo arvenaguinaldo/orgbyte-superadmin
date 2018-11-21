@@ -49,6 +49,7 @@ import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnou
 import Email from 'containers/SendEmail/Email';
 import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
+import AccountsList from 'containers/AccountList/AccountsList';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import Forgot from 'containers/ForgotPassword/Main';
@@ -122,7 +123,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/email" component={Email} />
         <AdminRoute path="/admin/sms" component={SendSMS} />
         <AdminRoute path="/admin/passwordreset" component={ChangePassword} />
-        <AdminRoute path="/admin/accounts" component={AddAccount} />
+        <AdminRoute path="/admin/accounts/addaccount" component={AddAccount} />
+        <AdminRoute path="/admin/accounts" component={AccountsList} />
         <AdminRoute path="/admin/logs" component={UserActivityLogs} />
         <AdminRoute path="/admin/reports/announcements" component={AnnouncementReport} />
         <AdminRoute path="/admin/reports/events" component={OrganizationReport} />

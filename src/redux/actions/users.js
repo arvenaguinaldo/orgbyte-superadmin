@@ -69,3 +69,23 @@ export const addMembersSuccess = response => ({
   type: USERS.ADD_MEMBERS_SUCCESS,
   response
 });
+
+export const changePassword = params => ({
+  type: USERS.CHANGE_PASSWORD,
+  params
+});
+
+export const changePasswordSuccess = response => ({
+  type: USERS.CHANGE_PASSWORD_SUCCESS,
+  response
+});
+
+export const fetchOfficers = params => ({
+  type: USERS.FETCH_OFFICERS,
+  params
+});
+
+export const fetchOfficersSuccess = response => ({
+  type: USERS.FETCH_OFFICERS_SUCCESS,
+  response
+});

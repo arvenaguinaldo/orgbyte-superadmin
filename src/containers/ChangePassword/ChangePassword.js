@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import Center from 'react-center';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import RemoteSubmitButton from 'containers/RemoteSubmitButton/RemoteSubmitButton';
+import SubmitButton from 'components/SubmitButton/SubmitButton';
+import {connect} from 'react-redux';
 
 import {Field, reduxForm} from 'redux-form';
 import {renderPasswordField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {compose} from 'recompose';
 import {validate, warn} from 'utils/PasswordValidations/ChangePassword';
+
+import {changePassword} from 'redux/actions/users';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectUsersMeta} from 'redux/selectors/users';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -26,6 +31,10 @@ class PasswordReset extends Component {
     showPassword3: false
   };
 
+  onSubmit = (values, dispatch) => {
+    dispatch(changePassword(values));
+  };
+
   handleClickShowPassword1 = () => {
     this.setState(state => ({showPassword1: !state.showPassword1}));
   };
@@ -35,19 +44,21 @@ class PasswordReset extends Component {
   handleClickShowPassword3 = () => {
     this.setState(state => ({showPassword3: !state.showPassword3}));
   };
+
   render() {
+    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
     return (
       <LayoutWithTopbarAndSidebar>
         <Center>
           <Paper className={styles.Paper}>
-            <form>
+            <form onSubmit={handleSubmit(this.onSubmit)}>
               <Grid container spacing={0}>
                 <Grid item xs={6} sm={6} md={6}>
 
                   <Grid container spacing={16}>
 
                     <Grid item xs={10} sm={10} md={12}>
-                      <Typography variant="h4" color="secondary" >Password Reset Form</Typography>
+                      <Typography variant="h4" color="secondary" >Password Reset</Typography>
                       <Typography variant="subtitle1" color="textSecondary" >Fill in required fields to change your password</Typography>
                     </Grid>
 
@@ -101,8 +112,8 @@ class PasswordReset extends Component {
 
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
-                        name="confirm_new_password"
-                        id="confirm_new_password"
+                        name="password"
+                        id="password"
                         component={renderPasswordField}
                         endAdornment={
                           <InputAdornment position="end">
@@ -133,11 +144,9 @@ class PasswordReset extends Component {
 
               </Grid>
               <div className={styles.submitButtonDiv}>
-                <RemoteSubmitButton
-                  submitForm={'ChangePasswordForm'}
-                >
+                <SubmitButton loading={meta.isLoading} valid={!valid} >
                 SAVE
-                </RemoteSubmitButton>
+                </SubmitButton>
               </div>
             </form>
           </Paper>
@@ -147,7 +156,18 @@ class PasswordReset extends Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  meta: makeSelectUsersMeta()
+});
+
+const mapDispatchToProps = {
+  changePassword
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
 export default compose(
+  withRedux,
   reduxForm({
     form: 'ChangePasswordForm',
     destroyOnUnmount: false,
