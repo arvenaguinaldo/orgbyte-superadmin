@@ -138,7 +138,7 @@ class CheckIn extends Component {
               </Grid>
             </Grid>
             <Typography gutterBottom variant="h6" color="default">
-            Attendees
+              Attendees
             </Typography>
             <Divider light />
             <List>
