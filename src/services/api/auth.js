@@ -7,3 +7,7 @@ export const login = (data) => {
 export const fetchUsers = () => {
   return api.callGet('/users');
 };
+
+export const getUser = (params) => {
+  return api.callGet('/users/' + params);
+};

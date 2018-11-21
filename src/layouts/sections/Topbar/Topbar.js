@@ -56,7 +56,7 @@ class Topbar extends Component {
             <MenuIcon />
           </IconButton>
 
-          {user.user_type_id === 'admin' ? (
+          {user.user_type_id === 'admin' || user.user_type_id === 'sub_admin' ? (
             <Typography variant="h6" color="inherit" noWrap >
               {organization.name}
             </Typography>

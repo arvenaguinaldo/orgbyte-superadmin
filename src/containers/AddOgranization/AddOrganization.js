@@ -469,7 +469,8 @@ export default compose(
     fields: ['password'],
     initialValues: {
       user: {
-        user_type_id: 2
+        user_type_id: 2,
+        position: 'President'
       }
     },
     destroyOnUnmount: false,

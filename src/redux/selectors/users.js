@@ -36,3 +36,8 @@ export const makeSelectIsVerified = () => createSelector(
   makeSelectUsers(),
   users => users.isVerified
 );
+
+export const makeSelectOfficersList = () => createSelector(
+  makeSelectUsers(),
+  users => users.officers
+);
