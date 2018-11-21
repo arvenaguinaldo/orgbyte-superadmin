@@ -49,8 +49,25 @@
 .logo {
 	width: 50px;
 } */
-
 body {
 	overflow-x: hidden;
 	background: url("https://i.postimg.cc/d1VLPTtd/Untitled-1.png");
+}
+
+#body1 {
+	overflow-x: hidden;
+	background: url("https://i.postimg.cc/d1VLPTtd/Untitled-1.png");
+	background-attachment: fixed;
+	background-size: cover;
+}
+.MuiToolbar-gutters-46 {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+@media only screen and (min-width: 600px) {
+.MuiToolbar-gutters-46 {
+    padding-left: 0;
+    padding-right: 0;
+}
 }
