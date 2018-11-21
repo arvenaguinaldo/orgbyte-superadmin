@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-// import {call} from 'redux-saga/effects';
+import _ from 'lodash';
+import JsPDF from 'jspdf';
 import Button from '@material-ui/core/Button';
 import MUIDataTable from 'mui-datatables';
 import * as Papa from 'papaparse';
@@ -13,16 +14,20 @@ import {createStructuredSelector} from 'reselect';
 import {addMembers} from 'redux/actions/users';
 import {setMessage, clearMessage} from 'redux/actions/notification';
 import {makeSelectUsersMeta} from 'redux/selectors/users';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 
 import SubmitButton from 'components/SubmitButton/SubmitButton';
 
 import validateInput from 'utils/Validations/AddMemberMultiple';
+
+import id from 'assets/images/membership-id-template.png';
 
 import style from './Multiple.scss';
 
 class Multiple extends Component {
   static propTypes = {
     addMembers: PropTypes.func,
+    organization: PropTypes.object,
     setMessage: PropTypes.func,
     clearMessage: PropTypes.func,
     meta: PropTypes.object.isRequired
@@ -34,9 +39,50 @@ class Multiple extends Component {
     columns: ['Student No.', 'Name', 'Course name', 'Section', 'Contact Number', 'Email', 'Address']
   };
 
+  onGenerateId = (members) => {
+    const {organization} = this.props;
+
+    for (let i = 0; i < members.length; i += 1) {
+
+      const qrcode = require('yaqrcode');
+      const base64 = qrcode(members[i].student_number);
+
+      const doc = new JsPDF('p', 'px', [2054, 3373]);
+
+      const width = doc.internal.pageSize.getWidth();
+      const height = doc.internal.pageSize.getHeight();
+      doc.addImage(id, 'PNG', 0, 0, width, height);
+
+      // Student Name
+      doc.setFontSize(150);
+      doc.setTextColor('#1F1F1F');
+      doc.text(members[i].first_name.toUpperCase() + ' ' + members[i].last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
+
+      // Student Number
+      doc.setFontSize(150);
+      doc.setTextColor('#1F1F1F');
+      doc.text(members[i].student_number, width / 2, 1560, null, null, 'center');
+
+      // Organization Name
+      doc.setFontSize(125);
+      doc.setTextColor('#1F1F1F');
+      const organizationName = doc.splitTextToSize(organization.name, 1750);
+      doc.text(organizationName, width / 2, 1671, null, null, 'center');
+
+      doc.addImage(base64, 'GIF', 625, 2019, 785, 785);
+      doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 930, 2320, 200, 200); // LEFT IMAGE
+
+      const membershipIdURI = doc.output('datauristring'); // Display in iframe
+      const membershipId = membershipIdURI.substring(28);
+      _.set(members[i], 'membershipId', membershipId);
+    }
+    return members;
+  };
+
   onSubmit = () => {
     const {members} = this.state;
-    this.props.addMembers({members});
+    const memberships = this.onGenerateId(members);
+    this.props.addMembers({memberships});
   };
 
   handleImport = (value) => {
@@ -134,6 +180,7 @@ class Multiple extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  organization: makeSelectCurrentOrganization(),
   meta: makeSelectUsersMeta()
 });
 

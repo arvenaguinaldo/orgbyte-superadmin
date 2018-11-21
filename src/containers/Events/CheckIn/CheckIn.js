@@ -41,14 +41,14 @@ import styles from './CheckIn.scss';
 
 function searchingFor(term) {
   return function (x) { // eslint-disable-line
-    const year_level = x.year_level.toString(); // eslint-disable-line
-    const section = x.section;
+    const yearLevel = x.year_level && x.year_level.toString(); // eslint-disable-line
+    const section = x.section && x.section;
     const dash = '-';
     const g = 'g';
-    const group = x.group.toString();
+    const group = x.group && x.group.toString();
     return x.first_name.toLowerCase().includes(term.toLowerCase()) || x.last_name.toLowerCase().includes(term.toLowerCase())
-    || x.student_number.toLowerCase().includes(term.toLowerCase()) || x.course_name.toLowerCase().includes(term.toLowerCase())
-    || x.year_level.toString().toLowerCase().includes(term.toLowerCase()) || year_level.concat(section, dash, g, group).toLowerCase().includes(term.toLowerCase())
+    || (x.student_number && x.student_number.toLowerCase().includes(term.toLowerCase())) || (x.course_namee && x.course_namee.toLowerCase().includes(term.toLowerCase()))
+    || (yearLevel && yearLevel.toString().toLowerCase().includes(term.toLowerCase())) || (yearLevel && yearLevel.concat(section, dash, g, group).toLowerCase().includes(term.toLowerCase()))
     || !term;
   };
 }
@@ -87,6 +87,7 @@ class CheckIn extends Component {
   };
 
   searchHandler = (event) => {
+    event.preventDefault();
     this.setState({term: event.target.value});
   }
 
@@ -137,7 +138,7 @@ class CheckIn extends Component {
               </Grid>
             </Grid>
             <Typography gutterBottom variant="h6" color="default">
-            Attendees
+              Attendees
             </Typography>
             <Divider light />
             <List>
@@ -154,10 +155,10 @@ class CheckIn extends Component {
                       </ListItemIcon>
                       <Paper>
                         <Typography variant="h6" color="default">{attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name}</Typography>
-                        {attendee.student_number && <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.student_number}</Typography>}
-                        {attendee.course_name && <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.course_name}</Typography>}
+                        {attendee.student_number && attendee.event_attendee_type_id !== 'NON-BULSUAN' && <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.student_number}</Typography>}
+                        {attendee.course_namee && <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.course_namee}</Typography>}
                         {attendee.year_level && <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.year_level + attendee.section + ' - G' + attendee.group}</Typography>}
-                        <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.event_attendee_type_name}</Typography>
+                        <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.event_attendee_type_id}</Typography>
                         <Typography className={styles.secondaryText} variant="body1" color="default">{attendee.payment_status === true ? 'PAID' : 'NOT PAID'}</Typography>
                         <Button
                           className={attendee.attendance ? styles.buttonSuccess : styles.button}

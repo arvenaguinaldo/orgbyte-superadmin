@@ -99,3 +99,13 @@ export const fetchWhoAttendSuccess = response => ({
   type: EVENTS.FETCH_WHO_ATTEND_SUCCESS,
   response
 });
+
+export const saveEdit = params => ({
+  type: EVENTS.SAVE_EDIT,
+  params
+});
+
+export const saveEditSuccess = response => ({
+  type: EVENTS.SAVE_EDIT_SUCCESS,
+  response
+});

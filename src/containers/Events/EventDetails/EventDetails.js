@@ -236,24 +236,23 @@ class EventDetails extends Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={10} sm={10} md={5} >
-                  <CardMedia className={styles.eventImage}>
-                    <img src={image} style={style} alt={image} />
+                  <CardMedia className={styles.eventImage} image={image} component="img">
                   </CardMedia>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <div className={styles.actionsDiv}>
-            <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            {event.nature_of_event === "curricular" && <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
-            </Button>
+            </Button>}
             <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable} variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
             <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Check In
             </Button>
-            <Button size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/edit'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Edit Event
             </Button>
           </div>
@@ -267,8 +266,8 @@ class EventDetails extends Component {
               attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name,
               attendee.email,
               attendee.contact_number,
-              attendee.course_name,
-              attendee.year_level + attendee.section + ' - G' + attendee.group,
+              attendee.course_namee,
+              attendee.section && attendee.year_level + attendee.section + ' - G' + attendee.group,
               attendee.event_attendee_type_name,
               attendee.payment_status === true ? 'PAID' : 'NOT PAID',
               attendee

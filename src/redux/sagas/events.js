@@ -138,6 +138,18 @@ function* fetchWhoAttend(action) {
   }
 }
 
+function* saveEdit(action) {
+  const response = yield call(eventsService.saveEdit, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.saveEditSuccess(response));
+    } else {
+      yield put(eventsActions.saveEditSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -180,6 +192,10 @@ function* watchRequestFetchWhoAttend() {
   yield* takeEvery(EVENTS.FETCH_WHO_ATTEND, fetchWhoAttend);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EVENTS.SAVE_EDIT, saveEdit);
+}
+
 
 export default function* events() {
   yield [
@@ -192,6 +208,7 @@ export default function* events() {
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
     fork(watchRequestRegisterImports),
-    fork(watchRequestFetchWhoAttend)
+    fork(watchRequestFetchWhoAttend),
+    fork(watchRequestSaveEdit)
   ];
 }

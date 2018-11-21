@@ -209,6 +209,7 @@ export const renderCheckbox = (
       control={
         <Checkbox
           {...input}
+          defaultChecked={input.value}
           checked={input.checked}
           onChange={input.onChange}
         />
@@ -229,7 +230,7 @@ export const renderMUIPlacesAutocomplete = ({onSuggestionSelected, ...other}) =>
   />
 );
 
-export const renderChip = (
+export const renderChipEmail = (
   {input, label, fullWidth, floatingLabelText, helper, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
   <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
@@ -256,7 +257,38 @@ export const renderChip = (
       onBlur={() => input.onBlur()}
       label={label}
       fullWidth={fullWidth}
-      floatingLabelText={floatingLabelText}
+    />
+    <FormHelperText>{(touched && error) || warning || helper}</FormHelperText>
+  </FormControl>
+);
+
+export const renderChipPhoneNumber = (
+  {input, label, fullWidth, floatingLabelText, helper, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
+) => (
+  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+    <ChipInput
+      {...input}
+      {...custom}
+      value={input.value || []}
+      onBeforeAdd={(toAddChip) => {
+        if (!/^(0|[1-9][0-9]{9})$/i.test(toAddChip)) {
+          return false;
+        } return true;
+      }}
+      onAdd={(addedChip) => {
+        let values = input.value || [];
+        values = values.slice();
+        values.push(addedChip);
+        input.onChange(values);
+      }}
+      onDelete={(deletedChip) => {
+        let values = input.value || [];
+        values = values.filter(v => v !== deletedChip);
+        input.onChange(values);
+      }}
+      onBlur={() => input.onBlur()}
+      label={label}
+      fullWidth={fullWidth}
     />
     <FormHelperText>{(touched && error) || warning || helper}</FormHelperText>
   </FormControl>

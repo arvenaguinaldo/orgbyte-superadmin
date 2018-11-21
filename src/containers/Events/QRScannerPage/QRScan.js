@@ -167,7 +167,7 @@ class QRScan extends Component {
                                 <Typography variant="h6" color="secondary">Course:</Typography>
                               </Grid>
                               <Grid item xs={12} sm={12} md={10}>
-                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_name}</Typography>
+                                <Typography variant="body1" color="secondary" className={styles.AttendeeDetail}>{attendee.course_namee}</Typography>
                               </Grid>
                             </Grid>
                           }

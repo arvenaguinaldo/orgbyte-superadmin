@@ -38,7 +38,7 @@ class UserSideEvents extends Component {
 
         <Grid container spacing={8}>
           <Grid item lg={12} md={12} sm={12} xs={12}>
-            <Typography variant="h4" className={style.SectionHeading}>
+            <Typography variant="h5" className={style.SectionHeading}>
                 UPCOMING EVENTS
             </Typography>
           </Grid>

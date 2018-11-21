@@ -32,6 +32,7 @@ import Shop from '@material-ui/icons/ShoppingBasket';
 import Building from '@material-ui/icons/AccountBalance';
 import Clock from '@material-ui/icons/AccessTime';
 import Event from '@material-ui/icons/Event';
+import PersonCheckIn from '@material-ui/icons/HowToReg';
 import Report from '@material-ui/icons/Description';
 import Announcement from '@material-ui/icons/Announcement';
 import Typography from '@material-ui/core/Typography';
@@ -387,7 +388,7 @@ class AdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
         >
-          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/shirts'} >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/shirts' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/attendees'} >
             <ListItemIcon>
               <Report className={style.listIcon} />
             </ListItemIcon>
@@ -424,6 +425,13 @@ class AdminMenuItemData extends Component {
                   <Shop className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Shirt Purchase</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/attendees" selected={pathname === '/admin/reports/attendees'}>
+                <ListItemIcon>
+                  <PersonCheckIn className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Attendees</Typography>} />
               </MenuItem>
 
             </MenuList>

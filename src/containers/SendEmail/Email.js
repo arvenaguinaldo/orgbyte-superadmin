@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import {Field, reduxForm} from 'redux-form';
 import {compose} from 'recompose';
-import {renderSelectField, renderTextField, renderCheckbox, renderChip} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderSelectField, renderTextField, renderCheckbox, renderChipEmail} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 import {createEmail} from 'redux/actions/emails';
 import {makeSelectEmailsMeta} from 'redux/selectors/emails';
@@ -112,7 +112,7 @@ class Email extends Component {
                     <Field
                       name="email_type"
                       component={renderSelectField}
-                      label="Type of Email"
+                      label="Type of Message"
                       fullWidth
                     >
                       <option value="" />
@@ -140,7 +140,7 @@ class Email extends Component {
                         onDelete={(chip, index) => this.handleDeleteChip(chip, index)}
                         label="Recipients"
                         helper="Enter a valid email and press Enter"
-                        component={renderChip}
+                        component={renderChipEmail}
                         floatingLabelText="Please enter valid email"
                         fullWidth
                         onBeforeAdd={chip => this.onBeforeAdd(chip)}

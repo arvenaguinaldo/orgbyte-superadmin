@@ -42,7 +42,6 @@ class Member extends Component {
   onSubmit = (values) => {
     if (!this.props.meta.isLoading) {
       this.props.verifyMember(values.student_number);
-      // dispatch(change('MemberPurchase', 'shirts_id', this.props.shirt.id));
     }
   };
 
@@ -109,6 +108,7 @@ export default compose(
   reduxForm({
     form: 'VerifyMemberForm',
     overwriteOnInitialValuesChange: false,
+    enableReinitialize: true,
     validate
   }),
   withRedux

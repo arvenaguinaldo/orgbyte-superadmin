@@ -41,7 +41,7 @@ class Announcements extends Component {
       <div className={style.ChildContainer}>
         <Grid container spacing={8}>
           <Grid item lg={6} md={6} sm={6} xs={6}>
-            <Typography variant="h4" className={style.SectionHeading}>
+            <Typography variant="h5" className={style.SectionHeading}>
               ANNOUNCEMENTS
             </Typography>
           </Grid>

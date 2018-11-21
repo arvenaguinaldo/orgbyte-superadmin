@@ -43,6 +43,7 @@ import QRScan from 'containers/Events/QRScannerPage/QRScan';
 import EventDetails from 'containers/Events/EventDetails/EventDetails';
 import EventList from 'containers/Events/EventList';
 import CheckIn from 'containers/Events/CheckIn/CheckIn';
+import EditEvent from 'containers/Events/EditEvent/EditEvent';
 
 import AnnouncementsPage from 'containers/Announcements/AnnouncementsPage/AnnouncementsPage';
 import AddAnnouncements from 'containers/Announcements/AddAnnouncements/AddAnnouncements';
@@ -51,6 +52,7 @@ import SendSMS from 'containers/SendSMS/SendSMS';
 import ChangePassword from 'containers/ChangePassword/ChangePassword';
 import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
+import Forgot from 'containers/ForgotPassword/Main';
 import AdminDashboard from 'containers/AdminDashboard/AdminDashboard';
 import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
 
@@ -59,6 +61,8 @@ import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
 import OrganizationReport from 'containers/AdminReports/EventList';
 import MembersReport from 'containers/AdminReports/MemberList';
 import ShirtsReport from 'containers/AdminReports/ShirtPurchaseList';
+import AttendeesReport from 'containers/AdminReports/AttendeeList';
+import AttendeeListView from 'containers/AdminReports/AttendeeListView';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -68,7 +72,7 @@ import UserAnnouncement from 'containers/UserPage/Announcements/AnnouncementList
 import UserEventList from 'containers/UserPage/Events/EventsList/EventsList';
 import UserOrganizationList from 'containers/UserPage/Organizations/UserOrganizationList/UserOrganizationList';
 import UserOrganizationProfile from 'containers/UserPage/Organizations/OrganizationPage/OrganizationProfile';
-
+import TrySpinner from 'containers/Spinner/Spinner';
 import NotFoundPage from 'containers/NotFound/NotFoundPage';
 
 class MainRoutes extends Component {
@@ -94,6 +98,8 @@ class MainRoutes extends Component {
 
         {/* Admin Routes */}
 
+        <Route path="/ForgotPassword" component={Forgot} />
+
         {/* Admin - Membership Routes */}
         <AdminRoute path="/admin/" component={AdminDashboard} exact />
         <AdminRoute path="/admin/memberships/addmember" component={AddMember} />
@@ -112,6 +118,7 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/events/:id/checkin" component={CheckIn} exact />
         <AdminRoute path="/admin/events/:id/register" component={EventRegister} />
         <AdminRoute path="/admin/events/:id/qrscanner" component={QRScan} />
+        <AdminRoute path="/admin/events/:id/edit" component={EditEvent} />
         <AdminRoute path="/admin/events/:id" component={EventDetails} exact />
         <AdminRoute path="/admin/events" component={EventList} exact />
 
@@ -126,6 +133,8 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/reports/events" component={OrganizationReport} />
         <AdminRoute path="/admin/reports/members" component={MembersReport} />
         <AdminRoute path="/admin/reports/shirts" component={ShirtsReport} />
+        <AdminRoute path="/admin/reports/attendees" component={AttendeesReport} />
+        <AdminRoute path="/admin/reports/:id/attendees" component={AttendeeListView} />
         <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}
@@ -136,8 +145,10 @@ class MainRoutes extends Component {
         <Route path="/announcements/:id" component={UserAnnouncementPage} exact />
         <Route path="/organizations/:acronym" component={UserOrganizationProfile} />
         <Route path="/events/:id" component={UserEventPage} />
-        <Route path="" component={NotFoundPage} />
+        <Route path="/tryspin" component={TrySpinner} />
+
         <Route path="/NotFound" component={NotFoundPage} />
+        <Route path="" component={NotFoundPage} />
       </Switch>
     );
   }
