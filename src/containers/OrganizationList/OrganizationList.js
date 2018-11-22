@@ -111,6 +111,8 @@ class OrganizationTable extends React.Component {
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
+      print: false,
+      download: false,
       customToolbarSelect: selectedRows =>
         (<CustomToolbarSelect
           dbTable={dbTable}

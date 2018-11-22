@@ -1,58 +1,61 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import MUIDataTable from 'mui-datatables';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import moment from 'moment';
-import JsPDF from 'jspdf';
-import 'jspdf-autotable';
-
-import MUIDataTable from 'mui-datatables';
-import {withStyles} from '@material-ui/core/styles';
-import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectLogsList, makeSelectLogsMeta} from 'redux/selectors/logs';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+import {makeSelectCurrentUser} from 'redux/selectors/auth';
+import {fetchLogs} from 'redux/actions/logs';
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import Grid from '@material-ui/core/Grid';
 import {Field, reduxForm} from 'redux-form';
 
-import {createStructuredSelector} from 'reselect';
-import {makeSelectAnnouncementsList, makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
-import {makeSelectCurrentUser} from 'redux/selectors/auth';
-import {fetchAnnouncements} from 'redux/actions/announcements';
+import JsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-import fetchInitialData from 'hoc/fetchInitialData';
-import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
-
+import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
-const styles = theme => ({
-  root: {
-    width: '100%'
+const columns = [
+  {
+    name: 'Admin name',
+    options: {
+      filter: false
+    }
   },
-  Paper: {
-    padding: '50px'
+  {
+    name: 'Action',
+    options: {
+      filter: false
+    }
   },
-  sendButton: {
-    flex: 1
+  {
+    name: 'Name',
+    options: {
+      filter: false
+    }
   },
-  grid: {
-    backgroundColor: '#5F1D24'
-  },
-  button: {
-    margin: 20
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
-  iconSmall: {
-    fontSize: 20
-  },
+  {
+    name: 'Date and Time',
+    options: {
+      filter: false
+    }
+  }
+];
+
+const styles = () => ({
   RangeLabel: {
     marginTop: 36,
     marginLeft: 36
@@ -65,50 +68,24 @@ const styles = theme => ({
 let tableData = {};
 let tableDataArray = [];
 let tableColumnsArray = [];
-
 const tableColumnsStatus = [];
 let tableColumns = {};
 let tabletitle;
 let globalStartsDate;
 let globalEndsDate;
-const columns = [
-  {
-    name: 'Title',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Announcements Starts',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Announcements Ends',
-    options: {
-      filter: false
-    }
-  }
-];
 
-
-class AnnouncementsPage extends Component {
-
+class AdminActivityLogs extends Component {
   static propTypes = {
-    announcements: PropTypes.array.isRequired,
+    logs: PropTypes.array,
+    classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    announcements: []
+    organization: PropTypes.object
   };
 
   state = {
     startsDate: 'reset',
     endsDate: 'reset'
-  }
+  };
 
   handleStartsDateChange = (date) => {
     this.setState({startsDate: date});
@@ -135,19 +112,24 @@ class AnnouncementsPage extends Component {
   Reset = () => {
     this.setState({startsDate: 'reset', endsDate: 'reset'});
   };
+
   render() {
-    const {announcements, user, classes} = this.props;
+
+    const {logs, classes, user, organization} = this.props;
     const {startsDate, endsDate} = this.state;
-    tabletitle = startsDate && endsDate !== 'reset' ? 'Announcements List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Announcements List';
+    tabletitle = startsDate && endsDate !== 'reset' ? 'Activity logs List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Activity logs List';
+
     const options = {
+      filterType: 'checkbox',
       selectableRows: false,
+      download: true,
+      print: false,
+      filter: false,
       rowsPerPage: 5,
       rowsPerPageOptions: [5, 10, 15],
-      filter: false,
-      print: false,
       customToolbar: () => {
         return (
-          <CustomToolbar announcements={announcements} user={user} startsDate={this.state.startsDate} endsDate={this.state.endsDate} />
+          <CustomToolbar logs={logs} user={user} organization={organization} />
         );
       },
       onTableChange: (action, tableState) => {
@@ -176,6 +158,7 @@ class AnnouncementsPage extends Component {
 
       }
     };
+
     return (
       <LayoutWithTopbarAndSidebar>
         <form>
@@ -218,15 +201,16 @@ class AnnouncementsPage extends Component {
         </form>
         <MUIDataTable
           title={tabletitle}
-          options={options}
-          data={this.props.announcements.filter(announcement => this.timePeriod(announcement.starts, announcement.ends)).map((announcement) => {
+          data={logs.filter(log => this.timePeriod(log.created_at)).map((log) => {
             return [
-              announcement.title,
-              moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-              moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+              log.admin_name,
+              log.action,
+              log.name,
+              moment(log.created_at).format('MMMM Do YYYY, h:mm a')
             ];
           })}
           columns={columns}
+          options={options}
         />
       </LayoutWithTopbarAndSidebar>
     );
@@ -235,8 +219,9 @@ class AnnouncementsPage extends Component {
 
 export class CustomToolbar extends Component {
   static propTypes = {
-    announcements: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired
+    logs: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
+    organization: PropTypes.object
   };
   timePeriod = (startsDate) => {
     moment.locale('en');
@@ -252,10 +237,11 @@ export class CustomToolbar extends Component {
     }
   }
   printData = () => {
-    const data = this.props.announcements.filter(announcement => this.timePeriod(announcement.starts)).map(announcement => ({
-      0: announcement.title,
-      1: moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-      2: moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+    const data = this.props.logs.filter(log => this.timePeriod(log.created_at)).map(log => ({
+      0: log.admin_name,
+      1: log.action,
+      2: log.name,
+      3: moment(log.created_at).format('MMMM Do YYYY, h:mm a')
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -290,19 +276,31 @@ export class CustomToolbar extends Component {
     ));
 
     const doc = new JsPDF('p', 'pt');
+    doc.setFontSize(10);
     const totalPagesExp = '{total_pages_count_string}';
     doc.setProperties({
-      title: 'Announcement Table'
+      title: 'Logs Table'
     });
     doc.page = 1;
-    const orgname = this.props.announcements[0].organization_name;
+    const orgname = this.props.organization.name;
     const username = this.props.user.first_name + ' ' + this.props.user.last_name;
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
-      styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 6},
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
-      columnStyles: {0: {columnWidth: 'auto'}},
+      columnStyles: {
+        // 0: {columnWidth: 'auto'},
+        1: {columnWidth: 'auto'},
+        // 2: {columnWidth: 'auto'},
+        // 3: {columnWidth: 'auto'},
+        // 4: {columnWidth: 'auto'},
+        5: {columnWidth: 'auto'},
+        6: {columnWidth: 'auto'},
+        // 7: {columnWidth: 'auto'},
+        // 8: {columnWidth: 'auto'},
+        9: {columnWidth: 'auto'}
+      },
       alternateRowStyles: {
         fillColor: [220, 220, 220]
       },
@@ -336,6 +334,7 @@ export class CustomToolbar extends Component {
         doc.setFontSize(6);
         const pdfdate = 'Report generated by ' + username + ' ' + moment(new Date()).format('MM-DD-YYYY h:mm A') + '  @OrgByte';
         doc.text(pdfdate, 10, pageHeight - 10);
+
       }
     });
     if (typeof doc.putTotalPages === 'function') {
@@ -358,15 +357,16 @@ export class CustomToolbar extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  announcements: makeSelectAnnouncementsList(),
+  logs: makeSelectLogsList(),
+  organization: makeSelectCurrentOrganization(),
   user: makeSelectCurrentUser(),
-  meta: makeSelectAnnouncementsMeta()
+  meta: makeSelectLogsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchAnnouncements});
+const withRedux = connect(mapStateToProps, {fetchLogs});
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchAnnouncements();
+  props.fetchLogs();
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
@@ -378,8 +378,8 @@ export default compose(
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
   reduxForm({
-    form: 'AnnouncementsForm',
+    form: 'LogsForm',
     destroyOnUnmount: false
   }),
   withStyles(styles)
-)(AnnouncementsPage);
+)(AdminActivityLogs);

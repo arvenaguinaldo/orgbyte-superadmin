@@ -21,6 +21,7 @@ import RenewalDate from 'containers/RenewalDate/RenewalDate';
 import SuperAdminOrganizationReport from 'containers/SuperAdminReports/OrganizationList';
 import SuperAdminPresidentReport from 'containers/SuperAdminReports/PresidentList';
 import SuperAdminActivityLogs from 'containers/SuperAdminActivityLogs/SuperAdminActivityLogs';
+import SuperAdminActivityLogsReport from 'containers/SuperAdminReports/ActivityLogsList';
 
 // Admin Routes
 
@@ -63,6 +64,7 @@ import MembersReport from 'containers/AdminReports/MemberList';
 import ShirtsReport from 'containers/AdminReports/ShirtPurchaseList';
 import AttendeesReport from 'containers/AdminReports/AttendeeList';
 import AttendeeListView from 'containers/AdminReports/AttendeeListView';
+import ActivityLogsReport from 'containers/AdminReports/ActivityLogsList';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -94,6 +96,7 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/renew/:id" component={RenewOrganization} />
         <SuperAdminRoute path="/superadmin/reports/organizations" component={SuperAdminOrganizationReport} />
         <SuperAdminRoute path="/superadmin/reports/presidents" component={SuperAdminPresidentReport} />
+        <SuperAdminRoute path="/superadmin/reports/useractivitylogs" component={SuperAdminActivityLogsReport} />
         <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}
@@ -135,6 +138,7 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/reports/shirts" component={ShirtsReport} />
         <AdminRoute path="/admin/reports/attendees" component={AttendeesReport} />
         <AdminRoute path="/admin/reports/:id/attendees" component={AttendeeListView} />
+        <AdminRoute path="/admin/reports/useractivitylogs" component={ActivityLogsReport} />
         <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}

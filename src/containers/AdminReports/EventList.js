@@ -6,6 +6,11 @@ import moment from 'moment';
 import JsPDF from 'jspdf';
 import 'jspdf-autotable';
 
+import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import Grid from '@material-ui/core/Grid';
+import {Field, reduxForm} from 'redux-form';
+import Typography from '@material-ui/core/Typography';
+
 import MUIDataTable from 'mui-datatables';
 import {withStyles} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
@@ -18,6 +23,7 @@ import {fetchEvents} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
@@ -48,15 +54,24 @@ const styles = theme => ({
   },
   iconSmall: {
     fontSize: 20
+  },
+  RangeLabel: {
+    marginTop: 36,
+    marginLeft: 36
+  },
+  ResetButton: {
+    marginTop: '28px'
   }
 });
 
 let tableData = {};
 let tableDataArray = [];
 let tableColumnsArray = [];
-
 const tableColumnsStatus = [];
 let tableColumns = {};
+let tabletitle;
+let globalStartsDate;
+let globalEndsDate;
 const columns = [
   {
     name: 'Name\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
@@ -125,15 +140,49 @@ class EventList extends Component {
 
   static propTypes = {
     events: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   static defaultProps = {
     events: []
   };
 
+  state = {
+    startsDate: 'reset',
+    endsDate: 'reset'
+  }
+
+  handleStartsDateChange = (date) => {
+    this.setState({startsDate: date});
+  };
+
+  handleEndsDateChange = (date) => {
+    this.setState({endsDate: date});
+  };
+  timePeriod = (startsDate) => {
+    moment.locale('en');
+    globalStartsDate = this.state.startsDate;
+    globalEndsDate = this.state.endsDate;
+    const starts = moment(startsDate).format('YYYY-MM-DD h:mm a');
+    const startsRange = moment(this.state.startsDate).format('YYYY-MM-DD h:mm a');
+    const endsRange = moment(this.state.endsDate).format('YYYY-MM-DD h:mm a');
+    if (startsRange <= starts && starts <= endsRange) {
+      return startsDate;
+    } else if (this.state.startsDate === 'reset') {
+      return startsDate;
+    } else if (this.state.endsDate === 'reset') {
+      return startsDate;
+    }
+  };
+  Reset = () => {
+    this.setState({startsDate: 'reset', endsDate: 'reset'});
+  }
+
   render() {
-    const {events, user} = this.props;
+    const {events, user, classes} = this.props;
+    const {startsDate, endsDate} = this.state;
+    tabletitle = startsDate && endsDate !== 'reset' ? 'Event List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Event List';
     const options = {
       selectableRows: false,
       rowsPerPage: 5,
@@ -174,20 +223,58 @@ class EventList extends Component {
 
     return (
       <LayoutWithTopbarAndSidebar>
+        <form>
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Grid container spacing={40}>
+                <Grid item xs={10} sm={10} md={2} />
+                <Grid item xs={10} sm={10} md={2}>
+                  <Typography variant="subtitle1" className={classes.RangeLabel}>Date Range:</Typography>
+                </Grid>
+                <Grid item xs={10} sm={10} md={3} >
+                  <Field
+                    name="starts"
+                    component={renderDateTimePicker}
+                    label="Start date"
+                    selected={this.state.startsDate}
+                    onChange={this.handleStartsDateChange}
+                    fullWidth
+                    clearable
+                  />
+                </Grid>
+                <Grid item xs={10} sm={10} md={3} >
+                  <Field
+                    name="ends"
+                    component={renderDateTimePicker}
+                    label="End date"
+                    selected={this.state.endsDate}
+                    onChange={this.handleEndsDateChange}
+                    minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
+                    fullWidth
+                    clearable
+                  />
+                </Grid>
+                <Grid item xs={10} sm={10} md={2} >
+                  <Button variant="contained" color="primary" className={classes.ResetButton} onClick={this.Reset}>Reset</Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
         <MUIDataTable
-          title={'Event List'}
+          title={tabletitle}
           options={options}
-          data={this.props.events.map((event) => {
+          data={this.props.events.filter(event => this.timePeriod(event.ends)).map((event) => {
             return [
               event.name,
               event.venue,
-              event.members_price !== null ? event.members_price : 'no price',
-              event.bulsuans_price !== null ? event.bulsuans_price : 'no price',
-              event.non_bulsuans_price !== null ? event.non_bulsuans_price : 'no price',
-              moment(event.starts).format('MM-DD-YYYY h:mm A'),
-              moment(event.ends).format('MM-DD-YYYY h:mm A'),
-              event.nature_of_event,
-              event.ticket_price_type,
+              event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString('us', {maximumFractionDigits: 2}) : 'NO PRICE',
+              event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString('us') : 'NO PRICE',
+              event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString('us') : 'NO PRICE',
+              moment(event.starts).format('MMM DD YYYY'),
+              moment(event.ends).format('MMM DD YYYY'),
+              event.nature_of_event.toUpperCase(),
+              event.ticket_price_type.toUpperCase(),
               event.number_of_attendees - event.available_slots
             ];
           })}
@@ -203,15 +290,28 @@ export class CustomToolbar extends Component {
     events: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired
   };
+  timePeriod = (startsDate) => {
+    moment.locale('en');
+    const starts = moment(startsDate).format('YYYY-MM-DD h:mm a');
+    const startsRange = moment(globalStartsDate).format('YYYY-MM-DD h:mm a');
+    const endsRange = moment(globalEndsDate).format('YYYY-MM-DD h:mm a');
+    if (startsRange <= starts && starts <= endsRange) {
+      return startsDate;
+    } else if (globalStartsDate === 'reset') {
+      return startsDate;
+    } else if (globalEndsDate === 'reset') {
+      return startsDate;
+    }
+  }
   printData = () => {
-    const data = this.props.events.map(event => ({
+    const data = this.props.events.filter(event => this.timePeriod(event.ends)).map(event => ({
       0: event.name,
       1: event.venue,
       2: event.members_price !== null ? event.members_price : 'no price available',
       3: event.bulsuans_price !== null ? event.bulsuans_price : 'no price available',
       4: event.non_bulsuans_price !== null ? event.non_bulsuans_price : 'no price available',
-      5: moment(event.starts).format('MM-DD-YYYY h:mm A'),
-      6: moment(event.ends).format('MM-DD-YYYY h:mm A'),
+      5: moment(event.starts).format('MMM DD YYYY'),
+      6: moment(event.ends).format('MMM DD YYYY'),
       7: event.nature_of_event,
       8: event.ticket_price_type,
       9: event.number_of_attendees - event.available_slots
@@ -263,7 +363,7 @@ export class CustomToolbar extends Component {
       styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 6},
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {
-        0: {columnWidth: 'auto'},
+        // 0: {columnWidth: 'auto'},
         1: {columnWidth: 'auto'},
         // 2: {columnWidth: 'auto'},
         // 3: {columnWidth: 'auto'},
@@ -281,7 +381,7 @@ export class CustomToolbar extends Component {
       addPageContent() {
         // HEADER
         doc.setFontSize(15);
-        doc.text('Events List', 35, 190);
+        doc.text(tabletitle, 35, 190);
         doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
         doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
@@ -349,5 +449,9 @@ export default compose(
   withRedux,
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
+  reduxForm({
+    form: 'EventsForm',
+    destroyOnUnmount: false
+  }),
   withStyles(styles)
 )(EventList);

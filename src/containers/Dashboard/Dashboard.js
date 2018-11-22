@@ -181,7 +181,7 @@ class Dashboard extends Component {
                   <ListItemIcon >
                     <Calendar />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Edit Renewal Period</Typography></Link>} />
+                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Renewal Period</Typography></Link>} />
                 </ListItem>
               </Card>
             </Grid>
