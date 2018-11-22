@@ -6,13 +6,21 @@ import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForm
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
+import fetchInitialData from 'hoc/fetchInitialData';
 
-import {validate, warn} from 'utils/EditValidations/Presidents';
+import {createStructuredSelector} from 'reselect';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+
+import {fetchColleges} from 'redux/actions/colleges';
+import {makeSelectCollegesList} from 'redux/selectors/colleges';
+
+import {validate, warn} from 'utils/Validations/AddAccount';
 
 class EditForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    colleges: PropTypes.array.isRequired
   };
 
   state = {
@@ -25,7 +33,8 @@ class EditForm extends React.Component {
       placeholder: ' '
     });
 
-    const {handleSubmit} = this.props;
+    const {handleSubmit, colleges} = this.props;
+    console.log(this.props.colleges);
 
     return (
       <div>
@@ -90,7 +99,7 @@ class EditForm extends React.Component {
                     fullWidth
                   >
                   <option value="" />
-                  {this.props.colleges.map((college) => {
+                  {colleges.map((college) => {
                     return (
                       <option key={college.id} value={college.id}> {college.name} </option>
                     );
@@ -107,11 +116,29 @@ class EditForm extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'EditForm',
-  overwriteOnInitialValuesChange: true,
-  destroyOnUnmount: false,
-  enableReinitialize: true,
-  validate,
-  warn
-})(EditForm);
+const mapStateToProps = createStructuredSelector({
+  colleges: makeSelectCollegesList()
+});
+
+const mapDispatchToProps = {
+  fetchColleges
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchColleges();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  reduxForm({
+    form: 'EditForm',
+    overwriteOnInitialValuesChange: true,
+    destroyOnUnmount: false,
+    enableReinitialize: true,
+    validate,
+    warn
+  })
+)(EditForm);
