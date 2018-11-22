@@ -98,12 +98,12 @@ class EditForm extends React.Component {
                     label="college"
                     fullWidth
                   >
-                  <option value="" />
-                  {colleges.map((college) => {
-                    return (
-                      <option key={college.id} value={college.id}> {college.name} </option>
-                    );
-                  })}
+                    <option value="" />
+                    {colleges.map((college) => {
+                      return (
+                        <option key={college.id} value={college.id}> {college.name} </option>
+                      );
+                    })}
                   </Field>
                 </Grid>
 
