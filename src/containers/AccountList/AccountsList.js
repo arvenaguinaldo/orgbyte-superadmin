@@ -16,7 +16,7 @@ import {makeSelectUsersMeta, makeSelectOfficersList} from 'redux/selectors/users
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
-import CustomToolbar from './CustomToolbarSelect';
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 import style from './AccountList.scss';
 
 
@@ -26,22 +26,31 @@ class AccountsList extends React.Component {
   }
 
   state = {
-    columns: ['Id', 'Name', 'Position', 'Email', 'Contact Number', 'College']
+    columns: [{name: 'id', options: {display: false}}, 'Name', 'Position', 'Email', 'Contact Number', 'College'],
+    dbTable: 'users'
   };
 
 
   render() {
-    const {columns} = this.state;
+    const {columns, dbTable} = this.state;
     const {officers} = this.props;
 
     const options = {
-      filter: true,
+      filter: false,
       selectableRows: true,
       filterType: 'dropdown',
       responsive: 'scroll',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      download: false,
+      print: false,
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={officers}
+          columns={columns}
+        />)
     };
     return (
       <LayoutWithTopbarAndSidebar>
