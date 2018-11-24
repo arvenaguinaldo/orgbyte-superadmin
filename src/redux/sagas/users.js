@@ -5,6 +5,7 @@ import * as usersService from 'services/api/users';
 import {push} from 'react-router-redux';
 import {reset} from 'redux-form';
 import {USERS} from 'constants/actions/users';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification} from './notification';
 import {callSuccessNotification} from './notification';
 
@@ -160,6 +161,10 @@ function* watchRequestFetchOfficers() {
   yield* takeEvery(USERS.FETCH_OFFICERS, fetchOfficers);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchMembers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -170,6 +175,7 @@ export default function* users() {
     fork(watchRequestVerifyMember),
     fork(watchRequestAddMembers),
     fork(watchRequestChangePassword),
-    fork(watchRequestFetchOfficers)
+    fork(watchRequestFetchOfficers),
+    fork(watchRequestArchive)
   ];
 }

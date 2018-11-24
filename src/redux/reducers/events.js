@@ -186,6 +186,21 @@ const events = (state = initialState, action) => {
       }));
     }
 
+    case EVENTS.PUBLISH: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: false
+      }));
+    }
+    case EVENTS.PUBLISH_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        event: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

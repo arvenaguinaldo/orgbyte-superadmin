@@ -23,7 +23,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import {createStructuredSelector} from 'reselect';
 import {makeSelectEvent, makeSelectAttendees, makeSelectSuccess, makeSelectEventsMeta} from 'redux/selectors/events';
-import {fetchEvent, attend, fetchAttendees} from 'redux/actions/events';
+import {fetchEvent, attend, fetchAttendees, publish} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
@@ -35,6 +35,7 @@ class EventDetails extends Component {
     event: PropTypes.object,
     success: PropTypes.bool,
     attend: PropTypes.func,
+    publish: PropTypes.func,
     attendees: PropTypes.array
   };
 
@@ -131,6 +132,13 @@ class EventDetails extends Component {
         }
       }
     ]
+  };
+
+  onPublishEvent = (event) => {
+    event.preventDefault();
+    const {match: {params}} = this.props;
+    const parameters = {event_id: params.id};
+    this.props.publish(parameters);
   };
 
   render() {
@@ -246,10 +254,15 @@ class EventDetails extends Component {
             {event.nature_of_event === "curricular" && <Button component={Link} to={'/admin/events/' + event.id + '/generatecertificate'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Generate Certificate
             </Button>}
-            <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable} variant="contained" color="primary" className={styles.actionsButton}>
+            <Button onClick={e => this.onPublishEvent(e)} disabled={registerDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+                    {!event.publish ? 'PUBLISH EVENT' : 'UNPUBLISH EVENT'}
+            </Button>
+
+            <Button component={Link} to={'/admin/events/' + event.id + '/register'} size="small" disabled={registerDisable && event.publish} variant="contained" color="primary" className={styles.actionsButton}>
                       Register
             </Button>
-            <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+
+            <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable && event.publish} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Check In
             </Button>
             <Button component={Link} to={'/admin/events/' + event.id + '/edit'} size="small" variant="contained" color="primary" className={styles.actionsButton}>
@@ -291,7 +304,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   fetchEvent,
   fetchAttendees,
-  attend
+  attend,
+  publish
 };
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
