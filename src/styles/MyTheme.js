@@ -83,6 +83,11 @@ const theme = colorTheme => createMuiTheme({
         color: '#fff',
         textDecoration: 'none'
       }
+    },
+    MuiDialog: {
+      paperWidthSm: {
+        maxWidth: '800px'
+      }
     }
   }
 }

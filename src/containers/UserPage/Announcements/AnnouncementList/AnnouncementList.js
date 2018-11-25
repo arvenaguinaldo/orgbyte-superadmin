@@ -145,7 +145,6 @@ class AnnouncementList extends Component {
   static defaultProps = {
     announcements: []
   };
-
   render() {
     const {announcements, classes} = this.props;
     return (

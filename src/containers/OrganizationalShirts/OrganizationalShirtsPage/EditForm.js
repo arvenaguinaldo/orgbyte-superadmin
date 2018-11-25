@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {Field, reduxForm} from 'redux-form';
 import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
-import {compose} from 'recompose';
 import {createTextMask} from 'redux-form-input-masks';
-import {fetchSizes} from 'redux/actions/shirts';
+
+import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import fetchInitialData from 'hoc/fetchInitialData';
-
 import {createStructuredSelector} from 'reselect';
+
 import {makeSelectShirtSizes} from 'redux/selectors/shirts';
+import {fetchSizes} from 'redux/actions/shirts';
 
 
 // Material UI
@@ -18,13 +20,12 @@ import Grid from '@material-ui/core/Grid';
 class EditForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func,
-    shirtSizes: PropTypes.object
+    shirtSizes: PropTypes.object.isRequired
   };
 
   state = {
     selectedDate: new Date()
   };
-
 
   render() {
     const groupNumberMask = createTextMask({
@@ -36,6 +37,7 @@ class EditForm extends React.Component {
       placeholder: ' '
     });
     const {handleSubmit, shirtSizes} = this.props;
+    console.log(shirtSizes);
     const required = value => (value ? undefined : 'This field is Required');
     return (
       <div>
@@ -153,12 +155,12 @@ const withFetchInitialData = fetchInitialData((props) => {
 });
 
 export default compose(
+  withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'EditForm',
     overwriteOnInitialValuesChange: true,
     destroyOnUnmount: false,
     enableReinitialize: true
   }),
-  withRedux,
-  withFetchInitialData,
 )(EditForm);

@@ -13,8 +13,14 @@ import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
+
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import View from '@material-ui/icons/Visibility';
+
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+import ViewModal from './ViewModal';
 
 import style from './MembershipPage.scss';
 
@@ -71,14 +77,36 @@ class MembershipPage extends React.Component {
         options: {
           filter: false
         }
+      },
+      {
+        name: 'View',
+        options: {
+          filter: false,
+          sort: false,
+          customBodyRender: (value) => {
+            return (
+              <Tooltip title={'View Member'}>
+                <IconButton onClick={e => this.handleModal(e, value)} className={style.ViewIcon}>
+                  <View />
+                </IconButton>
+              </Tooltip>
+            );
+          }
+        }
       }
     ],
-    dbTable: 'members'
+    dbTable: 'members',
+    open: false,
+    id: 0
   };
-
-  changeStuff(newcolumns) {
-    this.setState({columns: newcolumns});
-  }
+  handleModal =(e, value) => {
+    // e.preventDefault();
+    console.log(value);
+    this.setState({open: true, id: value});
+  };
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   render() {
     const {members} = this.props;
@@ -102,6 +130,7 @@ class MembershipPage extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
+        <ViewModal open={this.state.open} id={this.state.id} handleClose={this.handleClose.bind(this)} members={members} />
         <Typography variant="h4">
           Memberships
         </Typography>
@@ -120,7 +149,8 @@ class MembershipPage extends React.Component {
               member.year_level + member.section + ' - G' + member.group,
               member.contact_number,
               member.email,
-              member.address
+              member.address,
+              member.id
             ];
           })}
           columns={columns}
