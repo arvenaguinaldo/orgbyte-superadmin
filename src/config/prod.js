@@ -1,6 +1,8 @@
 module.exports = (() => {
   const commonConfig = {
-    /* configs here */
+    environment: 'prod',
+    apiUrl: '//OrgbyteBackend-env.trsr5rdy3z.us-east-1.elasticbeanstalk.com',
+    accessToken: ''
   };
 
   return commonConfig;
