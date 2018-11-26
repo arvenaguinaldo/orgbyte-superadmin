@@ -5,11 +5,17 @@ export const validate = (values) => {
     errors.email = 'Enter a valid email';
   }
 
+  if (!/^(0|[1-9][0-9]{9})$/i.test(values.contact_number)) {
+    errors.contact_number = 'Invalid phone number, must be 10 digits or not starting with 0';
+  }
+
   const requiredFields = [
     'email',
     'last_name',
     'first_name',
-    'user_type_id'
+    'college_id',
+    'contact_number',
+    'position'
   ];
 
   requiredFields.forEach((field) => {

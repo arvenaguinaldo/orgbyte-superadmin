@@ -4,6 +4,7 @@ import PresidentEdit from 'containers/PresidentList/EditModal';
 import MemberEdit from 'containers/Membership/MembershipPage/EditModal';
 import AnnouncementEdit from 'containers/Announcements/AnnouncementsPage/EditModal';
 import OrgshirtAvailEdit from 'containers/OrganizationalShirts/OrganizationalShirtsPage/EditModal';
+import AccountsEdit from 'containers/AccountList/EditModal';
 
 class EditModals extends Component {
   render() {
@@ -14,6 +15,7 @@ class EditModals extends Component {
         <MemberEdit />
         <AnnouncementEdit />
         <OrgshirtAvailEdit />
+        <AccountsEdit />
       </div>
     );
   }

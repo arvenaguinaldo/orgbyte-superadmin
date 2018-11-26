@@ -51,7 +51,7 @@ export const renderTextField = (
 export const renderPasswordField = (
   {input, type, label, handler, showPassword, fullWidth, multiline, defaultValue, meta: {touched, error, warning}, ...custom} // eslint-disable-line react/prop-types
 ) => (
-  <FormControl margin="normal" error={!!touched && !!error} disabled={!!warning} fullWidth={fullWidth}>
+  <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
     <Input
       label={label}
       defaultValue={defaultValue}

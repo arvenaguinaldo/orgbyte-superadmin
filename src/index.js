@@ -29,7 +29,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import 'styles/base.scss';
 
-// import './styles/index.css';
+import './styles/index.scss';
 
 function startApp() {
 
