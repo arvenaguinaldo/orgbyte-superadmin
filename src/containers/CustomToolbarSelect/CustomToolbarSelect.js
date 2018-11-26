@@ -4,6 +4,7 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 
 import {fetchEdit} from 'redux/actions/edit';
+import {archive} from 'redux/actions/archive';
 
 import {withStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,6 +22,7 @@ class CustomToolbarSelect extends React.Component {
     classes: PropTypes.object.isRequired,
     selectedRows: PropTypes.object.isRequired,
     fetchEdit: PropTypes.func.isRequired,
+    archive: PropTypes.func.isRequired,
     dbTable: PropTypes.string.isRequired,
     data: PropTypes.array
   }
@@ -34,10 +36,14 @@ class CustomToolbarSelect extends React.Component {
   };
 
   handleDelete = () => {
-    const tableData = this.props.data;
-    const selectedData = this.props.selectedRows.data;
-    for (let i = this.props.selectedRows.data.length - 1; i >= 0; i -= 1) {
-      tableData.splice(selectedData[i].index, 1);
+    const {data, selectedRows, dbTable} = this.props;
+    const tableData = data;
+    for (let i = 0; i < this.props.selectedRows.data.length; i += 1) {
+      const selectedIndex = selectedRows.data[i].index;
+      const selectedId = tableData[selectedIndex]['id'];
+      console.log(selectedId);
+      this.props.archive({table: dbTable, id: selectedId});
+      // tableData.splice(selectedData[i].index, 1);
     }
   }
 
@@ -64,7 +70,12 @@ class CustomToolbarSelect extends React.Component {
   }
 }
 
-const withRedux = connect(null, {fetchEdit});
+const mapDispatchToProps = {
+  fetchEdit,
+  archive
+};
+
+const withRedux = connect(null, mapDispatchToProps);
 
 export default compose(
   withRedux,

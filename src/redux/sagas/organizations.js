@@ -7,6 +7,7 @@ import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
 import {EDIT} from 'constants/actions/edit';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -143,6 +144,10 @@ function* watchRequestSaveEdit() {
   yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOrganizations);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchOrganizations);
+}
+
 
 // function* watchRequestAddOrganizationUser() {
 //   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
@@ -156,6 +161,7 @@ export default function* organizations() {
     fork(watchRequestFetchOrganizationToUserSide),
     fork(watchRequestRenewOrganization),
     fork(watchRequestFetchSuspendedOrganizations),
-    fork(watchRequestSaveEdit)
+    fork(watchRequestSaveEdit),
+    fork(watchRequestArchive)
   ];
 }

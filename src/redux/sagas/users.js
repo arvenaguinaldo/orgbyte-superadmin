@@ -6,6 +6,7 @@ import {EDIT} from 'constants/actions/edit';
 import {push} from 'react-router-redux';
 import {reset} from 'redux-form';
 import {USERS} from 'constants/actions/users';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification} from './notification';
 import {callSuccessNotification} from './notification';
 
@@ -170,6 +171,14 @@ function* watchRequestSaveEditOfficers() {
   yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOfficers);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchMembers);
+}
+
+function* watchRequestArchiveUsers() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchUsers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -182,6 +191,8 @@ export default function* users() {
     fork(watchRequestSaveEdit),
     fork(watchRequestChangePassword),
     fork(watchRequestFetchOfficers),
-    fork(watchRequestSaveEditOfficers)
+    fork(watchRequestSaveEditOfficers),
+    fork(watchRequestArchive),
+    fork(watchRequestArchiveUsers)
   ];
 }
