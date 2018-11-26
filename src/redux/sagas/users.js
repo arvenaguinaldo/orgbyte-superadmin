@@ -166,6 +166,10 @@ function* watchRequestFetchOfficers() {
   yield* takeEvery(USERS.FETCH_OFFICERS, fetchOfficers);
 }
 
+function* watchRequestSaveEditOfficers() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOfficers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -177,6 +181,7 @@ export default function* users() {
     fork(watchRequestAddMembers),
     fork(watchRequestSaveEdit),
     fork(watchRequestChangePassword),
-    fork(watchRequestFetchOfficers)
+    fork(watchRequestFetchOfficers),
+    fork(watchRequestSaveEditOfficers)
   ];
 }

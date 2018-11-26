@@ -107,6 +107,15 @@ class EditForm extends React.Component {
                   </Field>
                 </Grid>
 
+                <Grid item xs={10} sm={10} md={4}>
+                  <Field
+                    name="position"
+                    component={renderTextField}
+                    label="Position"
+                    fullWidth
+                  />
+                </Grid>
+
               </Grid>
             </Grid>
           </Grid>

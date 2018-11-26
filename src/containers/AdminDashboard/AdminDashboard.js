@@ -4,6 +4,14 @@ import ChartistGraph from 'react-chartist';
 import Chartist from 'chartist';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectMembersList, makeSelectUsersMeta} from 'redux/selectors/users';
+import {fetchMembers} from 'redux/actions/users';
+import fetchInitialData from 'hoc/fetchInitialData';
+
 // @material-ui
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -21,9 +29,18 @@ import ListItemText from '@material-ui/core/ListItemText';
 import styles from './AdminDashboard.scss';
 
 class Dashboard extends Component {
+  static propTypes = {
+    members: PropTypes.array.isRequired
+  }
+
+  static defaultProps = {
+    members: []
+  };
   render() {
     const delays = 80;
     const durations = 500;
+    const {members} = this.props;
+    console.log(members);
     const data = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       series: [[12, 17, 7, 17, 23, 18, 38]]
@@ -277,4 +294,23 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = createStructuredSelector({
+  members: makeSelectMembersList(),
+  meta: makeSelectUsersMeta()
+});
+
+// const mapDispatchToProps = {
+//   fetchEvents
+// };
+
+const withRedux = connect(mapStateToProps, {fetchMembers});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchMembers();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData
+)(Dashboard);
+
