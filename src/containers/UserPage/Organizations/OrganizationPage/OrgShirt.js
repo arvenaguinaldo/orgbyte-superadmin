@@ -4,9 +4,9 @@ import {withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Center from 'react-center';
+import {Typography} from '@material-ui/core';
 
 const styles = {
   root: {
@@ -35,6 +35,9 @@ const styles = {
   details: {
     fontWeight: 'bold',
     fontSize: '20px'
+  },
+  name: {
+    fontWeight: 'bold'
   }
 };
 
@@ -42,7 +45,6 @@ function FolderList(props) {
   const {classes} = props;
   return (
     <div className={classes.root}>
-      <Typography variant="h5"> SWITS ORG SHIRT</Typography>
       <Grid container>
         <Grid item lg={8} md={8} sm={12} xs={12}>
           <div className={classes.image}>
@@ -52,16 +54,37 @@ function FolderList(props) {
         <Grid item lg={4} md={4} sm={12} xs={12}>
           <List>
             <ListItem>
-              <ListItemText primary="PRICE" />
-              <ListItemText primary="Php 250.00" className={classes.details} />
+              <ListItemText>
+                <Typography variant="h5" className={classes.name}>
+                  SWITS ORG SHIRT
+                </Typography>
+              </ListItemText>
             </ListItem>
             <ListItem>
-              <ListItemText
-                primary="DESCRIPTION"
-                secondary="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-"
-              />
+              <ListItemText>
+                <Typography variant="h6">
+                 PRICE
+                </Typography>
+              </ListItemText>
+              <ListItemText>
+                <Typography variant="h5" className={classes.name}>
+                 Php 250.00
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Typography variant="h6">
+                 DESCRIPTION
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Typography variant="subtitle2">
+                It is a long established fact that a reader will be distracted by the readable content of a page
+                </Typography>
+              </ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText primary="SIZE" />
