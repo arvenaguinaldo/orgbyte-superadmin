@@ -22,8 +22,8 @@ import {validate, warn} from 'utils/Validations/AddOrganization';
 import fetchInitialData from 'hoc/fetchInitialData';
 
 // Redux Material UI Forms
-import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
-import FileUpload from 'components/FileUpload/FileUpload';
+import {renderTextField, renderSelectField, renderDatePicker, renderInput, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+// import FileUpload from 'components/FileUpload/FileUpload';
 
 // material ui core
 import Stepper from '@material-ui/core/Stepper';
@@ -321,7 +321,15 @@ class AddOrganization extends Component {
 
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12} md={7}>
-                  <FileUpload paramName="file" maxFilesize={200} uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Upload a image" />
+                  <Field
+                    accept="image/jpeg, image/png"
+                    name="logo"
+                    type="file"
+                    component={renderInput}
+                    label="Upload a image"
+                    fullWidth
+                  />
+                  {/* <FileUpload paramName="logo" maxFilesize={200} uploadUrl="http://localhost:3000/organizations" label="Upload a image" /> */}
                 </Grid>
               </Grid>
             </Grid>
@@ -427,7 +435,7 @@ class AddOrganization extends Component {
                       SUBMIT
                       </SubmitButton>
                     ) : (
-                      <Button variant="contained" color="primary" onClick={this.handleNext} disabled={!valid}>
+                      <Button variant="contained" color="primary" onClick={this.handleNext} disabled={valid}>
                         Next
                       </Button>
                     )}

@@ -150,6 +150,7 @@ export const renderInput = (
         multiple
         type="file"
         style={{display: 'none'}}
+        onChange={event => input.onChange(event.files)}
         {...input}
         {...custom}
       />
