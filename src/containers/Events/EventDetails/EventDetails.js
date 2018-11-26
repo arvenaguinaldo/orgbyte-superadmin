@@ -212,21 +212,21 @@ class EventDetails extends Component {
                     {event.members === true ? (
                       <ListItem className={styles.nested}>
                         <Typography variant="subtitle1" className={styles.bold}>Members:</Typography>
-                        <ListItemText primary={<Typography variant="subtitle1">{event.members_price === null ? 'FREE' : event.members_price }</Typography>} />
+                        <ListItemText primary={<Typography variant="subtitle1">{event.members_price === null ? 'FREE' : 'Php ' + parseFloat(event.members_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }</Typography>} />
                       </ListItem>
                     ) : null}
 
                     {event.bulsuans === true ? (
                       <ListItem className={styles.nested}>
                         <Typography variant="subtitle1" className={styles.bold}>Bulsuans:</Typography>
-                        <ListItemText primary={<Typography variant="subtitle1">{event.bulsuans_price === null ? 'FREE' : event.bulsuans_price }</Typography>} />
+                        <ListItemText primary={<Typography variant="subtitle1">{event.bulsuans_price === null ? 'FREE' : 'Php ' + parseFloat(event.bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }</Typography>} />
                       </ListItem>
                     ) : null}
 
                     {event.non_bulsuans === true ? (
                       <ListItem className={styles.nested}>
                         <Typography variant="subtitle1" className={styles.bold}>Non - Bulsuans:</Typography>
-                        <ListItemText primary={<Typography variant="subtitle1">{event.non_bulsuans_price === null ? 'FREE' : event.non_bulsuans_price }</Typography>} />
+                        <ListItemText primary={<Typography variant="subtitle1">{event.non_bulsuans_price === null ? 'FREE' : 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }</Typography>} />
                       </ListItem>
                     ) : null}
                   </List>

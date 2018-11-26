@@ -146,6 +146,8 @@ function* saveEdit(action) {
       yield put(eventsActions.saveEditSuccess(response));
     } else {
       yield put(eventsActions.saveEditSuccess(response));
+      yield call(callSuccessNotification, 'Event Updated Successfully');
+      yield put(push('/admin/events/' + response.data.id));
     }
   }
 }

@@ -27,13 +27,6 @@ const styles = {
     backgroundColor: 'transparent',
     boxShadow: 'none'
   },
-  paper: {
-    marginTop: 10,
-    '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)',
-      borderRight: 'solid balck 2px'
-    }
-  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -68,10 +61,13 @@ const styles = {
     width: '100%'
   },
   paper2: {
+    width: '1200px',
+    height: '200px',
     margin: '5px',
     padding: '0px',
     '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
+      boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)',
+      cursor: 'pointer'
     }
   },
   butt: {
@@ -88,6 +84,46 @@ const styles = {
   title2: {
     paddingTop: 10,
     boxShadow: 'none'
+  },
+  CardMedia: {
+    height: '100%',
+    marginLeft: '5px',
+    objectFit: 'cover'
+  },
+  filter: {
+    padding: 30,
+    marginTop: 5
+  },
+  AnnouncementContent: {
+    height: '175px',
+    overflow: 'hidden',
+    marginLeft: '20px',
+    marginTop: '10px',
+    textAlign: 'justify'
+  },
+  Avatar: {
+    height: '100px',
+    width: '100px',
+    marginTop: '5px'
+  },
+  ColumnTitle: {
+    marginTop: '15px',
+    textAlign: 'center'
+  },
+  ColumnSubTitle: {
+    marginLeft: '33px'
+  },
+  RelativeTime: {
+    marginLeft: '1px',
+    marginTop: '40px',
+    textAlign: 'center'
+  },
+  timeAgoSpan: {
+    color: '#7e7e7e',
+    fontSize: 16
+  },
+  Content: {
+    marginTop: 25
   }
 };
 
@@ -110,32 +146,20 @@ class Announcements extends Component {
               <Link key={ann.id} to={'/announcements/' + ann.id}>
                 <Card className={classes.paper2} key={ann.id}>
                   <Grid container spacing={0}>
-                    <Grid item lg={2} md={4} sm={12} xs={12}>
-                      <Card className={classes.CardImage}>
-                        <CardMedia
-                          className={classes.CardMedia}
-                          image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                          title="Announcement"
-                        />
-                      </Card>
+                    <Grid item md={2} sm={12} xs={12}>
+                      <CardMedia
+                        className={classes.CardMedia}
+                        image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                        title="Announcement"
+                      />
                     </Grid>
-                    <Grid item lg={6} md={6} xs={12}>
+                    <Grid item md={8} sm={12} xs={12}>
                       <div className={classes.AnnouncementContent}>
                         <Typography variant="h6">
-                          {ann.title}
+                          {ann.title}  <span className={classes.timeAgoSpan}>( posted <TimeAgo date={ann.starts} formatter={formatter} /> ) </span>
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant="body1" className={classes.Content}>
                           {ann.content}
-                        </Typography>
-                      </div>
-                    </Grid>
-                    <Grid item lg={1} md={1} xs={12}>
-                      <div>
-                        <Typography variant="body1" className={classes.ColumnTitle}>
-                                   Activity
-                        </Typography>
-                        <Typography variant="caption" className={classes.RelativeTime}>
-                          <TimeAgo date={ann.starts} formatter={formatter} />
                         </Typography>
                       </div>
                     </Grid>

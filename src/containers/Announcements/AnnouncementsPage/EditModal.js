@@ -19,6 +19,7 @@ import RemoteSubmitButton from 'containers/RemoteSubmitButton/RemoteSubmitButton
 import {saveEdit} from 'redux/actions/edit';
 
 import EditForm from './EditForm';
+import styles from './Announcements.scss';
 
 class EditModal extends React.Component {
   static propTypes = {
@@ -47,7 +48,6 @@ class EditModal extends React.Component {
 
     return (
       <div>
-        {console.log(edit.formValues)}
         <Dialog
           open
           onClose={this.props.editModalClose}
@@ -56,7 +56,9 @@ class EditModal extends React.Component {
         >
           <DialogTitle id="form-dialog-title" disableTypography><Typography component="h3" variant="h4">Edit</Typography></DialogTitle>
           <DialogContent>
-            <EditForm initialValues={edit.formValues} onSubmit={this.handleSubmit} />
+            <div className={styles.Modal}>
+              <EditForm initialValues={edit.formValues} onSubmit={this.handleSubmit} data={edit.formValues} />
+            </div>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.props.editModalClose} color="primary">

@@ -13,7 +13,8 @@ import Grid from '@material-ui/core/Grid';
 
 class EditForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    data: PropTypes.object
   };
 
   state = {
@@ -36,7 +37,9 @@ class EditForm extends React.Component {
 
   render() {
     const {handleSubmit} = this.props;
-
+    console.log(this.props);
+    const starts = (this.props.data.starts);
+    const dateToday = this.state.dateToday;
 
     return (
       <div>
@@ -46,7 +49,7 @@ class EditForm extends React.Component {
 
               <Grid container spacing={40}>
 
-                <Grid item xs={10} sm={10} md={6} >
+                <Grid item xs={10} sm={10} md={4} >
                   <Field
                     name="title"
                     component={renderTextField}
@@ -54,18 +57,30 @@ class EditForm extends React.Component {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={10} sm={10} md={3} >
-                  <Field
-                    name="starts"
-                    component={renderDateTimePicker}
-                    label="Announcements Starts"
-                    selected={this.state.startsDate}
-                    onChange={this.handleStartsDateChange}
-                    minDate={moment().format('YYYY-MM-DD')}
-                    fullWidth
-                  />
+                <Grid item xs={10} sm={10} md={4} >
+                  {starts !== undefined && starts > dateToday ?
+                    (<Field
+                      name="starts"
+                      component={renderDateTimePicker}
+                      label="Announcements Starts"
+                      selected={this.state.startsDate}
+                      onChange={this.handleStartsDateChange}
+                      disablePast
+                      fullWidth
+                    />)
+                    :
+                    (<Field
+                      name="starts"
+                      component={renderDateTimePicker}
+                      label="Announcements Starts"
+                      selected={this.state.startsDate}
+                      onChange={this.handleStartsDateChange}
+                      fullWidth
+                      disabled
+                    />)
+                  }
                 </Grid>
-                <Grid item xs={10} sm={10} md={3} >
+                <Grid item xs={10} sm={10} md={4} >
                   <Field
                     name="ends"
                     component={renderDateTimePicker}

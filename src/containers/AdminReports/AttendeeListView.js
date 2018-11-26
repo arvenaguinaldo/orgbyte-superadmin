@@ -157,11 +157,11 @@ class AttendeeListView extends Component {
               attendee.student_number !== null ? attendee.student_number : 'N/A',
               attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name,
               attendee.email,
-              attendee.contact_number,
+              '+63' + attendee.contact_number,
               attendee.course_namee !== null ? attendee.course_namee : 'N/A',
               attendee.section && attendee.year_level !== null ? attendee.section && attendee.year_level + attendee.section + ' - G' + attendee.group : 'N/A',
               attendee.event_attendee_type_name,
-              this.getAmount(attendee.event_attendee_type_name, event)
+              'PHP' + parseFloat(this.getAmount(attendee.event_attendee_type_name, event)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
             ];
           })}
           columns={columns}
@@ -202,11 +202,11 @@ export class CustomToolbar extends Component {
       0: attendee.student_number !== null ? attendee.student_number : 'N/A',
       1: attendee.last_name + ',  ' + attendee.first_name + ' ' + attendee.middle_name,
       2: attendee.email,
-      3: attendee.contact_number,
+      3: '+63' + attendee.contact_number,
       4: attendee.course_namee !== null ? attendee.course_namee : 'N/A',
       5: attendee.section && attendee.year_level !== null ? attendee.section && attendee.year_level + attendee.section + ' - G' + attendee.group : 'N/A',
       6: attendee.event_attendee_type_name,
-      7: this.getAmount(attendee.event_attendee_type_name, event)
+      7: 'Php' + parseFloat(this.getAmount(attendee.event_attendee_type_name, event)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
     }));
 
     for (let i = 0; i < this.props.attendees.length; i += 1) {
@@ -276,11 +276,11 @@ export class CustomToolbar extends Component {
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {
         // 0: {columnWidth: 'auto'},
-        // 1: {columnWidth: 'auto'},
+        1: {columnWidth: 'auto'},
         // 2: {columnWidth: 'auto'},
         // 3: {columnWidth: 'auto'},
-        4: {columnWidth: 'auto'},
-        5: {columnWidth: 'auto'}
+        4: {columnWidth: 'auto'}
+        // 5: {columnWidth: 'auto'}
         // 6: {columnWidth: 'auto'},
         // 7: {columnWidth: 'auto'}
       },
@@ -289,7 +289,6 @@ export class CustomToolbar extends Component {
       },
       theme: 'grid',
       addPageContent() {
-        // HEADER
         doc.setFontSize(15);
         doc.text('Attendee List', 35, 275);
         doc.setFontSize(15);
@@ -304,16 +303,16 @@ export class CustomToolbar extends Component {
         doc.text('Non-Bulsuans: ' + nonbulsuans, 40, 235);
         doc.text('Total participants: ' + attendeecount, 40, 245);
         doc.text('Total price of tickets sold: Php ' + total, 40, 255);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
+        // HEADER
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/9MypYC78/CICT.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
         const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -332,6 +331,12 @@ export class CustomToolbar extends Component {
 
       }
     });
+    // COUNT AT END OF TABLE
+    const totalrecords = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + totalrecords, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }

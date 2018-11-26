@@ -268,9 +268,9 @@ class EventList extends Component {
             return [
               event.name,
               event.venue,
-              event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString('us', {maximumFractionDigits: 2}) : 'NO PRICE',
-              event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString('us') : 'NO PRICE',
-              event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString('us') : 'NO PRICE',
+              event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
+              event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
+              event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
               moment(event.starts).format('MMM DD YYYY'),
               moment(event.ends).format('MMM DD YYYY'),
               event.nature_of_event.toUpperCase(),
@@ -307,9 +307,9 @@ export class CustomToolbar extends Component {
     const data = this.props.events.filter(event => this.timePeriod(event.ends)).map(event => ({
       0: event.name,
       1: event.venue,
-      2: event.members_price !== null ? event.members_price : 'no price available',
-      3: event.bulsuans_price !== null ? event.bulsuans_price : 'no price available',
-      4: event.non_bulsuans_price !== null ? event.non_bulsuans_price : 'no price available',
+      2: event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
+      3: event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
+      4: event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
       5: moment(event.starts).format('MMM DD YYYY'),
       6: moment(event.ends).format('MMM DD YYYY'),
       7: event.nature_of_event,
@@ -380,18 +380,18 @@ export class CustomToolbar extends Component {
       theme: 'grid',
       addPageContent() {
         // HEADER
-        doc.setFontSize(15);
-        doc.text(tabletitle, 35, 190);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/9MypYC78/CICT.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
         const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
+
+        doc.setFontSize(15);
+        doc.text('Events List', 35, 190);
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -410,6 +410,12 @@ export class CustomToolbar extends Component {
 
       }
     });
+    // COUNT AT END OF TABLE
+    const total = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + total, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }

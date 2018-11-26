@@ -5,6 +5,10 @@ import JsPDF from 'jspdf';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -21,11 +25,12 @@ class ViewModal extends React.Component {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func,
     members: PropTypes.array.isRequired,
-    id: PropTypes.number
-    // organization: PropTypes.object
+    id: PropTypes.number,
+    organization: PropTypes.object
   };
-  onGenerateId = (member, id) => {
-    // const {organization} = this.props;
+  onGenerateId = (e, member, id) => {
+    const {organization} = this.props;
+    e.preventDefault();
     console.log(id);
     const qrcode = require('yaqrcode');
     const base64 = qrcode(id);
@@ -37,25 +42,25 @@ class ViewModal extends React.Component {
     doc.addImage(idtemplate, 'PNG', 0, 0, width, height);
 
     // Student Name
-    // doc.setFontSize(150);
-    // doc.setTextColor('#1F1F1F');
-    // doc.text(member.first_name.toUpperCase() + ' ' + member.last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
+    doc.setFontSize(150);
+    doc.setTextColor('#1F1F1F');
+    doc.text(member.first_name.toUpperCase() + ' ' + member.last_name.toUpperCase(), width / 2, 1423, null, null, 'center');
 
-    // // Student Number
-    // doc.setFontSize(150);
-    // doc.setTextColor('#1F1F1F');
-    // doc.text(member.student_number, width / 2, 1560, null, null, 'center');
+    // Student Number
+    doc.setFontSize(150);
+    doc.setTextColor('#1F1F1F');
+    doc.text(member.student_number, width / 2, 1560, null, null, 'center');
 
-    // // Organization Name
-    // doc.setFontSize(125);
-    // doc.setTextColor('#1F1F1F');
-    // const organizationName = doc.splitTextToSize(organization.name, 1750);
-    // doc.text(organizationName, width / 2, 1671, null, null, 'center');
+    // Organization Name
+    doc.setFontSize(125);
+    doc.setTextColor('#1F1F1F');
+    const organizationName = doc.splitTextToSize(organization.name, 1750);
+    doc.text(organizationName, width / 2, 1671, null, null, 'center');
 
     doc.addImage(base64, 'GIF', 625, 2019, 785, 785);
     doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 930, 2320, 200, 200); // LEFT IMAGE
 
-    doc.output('datauristring'); // Display in iframe
+    doc.save(member.first_name.toUpperCase() + member.last_name.toUpperCase() + 'MembershipID'); // Display in iframe
     // const membershipId = membershipIdURI.substring(28);
 
     // return membershipId;
@@ -123,7 +128,7 @@ class ViewModal extends React.Component {
                   </Grid>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.onGenerateId(member, member.student_number)} color="primary" autoFocus>
+                  <Button onClick={e => this.onGenerateId(e, member, member.student_number)} color="primary" autoFocus>
                     Download
                   </Button>
                 </DialogActions>
@@ -137,5 +142,13 @@ class ViewModal extends React.Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  organization: makeSelectCurrentOrganization()
+});
 
-export default withMobileDialog()(ViewModal);
+const withRedux = connect(mapStateToProps);
+
+export default compose(
+  withRedux,
+  withMobileDialog()
+)(ViewModal);

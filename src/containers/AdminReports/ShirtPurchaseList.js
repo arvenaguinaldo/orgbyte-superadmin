@@ -13,7 +13,7 @@ import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectUsersMeta} from 'redux/selectors/users';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
-
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 import {makeSelectShirtPurchaseShirts} from 'redux/selectors/shirts';
 import {fetchPurchaseShirts} from 'redux/actions/shirts';
 
@@ -23,6 +23,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
+
 
 // import myStyles from './Announcements.scss';
 
@@ -109,6 +110,7 @@ class ShirtPurchaseList extends Component {
 
 static propTypes = {
   purchasedShirts: PropTypes.array.isRequired,
+  organization: PropTypes.object,
   user: PropTypes.object.isRequired
 }
 
@@ -117,7 +119,7 @@ static defaultProps = {
 };
 
 render() {
-  const {purchasedShirts, user} = this.props;
+  const {purchasedShirts, user, organization} = this.props;
   const options = {
     selectableRows: false,
     rowsPerPage: 5,
@@ -127,7 +129,7 @@ render() {
     print: false,
     customToolbar: () => {
       return (
-        <CustomToolbar purchasedShirts={purchasedShirts} user={user} />
+        <CustomToolbar purchasedShirts={purchasedShirts} user={user} organization={organization} />
       );
     },
     onTableChange: (action, tableState) => {
@@ -168,7 +170,7 @@ render() {
             shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
             shirt.size,
             shirt.year_level + shirt.section + ' - G' + shirt.group,
-            shirt.contact_number,
+            '+63' + shirt.contact_number,
             shirt.email
           ];
         })}
@@ -182,6 +184,7 @@ render() {
 export class CustomToolbar extends Component {
   static propTypes = {
     purchasedShirts: PropTypes.array.isRequired,
+    organization: PropTypes.object,
     user: PropTypes.object.isRequired
   };
   printData = () => {
@@ -190,7 +193,7 @@ export class CustomToolbar extends Component {
       1: shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
       2: shirt.size,
       3: shirt.year_level + shirt.section + ' - G' + shirt.group,
-      4: shirt.contact_number,
+      4: '+63' + shirt.contact_number,
       5: shirt.email
     }));
 
@@ -231,9 +234,8 @@ export class CustomToolbar extends Component {
       title: 'Shirts Purchase Table'
     });
     doc.page = 1;
-    // const orgname = this.props.members[0].organization_name;
+    const orgname = this.props.organization.name;
     const username = this.props.user.first_name + ' ' + this.props.user.last_name;
-    const orgname = 'Society for the Welfare of Information Technology Students static';
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
@@ -252,19 +254,18 @@ export class CustomToolbar extends Component {
       },
       theme: 'grid',
       addPageContent() {
-        // HEADER
         doc.setFontSize(15);
         doc.text('Shirt Purchase List', 35, 190);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
+        // HEADER
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/9MypYC78/CICT.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
         const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -282,6 +283,12 @@ export class CustomToolbar extends Component {
         doc.text(pdfdate, 10, pageHeight - 10);
       }
     });
+    // COUNT AT END OF TABLE
+    const totalrecords = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + totalrecords, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }
@@ -304,6 +311,7 @@ export class CustomToolbar extends Component {
 const mapStateToProps = createStructuredSelector({
   purchasedShirts: makeSelectShirtPurchaseShirts(),
   user: makeSelectCurrentUser(),
+  organization: makeSelectCurrentOrganization(),
   meta: makeSelectUsersMeta()
 });
 

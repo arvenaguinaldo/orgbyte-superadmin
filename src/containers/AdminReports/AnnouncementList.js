@@ -222,8 +222,8 @@ class AnnouncementsPage extends Component {
           data={this.props.announcements.filter(announcement => this.timePeriod(announcement.starts, announcement.ends)).map((announcement) => {
             return [
               announcement.title,
-              moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-              moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+              moment(announcement.starts).format('MMMM DD YYYY, h:mm a'),
+              moment(announcement.ends).format('MMMM DD YYYY, h:mm a')
             ];
           })}
           columns={columns}
@@ -254,8 +254,8 @@ export class CustomToolbar extends Component {
   printData = () => {
     const data = this.props.announcements.filter(announcement => this.timePeriod(announcement.starts)).map(announcement => ({
       0: announcement.title,
-      1: moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-      2: moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+      1: moment(announcement.starts).format('MMMM DD YYYY, h:mm a'),
+      2: moment(announcement.ends).format('MMMM DD YYYY, h:mm a')
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -300,7 +300,7 @@ export class CustomToolbar extends Component {
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
-      styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 6},
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {0: {columnWidth: 'auto'}},
       alternateRowStyles: {
@@ -309,18 +309,18 @@ export class CustomToolbar extends Component {
       theme: 'grid',
       addPageContent() {
         // HEADER
-        doc.setFontSize(15);
-        doc.text(tabletitle, 35, 190);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/9MypYC78/CICT.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
         const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
+
+        doc.setFontSize(15);
+        doc.text('Announcement List', 35, 190);
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -338,6 +338,12 @@ export class CustomToolbar extends Component {
         doc.text(pdfdate, 10, pageHeight - 10);
       }
     });
+    // COUNT AT END OF TABLE
+    const total = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + total, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }
