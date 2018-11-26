@@ -5,6 +5,7 @@ import * as eventsService from 'services/api/events';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EVENTS} from 'constants/actions/events';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -212,6 +213,10 @@ function* watchRequestPublish() {
   yield* takeEvery(EVENTS.PUBLISH, publish);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchEvents);
+}
+
 export default function* events() {
   yield [
     fork(watchRequest),
@@ -225,6 +230,7 @@ export default function* events() {
     fork(watchRequestRegisterImports),
     fork(watchRequestFetchWhoAttend),
     fork(watchRequestSaveEdit),
-    fork(watchRequestPublish)
+    fork(watchRequestPublish),
+    fork(watchRequestArchive)
   ];
 }

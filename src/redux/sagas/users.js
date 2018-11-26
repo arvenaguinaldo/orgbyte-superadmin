@@ -165,6 +165,10 @@ function* watchRequestArchive() {
   yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchMembers);
 }
 
+function* watchRequestArchiveUsers() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchUsers);
+}
+
 export default function* users() {
   yield [
     fork(watchRequest),
@@ -176,6 +180,7 @@ export default function* users() {
     fork(watchRequestAddMembers),
     fork(watchRequestChangePassword),
     fork(watchRequestFetchOfficers),
-    fork(watchRequestArchive)
+    fork(watchRequestArchive),
+    fork(watchRequestArchiveUsers)
   ];
 }
