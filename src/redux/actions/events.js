@@ -109,3 +109,14 @@ export const saveEditSuccess = response => ({
   type: EVENTS.SAVE_EDIT_SUCCESS,
   response
 });
+
+export const publish = params => ({
+  type: EVENTS.PUBLISH,
+  params
+});
+
+export const publishSuccess = response => ({
+  type: EVENTS.PUBLISH_SUCCESS,
+  response
+});
+

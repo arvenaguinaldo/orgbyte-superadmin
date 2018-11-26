@@ -5,6 +5,7 @@ import * as smssService from 'services/api/sms';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {SMSS} from 'constants/actions/sms';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -60,10 +61,15 @@ function* watchRequestCreateSms() {
   yield* takeEvery(SMSS.CREATE_SMS, createSms);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchSmss);
+}
+
 export default function* smss() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchSms),
-    fork(watchRequestCreateSms)
+    fork(watchRequestCreateSms),
+    fork(watchRequestArchive)
   ];
 }
