@@ -13,6 +13,7 @@ import Announcement from '@material-ui/icons/Announcement';
 import Org from '@material-ui/icons/AccountBoxRounded';
 import Event from '@material-ui/icons/Event';
 import {SocialIcon} from 'react-social-icons';
+import {Link} from 'react-router-dom';
 import 'typeface-roboto';
 
 const styles = theme => ({
@@ -24,14 +25,16 @@ const styles = theme => ({
   },
   text: {
     color: 'white',
-    padding: 0
+    padding: 0,
+    fontWeight: 'bold'
   },
   content: {
     color: 'white',
-    fontSize: '10px'
+    fontWeight: 'none'
   },
   gridrightcont: {
-    height: '30%'
+    height: '30%',
+    paddingTop: '20px'
   },
   gridRIght: {
     paddingLeft: 10,
@@ -58,70 +61,82 @@ class Footer extends Component {
                           <Typography variant="overline" className={classes.text}>Orgbyte</Typography>
                         </ListItem>
 
-                        <ListItem button>
-                          <ListItemIcon>
-                            <Home />
-                          </ListItemIcon>
-                          <Typography variant="caption" className={classes.text}>Home</Typography>
-                        </ListItem>
+                        <Link to={''}>
+                          <ListItem button>
+                            <ListItemIcon>
+                              <Home />
+                            </ListItemIcon>
+                            <Typography variant="caption" className={classes.text}>Home</Typography>
+                          </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                          <ListItemIcon>
-                            <Announcement />
-                          </ListItemIcon>
-                          <Typography variant="caption" className={classes.text}>Announcement</Typography>
-                        </ListItem>
+                        <Link to={'/announcements'}>
+                          <ListItem >
+                            <ListItemIcon>
+                              <Announcement />
+                            </ListItemIcon>
+                            <Typography variant="caption" className={classes.text}>Announcement</Typography>
+                          </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                          <ListItemIcon>
-                            <Org />
-                          </ListItemIcon>
-                          <Typography variant="caption" className={classes.text}>Organization</Typography>
-                        </ListItem>
+                        <Link to={'/organizations'}>
+                          <ListItem button>
+                            <ListItemIcon>
+                              <Org />
+                            </ListItemIcon>
+                            <Typography variant="caption" className={classes.text}>Organization</Typography>
+                          </ListItem>
+                        </Link>
 
-                        <ListItem button>
-                          <ListItemIcon>
-                            <Event />
-                          </ListItemIcon>
-                          <Typography variant="caption" className={classes.text}>Event</Typography>
-                        </ListItem>
+                        <Link to={'/events'}>
+                          <ListItem button>
+                            <ListItemIcon>
+                              <Event />
+                            </ListItemIcon>
+                            <Typography variant="caption" className={classes.text}>Event</Typography>
+                          </ListItem>
+                        </Link>
                       </List>
                     </Grid>
 
 
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                       <List component="nav">
-                        <ListItem button>
-                          <Typography variant="overline" className={classes.text}>Follow Us</Typography>
-                        </ListItem>
-                        <ListItem button>
-                          <ListItemIcon>
-                            <SocialIcon network="facebook" color="#171717" style={{height: 25, width: 25}} />
-                          </ListItemIcon>
-                          <Typography variant="caption" className={classes.text}>Facebook</Typography>
-                        </ListItem>
+                        <a href="https://web.facebook.com/ORGBYTE">
+                          <ListItem button>
+                            <Typography variant="overline" className={classes.text}>Follow Us</Typography>
+                          </ListItem>
+                          <ListItem button>
+                            <ListItemIcon>
+                              <SocialIcon network="facebook" color="#171717" style={{height: 25, width: 25}} />
+                            </ListItemIcon>
+                            <Typography variant="caption" className={classes.text}>Facebook</Typography>
+                          </ListItem>
+                        </a>
                       </List>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12} className={classes.gridRight}>
-                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
-                    <Typography variant="overline" className={classes.text}> About Us </Typography>
-                    <Typography variant="caption" component="p" className={classes.content}>OrgByte is a non-profit group that aims for the betterment of students and organizations in Bulacan State University. No officials or members of this university is neglected upon the formulation of this project. We are open for suggestions on how we can make our project better.</Typography>
-                  </Grid>
+                  <Grid container>
+                    <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                      <Typography variant="caption" className={classes.text}> About Us </Typography>
+                      <Typography variant="caption" component="p" className={classes.content}>OrgByte is a non-profit group that aims for the betterment of students and organizations in Bulacan State University. No officials or members of this university is neglected upon the formulation of this project. We are open for suggestions on how we can make our project better.</Typography>
+                    </Grid>
 
-                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
-                    <Typography variant="overline" className={classes.text}> Contact Us </Typography>
-                    <Typography variant="caption" component="p" className={classes.content}>You may email us at orgbyte@gmail.com or through our telephone number (044) 794-2468 for your queries and suggestions. You may also like our facebook page facebook/orgbyte for more updates and details.</Typography>
-                  </Grid>
+                    <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                      <Typography variant="caption" className={classes.text}> Contact Us </Typography>
+                      <Typography variant="caption" component="p" className={classes.content}>You may email us at orgbyte@gmail.com or through our telephone number (044) 794-2468 for your queries and suggestions. You may also like our facebook page facebook/orgbyte for more updates and details.</Typography>
+                    </Grid>
 
-                  <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
-                    <Typography variant="overline" className={classes.text}> Location  </Typography>
-                    <Typography variant="caption" component="pre" className={classes.content}>0421 (APT 4) P. Mabini St. Barihan, Malolos City, 3000, Bulacan
+                    <Grid item lg={12} md={12} sm={12} xs={12} className={classes.gridrightcont}>
+                      <Typography variant="caption" className={classes.text}> Location  </Typography>
+                      <Typography variant="caption" component="pre" className={classes.content}>0421 (APT 4) P. Mabini St. Barihan, Malolos City, 3000, Bulacan
 © OrgByte | All rights reserved 2018
-                    </Typography>
-                  </Grid>
+                      </Typography>
+                    </Grid>
 
+                  </Grid>
                 </Grid>
               </Grid>
             </Center>

@@ -22,6 +22,7 @@ import {compose} from 'recompose';
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 import Announcement from './Announcements';
 import Event from './Events';
+import OrgShirt from './OrgShirt';
 import styles from './OrganizationProfile.scss';
 
 function TabContainer({children, dir}) {
@@ -168,7 +169,9 @@ class OrganizationProfile extends Component {
                   <TabContainer dir={theme.direction}>
                     <Event />
                   </TabContainer>
-                  <TabContainer dir={theme.direction}>Item Three</TabContainer>
+                  <TabContainer dir={theme.direction}>
+                    <OrgShirt />
+                  </TabContainer>
                 </SwipeableViews>
               </div>
             </Grid>
