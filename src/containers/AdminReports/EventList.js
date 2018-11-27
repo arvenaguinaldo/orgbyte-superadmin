@@ -364,15 +364,15 @@ export class CustomToolbar extends Component {
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {
         // 0: {columnWidth: 'auto'},
-        1: {columnWidth: 'auto'},
-        // 2: {columnWidth: 'auto'},
-        // 3: {columnWidth: 'auto'},
-        // 4: {columnWidth: 'auto'},
+        // 1: {columnWidth: 'auto'},
+        2: {columnWidth: 'auto'},
+        3: {columnWidth: 'auto'},
+        4: {columnWidth: 'auto'},
         5: {columnWidth: 'auto'},
-        6: {columnWidth: 'auto'},
+        6: {columnWidth: 'auto'}
         // 7: {columnWidth: 'auto'},
         // 8: {columnWidth: 'auto'},
-        9: {columnWidth: 'auto'}
+        // 9: {columnWidth: 'auto'}
       },
       alternateRowStyles: {
         fillColor: [220, 220, 220]

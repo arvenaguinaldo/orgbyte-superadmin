@@ -122,6 +122,7 @@ class OrganizationList extends Component {
 
   render() {
     const {organizations} = this.props;
+    console.log(organizations);
     const options = {
       selectableRows: false,
       rowsPerPage: 5,

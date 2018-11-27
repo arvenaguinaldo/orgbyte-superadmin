@@ -10,10 +10,16 @@ import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import MUIDataTable from 'mui-datatables';
-import Button from '@material-ui/core/Button';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import View from '@material-ui/icons/Visibility';
+import ViewModal from './ViewModal';
+
+import style from './OrganizationList.scss';
+
 
 class OrganizationTable extends React.Component {
   static propTypes = {
@@ -25,7 +31,6 @@ class OrganizationTable extends React.Component {
   };
 
   state = {
-    open: false,
     columns: [
       {
         name: 'Id',
@@ -80,27 +85,31 @@ class OrganizationTable extends React.Component {
         name: 'View',
         options: {
           filter: false,
-          customBodyRender: () => {
+          sort: false,
+          customBodyRender: (value) => {
             return (
-              <Button
-                color="primary"
-                variant="contained"
-                mini
-                style={{fontSize: '11px'}}
-                onClick={this.handleClickOpen}
-              > View </Button>
+              <Tooltip title={'View Member'}>
+                <IconButton onClick={e => this.handleModal(e, value)} className={style.ViewIcon}>
+                  <View />
+                </IconButton>
+              </Tooltip>
             );
           }
         }
       }
     ],
-    dbTable: 'organizations'
+    dbTable: 'organizations',
+    open: false,
+    id: 0
   };
-  handleClickOpen = () => {
-    this.setState({open: true});
-    console.log(this.state);
+  handleModal =(e, value) => {
+    // e.preventDefault();
+    console.log(value);
+    this.setState({open: true, id: value});
   };
-
+  handleClose = () => {
+    this.setState({open: false});
+  };
   render() {
     const {columns, dbTable} = this.state;
     const {organizations} = this.props;
@@ -123,6 +132,7 @@ class OrganizationTable extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
+        <ViewModal open={this.state.open} id={this.state.id} handleClose={this.handleClose.bind(this)} organizations={organizations} />
         <MUIDataTable
           title={'Organization List'}
           data={organizations.map((org) => {
@@ -135,7 +145,7 @@ class OrganizationTable extends React.Component {
               org.college_name,
               org.organization_type_name,
               org.status,
-              org.status
+              org.id
             ];
           })}
           columns={columns}

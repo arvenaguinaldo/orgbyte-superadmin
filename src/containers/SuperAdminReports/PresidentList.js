@@ -172,7 +172,7 @@ export class CustomToolbar extends Component {
       1: president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
       2: president.organization_name,
       3: president.email,
-      4: '+63' + president.contact_numberr
+      4: '+63' + president.contact_number
     }));
 
     const columnsWithKey = columns.map((col, index) => {
