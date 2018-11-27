@@ -13,7 +13,7 @@
   margin-top: 50px;
   margin-bottom: 50px;
   position: relative;
-  border-bottom: solid 3px #60100b;
+  border-bottom: solid 3px #bdbdbd;
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -53,10 +53,9 @@
 
 .RelativeTime {
   position: absolute;
-  top: 50%;
+  margin-top: 5px;
 }
 
 .Title {
-  position: absolute;
   top: 0;
 }

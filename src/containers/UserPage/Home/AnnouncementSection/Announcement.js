@@ -66,12 +66,12 @@ class Announcements extends Component {
                             <Grid item md={8} sm={8} xs={8}>
                               <div className={style.AnnouncementDetails}>
                                 <div className={style.Title}>
-                                  <Typography variant="h5">
+                                  <Typography variant="h5" component="p">
                                     {ann.title}
                                   </Typography>
                                 </div>
                                 <div className={style.RelativeTime}>
-                                  <Typography variant="h5" color="textSecondary">
+                                  <Typography variant="subtitle1" color="textSecondary" component="p">
                                     <TimeAgo date={ann.starts} formatter={formatter} />
                                   </Typography>
                                 </div>

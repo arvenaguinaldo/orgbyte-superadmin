@@ -17,6 +17,9 @@ import {createStructuredSelector} from 'reselect';
 import {makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvent} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
+import {Player} from 'video-react';
+
+import 'video-react/dist/video-react.css';
 
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
@@ -36,7 +39,12 @@ const styles = {
   },
   ImageDiv: {
     border: '3px solid #f1f1f1',
+<<<<<<< HEAD
     transform: 'translate(0%, 100%)',
+=======
+    transform: 'translate(0%, -100%)',
+    position: 'absolute',
+>>>>>>> develop
     zIndex: '2',
     width: '100%',
     height: '400px',
@@ -235,9 +243,15 @@ class EventPage extends Component {
 
                       <CardContent>
                         <Typography className={classes.title} gutterBottom>
-                             Directions
+                             Video
                         </Typography>
-                        <Card className={classes.Map} />
+                        <Card className={classes.Map}>
+                          <Player
+                            playsInline
+                            poster="/assets/poster.png"
+                            src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+                          />
+                        </Card>
                       </CardContent>
                     </Grid>
 
