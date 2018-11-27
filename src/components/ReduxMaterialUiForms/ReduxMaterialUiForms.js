@@ -139,24 +139,6 @@ export const renderDateTimePicker = (
   </FormControl>
 );
 
-// const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
-const handleChange = handler => ({target: {files}}) =>
-  handler(files.length ? {file: files[0], name: files[0].name} : {});
-
-export const UploadFile = ({
-  input: {onChange, onBlur, value: omitValue, ...inputProps}, // eslint-disable-line react/prop-types
-  meta: omitMeta, // eslint-disable-line react/prop-types
-  ...props
-}) => (
-  <input
-    type="file"
-    onChange={handleChange(onChange)}
-    onBlur={handleChange(onBlur)}
-    {...inputProps}
-    {...props}
-  />
-);
-
 export const renderInput = (
   {input, label, fullWidth, accept, className, meta: {touched, error}, ...custom}, // eslint-disable-line react/prop-types
 ) => (
@@ -168,8 +150,6 @@ export const renderInput = (
         id="contained-button-file"
         type="file"
         style={{display: 'none'}}
-        onChange={handleChange(input.onChange)}
-        onBlur={handleChange(input.onBlur)}
         {...custom}
       />
       <label htmlFor="contained-button-file">

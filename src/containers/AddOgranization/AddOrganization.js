@@ -332,22 +332,6 @@ class AddOrganization extends Component {
 
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={7}>
-                    {/* <Field component={UploadFile} name="logo" /> */}
-                    {/* <Field component={UploadFile} name="logo" /> */}
-                    {/* <Field
-                      accept="image/jpeg, image/png"
-                      name="logo"
-                      type="file"
-                      component={renderInput}
-                      label="Upload a image"
-                      fullWidth
-                    /> */}
-                    {/* <Dropzone
-                      onDrop={this.onDrop}
-                      onFileDialogCancel={this.onCancel}
-                    >
-                      <p>Try dropping some files here, or click to select files to upload.</p>
-                    </Dropzone> */}
                     <FileUpload
                       paramName="logo"
                       maxFilesize={200}
