@@ -27,3 +27,11 @@ export const verifyMember = (params) => {
 export const addMembers = (params) => {
   return api.callPost('/members/add_members', params);
 };
+
+export const changePassword = (params) => {
+  return api.callPut('/users/change_password', params);
+};
+
+export const fetchOfficers = () => {
+  return api.callGet('/users/officers');
+};

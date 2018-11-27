@@ -171,6 +171,36 @@ const events = (state = initialState, action) => {
       }));
     }
 
+    case EVENTS.SAVE_EDIT: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case EVENTS.SAVE_EDIT_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case EVENTS.PUBLISH: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: false
+      }));
+    }
+    case EVENTS.PUBLISH_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        event: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

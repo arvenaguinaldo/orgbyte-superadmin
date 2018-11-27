@@ -1,9 +1,3 @@
-.bottomButton {
-  position: relative;
-  right: 5px;
-  top: 30px;
-}
-
 .grid {
   background-color: aqua;
 }
@@ -21,4 +15,18 @@
   position: absolute;
   padding: 5px;
   right: 25px;
+}
+
+.addbutton {
+  margin: 20px;
+}
+
+.bottomButton {
+  position: absolute;
+  bottom: -30px;
+  right: 40px;
+}
+
+.cancelButton {
+  margin: 5px;
 }

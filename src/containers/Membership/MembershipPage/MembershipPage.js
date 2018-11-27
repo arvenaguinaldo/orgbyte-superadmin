@@ -14,7 +14,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-import CustomToolbar from './CustomToolbarSelect';
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 import style from './MembershipPage.scss';
 
@@ -28,7 +28,8 @@ class MembershipPage extends React.Component {
   };
 
   state = {
-    columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Address']
+    columns: ['Student No.', 'Name', 'Section', 'Contact Number', 'Email', 'Address'],
+    dbTable: 'members'
   };
 
   changeStuff(newcolumns) {
@@ -37,7 +38,7 @@ class MembershipPage extends React.Component {
 
   render() {
     const {members} = this.props;
-    const {columns} = this.state;
+    const {columns, dbTable} = this.state;
     const options = {
       filter: true,
       selectableRows: true,
@@ -45,7 +46,13 @@ class MembershipPage extends React.Component {
       responsive: 'stacked',
       rowsPerPage: 5,
       resizableColumns: false,
-      customToolbarSelect: selectedRows => <CustomToolbar selectedRows={selectedRows} data={this.state.data} changeHandler={this.changeStuff.bind(this)} columns={this.state.columns} />
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={members}
+          columns={this.state.columns}
+        />)
     };
     return (
       <LayoutWithTopbarAndSidebar>

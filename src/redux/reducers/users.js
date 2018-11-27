@@ -4,6 +4,7 @@ import {fromJS} from 'immutable';
 const initialState = fromJS({
   list: [],
   presidents: [],
+  officers: [],
   members: [],
   isVerified: false,
   meta: {
@@ -84,6 +85,7 @@ const users = (state = initialState, action) => {
     case USERS.ADD_USER_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
+        officers: data,
         list: data,
         meta: {
           loading: false
@@ -123,6 +125,34 @@ const users = (state = initialState, action) => {
       }));
     }
 
+    case USERS.CHANGE_PASSWORD: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+
+    case USERS.CHANGE_PASSWORD_SUCCESS: {
+      return state.merge(fromJS({
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case USERS.FETCH_OFFICERS: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case USERS.FETCH_OFFICERS_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        officers: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
 
     default:
       return state;

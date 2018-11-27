@@ -263,7 +263,7 @@ class GenerateCertificate extends Component {
                 <Grid container spacing={40}>
                   <Grid item xs={12} sm={12} md={9}>
                     <input
-                      accept="image/jpeg"
+                      accept="image/jpeg, image/png"
                       style={{display: 'none'}}
                       id="contained-button-file"
                       multiple

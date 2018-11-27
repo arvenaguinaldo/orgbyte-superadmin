@@ -5,6 +5,7 @@ import * as eventsService from 'services/api/events';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EVENTS} from 'constants/actions/events';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -138,6 +139,30 @@ function* fetchWhoAttend(action) {
   }
 }
 
+function* saveEdit(action) {
+  const response = yield call(eventsService.saveEdit, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.saveEditSuccess(response));
+    } else {
+      yield put(eventsActions.saveEditSuccess(response));
+    }
+  }
+}
+
+function* publish(action) {
+  const response = yield call(eventsService.publish, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(eventsActions.publishSuccess(response));
+    } else {
+      yield put(eventsActions.publishSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -180,6 +205,17 @@ function* watchRequestFetchWhoAttend() {
   yield* takeEvery(EVENTS.FETCH_WHO_ATTEND, fetchWhoAttend);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EVENTS.SAVE_EDIT, saveEdit);
+}
+
+function* watchRequestPublish() {
+  yield* takeEvery(EVENTS.PUBLISH, publish);
+}
+
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchEvents);
+}
 
 export default function* events() {
   yield [
@@ -192,6 +228,9 @@ export default function* events() {
     fork(watchRequestAttend),
     fork(watchRequestSettlePayment),
     fork(watchRequestRegisterImports),
-    fork(watchRequestFetchWhoAttend)
+    fork(watchRequestFetchWhoAttend),
+    fork(watchRequestSaveEdit),
+    fork(watchRequestPublish),
+    fork(watchRequestArchive)
   ];
 }

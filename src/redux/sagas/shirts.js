@@ -5,6 +5,7 @@ import * as shirtsService from 'services/api/shirts';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {SHIRTS} from 'constants/actions/shirts';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -120,6 +121,10 @@ function* watchRequestPurchaseImports() {
   yield* takeEvery(SHIRTS.PURCHASE_IMPORTS, purchaseImports);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchPurchaseShirts);
+}
+
 export default function* shirts() {
   yield [
     fork(watchRequest),
@@ -127,6 +132,7 @@ export default function* shirts() {
     fork(watchRequestfetchSizes),
     fork(watchRequestPurchaseShirt),
     fork(watchRequestFetchPurchaseShirts),
-    fork(watchRequestPurchaseImports)
+    fork(watchRequestPurchaseImports),
+    fork(watchRequestArchive)
   ];
 }

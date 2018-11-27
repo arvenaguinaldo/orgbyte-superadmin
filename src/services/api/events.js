@@ -39,3 +39,13 @@ export const registerImports = (params) => {
 export const fetchWhoAttend = (params) => {
   return api.callGet('/event_attendees/fetch_who_attend/' + params);
 };
+
+export const saveEdit = (params) => {
+  return api.callPut('/events/' + params.id, params.values);
+};
+
+export const publish = (params) => {
+  console.log(params);
+  return api.callPut('/events/publish', params);
+};
+

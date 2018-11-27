@@ -5,6 +5,7 @@ import * as emailsService from 'services/api/emails';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EMAILS} from 'constants/actions/emails';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callInfoNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -79,11 +80,16 @@ function* watchRequestSendCertificate() {
   yield* takeEvery(EMAILS.SEND_CERTIFICATE, sendCertificate);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchEmails);
+}
+
 export default function* emails() {
   yield [
     fork(watchRequest),
     fork(watchRequestFetchEmail),
     fork(watchRequestCreateEmail),
-    fork(watchRequestSendCertificate)
+    fork(watchRequestSendCertificate),
+    fork(watchRequestArchive)
   ];
 }

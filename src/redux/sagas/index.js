@@ -14,6 +14,7 @@ import emails from './emails';
 import renewal from './renewal';
 import sms from './sms';
 import logs from './logs';
+import archive from './archive';
 
 export default function* root() {
   yield [
@@ -30,6 +31,7 @@ export default function* root() {
     fork(emails),
     fork(renewal),
     fork(sms),
-    fork(logs)
+    fork(logs),
+    fork(archive)
   ];
 }

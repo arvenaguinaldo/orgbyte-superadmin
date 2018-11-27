@@ -6,6 +6,7 @@ import * as organizationsService from 'services/api/organizations';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
+import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -46,8 +47,8 @@ function* fetchCurrentOrganization(action) {
 function* addOrganization(action) {
   const response = yield call(organizationsService.addOrganization, action.params);
   if (response) {
-    if (response.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
@@ -138,6 +139,10 @@ function* watchRequestFetchSuspendedOrganizations() {
   yield* takeEvery(ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS, fetchSuspendedOrganizations);
 }
 
+function* watchRequestArchive() {
+  yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchOrganizations);
+}
+
 
 // function* watchRequestAddOrganizationUser() {
 //   yield* takeEvery(ORGANIZATIONS.ADD_ORGANIZATION_USER, addOrganizationUser);
@@ -150,6 +155,7 @@ export default function* organizations() {
     fork(watchRequestAddOrganization),
     fork(watchRequestFetchOrganizationToUserSide),
     fork(watchRequestRenewOrganization),
-    fork(watchRequestFetchSuspendedOrganizations)
+    fork(watchRequestFetchSuspendedOrganizations),
+    fork(watchRequestArchive)
   ];
 }
