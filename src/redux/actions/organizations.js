@@ -30,9 +30,10 @@ export const fetchCurrentOrganizationSuccess = response => ({
   response
 });
 
-export const addOrganization = params => ({
+export const addOrganization = (params, callback) => ({
   type: ORGANIZATIONS.ADD_ORGANIZATION,
-  params
+  params,
+  callback
 });
 
 export const addOrganizationSuccess = response => ({

@@ -145,12 +145,11 @@ export const renderInput = (
   <div>
     <FormControl margin="normal" error={!!touched && !!error} fullWidth={fullWidth}>
       <input
+        {...input}
         accept={accept}
         id="contained-button-file"
-        multiple
         type="file"
         style={{display: 'none'}}
-        {...input}
         {...custom}
       />
       <label htmlFor="contained-button-file">
