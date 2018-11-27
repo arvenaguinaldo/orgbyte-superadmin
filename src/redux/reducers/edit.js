@@ -14,6 +14,7 @@ const edit = (state = initialState, action) => {
   switch (action.type) {
     case EDIT.FETCH_EDIT: {
       return state.mergeIn(['meta'], fromJS({
+        formValues: {},
         isLoading: true
       }));
     }

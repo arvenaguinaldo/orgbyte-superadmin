@@ -3,16 +3,28 @@ import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 import {createTextMask} from 'redux-form-input-masks';
 import {renderTextField, renderSelectField, renderDatePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {createStructuredSelector} from 'reselect';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+
+
+import {makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
+import {makeSelectOrganizationNaturesList} from 'redux/selectors/organization_natures';
+import {fetchColleges} from 'redux/actions/colleges';
+import {makeSelectCollegesList} from 'redux/selectors/colleges';
+import {fetchOrganizationNatures} from 'redux/actions/organization_natures';
+import fetchInitialData from 'hoc/fetchInitialData';
 
 import {validate, warn} from 'utils/EditValidations/Organization';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 
 class EditForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    colleges: PropTypes.array.isRequired,
+    organizationNatures: PropTypes.array.isRequired
   };
 
   state = {
@@ -29,7 +41,7 @@ class EditForm extends React.Component {
       placeholder: ' '
     });
 
-    const {handleSubmit} = this.props;
+    const {handleSubmit, colleges, organizationNatures} = this.props;
 
     return (
       <div>
@@ -38,7 +50,7 @@ class EditForm extends React.Component {
             <Grid item xs={12} sm={12} md={12}>
 
               <Grid container spacing={40}>
-                <Grid item xs={10} sm={10} md={4}>
+                <Grid item xs={10} sm={10} md={8}>
                   <Field
                     name="name"
                     component={renderTextField}
@@ -49,30 +61,53 @@ class EditForm extends React.Component {
 
                 <Grid item xs={12} sm={12} md={4}>
                   <Field
-                    name="organization_type_id"
-                    component={renderSelectField}
-                    label="Type of Organization"
-                    fullWidth
-                  >
-                    <MenuItem value={1}>Univesity Based</MenuItem>
-                    <MenuItem value={2}>College Based</MenuItem>
-                  </Field>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={4}>
-                  <Field
                     name="organization_nature_id"
                     component={renderSelectField}
                     label="Nature of Organiation"
                     fullWidth
                   >
-                    <MenuItem value={1}>Academic</MenuItem>
+                    <option value="" />
+                    {organizationNatures.map((nature) => {
+                      return (
+                        <option key={nature.id} value={nature.id}> {nature.name} </option>
+                      );
+                    })}
                   </Field>
                 </Grid>
+
+                <Grid item xs={12} sm={12} md={5}>
+                  <Field
+                    name="organization_type_id"
+                    component={renderSelectField}
+                    label="Type of Organization"
+                    fullWidth
+                  >
+                    <option value="" />
+                    <option value={1}>Univesity Based</option>
+                    <option value={2}>College Based</option>
+                  </Field>
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={7}>
+                  <Field
+                    name="college_id"
+                    component={renderSelectField}
+                    label="College"
+                    fullWidth
+                  >
+                    <option value="" />
+                    {colleges.map((college) => {
+                      return (
+                        <option key={college.id} value={college.id}> {college.name} </option>
+                      );
+                    })}
+                  </Field>
+                </Grid>
+
               </Grid>
 
               <Grid container spacing={32}>
-                <Grid item xs={6} sm={6} md={2}>
+                <Grid item xs={6} sm={6} md={4}>
                   <Field
                     name="acronym"
                     component={renderTextField}
@@ -91,7 +126,7 @@ class EditForm extends React.Component {
                   />
                 </Grid>
 
-                <Grid item xs={11} sm={11} md={3}>
+                <Grid item xs={11} sm={11} md={5}>
                   <Field
                     name="formation"
                     component={renderDatePicker}
@@ -100,19 +135,6 @@ class EditForm extends React.Component {
                     fullWidth
                   />
                 </Grid>
-
-                <Grid item xs={12} sm={12} md={4}>
-                  <Field
-                    name="college_id"
-                    component={renderSelectField}
-                    label="College"
-                    fullWidth
-                  >
-                    <MenuItem value={1}>College of Information and Communications Technology</MenuItem>
-                    <MenuItem value={2}>College of Industrial Technology</MenuItem>
-                  </Field>
-                </Grid>
-
               </Grid>
             </Grid>
           </Grid>
@@ -122,10 +144,33 @@ class EditForm extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'EditForm',
-  overwriteOnInitialValuesChange: true,
-  destroyOnUnmount: false,
-  validate,
-  warn
-})(EditForm);
+const mapStateToProps = createStructuredSelector({
+  organizationNatures: makeSelectOrganizationNaturesList(),
+  colleges: makeSelectCollegesList(),
+  meta: makeSelectOrganizationsMeta()
+});
+
+const mapDispatchToProps = {
+  fetchColleges,
+  fetchOrganizationNatures
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchOrganizationNatures();
+  props.fetchColleges();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  reduxForm({
+    form: 'EditForm',
+    overwriteOnInitialValuesChange: true,
+    destroyOnUnmount: false,
+    enableReinitialize: true,
+    validate,
+    warn
+  })
+)(EditForm);

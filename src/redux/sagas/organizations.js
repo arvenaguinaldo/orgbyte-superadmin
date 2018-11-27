@@ -6,6 +6,7 @@ import * as organizationsService from 'services/api/organizations';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {ORGANIZATIONS} from 'constants/actions/organizations';
+import {EDIT} from 'constants/actions/edit';
 import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification, callSuccessNotification} from './notification';
 
@@ -139,6 +140,10 @@ function* watchRequestFetchSuspendedOrganizations() {
   yield* takeEvery(ORGANIZATIONS.FETCH_SUSPENDED_ORGANIZATIONS, fetchSuspendedOrganizations);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOrganizations);
+}
+
 function* watchRequestArchive() {
   yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchOrganizations);
 }
@@ -156,6 +161,7 @@ export default function* organizations() {
     fork(watchRequestFetchOrganizationToUserSide),
     fork(watchRequestRenewOrganization),
     fork(watchRequestFetchSuspendedOrganizations),
+    fork(watchRequestSaveEdit),
     fork(watchRequestArchive)
   ];
 }

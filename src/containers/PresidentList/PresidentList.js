@@ -68,6 +68,8 @@ class PresidentsTable extends React.Component {
       filterType: 'dropdown',
       responsive: 'scroll',
       rowsPerPage: 5,
+      print: false,
+      download: false,
       resizableColumns: false,
       customToolbarSelect: selectedRows =>
         (<CustomToolbarSelect

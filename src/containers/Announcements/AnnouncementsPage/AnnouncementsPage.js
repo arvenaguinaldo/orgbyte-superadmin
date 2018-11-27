@@ -18,6 +18,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 
 // import myStyles from './Announcements.scss';
@@ -49,13 +50,6 @@ const styles = theme => ({
   }
 });
 
-
-const columns = ['Title', 'Announcements Starts', 'Announcements Ends'];
-
-
-const options = {
-  rowsPerPage: 5
-};
 class AnnouncementsPage extends Component {
   static propTypes = {
     classes: PropTypes.object,
@@ -66,8 +60,56 @@ class AnnouncementsPage extends Component {
     announcements: []
   };
 
+  state = {
+    columns: [
+      {
+        name: 'Id',
+        options: {
+          display: false,
+          filter: false
+        }
+      },
+      {
+        name: 'Title',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Announcement starts',
+        options: {
+          filter: false
+        }
+      },
+      {
+        name: 'Announcement ends',
+        options: {
+          filter: false
+        }
+      }
+    ],
+    dbTable: 'announcements'
+  };
   render() {
-    const {classes} = this.props;
+    const {classes, announcements} = this.props;
+    const {columns, dbTable} = this.state;
+    const options = {
+      filter: false,
+      print: false,
+      download: false,
+      selectableRows: true,
+      filterType: 'dropdown',
+      responsive: 'scroll',
+      rowsPerPage: 5,
+      resizableColumns: false,
+      customToolbarSelect: selectedRows =>
+        (<CustomToolbarSelect
+          dbTable={dbTable}
+          selectedRows={selectedRows}
+          data={announcements}
+          columns={this.state.columns}
+        />)
+    };
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -82,6 +124,7 @@ class AnnouncementsPage extends Component {
           options={options}
           data={this.props.announcements.map((announcement) => {
             return [
+              announcement.id,
               announcement.title,
               moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
               moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
@@ -98,6 +141,7 @@ const mapStateToProps = createStructuredSelector({
   announcements: makeSelectAnnouncementsList(),
   meta: makeSelectAnnouncementsMeta()
 });
+
 
 const withRedux = connect(mapStateToProps, {fetchAnnouncements});
 

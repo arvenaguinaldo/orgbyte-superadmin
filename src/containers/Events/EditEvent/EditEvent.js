@@ -19,7 +19,7 @@ import FileUpload from 'components/FileUpload/FileUpload';
 import {createNumberMask} from 'redux-form-input-masks';
 import {validate, warn} from 'utils/EditValidations/Events';
 
-import {createEvent} from 'redux/actions/events';
+import {saveEdit} from 'redux/actions/events';
 // import GoogleSearchPlaces from 'components/GoogleSearchPlaces/GoogleSearchPlaces';
 
 // import GooglePlaceAutocomplete from 'material-ui-autocomplete-google-places';
@@ -51,15 +51,19 @@ class EditEvent extends Component {
   state = {
     startsDate: new Date('2018-01-01T00:00:00.000Z'),
     endsDate: new Date(),
-    members: this.props.event.members
+    members: this.props.event.members,
+    dateToday: new Date()
   };
 
   componentDidMount() {
     this.handleInitialize();
+    validate.starts === null; // eslint-disable-line
   }
 
   onSubmit = (values, dispatch) => {
-    dispatch(createEvent(values));
+    const {match: {params}} = this.props; // eslint-disable-line
+    const param = {id: params.id, values};
+    dispatch(saveEdit(param));
   };
 
   handleStartsDateChange = (date) => {
@@ -88,11 +92,11 @@ class EditEvent extends Component {
 
     };
     this.props.initialize(initData); // eslint-disable-line react/prop-types
-    console.log(this.props.event);
   }
 
   render() {
-
+    const starts = (this.props.event.starts);
+    const dateToday = this.state.dateToday;
     const {valid, handleSubmit, meta, event} = this.props; // eslint-disable-line react/prop-types
 
     const checkboxLabel = [
@@ -159,15 +163,27 @@ class EditEvent extends Component {
 
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={3}>
-                    <Field
-                      name="starts"
-                      component={renderDateTimePicker}
-                      label="Date Starts"
-                      selected={this.state.startsDate}
-                      onChange={this.handleStartsDateChange}
-                      disablePast
-                      fullWidth
-                    />
+                    {starts !== undefined && starts > dateToday ?
+                      (<Field
+                        name="starts"
+                        component={renderDateTimePicker}
+                        label="Date Starts"
+                        selected={this.state.startsDate}
+                        onChange={this.handleStartsDateChange}
+                        disablePast
+                        fullWidth
+                      />)
+                      :
+                      (<Field
+                        name="starts"
+                        component={renderDateTimePicker}
+                        label="Date Starts"
+                        selected={this.state.startsDate}
+                        onChange={this.handleStartsDateChange}
+                        fullWidth
+                        disabled
+                      />)
+                    }
                   </Grid>
 
                   <Grid item xs={12} sm={12} md={3}>

@@ -10,6 +10,10 @@ import MUIDataTable from 'mui-datatables';
 import {withStyles} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
+import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import Grid from '@material-ui/core/Grid';
+import {Field, reduxForm} from 'redux-form';
+
 import {createStructuredSelector} from 'reselect';
 import {makeSelectAnnouncementsList, makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
@@ -21,8 +25,8 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
-
-// import myStyles from './Announcements.scss';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -48,6 +52,13 @@ const styles = theme => ({
   },
   iconSmall: {
     fontSize: 20
+  },
+  RangeLabel: {
+    marginTop: 36,
+    marginLeft: 36
+  },
+  ResetButton: {
+    marginTop: '28px'
   }
 });
 
@@ -57,6 +68,9 @@ let tableColumnsArray = [];
 
 const tableColumnsStatus = [];
 let tableColumns = {};
+let tabletitle;
+let globalStartsDate;
+let globalEndsDate;
 const columns = [
   {
     name: 'Title',
@@ -83,15 +97,48 @@ class AnnouncementsPage extends Component {
 
   static propTypes = {
     announcements: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   static defaultProps = {
     announcements: []
   };
 
+  state = {
+    startsDate: 'reset',
+    endsDate: 'reset'
+  }
+
+  handleStartsDateChange = (date) => {
+    this.setState({startsDate: date});
+  };
+
+  handleEndsDateChange = (date) => {
+    this.setState({endsDate: date});
+  };
+  timePeriod = (startsDate) => {
+    moment.locale('en');
+    globalStartsDate = this.state.startsDate;
+    globalEndsDate = this.state.endsDate;
+    const starts = moment(startsDate).format('YYYY-MM-DD h:mm a');
+    const startsRange = moment(this.state.startsDate).format('YYYY-MM-DD h:mm a');
+    const endsRange = moment(this.state.endsDate).format('YYYY-MM-DD h:mm a');
+    if (startsRange <= starts && starts <= endsRange) {
+      return startsDate;
+    } else if (this.state.startsDate === 'reset') {
+      return startsDate;
+    } else if (this.state.endsDate === 'reset') {
+      return startsDate;
+    }
+  };
+  Reset = () => {
+    this.setState({startsDate: 'reset', endsDate: 'reset'});
+  };
   render() {
-    const {announcements, user} = this.props;
+    const {announcements, user, classes} = this.props;
+    const {startsDate, endsDate} = this.state;
+    tabletitle = startsDate && endsDate !== 'reset' ? 'Announcements List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Announcements List';
     const options = {
       selectableRows: false,
       rowsPerPage: 5,
@@ -100,7 +147,7 @@ class AnnouncementsPage extends Component {
       print: false,
       customToolbar: () => {
         return (
-          <CustomToolbar announcements={announcements} user={user} />
+          <CustomToolbar announcements={announcements} user={user} startsDate={this.state.startsDate} endsDate={this.state.endsDate} />
         );
       },
       onTableChange: (action, tableState) => {
@@ -129,17 +176,54 @@ class AnnouncementsPage extends Component {
 
       }
     };
-
     return (
       <LayoutWithTopbarAndSidebar>
+        <form>
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Grid container spacing={40}>
+                <Grid item xs={10} sm={10} md={2} />
+                <Grid item xs={10} sm={10} md={2}>
+                  <Typography variant="subtitle1" className={classes.RangeLabel}>Date Range:</Typography>
+                </Grid>
+                <Grid item xs={10} sm={10} md={3} >
+                  <Field
+                    name="starts"
+                    component={renderDateTimePicker}
+                    label="Start date"
+                    selected={this.state.startsDate}
+                    onChange={this.handleStartsDateChange}
+                    fullWidth
+                    clearable
+                  />
+                </Grid>
+                <Grid item xs={10} sm={10} md={3} >
+                  <Field
+                    name="ends"
+                    component={renderDateTimePicker}
+                    label="End date"
+                    selected={this.state.endsDate}
+                    onChange={this.handleEndsDateChange}
+                    minDate={moment(this.state.startsDate).format('YYYY-MM-DD')}
+                    fullWidth
+                    clearable
+                  />
+                </Grid>
+                <Grid item xs={10} sm={10} md={2} >
+                  <Button variant="contained" color="primary" className={classes.ResetButton} onClick={this.Reset}>Reset</Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
         <MUIDataTable
-          title={'Announcements List'}
+          title={tabletitle}
           options={options}
-          data={this.props.announcements.map((announcement) => {
+          data={this.props.announcements.filter(announcement => this.timePeriod(announcement.starts, announcement.ends)).map((announcement) => {
             return [
               announcement.title,
-              moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-              moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+              moment(announcement.starts).format('MMMM DD YYYY, h:mm a'),
+              moment(announcement.ends).format('MMMM DD YYYY, h:mm a')
             ];
           })}
           columns={columns}
@@ -154,11 +238,24 @@ export class CustomToolbar extends Component {
     announcements: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired
   };
+  timePeriod = (startsDate) => {
+    moment.locale('en');
+    const starts = moment(startsDate).format('YYYY-MM-DD h:mm a');
+    const startsRange = moment(globalStartsDate).format('YYYY-MM-DD h:mm a');
+    const endsRange = moment(globalEndsDate).format('YYYY-MM-DD h:mm a');
+    if (startsRange <= starts && starts <= endsRange) {
+      return startsDate;
+    } else if (globalStartsDate === 'reset') {
+      return startsDate;
+    } else if (globalEndsDate === 'reset') {
+      return startsDate;
+    }
+  }
   printData = () => {
-    const data = this.props.announcements.map(announcement => ({
+    const data = this.props.announcements.filter(announcement => this.timePeriod(announcement.starts)).map(announcement => ({
       0: announcement.title,
-      1: moment(announcement.starts).format('MMMM Do YYYY, h:mm a'),
-      2: moment(announcement.ends).format('MMMM Do YYYY, h:mm a')
+      1: moment(announcement.starts).format('MMMM DD YYYY, h:mm a'),
+      2: moment(announcement.ends).format('MMMM DD YYYY, h:mm a')
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -203,7 +300,7 @@ export class CustomToolbar extends Component {
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
-      styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 6},
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {0: {columnWidth: 'auto'}},
       alternateRowStyles: {
@@ -212,18 +309,18 @@ export class CustomToolbar extends Component {
       theme: 'grid',
       addPageContent() {
         // HEADER
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/9MypYC78/CICT.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
+        doc.setTextColor(40);
+        const split = doc.splitTextToSize(orgname, 300);
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
+
         doc.setFontSize(15);
         doc.text('Announcement List', 35, 190);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
-        doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
-        const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -241,6 +338,12 @@ export class CustomToolbar extends Component {
         doc.text(pdfdate, 10, pageHeight - 10);
       }
     });
+    // COUNT AT END OF TABLE
+    const total = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + total, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }
@@ -280,5 +383,9 @@ export default compose(
   withRedux,
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
+  reduxForm({
+    form: 'AnnouncementsForm',
+    destroyOnUnmount: false
+  }),
   withStyles(styles)
 )(AnnouncementsPage);

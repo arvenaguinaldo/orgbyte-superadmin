@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
+
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+
+import {makeSelectShirt, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchShirts} from 'redux/actions/announcements';
+import fetchInitialData from 'hoc/fetchInitialData';
+
 // import MUIDataTable from 'mui-datatables';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +30,15 @@ import ListItem from '@material-ui/core/ListItem';
 import styles from './OrganizationalShirtDetails.scss';
 
 class Home extends Component {
+  static propTypes = {
+    shirt: PropTypes.array.isRequired
+  }
+  static defaultProps = {
+    shirt: []
+  };
   render() {
+    const {shirt} = this.props;
+    console.log(shirt);
     const src = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
     const style = {
       height: 400
@@ -74,4 +92,22 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = createStructuredSelector({
+  members: makeSelectShirt(),
+  meta: makeSelectShirtsMeta()
+});
+
+// const mapDispatchToProps = {
+//   fetchEvents
+// };
+
+const withRedux = connect(mapStateToProps, {fetchShirts});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchShirts();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData
+)(Home);

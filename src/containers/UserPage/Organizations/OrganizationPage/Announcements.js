@@ -1,21 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectAnnouncementsList, makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
+import {fetchAnnouncements} from 'redux/actions/announcements';
+import fetchInitialData from 'hoc/fetchInitialData';
+
+// Material UI
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import {Grid, CardMedia, Paper} from '@material-ui/core';
+import {Grid, CardMedia} from '@material-ui/core';
+import {Link} from 'react-router-dom';
+
+import TimeAgo from 'react-timeago';
+import English from 'react-timeago/lib/language-strings/en';
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
+
+
+const formatter = buildFormatter(English);
 
 const styles = {
   card: {
     backgroundColor: 'transparent',
     boxShadow: 'none'
-  },
-  paper: {
-    marginTop: 10,
-    '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)',
-      borderRight: 'solid balck 2px'
-    }
   },
   bullet: {
     display: 'inline-block',
@@ -51,10 +61,13 @@ const styles = {
     width: '100%'
   },
   paper2: {
+    width: '1200px',
+    height: '200px',
     margin: '5px',
     padding: '0px',
     '&:hover': {
-      boxShadow: '1px 6px 20px 6px rgba(0,0,0,0.35)'
+      boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)',
+      cursor: 'pointer'
     }
   },
   butt: {
@@ -71,78 +84,109 @@ const styles = {
   title2: {
     paddingTop: 10,
     boxShadow: 'none'
+  },
+  CardMedia: {
+    height: '100%',
+    marginLeft: '5px',
+    objectFit: 'cover'
+  },
+  filter: {
+    padding: 30,
+    marginTop: 5
+  },
+  AnnouncementContent: {
+    height: '175px',
+    overflow: 'hidden',
+    marginLeft: '20px',
+    marginTop: '10px',
+    textAlign: 'justify'
+  },
+  Avatar: {
+    height: '100px',
+    width: '100px',
+    marginTop: '5px'
+  },
+  ColumnTitle: {
+    marginTop: '15px',
+    textAlign: 'center'
+  },
+  ColumnSubTitle: {
+    marginLeft: '33px'
+  },
+  RelativeTime: {
+    marginLeft: '1px',
+    marginTop: '40px',
+    textAlign: 'center'
+  },
+  timeAgoSpan: {
+    color: '#7e7e7e',
+    fontSize: 16
+  },
+  Content: {
+    marginTop: 25
   }
 };
 
-function SimpleCard(props) {
-  const {classes} = props;
+class Announcements extends Component {
+  static propTypes = {
+    announcements: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired
+  };
 
-  return (
-    <Card className={classes.card}>
-      <Grid container spacing={0}>
-
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
+  static defaultProps = {
+    announcements: []
+  };
+  render() {
+    const {classes, announcements} = this.props;
+    return (
+      <Card className={classes.card}>
+        <Grid container spacing={0}>
+          {announcements.map((ann) => {
+            return (
+              <Link key={ann.id} to={'/announcements/' + ann.id}>
+                <Card className={classes.paper2} key={ann.id}>
+                  <Grid container spacing={0}>
+                    <Grid item md={2} sm={12} xs={12}>
+                      <CardMedia
+                        className={classes.CardMedia}
+                        image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                        title="Announcement"
+                      />
+                    </Grid>
+                    <Grid item md={8} sm={12} xs={12}>
+                      <div className={classes.AnnouncementContent}>
+                        <Typography variant="h6">
+                          {ann.title}  <span className={classes.timeAgoSpan}>( posted <TimeAgo date={ann.starts} formatter={formatter} /> ) </span>
+                        </Typography>
+                        <Typography variant="body1" className={classes.Content}>
+                          {ann.content}
+                        </Typography>
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="h6">
-                Announcement Title
-                  </Typography>
-                  <Typography variant="caption">
-                Established:
-                  </Typography>
-                  <Typography variant="body1">
-               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
+              </Link>
+            );
+          })}
         </Grid>
-
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Card className={classes.paper2}>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Card className={classes.image2}>
-                  <CardMedia
-                    className={classes.annou}
-                    image="https://i.postimg.cc/jdsys9Mz/announcement_Balangayan.jpg"
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={9} >
-                <Paper className={classes.title2}>
-                  <Typography variant="h6">
-                Organization Name
-                  </Typography>
-                  <Typography variant="caption">
-                Established:
-                  </Typography>
-                  <Typography variant="body1">
-               Organization Summary asjdbawubaskaaudhba aosdbawodjbaoidub sdja kdwdub asdjawn dasd oauiwd
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-      </Grid>
-    </Card>
-  );
+      </Card>
+    );
+  }
 }
 
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+const mapStateToProps = createStructuredSelector({
+  announcements: makeSelectAnnouncementsList(),
+  meta: makeSelectAnnouncementsMeta()
+});
 
-export default withStyles(styles)(SimpleCard);
+const withRedux = connect(mapStateToProps, {fetchAnnouncements});
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchAnnouncements();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  withStyles(styles)
+)(Announcements);

@@ -4,6 +4,7 @@ import * as announcementsActions from 'redux/actions/announcements';
 import * as announcementsService from 'services/api/announcements';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
+import {EDIT} from 'constants/actions/edit';
 import {ARCHIVE} from 'constants/actions/archive';
 import {ANNOUNCEMENTS} from 'constants/actions/announcements';
 import {callErrorNotification, callSuccessNotification} from './notification';
@@ -60,6 +61,10 @@ function* watchRequestCreateAnnouncement() {
   yield* takeEvery(ANNOUNCEMENTS.CREATE_ANNOUNCEMENT, createAnnouncement);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchAnnouncements);
+}
+
 function* watchRequestArchive() {
   yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchAnnouncements);
 }
@@ -70,6 +75,7 @@ export default function* announcements() {
     fork(watchRequest),
     fork(watchRequestFetchAnnouncement),
     fork(watchRequestCreateAnnouncement),
+    fork(watchRequestSaveEdit),
     fork(watchRequestArchive)
   ];
 }

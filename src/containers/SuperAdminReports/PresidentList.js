@@ -152,7 +152,7 @@ class Presidents extends Component {
               president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
               president.organization_name,
               president.email,
-              president.contact_number
+              '+63' + president.contact_number
             ];
           })}
           columns={columns}
@@ -172,7 +172,7 @@ export class CustomToolbar extends Component {
       1: president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
       2: president.organization_name,
       3: president.email,
-      4: president.contact_number
+      4: '+63' + president.contact_number
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -233,19 +233,18 @@ export class CustomToolbar extends Component {
       },
       theme: 'grid',
       addPageContent() {
-        // HEADER
         doc.setFontSize(15);
         doc.text('Organization Presidents', 35, 190);
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 45, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fbVLbXsL/OSO.png', 'PNG', 475, 30, 80, 80); // RIGHT IMAGE
+        // HEADER
+        const pdfcenter = doc.internal.pageSize.getWidth() / 2;
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
+        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
+        doc.addImage('https://i.postimg.cc/fbVLbXsL/OSO.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
         doc.setTextColor(40);
-        doc.setFontSize(26);
-        doc.text('Bulacan State University', doc.internal.pageSize.getWidth() / 2, 60, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text('MacArthur Highway, Brgy. Guinhawa, City of Malolos Bulacan', doc.internal.pageSize.getWidth() / 2, 73, null, null, 'center');
-        doc.setFontSize(12);
         const split = doc.splitTextToSize(orgname, 300);
-        doc.text(split, doc.internal.pageSize.getWidth() / 2, 100, null, null, 'center');
+        doc.setFontSize(18);
+        doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
+        // END OF HEADER
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -263,6 +262,12 @@ export class CustomToolbar extends Component {
         doc.text(pdfdate, 10, pageHeight - 10);
       }
     });
+    // COUNT AT END OF TABLE
+    const totalrecords = pdfrows.length;
+    const endoftable = doc.autoTable.previous.finalY + 15;
+    doc.setFontSize(7);
+    doc.text('Total records: ' + totalrecords, 490, endoftable);
+    // END OF COUNT END OF TABLE
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }
