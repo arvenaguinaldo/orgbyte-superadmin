@@ -58,7 +58,8 @@ function DenseAppBar(props) {
                 </Center>
               </div>
             </Grid>
-            <Grid item lg={9} md={9} sm={12} xs={12} className={classes.right}>
+            <Grid item lg={3} md={3} sm={0} xs={0} />
+            <Grid item lg={6} md={6} sm={12} xs={12} className={classes.right}>
               <TabBar className={classes.menu} />
             </Grid>
           </Grid>

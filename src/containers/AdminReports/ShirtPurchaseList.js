@@ -11,10 +11,11 @@ import {withStyles} from '@material-ui/core/styles';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 import {createStructuredSelector} from 'reselect';
-import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
-import {makeSelectMembersList, makeSelectUsersMeta} from 'redux/selectors/users';
+import {makeSelectUsersMeta} from 'redux/selectors/users';
 import {makeSelectCurrentUser} from 'redux/selectors/auth';
-import {fetchMembers} from 'redux/actions/users';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+import {makeSelectShirtPurchaseShirts} from 'redux/selectors/shirts';
+import {fetchPurchaseShirts} from 'redux/actions/shirts';
 
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
@@ -22,6 +23,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
+
 
 // import myStyles from './Announcements.scss';
 
@@ -60,70 +62,64 @@ let tableColumns = {};
 
 const columns = [
   {
-    name: 'Student no.',
+    name: 'Id',
     options: {
+      display: false,
       filter: false
     }
   },
   {
     name: 'Name',
     options: {
+      display: true,
       filter: false
     }
   },
   {
-    name: 'Year level',
+    name: 'Size',
     options: {
+      display: true,
       filter: true
     }
   },
   {
-    name: 'Section',
+    name: 'Year and Section',
     options: {
+      display: true,
       filter: true
     }
   },
   {
-    name: 'Group',
+    name: 'Contact Number',
     options: {
-      filter: true
-    }
-  },
-  {
-    name: 'Address',
-    options: {
+      display: true,
       filter: false
     }
   },
   {
     name: 'Email',
     options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Contact no.',
-    options: {
+      display: true,
       filter: false
     }
   }
 ];
 
 
-class MemberList extends Component {
+class ShirtPurchaseList extends Component {
 
 static propTypes = {
-  members: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  organization: PropTypes.object
+  purchasedShirts: PropTypes.array.isRequired,
+  organization: PropTypes.object,
+  user: PropTypes.object.isRequired
 }
 
 static defaultProps = {
-  members: []
+  purchasedShirts: []
 };
 
 render() {
-  const {members, user, organization} = this.props;
+  const {purchasedShirts, user, organization} = this.props;
   const options = {
     selectableRows: false,
     rowsPerPage: 5,
@@ -133,7 +129,7 @@ render() {
     print: false,
     customToolbar: () => {
       return (
-        <CustomToolbar members={members} user={user} organization={organization} />
+        <CustomToolbar purchasedShirts={purchasedShirts} user={user} organization={organization} />
       );
     },
     onTableChange: (action, tableState) => {
@@ -166,18 +162,16 @@ render() {
   return (
     <LayoutWithTopbarAndSidebar>
       <MUIDataTable
-        title={'Members List'}
+        title={'Shirt Purchase List'}
         options={options}
-        data={this.props.members.map((member) => {
+        data={purchasedShirts.map((shirt) => {
           return [
-            member.student_number,
-            member.last_name + ' ' + member.first_name,
-            member.year_level,
-            member.section,
-            member.group,
-            member.address,
-            member.email,
-            '+63' + member.contact_number
+            shirt.id,
+            shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+            shirt.size,
+            shirt.year_level + shirt.section + ' - G' + shirt.group,
+            '+63' + shirt.contact_number,
+            shirt.email
           ];
         })}
         columns={columns}
@@ -189,20 +183,18 @@ render() {
 
 export class CustomToolbar extends Component {
   static propTypes = {
-    members: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired,
-    organization: PropTypes.object
+    purchasedShirts: PropTypes.array.isRequired,
+    organization: PropTypes.object,
+    user: PropTypes.object.isRequired
   };
   printData = () => {
-    const data = this.props.members.map(member => ({
-      0: member.student_number,
-      1: member.last_name + ' ' + member.first_name,
-      2: member.year_level,
-      3: member.section,
-      4: member.group,
-      5: member.address,
-      6: member.email,
-      7: '+63' + member.contact_number
+    const data = this.props.purchasedShirts.map(shirt => ({
+      0: shirt.id,
+      1: shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+      2: shirt.size,
+      3: shirt.year_level + shirt.section + ' - G' + shirt.group,
+      4: '+63' + shirt.contact_number,
+      5: shirt.email
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -239,12 +231,11 @@ export class CustomToolbar extends Component {
     const doc = new JsPDF('p', 'pt');
     const totalPagesExp = '{total_pages_count_string}';
     doc.setProperties({
-      title: 'Members Table'
+      title: 'Shirts Purchase Table'
     });
     doc.page = 1;
-    // const orgname = this.props.members[0].organization_name;
-    const username = this.props.user.first_name + ' ' + this.props.user.last_name;
     const orgname = this.props.organization.name;
+    const username = this.props.user.first_name + ' ' + this.props.user.last_name;
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
       bodyStyles: {valign: 'top'},
@@ -256,15 +247,15 @@ export class CustomToolbar extends Component {
         2: {columnWidth: 'auto'},
         3: {columnWidth: 'auto'},
         4: {columnWidth: 'auto'},
-        5: {columnWidth: 'auto'},
-        6: {columnWidth: 'auto'},
-        7: {columnWidth: 'auto'}
+        5: {columnWidth: 'auto'}
       },
       alternateRowStyles: {
         fillColor: [220, 220, 220]
       },
       theme: 'grid',
       addPageContent() {
+        doc.setFontSize(15);
+        doc.text('Shirt Purchase List', 35, 190);
         // HEADER
         const pdfcenter = doc.internal.pageSize.getWidth() / 2;
         doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
@@ -275,9 +266,6 @@ export class CustomToolbar extends Component {
         doc.setFontSize(18);
         doc.text(split, doc.internal.pageSize.getWidth() / 2, 140, null, null, 'center');
         // END OF HEADER
-
-        doc.setFontSize(15);
-        doc.text('Member List', 35, 190);
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -295,14 +283,12 @@ export class CustomToolbar extends Component {
         doc.text(pdfdate, 10, pageHeight - 10);
       }
     });
-
     // COUNT AT END OF TABLE
-    const total = pdfrows.length;
+    const totalrecords = pdfrows.length;
     const endoftable = doc.autoTable.previous.finalY + 15;
     doc.setFontSize(7);
-    doc.text('Total members: ' + total, 490, endoftable);
+    doc.text('Total records: ' + totalrecords, 490, endoftable);
     // END OF COUNT END OF TABLE
-
     if (typeof doc.putTotalPages === 'function') {
       doc.putTotalPages(totalPagesExp);
     }
@@ -323,16 +309,16 @@ export class CustomToolbar extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  members: makeSelectMembersList(),
+  purchasedShirts: makeSelectShirtPurchaseShirts(),
   user: makeSelectCurrentUser(),
-  meta: makeSelectUsersMeta(),
-  organization: makeSelectCurrentOrganization()
+  organization: makeSelectCurrentOrganization(),
+  meta: makeSelectUsersMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchMembers});
+const withRedux = connect(mapStateToProps, {fetchPurchaseShirts});
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchMembers();
+  props.fetchPurchaseShirts();
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
@@ -344,4 +330,4 @@ export default compose(
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
   withStyles(styles)
-)(MemberList);
+)(ShirtPurchaseList);

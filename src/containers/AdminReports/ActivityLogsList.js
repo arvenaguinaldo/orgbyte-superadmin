@@ -1,60 +1,61 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import MUIDataTable from 'mui-datatables';
+import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import moment from 'moment';
-import JsPDF from 'jspdf';
-import 'jspdf-autotable';
+import {createStructuredSelector} from 'reselect';
+import {makeSelectLogsList, makeSelectLogsMeta} from 'redux/selectors/logs';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+import {makeSelectCurrentUser} from 'redux/selectors/auth';
+import {fetchLogs} from 'redux/actions/logs';
+import fetchInitialData from 'hoc/fetchInitialData';
+import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
 import {renderDateTimePicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import Grid from '@material-ui/core/Grid';
 import {Field, reduxForm} from 'redux-form';
-import Typography from '@material-ui/core/Typography';
 
-import MUIDataTable from 'mui-datatables';
+import JsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 import {withStyles} from '@material-ui/core/styles';
-import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-
-import {createStructuredSelector} from 'reselect';
-import {makeSelectEventsList, makeSelectEventsMeta} from 'redux/selectors/events';
-import {makeSelectCurrentUser} from 'redux/selectors/auth';
-import {fetchEvents} from 'redux/actions/events';
-
-import fetchInitialData from 'hoc/fetchInitialData';
-import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
-
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Print from '@material-ui/icons/LocalPrintshop';
 
-// import myStyles from './Announcements.scss';
+const columns = [
+  {
+    name: 'Admin name',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Action',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Name',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Date and Time',
+    options: {
+      filter: false
+    }
+  }
+];
 
-const styles = theme => ({
-  root: {
-    width: '100%'
-  },
-  Paper: {
-    padding: '50px'
-  },
-  sendButton: {
-    flex: 1
-  },
-  grid: {
-    backgroundColor: '#5F1D24'
-  },
-  button: {
-    margin: 20
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
-  iconSmall: {
-    fontSize: 20
-  },
+const styles = () => ({
   RangeLabel: {
     marginTop: 36,
     marginLeft: 36
@@ -72,86 +73,19 @@ let tableColumns = {};
 let tabletitle;
 let globalStartsDate;
 let globalEndsDate;
-const columns = [
-  {
-    name: 'Name\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Venue\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Members Price',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'BulSUan Price',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Non-BulSUan Price',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Start Date\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'End Date\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0',
-    options: {
-      filter: false
-    }
-  },
-  {
-    name: 'Nature of Event',
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: 'Ticket Price',
-    options: {
-      filter: true
-    }
-  },
-  {
-    name: 'No. of Attendees',
-    options: {
-      filter: false
-    }
-  }
-];
 
-
-class EventList extends Component {
-
+class AdminActivityLogs extends Component {
   static propTypes = {
-    events: PropTypes.array.isRequired,
+    logs: PropTypes.array,
+    classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    events: []
+    organization: PropTypes.object
   };
 
   state = {
     startsDate: 'reset',
     endsDate: 'reset'
-  }
+  };
 
   handleStartsDateChange = (date) => {
     this.setState({startsDate: date});
@@ -177,21 +111,25 @@ class EventList extends Component {
   };
   Reset = () => {
     this.setState({startsDate: 'reset', endsDate: 'reset'});
-  }
+  };
 
   render() {
-    const {events, user, classes} = this.props;
+
+    const {logs, classes, user, organization} = this.props;
     const {startsDate, endsDate} = this.state;
-    tabletitle = startsDate && endsDate !== 'reset' ? 'Event List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Event List';
+    tabletitle = startsDate && endsDate !== 'reset' ? 'Activity logs List from ' + moment(startsDate._d).format('MMM DD YYYY') + ' to ' + moment(endsDate._d).format('MMM DD YYYY') : 'Activity logs List';
+
     const options = {
+      filterType: 'checkbox',
       selectableRows: false,
+      download: true,
+      print: false,
+      filter: false,
       rowsPerPage: 5,
       rowsPerPageOptions: [5, 10, 15],
-      filter: true,
-      print: false,
       customToolbar: () => {
         return (
-          <CustomToolbar events={events} user={user} />
+          <CustomToolbar logs={logs} user={user} organization={organization} />
         );
       },
       onTableChange: (action, tableState) => {
@@ -263,22 +201,16 @@ class EventList extends Component {
         </form>
         <MUIDataTable
           title={tabletitle}
-          options={options}
-          data={this.props.events.filter(event => this.timePeriod(event.ends)).map((event) => {
+          data={logs.filter(log => this.timePeriod(log.created_at)).map((log) => {
             return [
-              event.name,
-              event.venue,
-              event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-              event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-              event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-              moment(event.starts).format('MMM DD YYYY'),
-              moment(event.ends).format('MMM DD YYYY'),
-              event.nature_of_event.toUpperCase(),
-              event.ticket_price_type.toUpperCase(),
-              event.number_of_attendees - event.available_slots
+              log.admin_name,
+              log.action,
+              log.name,
+              moment(log.created_at).format('MMMM DD YYYY, h:mm a')
             ];
           })}
           columns={columns}
+          options={options}
         />
       </LayoutWithTopbarAndSidebar>
     );
@@ -287,8 +219,9 @@ class EventList extends Component {
 
 export class CustomToolbar extends Component {
   static propTypes = {
-    events: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired
+    logs: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
+    organization: PropTypes.object
   };
   timePeriod = (startsDate) => {
     moment.locale('en');
@@ -304,17 +237,11 @@ export class CustomToolbar extends Component {
     }
   }
   printData = () => {
-    const data = this.props.events.filter(event => this.timePeriod(event.ends)).map(event => ({
-      0: event.name,
-      1: event.venue,
-      2: event.members_price !== null ? 'Php ' + parseFloat(event.members_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-      3: event.bulsuans_price !== null ? 'Php ' + parseFloat(event.bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-      4: event.non_bulsuans_price !== null ? 'Php ' + parseFloat(event.non_bulsuans_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'NO PRICE',
-      5: moment(event.starts).format('MMM DD YYYY'),
-      6: moment(event.ends).format('MMM DD YYYY'),
-      7: event.nature_of_event,
-      8: event.ticket_price_type,
-      9: event.number_of_attendees - event.available_slots
+    const data = this.props.logs.filter(log => this.timePeriod(log.created_at)).map(log => ({
+      0: log.admin_name,
+      1: log.action,
+      2: log.name,
+      3: moment(log.created_at).format('MMMM DD YYYY, h:mm a')
     }));
 
     const columnsWithKey = columns.map((col, index) => {
@@ -352,10 +279,10 @@ export class CustomToolbar extends Component {
     doc.setFontSize(10);
     const totalPagesExp = '{total_pages_count_string}';
     doc.setProperties({
-      title: 'Events Table'
+      title: 'Logs Table'
     });
     doc.page = 1;
-    const orgname = this.props.events[0].organization_name;
+    const orgname = this.props.organization.name;
     const username = this.props.user.first_name + ' ' + this.props.user.last_name;
     doc.autoTable(pdfcolumns, pdfrows, {
       margin: {top: 200, left: 35},
@@ -364,15 +291,15 @@ export class CustomToolbar extends Component {
       headerStyles: {fillColor: [94, 22, 25], textColor: 255, fontStyle: 'bold'},
       columnStyles: {
         // 0: {columnWidth: 'auto'},
-        // 1: {columnWidth: 'auto'},
-        2: {columnWidth: 'auto'},
-        3: {columnWidth: 'auto'},
-        4: {columnWidth: 'auto'},
+        1: {columnWidth: 'auto'},
+        // 2: {columnWidth: 'auto'},
+        // 3: {columnWidth: 'auto'},
+        // 4: {columnWidth: 'auto'},
         5: {columnWidth: 'auto'},
-        6: {columnWidth: 'auto'}
+        6: {columnWidth: 'auto'},
         // 7: {columnWidth: 'auto'},
         // 8: {columnWidth: 'auto'},
-        // 9: {columnWidth: 'auto'}
+        9: {columnWidth: 'auto'}
       },
       alternateRowStyles: {
         fillColor: [220, 220, 220]
@@ -391,7 +318,7 @@ export class CustomToolbar extends Component {
         // END OF HEADER
 
         doc.setFontSize(15);
-        doc.text('Events List', 35, 190);
+        doc.text('Activity Logs List', 35, 190);
 
         // FOOTER
         let str = 'Page ' + doc.page;
@@ -436,15 +363,16 @@ export class CustomToolbar extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  events: makeSelectEventsList(),
+  logs: makeSelectLogsList(),
+  organization: makeSelectCurrentOrganization(),
   user: makeSelectCurrentUser(),
-  meta: makeSelectEventsMeta()
+  meta: makeSelectLogsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {fetchEvents});
+const withRedux = connect(mapStateToProps, {fetchLogs});
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchEvents();
+  props.fetchLogs();
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {
@@ -456,8 +384,8 @@ export default compose(
   withFetchInitialData,
   withLoadingWhileFetchingDataInsideLayout,
   reduxForm({
-    form: 'EventsForm',
+    form: 'LogsForm',
     destroyOnUnmount: false
   }),
   withStyles(styles)
-)(EventList);
+)(AdminActivityLogs);

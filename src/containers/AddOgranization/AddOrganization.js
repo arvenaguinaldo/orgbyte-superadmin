@@ -160,7 +160,7 @@ class AddOrganization extends Component {
                   fullWidth
                 >
                   <option value="" />
-                  <option value={1}>Univesity Based</option>
+                  <option value={1}>University Based</option>
                   <option value={2}>College Based</option>
                 </Field>
               </Grid>

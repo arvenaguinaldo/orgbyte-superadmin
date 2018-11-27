@@ -38,7 +38,7 @@ const styles = theme => ({
 
 class SimpleTabs extends React.Component {
   state = {
-    value: 0
+    value: '0'
   };
 
   handleChange = (event, value) => {
@@ -47,8 +47,6 @@ class SimpleTabs extends React.Component {
 
   render() {
     const {classes} = this.props;
-    const {value} = this.state;
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -62,8 +60,8 @@ class SimpleTabs extends React.Component {
               </Card>
             </Grid>
             <Grid item xs={6}>
-              <Tabs value={value} onChange={this.handleChange}>
-                <Tab classes={{root: classes.toptab}} label="Home" />
+              <Tabs onChange={this.handleChange}>
+                <Tab className={{root: classes.toptab}} label="Home" />
                 <Tab classes={{root: classes.toptab}} label="Events" />
                 <Tab classes={{root: classes.toptab}} label="Organizations" />
                 <Tab classes={{root: classes.toptab}} label="Announcements" />

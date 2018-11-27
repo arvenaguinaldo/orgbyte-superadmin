@@ -31,7 +31,48 @@ class OrganizationalShirtPage extends React.Component {
   };
 
   state = {
-    columns: ['Id', 'Name', 'Size', 'Year and Section', 'Contact Number', 'Email'],
+    columns: [{
+      name: 'Id',
+      options: {
+        display: false,
+        filter: false
+      }
+    },
+    {
+      name: 'Name',
+      options: {
+        display: true,
+        filter: false
+      }
+    },
+    {
+      name: 'Size',
+      options: {
+        display: true,
+        filter: true
+      }
+    },
+    {
+      name: 'Year and Section',
+      options: {
+        display: true,
+        filter: true
+      }
+    },
+    {
+      name: 'Contact Number',
+      options: {
+        display: true,
+        filter: false
+      }
+    },
+    {
+      name: 'Email',
+      options: {
+        display: true,
+        filter: false
+      }
+    }],
     dbTable: 'purchased_shirts'
   };
 
@@ -41,6 +82,8 @@ class OrganizationalShirtPage extends React.Component {
     const options = {
       filter: true,
       selectableRows: true,
+      print: false,
+      download: false,
       filterType: 'dropdown',
       responsive: 'scroll',
       rowsPerPage: 5,
@@ -66,11 +109,11 @@ class OrganizationalShirtPage extends React.Component {
           View
         </Button>
         <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
-          Edit
+          Edit Shirt Details
         </Button>
-
+        {console.log(this.props)}
         <MUIDataTable
-          title={'Organizational Shirts Availers'}
+          title={'Organizational Shirt Purchase Record'}
           data={purchasedShirts.map((shirt) => {
             return [
               shirt.id,

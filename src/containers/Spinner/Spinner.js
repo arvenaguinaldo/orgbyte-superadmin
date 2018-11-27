@@ -5,13 +5,6 @@ import {withStyles} from '@material-ui/core';
 const styles = {
   root: {
     flexGrow: 1
-  },
-  spin: {
-    backgroundColor: 'red',
-    borderRadius: '100',
-    width: '10%',
-    height: '30%',
-    border: 'solid blue 5px'
   }
 };
 
@@ -20,7 +13,7 @@ function SimpleAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <div className={classes.spin} />
+      <img src="https://i.postimg.cc/br462DQ5/Untitled-1.gif" alt="spinner" />
     </div>
   );
 }

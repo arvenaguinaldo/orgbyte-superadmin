@@ -2,6 +2,16 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import ChartistGraph from 'react-chartist';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
+// import {Player} from 'video-react';
+import ReactPlayer from 'react-player';
+import PropTypes from 'prop-types';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import fetchInitialData from 'hoc/fetchInitialData';
+import {makeSelectOrganizationsList, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
+import {fetchOrganizations} from 'redux/actions/organizations';
+
 
 // @material-ui
 import Avatar from '@material-ui/core/Avatar';
@@ -14,65 +24,48 @@ import College from '@material-ui/icons/Contacts';
 import OrganizationIcon from '@material-ui/icons/AccountBalance';
 import Calendar from '@material-ui/icons/CalendarToday';
 import University from '@material-ui/icons/LocalLibrary';
-import Renew from '@material-ui/icons/AutoRenew';
+// import Renew from '@material-ui/icons/AutoRenew';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
 
 import 'chartist/dist/chartist.min.css';
 import styles from './Dashboard.scss';
 
 class Dashboard extends Component {
+  static propTypes = {
+    organizations: PropTypes.array.isRequired
+  }
+
+  static defaultProps = {
+    organizations: []
+  };
+
   render() {
+    const {organizations} = this.props;
+    console.log(organizations);
+    const organizationCount = organizations.filter(organization => (organization.status === 'active' ? organization.status : null)).map((organization) => {
+      return [
+        organization.status
+      ];
+    });
+    const uwideCount = organizations.filter(organization => (organization.organization_type_name === 'University Wide' && organization.status === 'active' ? organization.status : null)).map((organization) => {
+      return [
+        organization.status
+      ];
+    });
+    const cbCount = organizations.filter(organization => (organization.organization_type_name === 'College Based' && organization.status === 'active' ? organization.status : null)).map((organization) => {
+      return [
+        organization.status
+      ];
+    });
     const delays = 80;
     const durations = 500;
-    const Chartist = require('chartist');
+    // const Chartist = require('chartist');
     const data = {
       labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018'],
       series: [[12, 17, 7, 17, 23, 18, 38]]
-    };
-    const options = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: {
-        top: 20,
-        right: 20,
-        bottom: 0,
-        left: 0
-      }
-    };
-    // for animation
-    const animation = {
-      draw() {
-        if (data.type === 'line' || data.type === 'area') {
-          data.element.animate({
-            d: {
-              begin: 600,
-              dur: 700,
-              from: data.path
-                .clone()
-                .scale(1, 0)
-                .translate(0, data.chartRect.height())
-                .stringify(),
-              to: data.path.clone().stringify(),
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
-          });
-        } else if (data.type === 'point') {
-          data.element.animate({
-            opacity: {
-              begin: (data.index + 1) * delays,
-              dur: durations,
-              from: 0,
-              to: 1,
-              easing: 'ease'
-            }
-          });
-        }
-      }
     };
     const chart2 = {
       data: {
@@ -151,7 +144,7 @@ class Dashboard extends Component {
                 />
                 <div className={styles.CardUpperText}>
                   <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Active Organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>{organizationCount.length}</Typography>
                 </div>
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText}>
@@ -181,7 +174,7 @@ class Dashboard extends Component {
                   <ListItemIcon >
                     <Calendar />
                   </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Edit Renewal Period</Typography></Link>} />
+                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Renewal Period</Typography></Link>} />
                 </ListItem>
               </Card>
             </Grid>
@@ -197,7 +190,7 @@ class Dashboard extends Component {
                 />
                 <div className={styles.CardUpperText}>
                   <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>University wide organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>{uwideCount.length}</Typography>
                 </div>
                 <div className={styles.Divider} />
               </Card>
@@ -214,7 +207,7 @@ class Dashboard extends Component {
                 />
                 <div className={styles.CardUpperText}>
                   <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryTextLong}>College based organizations</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>49</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>{cbCount.length}</Typography>
                 </div>
                 <div className={styles.Divider} />
               </Card>
@@ -223,26 +216,7 @@ class Dashboard extends Component {
 
           <Grid container spacing={24}>
             <Grid item xs={12} sm={12} md={6}>
-              <Card className={styles.ChartContainer}>
-                <Card className={styles.ChartCard}>
-                  <ChartistGraph
-                    className="ct-chart"
-                    data={data}
-                    type="Line"
-                    options={options}
-                    listener={animation}
-                  />
-                </Card>
-                <Typography variant="body1" className={styles.ChartPrimaryText}>Organization Renewals per year</Typography>
-                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>40% more compared with year 2017</Typography>
-                <div className={styles.DividerChart} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <Renew />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/organizations">Manage Renewals</Link>} />
-                </ListItem>
-              </Card>
+              <ReactPlayer height="330px" url="https://www.youtube.com/watch?v=0Zl5moDWab0" playing />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <Card className={styles.ChartContainer}>
@@ -273,4 +247,23 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = createStructuredSelector({
+  organizations: makeSelectOrganizationsList(),
+  meta: makeSelectOrganizationsMeta()
+});
+
+const mapDispatchToProps = {
+  fetchOrganizations
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchOrganizations();
+});
+
+
+export default compose(
+  withRedux,
+  withFetchInitialData
+)(Dashboard);

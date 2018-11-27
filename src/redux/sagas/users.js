@@ -2,12 +2,14 @@ import {takeEvery} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as usersActions from 'redux/actions/users';
 import * as usersService from 'services/api/users';
+import {EDIT} from 'constants/actions/edit';
 import {push} from 'react-router-redux';
 import {reset} from 'redux-form';
 import {USERS} from 'constants/actions/users';
 import {ARCHIVE} from 'constants/actions/archive';
 import {callErrorNotification} from './notification';
 import {callSuccessNotification} from './notification';
+
 
 //* *********** Subroutines ************//
 
@@ -153,12 +155,20 @@ function* watchRequestAddMembers() {
   yield* takeEvery(USERS.ADD_MEMBERS, addMembers);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchMembers);
+}
+
 function* watchRequestChangePassword() {
   yield* takeEvery(USERS.CHANGE_PASSWORD, changePassword);
 }
 
 function* watchRequestFetchOfficers() {
   yield* takeEvery(USERS.FETCH_OFFICERS, fetchOfficers);
+}
+
+function* watchRequestSaveEditOfficers() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchOfficers);
 }
 
 function* watchRequestArchive() {
@@ -178,8 +188,10 @@ export default function* users() {
     fork(watchRequestAddUser),
     fork(watchRequestVerifyMember),
     fork(watchRequestAddMembers),
+    fork(watchRequestSaveEdit),
     fork(watchRequestChangePassword),
     fork(watchRequestFetchOfficers),
+    fork(watchRequestSaveEditOfficers),
     fork(watchRequestArchive),
     fork(watchRequestArchiveUsers)
   ];

@@ -177,7 +177,7 @@ class SuperAdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
         >
-          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/superadmin/reports/organizations' || pathname === '/superadmin/reports/presidents' || pathname === '/superadmin/reports'} >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/superadmin/reports/organizations' || pathname === '/superadmin/reports/presidents' || pathname === '/superadmin/reports' || pathname === '/superadmin/reports/useractivitylogs'} >
             <ListItemIcon>
               <Report className={style.listIcon} />
             </ListItemIcon>
@@ -200,6 +200,13 @@ class SuperAdminMenuItemData extends Component {
                   <SupervisorAccount className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Presidents</Typography>} />
+              </MenuItem>
+
+              <MenuItem className={style.nested} component={Link} to="/superadmin/reports/useractivitylogs" selected={pathname === '/superadmin/reports/useractivitylogs'}>
+                <ListItemIcon>
+                  <LogsIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>User logs</Typography>} />
               </MenuItem>
 
             </MenuList>
@@ -388,7 +395,7 @@ class AdminMenuItemData extends Component {
         <MenuList
           subheader={<ListSubheader className={style.subHeader} component="div">Reports</ListSubheader>}
         >
-          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/attendees' || pathname === '/admin/reports/officers'} >
+          <MenuItem button onClick={this.handleClickReports} selected={pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/shirts' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/attendees' || pathname === '/admin/reports/useractivitylogs'} >
             <ListItemIcon>
               <Report className={style.listIcon} />
             </ListItemIcon>
@@ -420,6 +427,13 @@ class AdminMenuItemData extends Component {
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Events</Typography>} />
               </MenuItem>
 
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/shirts" selected={pathname === '/admin/reports/shirts'}>
+                <ListItemIcon>
+                  <Shop className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Shirt Purchase</Typography>} />
+              </MenuItem>
+
               <MenuItem className={style.nested} component={Link} to="/admin/reports/attendees" selected={pathname === '/admin/reports/attendees'}>
                 <ListItemIcon>
                   <PersonCheckIn className={style.listIcon} />
@@ -427,6 +441,12 @@ class AdminMenuItemData extends Component {
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Attendees</Typography>} />
               </MenuItem>
 
+              <MenuItem className={style.nested} component={Link} to="/admin/reports/useractivitylogs" selected={pathname === '/admin/reports/useractivitylogs'}>
+                <ListItemIcon>
+                  <LogsIcon className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>User logs</Typography>} />
+              </MenuItem>
               <MenuItem className={style.nested} component={Link} to="/admin/reports/officers" selected={pathname === '/admin/reports/officers'} >
                 <ListItemIcon>
                   <ManageIcon className={style.listIcon} />

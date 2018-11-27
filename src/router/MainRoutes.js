@@ -21,6 +21,7 @@ import RenewalDate from 'containers/RenewalDate/RenewalDate';
 import SuperAdminOrganizationReport from 'containers/SuperAdminReports/OrganizationList';
 import SuperAdminPresidentReport from 'containers/SuperAdminReports/PresidentList';
 import SuperAdminActivityLogs from 'containers/SuperAdminActivityLogs/SuperAdminActivityLogs';
+import SuperAdminActivityLogsReport from 'containers/SuperAdminReports/ActivityLogsList';
 
 // Admin Routes
 
@@ -61,9 +62,11 @@ import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
 import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
 import OrganizationReport from 'containers/AdminReports/EventList';
 import MembersReport from 'containers/AdminReports/MemberList';
+import ShirtsReport from 'containers/AdminReports/ShirtPurchaseList';
 import AttendeesReport from 'containers/AdminReports/AttendeeList';
 import OfficersReport from 'containers/AdminReports/OfficerList';
 import AttendeeListView from 'containers/AdminReports/AttendeeListView';
+import ActivityLogsReport from 'containers/AdminReports/ActivityLogsList';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -95,6 +98,7 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/renew/:id" component={RenewOrganization} />
         <SuperAdminRoute path="/superadmin/reports/organizations" component={SuperAdminOrganizationReport} />
         <SuperAdminRoute path="/superadmin/reports/presidents" component={SuperAdminPresidentReport} />
+        <SuperAdminRoute path="/superadmin/reports/useractivitylogs" component={SuperAdminActivityLogsReport} />
         <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}
@@ -134,9 +138,11 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/reports/announcements" component={AnnouncementReport} />
         <AdminRoute path="/admin/reports/events" component={OrganizationReport} />
         <AdminRoute path="/admin/reports/members" component={MembersReport} />
+        <AdminRoute path="/admin/reports/shirts" component={ShirtsReport} />
         <AdminRoute path="/admin/reports/attendees" component={AttendeesReport} />
         <AdminRoute path="/admin/reports/officers" component={OfficersReport} />
         <AdminRoute path="/admin/reports/:id/attendees" component={AttendeeListView} />
+        <AdminRoute path="/admin/reports/useractivitylogs" component={ActivityLogsReport} />
         <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
 
         {/* User Sides */}

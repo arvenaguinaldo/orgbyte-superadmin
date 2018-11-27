@@ -22,6 +22,7 @@ import {compose} from 'recompose';
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 import Announcement from './Announcements';
 import Event from './Events';
+import OrgShirt from './OrgShirt';
 import styles from './OrganizationProfile.scss';
 
 function TabContainer({children, dir}) {
@@ -53,7 +54,7 @@ class OrganizationProfile extends Component {
       if (typeof nextProps.organization.organizations.name !== 'undefined') {
         this.setState({name: nextProps.organization.organizations.name});
         this.setState({user: nextProps.organization.user.first_name + ' ' + nextProps.organization.user.last_name});
-        this.setState({contact: nextProps.organization.user.contact_number});
+        this.setState({contact: '+63' + nextProps.organization.user.contact_number});
         this.setState({email: nextProps.organization.user.email});
         this.setState({nature: nextProps.organization.organizations.organization_nature_name});
         this.setState({type: nextProps.organization.organizations.organization_type_name});
@@ -168,7 +169,9 @@ class OrganizationProfile extends Component {
                   <TabContainer dir={theme.direction}>
                     <Event />
                   </TabContainer>
-                  <TabContainer dir={theme.direction}>Item Three</TabContainer>
+                  <TabContainer dir={theme.direction}>
+                    <OrgShirt />
+                  </TabContainer>
                 </SwipeableViews>
               </div>
             </Grid>

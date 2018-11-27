@@ -13,17 +13,49 @@ import {fetchLogs} from 'redux/actions/logs';
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
 
+const columns = [
+  {
+    name: 'Admin name',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Action',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Name',
+    options: {
+      filter: false
+    }
+  },
+  {
+    name: 'Date and Time',
+    options: {
+      filter: false
+    }
+  }
+];
+
 class AdminActivityLogs extends Component {
   static propTypes = {
     logs: PropTypes.array
   }
   render() {
 
-    const columns = ['Admin name', 'Action', 'Name', 'Date and time'];
     const {logs} = this.props;
 
     const options = {
-      filterType: 'checkbox'
+      filterType: 'checkbox',
+      selectableRows: false,
+      download: false,
+      print: false,
+      filter: false,
+      rowsPerPage: 5,
+      rowsPerPageOptions: [5, 10, 15]
     };
 
     return (
@@ -32,7 +64,7 @@ class AdminActivityLogs extends Component {
           Activity logs
         </Typography>
         <MUIDataTable
-          title={''}
+          title={'Activity logs list'}
           data={logs.map((log) => {
             return [
               log.admin_name,
