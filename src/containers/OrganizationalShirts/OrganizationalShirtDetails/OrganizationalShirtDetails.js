@@ -39,7 +39,7 @@ class Home extends Component {
   render() {
     const {shirt} = this.props;
     console.log(shirt);
-    const src = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
+    const src = 'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + shirt.image_blobs[0].key;
     const style = {
       height: 400
     };

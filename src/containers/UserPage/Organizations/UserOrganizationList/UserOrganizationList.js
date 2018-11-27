@@ -175,7 +175,7 @@ class UserOrganizationList extends Component {
                               <Card>
                                 <Avatar
                                   alt="Organization Logo"
-                                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                                  src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + org.logo_blobs[0].key}
                                   className={classes.annou}
                                 />
                               </Card>

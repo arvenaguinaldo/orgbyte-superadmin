@@ -145,7 +145,7 @@ class AnnouncementPage extends Component {
                       <Card className={classes.CardImage}>
                         <CardMedia
                           className={classes.CardMedia}
-                          image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                          image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + announcement.image_blobs[0].key}
                           title="Announcement"
                         />
                       </Card>

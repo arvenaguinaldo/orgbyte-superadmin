@@ -193,7 +193,7 @@ class AnnouncementList extends Component {
                             <Card className={classes.CardImage}>
                               <CardMedia
                                 className={classes.CardMedia}
-                                image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                                image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + ann.image_blobs[0].key}
                                 title="Announcement"
                               />
                             </Card>
@@ -216,7 +216,7 @@ class AnnouncementList extends Component {
                                 </Typography>
                                 <Avatar
                                   alt="Organization Logo"
-                                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                                  src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + ann.image_blobs[0].key}
                                   className={classes.Avatar}
                                 />
                                 <Typography variant="caption" className={classes.ColumnSubTitle}>

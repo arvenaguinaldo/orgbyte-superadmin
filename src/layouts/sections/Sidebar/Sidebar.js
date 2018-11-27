@@ -74,7 +74,7 @@ class Sidebar extends Component {
               <Grid item xs={12} sm={12} md={2}>
                 <Avatar
                   alt="Organization_logo"
-                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + user.logo_blobs[0].key}
                   className={styles.Avatar}
                 />
               </Grid>

@@ -23,7 +23,7 @@ import 'video-react/dist/video-react.css';
 
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
-const bgImage = 'https://i.postimg.cc/FRzLXJfR/swits.jpg';
+const bgImage = 'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + this.props.event.image_blobs[0].key;
 
 const styles = {
   root: {
@@ -115,7 +115,7 @@ class EventPage extends Component {
         <div className={classes.ImageDiv}>
           <CardMedia
             className={classes.Image}
-            image="https://i.postimg.cc/FRzLXJfR/swits.jpg"
+            image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
             title="Orgbyte Event Image"
             component="img"
             alt="Event Photo"

@@ -149,7 +149,7 @@ class Announcements extends Component {
                     <Grid item md={2} sm={12} xs={12}>
                       <CardMedia
                         className={classes.CardMedia}
-                        image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                        image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + this.state.image_blobs[0].key}
                         title="Announcement"
                       />
                     </Grid>

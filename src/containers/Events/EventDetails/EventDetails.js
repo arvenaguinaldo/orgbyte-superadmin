@@ -155,9 +155,7 @@ class EventDetails extends Component {
     const style = {
       height: 400
     };
-
-    const image = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
-
+    const image = 'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key;
     const attendDisable = moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends);
     const registerDisable = moment().isAfter(this.props.event.ends);
 

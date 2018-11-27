@@ -58,6 +58,7 @@ class OrganizationProfile extends Component {
         this.setState({email: nextProps.organization.user.email});
         this.setState({nature: nextProps.organization.organizations.organization_nature_name});
         this.setState({type: nextProps.organization.organizations.organization_type_name});
+        this.setState({logo_blobs: nextProps.organization.organizations.logo_blobs});
       }
     } catch (err) {
       console.log('Catch');
@@ -83,7 +84,7 @@ class OrganizationProfile extends Component {
                 <Center>
                   <Avatar
                     alt="SWITS"
-                    src="https://i.postimg.cc/CxzJrZ0J/SWITS-Logo.png"
+                    src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + this.state.logo_blobs[0].key}
                     className={styles.OrgAvatar}
                   />
                 </Center>

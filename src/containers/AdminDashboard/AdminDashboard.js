@@ -33,7 +33,6 @@ import Event from '@material-ui/icons/Event';
 import People from '@material-ui/icons/People';
 import Calendar from '@material-ui/icons/CalendarToday';
 import Announcement from '@material-ui/icons/Announcement';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -58,8 +57,7 @@ class Dashboard extends Component {
   static propTypes = {
     members: PropTypes.array.isRequired,
     events: PropTypes.array.isRequired,
-    announcements: PropTypes.array.isRequired,
-    officers: PropTypes.array
+    announcements: PropTypes.array.isRequired
   }
   static defaultProps = {
     members: [],
@@ -144,7 +142,7 @@ class Dashboard extends Component {
     dec = 0;
     const delays = 80;
     const durations = 500;
-    const {members, events, announcements, officers} = this.props;
+    const {members, events, announcements} = this.props;
     // line chart
     const activeMemberCount = members.filter(member => (member.status === 'active' ? member.status : null)).map((member) => {
       return [
@@ -213,58 +211,6 @@ class Dashboard extends Component {
               easing: 'ease'
             }
           });
-        }
-      }
-    };
-    const officerNames = officers.slice(0, 5).map((officer) => {
-      return officer.first_name
-      ;
-    });
-    console.log(officerNames);
-    const chart2 = {
-      data: {
-        labels: officerNames,
-        series: [[542, 443, 40, 450]]
-      },
-      options: {
-        axisX: {
-          showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: {
-          top: 0,
-          right: 5,
-          bottom: 0,
-          left: 0
-        }
-      },
-      responsiveOptions: [
-        [
-          'screen and (max-width: 640px)',
-          {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc(value) {
-                return value[0];
-              }
-            }
-          }
-        ]
-      ],
-      animation: {
-        draw() {
-          if (data.type === 'bar') {
-            data.element.animate({
-              opacity: {
-                begin: (data.index + 1) * delays,
-                dur: durations,
-                from: 0,
-                to: 1,
-                easing: 'ease'
-              }
-            });
-          }
         }
       }
     };
@@ -365,7 +311,7 @@ class Dashboard extends Component {
           </Grid>
 
           <Grid container spacing={24}>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <Card className={styles.ChartContainer}>
                 <Card className={styles.ChartCard}>
                   <ChartistGraph
@@ -384,28 +330,6 @@ class Dashboard extends Component {
                     <Calendar />
                   </ListItemIcon>
                   <ListItemText primary={<Link to="/admin/events">Manage Events</Link>} />
-                </ListItem>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <Card className={styles.ChartContainer}>
-                <Card className={styles.ChartCard}>
-                  <ChartistGraph
-                    className="ct-chart"
-                    data={chart2.data}
-                    type="Bar"
-                    options={chart2.options}
-                    listener={chart2.animation}
-                  />
-                </Card>
-                <Typography variant="body1" className={styles.ChartPrimaryText}>Highest users sign in count</Typography>
-                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText} />
-                <div className={styles.DividerChart} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <AccountCircle />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/admin/accounts">View Accounts</Link>} />
                 </ListItem>
               </Card>
             </Grid>

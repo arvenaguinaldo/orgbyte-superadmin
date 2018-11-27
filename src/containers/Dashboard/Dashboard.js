@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import ChartistGraph from 'react-chartist';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 // import {Player} from 'video-react';
-import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -215,9 +214,7 @@ class Dashboard extends Component {
           </Grid>
 
           <Grid container spacing={24}>
-            <Grid item xs={12} sm={12} md={6}>
-              <ReactPlayer height="330px" url="https://www.youtube.com/watch?v=0Zl5moDWab0" playing />
-            </Grid>
+            <Grid item xs={12} sm={12} md={3} />
             <Grid item xs={12} sm={12} md={6}>
               <Card className={styles.ChartContainer}>
                 <Card className={styles.ChartCard}>

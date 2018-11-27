@@ -50,7 +50,7 @@ class Organizations extends Component {
                       <Center>
                         <CardContent>
                           <Center>
-                            <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
+                            <UserAvatar size="140" name="Organization..." src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + org.logo_blobs[0].key} />
                           </Center>
                           <Center>
                             <Typography variant="h5" >

@@ -190,7 +190,7 @@ class EventList extends Component {
                         alt="Event Image"
                         height="200"
                         width="140"
-                        image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                        image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
                         title="Event Image"
                         className={styles.cardMedia}
                       />

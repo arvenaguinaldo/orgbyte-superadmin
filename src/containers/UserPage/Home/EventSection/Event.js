@@ -54,7 +54,7 @@ class UserSideEvents extends Component {
                     <Card className={style.EventCard}>
                       <CardMedia
                         className={style.EventImage}
-                        image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                        image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
                       />
                     </Card>
 
