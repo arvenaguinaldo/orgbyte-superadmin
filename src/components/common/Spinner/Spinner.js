@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import classNames from 'classnames';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import style from './Spinner.scss';
 
 const styles = theme => ({
@@ -9,6 +12,11 @@ const styles = theme => ({
 });
 
 class Spinner extends React.Component {
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   state = {
     completed: 0
   };
@@ -30,9 +38,16 @@ class Spinner extends React.Component {
   };
 
   render() {
+    const {classes} = this.props;
     return (
       <div className={style.wrapper}>
-        <img src="https://i.postimg.cc/mkkMQFH3/asde.gif" alt="spinner" className={style.spinner} />
+        <CircularProgress
+          className={classNames(classes.progress, style.spinner)}
+          color="primary"
+          variant="determinate"
+          size={50}
+          value={this.state.completed}
+        />
       </div>
     );
   }

@@ -244,7 +244,7 @@ class EventPage extends Component {
                         <Card className={classes.Map}>
                           <Player
                             playsInline
-                            poster="https://i.postimg.cc/1XMvZ54C/46482905-762860140729270-5836505868274761728-n.jpg"
+                            poster="/assets/poster.png"
                             src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                           />
                         </Card>
