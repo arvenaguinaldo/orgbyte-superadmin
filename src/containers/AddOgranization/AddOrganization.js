@@ -88,7 +88,6 @@ class AddOrganization extends Component {
 
   onSubmit = (values, dispatch) => {
     _.set(values.user, 'password', values.user.last_name + values.organization.acronym);
-    // _.set(values.organization, 'logo', this.state.files);
     console.log(values);
     dispatch(addOrganization(values, (data) => { this.fileUpload.processQueue(data); }));
   };
