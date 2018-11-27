@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-
+import moment from 'moment';
 import TimeAgo from 'react-timeago';
 import English from 'react-timeago/lib/language-strings/en';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
@@ -22,6 +22,12 @@ import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import {Grid, CardMedia, Paper} from '@material-ui/core';
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
+
+function searchingFor(term) {
+  return function (x) { // eslint-disable-line
+    return x.title.toLowerCase().includes(term.toLowerCase());
+  };
+}
 
 const formatter = buildFormatter(English);
 const styles = {
@@ -145,8 +151,25 @@ class AnnouncementList extends Component {
   static defaultProps = {
     announcements: []
   };
+  state = {
+    term: ''
+  }
+  handleDayRange = (value) => {
+    const nature = {value};
+
+    if (nature.value === '1') {
+      this.setState({nature: 'curricular'});
+    } else if (nature.value === '2') {
+      this.setState({nature: 'co_curricular'});
+    } else { this.setState({nature: 'reset'}); }
+  };
+
+  searchHandler = (event) => {
+    this.setState({term: event.target.value});
+  };
   render() {
     const {announcements, classes} = this.props;
+    const today = moment(moment().toString()).format('YYYY-MM-DD h:mm a');
     return (
       <TopBarAndFooter>
         <Typography variant="h4" className={classes.header} >Announcements</Typography>
@@ -163,6 +186,8 @@ class AnnouncementList extends Component {
                     component={renderTextField}
                     label="Search Announcements"
                     fullWidth
+                    className={styles.searchField}
+                    onChange={this.searchHandler}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
@@ -184,7 +209,7 @@ class AnnouncementList extends Component {
 
             <Grid container spacing={16}>
               <Grid item lg={12} md={12} sm={12} xs={12} >
-                {announcements.map((ann) => {
+                {announcements.filter(searchingFor(this.state.term)).filter(ann => (moment(ann.starts).format('YYYY-MM-DD h:mm a') < today ? ann : null)).sort((a, b) => (new Date(b.starts) - new Date(a.starts))).map((ann) => {
                   return (
                     <Link key={ann.id} to={'/announcements/' + ann.id}>
                       <Card className={classes.paper2} key={ann.id}>

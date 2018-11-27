@@ -103,6 +103,12 @@ const styles = {
   }
 };
 
+function searchingFor(term) {
+  return function (x) { // eslint-disable-line
+    return x.name.toLowerCase().includes(term.toLowerCase());
+  };
+}
+
 class UserOrganizationList extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -112,8 +118,24 @@ class UserOrganizationList extends Component {
   static defaultProps = {
     organizations: []
   };
+  state = {
+    term: '',
+    type: 'reset'
+  };
+  searchHandler = (event) => {
+    this.setState({term: event.target.value});
+  };
+  handleNature = (value) => {
+    const nature = {value};
+    if (nature.value === '1') {
+      this.setState({nature: 'curricular'});
+    } else if (nature.value === '2') {
+      this.setState({nature: 'co_curricular'});
+    } else { this.setState({nature: 'reset'}); }
+  }
   render() {
     const {classes, organizations, handleSubmit} = this.props;
+    console.log(organizations);
     Moment.locale('en');
     return (
       <TopBarAndFooter>
@@ -130,10 +152,12 @@ class UserOrganizationList extends Component {
                 <form onSubmit={handleSubmit}>
                   <Grid item xs={12} sm={12} md={12}>
                     <Field
-                      name="name"
+                      name="search"
                       component={renderTextField}
-                      label="Organization Name"
+                      label="Search Organizations"
                       fullWidth
+                      className={styles.searchField}
+                      onChange={this.searchHandler}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12}>
@@ -162,10 +186,10 @@ class UserOrganizationList extends Component {
                 </form>
               </Paper>
             </Grid>
-            <Grid item lg={9} md={9} sm={12} xs={12} className={classes.content} >
+            <Grid item lg={8} md={8} sm={12} xs={12} className={classes.content} >
 
               <Grid container spacing={0}>
-                {organizations.map((org) => {
+                {organizations.filter(searchingFor(this.state.term)).map((org) => {
                   return (
                     <Grid item lg={12} md={12} sm={12} xs={12} key={org.id}>
                       <Link key={org.id} to={'/organizations/' + org.acronym}>

@@ -85,15 +85,6 @@ class EventList extends Component {
     } else { this.setState({price_type: 'reset'}); }
   }
 
-  handleNature = (value) => {
-    const nature = {value};
-    if (nature.value === '1') {
-      this.setState({nature: 'curricular'});
-    } else if (nature.value === '2') {
-      this.setState({nature: 'co_curricular'});
-    } else { this.setState({nature: 'reset'}); }
-  }
-
   searchHandler = (event) => {
     this.setState({term: event.target.value});
   }

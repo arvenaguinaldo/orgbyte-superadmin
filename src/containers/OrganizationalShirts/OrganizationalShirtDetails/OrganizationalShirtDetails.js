@@ -7,8 +7,10 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
-import {makeSelectShirt, makeSelectShirtsMeta} from 'redux/selectors/shirts';
-import {fetchShirts} from 'redux/actions/announcements';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+import {makeSelectShirt, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchShirt} from 'redux/actions/shirts';
+import {fetchSizes} from 'redux/actions/shirts';
 import fetchInitialData from 'hoc/fetchInitialData';
 
 // import MUIDataTable from 'mui-datatables';
@@ -31,21 +33,24 @@ import styles from './OrganizationalShirtDetails.scss';
 
 class Home extends Component {
   static propTypes = {
-    shirt: PropTypes.array.isRequired
+    shirt: PropTypes.object.isRequired,
+    shirtSizes: PropTypes.object,
+    organization: PropTypes.object
   }
   static defaultProps = {
-    shirt: []
+    shirt: {}
   };
   render() {
-    const {shirt} = this.props;
-    console.log(shirt);
+    const {shirt, organization, shirtSizes} = this.props;
     const src = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
     const style = {
-      height: 400
+      height: 500,
+      marginTop: '-40px',
+      marginLeft: '30px'
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <Paper className={styles.Paper}>
+        <Paper className={styles.Paper} id={organization.id}>
           <Typography variant="h4" color="secondary" >OrganizationalShirt</Typography>
           <Grid container spacing={0}>
 
@@ -56,25 +61,33 @@ class Home extends Component {
                   <div className={styles.detailsDiv}>
                     <ListItem>
                       <Typography variant="h6" className={styles.listTitle}>Name:</Typography>
-                      <ListItemText primary={<Typography variant="h6">SWITS ORG SHIRT</Typography>} />
+                      <ListItemText primary={<Typography variant="h6">{shirt.name}</Typography>} />
                     </ListItem>
                     <ListItem>
                       <Typography variant="h6" className={styles.listTitle}>Sizes:</Typography>
-                      <ListItemText primary={<Typography variant="h6">S, M, L, XL, XXL</Typography>} />
+                      <ListItemText primary={
+                        <Typography variant="h6">
+                          {shirtSizes.xxsmall && 'XXS '}
+                          {shirtSizes.xsmall && 'XS '}
+                          {shirtSizes.small && 'S '}
+                          {shirtSizes.medium && 'M '}
+                          {shirtSizes.large && 'L '}
+                          {shirtSizes.xlarge && 'XL '}
+                          {shirtSizes.xxlarge && 'XXL '}
+                          {shirtSizes.xxxlarge && '3XL '}
+                          {shirtSizes.xxxxlarge && '4XL '}
+                        </Typography>
+
+                      }
+                      />
                     </ListItem>
                     <ListItem>
                       <Typography variant="h6" className={styles.listTitle}>Price:</Typography>
-                      <ListItemText primary={<Typography variant="h6">400.00</Typography>} />
+                      <ListItemText primary={<Typography variant="h6">{'Php  ' + parseFloat(shirt.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</Typography>} />
                     </ListItem>
                   </div>
                   <Typography variant="body1" color="secondary" align="justify" className={styles.eventDescription}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam porta euismod nisl vel mollis.
-                    Suspendisse laoreet odio quis arcu ultrices, a dignissim ipsum aliquam.
-                    Proin vestibulum felis ex, non feugiat magna vestibulum vitae.
-                    Quisque maximus tincidunt tellus quis vestibulum. Maecenas scelerisque tortor id fringilla vestibulum.
-                    In hac habitasse platea dictumst. Mauris aliquam tincidunt tempus. Phasellus placerat sit amet lectus vitae auctor.
-                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque quis consequat eros.
+                    {shirt.description}
                   </Typography>
                 </Grid>
                 <Grid item xs={10} sm={10} md={6} >
@@ -93,18 +106,22 @@ class Home extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  members: makeSelectShirt(),
+  shirt: makeSelectShirt(),
+  organization: makeSelectCurrentOrganization(),
+  shirtSizes: makeSelectShirtSizes(),
   meta: makeSelectShirtsMeta()
 });
 
-// const mapDispatchToProps = {
-//   fetchEvents
-// };
+const mapDispatchToProps = {
+  fetchSizes,
+  fetchShirt
+};
 
-const withRedux = connect(mapStateToProps, {fetchShirts});
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchShirts();
+  props.fetchShirt();
+  props.fetchSizes();
 });
 
 export default compose(

@@ -48,9 +48,13 @@ class OrganizationProfile extends Component {
   state = {
     value: 0
   };
+  componentDidMount() {
+    this.setState({id: this.state.id}); // eslint-disable-line
+  }
   componentWillReceiveProps(nextProps) {
     try {
       if (typeof nextProps.organization.organizations.name !== 'undefined') {
+        this.setState({id: nextProps.organization.organizations.id});
         this.setState({name: nextProps.organization.organizations.name});
         this.setState({user: nextProps.organization.user.first_name + ' ' + nextProps.organization.user.last_name});
         this.setState({contact: '+63' + nextProps.organization.user.contact_number});
@@ -163,10 +167,10 @@ class OrganizationProfile extends Component {
                   onChangeIndex={this.handleChangeIndex}
                 >
                   <TabContainer dir={theme.direction}>
-                    <Announcement />
+                    <Announcement id={this.state.id} />
                   </TabContainer>
                   <TabContainer dir={theme.direction}>
-                    <Event />
+                    <Event id={this.state.id} />
                   </TabContainer>
                   <TabContainer dir={theme.direction}>Item Three</TabContainer>
                 </SwipeableViews>

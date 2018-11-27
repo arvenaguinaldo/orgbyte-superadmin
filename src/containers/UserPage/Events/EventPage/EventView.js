@@ -36,10 +36,7 @@ const styles = {
   },
   ImageDiv: {
     border: '3px solid #f1f1f1',
-    position: 'absolute',
-    top: '48%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(0%, 100%)',
     zIndex: '2',
     width: '100%',
     height: '400px',
@@ -53,8 +50,7 @@ const styles = {
     filter: 'blur(7px)',
     WebkitFilter: 'blur(7px)',
     height: '400px ',
-    width: '100%',
-    marginTop: '50px'
+    width: '100%'
   },
   card: {
     minWidth: 275
