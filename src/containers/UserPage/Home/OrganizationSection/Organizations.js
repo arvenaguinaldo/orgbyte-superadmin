@@ -34,7 +34,7 @@ class Organizations extends Component {
     const {organizations} = this.props;
 
     return (
-      <div className={style.ChildContainer}>{console.log(organizations)}
+      <div className={style.ChildContainer}>
         <Grid container spacing={8}>
           <Grid item lg={6} md={6} sm={6} xs={6}>
             <Typography variant="h5" className={style.SectionHeading}>
