@@ -270,8 +270,17 @@ class AdminMenuItemData extends Component {
 
   componentWillMount() {
     const {pathname} = this.props;
-    if (pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members') {
+    if (pathname === '/admin/reports/announcements' || pathname === '/admin/reports/events' || pathname === '/admin/reports/members' || pathname === '/admin/reports/shirts' || pathname === '/admin/reports/attendees' || pathname === '/admin/reports/useractivitylogs' || pathname === '/admin/reports/officers') {
       this.setState(({advancedReportsOpen: !this.state.advancedReportsOpen}));
+    }
+    if (pathname === '/admin/accounts' || pathname === '/admin/passwordreset' || pathname === '/admin/useractivitylogs') {
+      this.setState(({advancedAccountsOpen: !this.state.advancedAccountsOpen}));
+    }
+    if (pathname === '/admin/events/createevent' || pathname === '/admin/events') {
+      this.setState(({advancedEventsOpen: !this.state.advancedEventsOpen}));
+    }
+    if (pathname === '/admin/shirts' || pathname === '/admin/shirts/addorganizationalshirt') {
+      this.setState(({advancedShirtsOpen: !this.state.advancedShirtsOpen}));
     }
   }
 
@@ -324,7 +333,7 @@ class AdminMenuItemData extends Component {
             <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Membership</Typography>} />
           </MenuItem>
 
-          <MenuItem button onClick={this.handleClickShirts} component={Link} to="/admin/shirts" selected={pathname === '/admin/shirts'}>
+          <MenuItem button onClick={this.handleClickShirts}>
             <ListItemIcon>
               <Shop className={style.listIcon} />
             </ListItemIcon>
@@ -342,10 +351,16 @@ class AdminMenuItemData extends Component {
                 <ListItemText inset primary={<Typography variant="body1" className={style.list}>Add Shirt</Typography>} />
               </MenuItem>
 
+              <MenuItem component={Link} to="/admin/shirts" selected={pathname === '/admin/shirts'} className={style.nested}>
+                <ListItemIcon>
+                  <Shop className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Shirts</Typography>} />
+              </MenuItem>
             </MenuList>
           </Collapse>
 
-          <MenuItem button onClick={this.handleClickEvents} component={Link} to="/admin/events" selected={pathname === '/admin/events'} >
+          <MenuItem button onClick={this.handleClickEvents}>
             <ListItemIcon>
               <Event className={style.listIcon} />
             </ListItemIcon>
@@ -361,6 +376,13 @@ class AdminMenuItemData extends Component {
                   <Add className={style.listIcon} />
                 </ListItemIcon>
                 <ListItemText inset primary={<Typography variant="body1" className={style.list}>Create Event</Typography>} />
+              </MenuItem>
+
+              <MenuItem component={Link} to="/admin/events" selected={pathname === '/admin/events'} className={style.nested}>
+                <ListItemIcon>
+                  <Event className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Events</Typography>} />
               </MenuItem>
 
             </MenuList>

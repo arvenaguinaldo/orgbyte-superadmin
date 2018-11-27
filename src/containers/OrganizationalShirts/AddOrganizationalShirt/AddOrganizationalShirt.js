@@ -8,6 +8,15 @@ import {renderTextField, renderCheckbox} from 'components/ReduxMaterialUiForms/R
 import {createNumberMask} from 'redux-form-input-masks';
 import {addOrgShirt} from 'redux/actions/shirts';
 
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+
+import {makeSelectShirt, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchShirt} from 'redux/actions/shirts';
+import {fetchSizes} from 'redux/actions/shirts';
+import fetchInitialData from 'hoc/fetchInitialData';
+import SubmitButton from 'components/SubmitButton/SubmitButton';
+
 
 // Material UI
 import {withStyles} from '@material-ui/core/styles';
@@ -15,11 +24,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
 import FileUpload from 'components/FileUpload/FileUpload';
-
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-
 import style from './AddOrganizationalShirt.scss';
 
 
@@ -31,7 +37,8 @@ const styles = ({
 
 class AddOrganizationalShirt extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    meta: PropTypes.object
   }
 
   onSubmit = (values, dispatch) => {
@@ -39,7 +46,7 @@ class AddOrganizationalShirt extends Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const {classes, meta} = this.props;
 
     const {valid, handleSubmit} = this.props; // eslint-disable-line react/prop-types
 
@@ -157,7 +164,9 @@ class AddOrganizationalShirt extends Component {
                 <Button component={Link} to="/shirts" color="primary" className={style.button}>
                   Cancel
                 </Button>
-
+                <SubmitButton loading={meta.isLoading} valid={!valid}>
+                  Save
+                </SubmitButton>
                 <Button variant="contained" color="primary" type="submit" className={style.button} disabled={!valid}>
                   Save
                 </Button>
@@ -170,9 +179,25 @@ class AddOrganizationalShirt extends Component {
   }
 }
 
-// export default withStyles(styles)(OrganizationalShirtInfo);
+const mapStateToProps = createStructuredSelector({
+  shirt: makeSelectShirt(),
+  meta: makeSelectShirtsMeta()
+});
+
+const mapDispatchToProps = {
+  fetchSizes,
+  fetchShirt
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchShirt();
+});
 
 export default compose(
+  withRedux,
+  withFetchInitialData,
   reduxForm({
     form: 'AddOrgShirtForm',
     destroyOnUnmount: false,
