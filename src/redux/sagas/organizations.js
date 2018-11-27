@@ -49,10 +49,14 @@ function* addOrganization(action) {
   if (response) {
     if (response.data.error) {
       yield call(callErrorNotification, response.data.error);
+      yield put(organizationsActions.addOrganizationSuccess(response.data.error));
+      yield put(usersActions.addUserSuccess(response.data.error));
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
       yield put(usersActions.addUserSuccess(response.data.user));
+      console.log(response.data.organization);
+      yield put(action.callback(response.data.organization));
       yield put(reset('AddOrganizationForm'));
       yield put(push('/superadmin/organizations'));
     }

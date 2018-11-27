@@ -39,6 +39,7 @@ FileList.propTypes = {
 export default class FileUpload extends Component {
   static propTypes = {
     acceptedFiles: PropTypes.string,
+    autoProcessQueue: PropTypes.bool,
     headers: PropTypes.object,
     isErrorMessageVisible: PropTypes.bool,
     isFileListVisible: PropTypes.bool,
@@ -96,6 +97,7 @@ export default class FileUpload extends Component {
   componentDidMount() {
     const {
       acceptedFiles,
+      autoProcessQueue,
       headers,
       maxFiles,
       maxFilesize,
@@ -109,6 +111,7 @@ export default class FileUpload extends Component {
 
     const options = {
       acceptedFiles,
+      autoProcessQueue,
       addedfile: this.handleOnFileAdd,
       canceled: this.handleOnUploadCanceled,
       complete: this.handleOnUploadComplete,
@@ -228,6 +231,13 @@ export default class FileUpload extends Component {
     return file.name;
   };
 
+  processQueue = (id) => {
+    this.dropzone.on('sending', (file, xhr, formData) => {
+      formData.append('id', id);
+    });
+    this.dropzone.processQueue();
+  }
+
   formatFileSize = (size) => {
     return {__html: this.dropzone.filesize(size)};
   };
@@ -263,7 +273,6 @@ export default class FileUpload extends Component {
           <div className={classnames(styles.message, 'dz-message')}>
             <div className={styles.icon}><CloudUpload /></div>
             <div className={styles.label}>{label}</div>
-            <input type="hidden" name="X-Amz-Credential" value="AKIAIRKM6VWMEJMXD4TA/20191229/ap-southeast-1/s3/aws4_request" />
             {/* <input type="hidden" name="key" value="38212380_1858531684185480_5302473689139249152_n.jpg" />
 
               <input type="hidden" name="acl" value="public-read" />

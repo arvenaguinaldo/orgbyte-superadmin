@@ -5,6 +5,8 @@ import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import _ from 'lodash';
+// import ImageUploader from 'react-images-upload';
+// import Dropzone from 'react-dropzone';
 
 import {Field, reduxForm, FormSection, change} from 'redux-form';
 
@@ -22,8 +24,8 @@ import {validate, warn} from 'utils/Validations/AddOrganization';
 import fetchInitialData from 'hoc/fetchInitialData';
 
 // Redux Material UI Forms
-import {renderTextField, renderSelectField, renderDatePicker, renderInput, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
-// import FileUpload from 'components/FileUpload/FileUpload';
+import {renderTextField, renderSelectField, renderDatePicker, renderCircleColorPicker} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import FileUpload from 'components/FileUpload/FileUpload';
 
 // material ui core
 import Stepper from '@material-ui/core/Stepper';
@@ -79,13 +81,16 @@ class AddOrganization extends Component {
       '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107',
       '#ff9800', '#ff5722', '#795548', '#607d8b'],
     selectedColor: '#5C181D',
-    activeStep: 0
+    activeStep: 0,
+    logo: null,
+    files: []
   };
 
   onSubmit = (values, dispatch) => {
     _.set(values.user, 'password', values.user.last_name + values.organization.acronym);
+    // _.set(values.organization, 'logo', this.state.files);
     console.log(values);
-    dispatch(addOrganization(values));
+    dispatch(addOrganization(values, (data) => { this.fileUpload.processQueue(data); }));
   };
 
   getSteps = () => {
@@ -104,6 +109,12 @@ class AddOrganization extends Component {
         return 'Uknown stepIndex';
     }
   }
+
+  handleUploadSuccess = (file, response) => {
+    this.setState({logo: response});
+    console.log(response);
+  }
+
 
   imageUploadHandler = (event) => {
     event.preventDefault();
@@ -308,44 +319,61 @@ class AddOrganization extends Component {
     const {color, selectedColor} = this.state;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={12} md={12}>
-          <Grid container spacing={24}>
+      <FormSection name="organization">
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Grid container spacing={24}>
 
 
-            <Grid item xs={12} sm={12} md={6} >
-              <Typography variant="h4" gutterBottom>
-                    Upload your logo
-              </Typography>
+              <Grid item xs={12} sm={12} md={6} >
+                <Typography variant="h4" gutterBottom>
+                      Upload your logo
+                </Typography>
 
 
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} md={7}>
-                  <Field
-                    accept="image/jpeg, image/png"
-                    name="logo"
-                    type="file"
-                    component={renderInput}
-                    label="Upload a image"
-                    fullWidth
-                  />
-                  {/* <FileUpload paramName="logo" maxFilesize={200} uploadUrl="http://localhost:3000/organizations" label="Upload a image" /> */}
+                <Grid container spacing={24}>
+                  <Grid item xs={12} sm={12} md={7}>
+                    {/* <Field component={UploadFile} name="logo" /> */}
+                    {/* <Field component={UploadFile} name="logo" /> */}
+                    {/* <Field
+                      accept="image/jpeg, image/png"
+                      name="logo"
+                      type="file"
+                      component={renderInput}
+                      label="Upload a image"
+                      fullWidth
+                    /> */}
+                    {/* <Dropzone
+                      onDrop={this.onDrop}
+                      onFileDialogCancel={this.onCancel}
+                    >
+                      <p>Try dropping some files here, or click to select files to upload.</p>
+                    </Dropzone> */}
+                    <FileUpload
+                      paramName="logo"
+                      maxFilesize={200}
+                      autoProcessQueue={false}
+                      ref={(element) => { this.fileUpload = element; }}
+                      onUploadSuccess={this.handleUploadSuccess}
+                      uploadUrl="http://localhost:3000/organizations/logo"
+                      label="Upload a image"
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Typography variant="h4" gutterBottom>
-                    Choose a color
-              </Typography>
+              <Grid item xs={12} sm={12} md={6}>
+                <Typography variant="h4" gutterBottom>
+                      Choose a color
+                </Typography>
 
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} md={6} >
-                  <Paper style={{backgroundColor: selectedColor}} className={style.colorPreviewBox} elevation={0} square={false} />
+                <Grid container spacing={24}>
+                  <Grid item xs={12} sm={12} md={6} >
+                    <Paper style={{backgroundColor: selectedColor}} className={style.colorPreviewBox} elevation={0} square={false} />
+                  </Grid>
                 </Grid>
-              </Grid>
 
-              <FormSection name="organization">
+
                 <Grid container spacing={24} >
                   <Grid item xs={12} sm={12} md={6} >
                     <Field
@@ -358,13 +386,13 @@ class AddOrganization extends Component {
                     />
                   </Grid>
                 </Grid>
-              </FormSection>
+
+              </Grid>
 
             </Grid>
-
           </Grid>
         </Grid>
-      </Grid>
+      </FormSection>
     );
   }
 
@@ -435,7 +463,7 @@ class AddOrganization extends Component {
                       SUBMIT
                       </SubmitButton>
                     ) : (
-                      <Button variant="contained" color="primary" onClick={this.handleNext} disabled={valid}>
+                      <Button variant="contained" color="primary" onClick={this.handleNext} disabled={!valid}>
                         Next
                       </Button>
                     )}
