@@ -39,12 +39,8 @@ const styles = {
   },
   ImageDiv: {
     border: '3px solid #f1f1f1',
-<<<<<<< HEAD
-    transform: 'translate(0%, 100%)',
-=======
     transform: 'translate(0%, -100%)',
     position: 'absolute',
->>>>>>> develop
     zIndex: '2',
     width: '100%',
     height: '400px',

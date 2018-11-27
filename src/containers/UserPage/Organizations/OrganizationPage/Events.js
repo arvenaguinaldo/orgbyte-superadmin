@@ -157,7 +157,7 @@ class Events extends Component {
         (
           <Card className={classes.card}>
             <Grid container spacing={0}>
-              {events.map((event) => {
+              {events.filter(event => (id === event.organization_id ? event : null)).map((event) => {
                 return (
                   <Grid item lg={4} md={4} sm={12} xs={12} key={event.id}>
                     <Link key={event.id} to={'/events/' + event.id}>

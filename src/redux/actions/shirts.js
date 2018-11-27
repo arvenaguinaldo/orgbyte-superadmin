@@ -60,3 +60,12 @@ export const purchaseImportsSuccess = response => ({
   response
 });
 
+export const fetchShirtOrganization = params => ({
+  type: SHIRTS.FETCH_SHIRT_ORGANIZATION,
+  params
+});
+
+export const fetchShirtOrganizationSuccess = response => ({
+  type: SHIRTS.FETCH_SHIRT_ORGANIZATION_SUCCESS,
+  response
+});

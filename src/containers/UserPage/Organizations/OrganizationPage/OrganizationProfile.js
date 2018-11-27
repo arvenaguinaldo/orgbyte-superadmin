@@ -174,7 +174,7 @@ class OrganizationProfile extends Component {
                     <Event id={this.state.id} />
                   </TabContainer>
                   <TabContainer dir={theme.direction}>
-                    <OrgShirt />
+                    <OrgShirt id={this.state.id} />
                   </TabContainer>
                 </SwipeableViews>
               </div>

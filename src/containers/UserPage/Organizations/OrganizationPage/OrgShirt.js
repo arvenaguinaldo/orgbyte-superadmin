@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+// import moment from 'moment';
+
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+
+import {makeSelectShirtsList, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchShirts} from 'redux/actions/shirts';
+import {fetchSizes} from 'redux/actions/shirts';
+import fetchInitialData from 'hoc/fetchInitialData';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -41,95 +52,129 @@ const styles = {
   }
 };
 
-function FolderList(props) {
-  const {classes} = props;
-  return (
-    <div className={classes.root}>
-      <Grid container>
-        <Grid item lg={8} md={8} sm={12} xs={12}>
-          <div className={classes.image}>
-            <img src="https://i.postimg.cc/1XMvZ54C/46482905-762860140729270-5836505868274761728-n.jpg" alt="orgShirt" className={classes.orgshirt} />
-          </div>
-        </Grid>
-        <Grid item lg={4} md={4} sm={12} xs={12}>
-          <List>
-            <ListItem>
-              <ListItemText>
-                <Typography variant="h5" className={classes.name}>
+
+class OrgShirt extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    id: PropTypes.number,
+    shirts: PropTypes.array.isRequired,
+    shirtSizes: PropTypes.object
+  };
+  static defaultProps = {
+    shirts: []
+  };
+  render() {
+    const {classes, id, shirts, shirtSizes} = this.props;
+    console.log(id);
+    console.log(shirts);
+    console.log(shirtSizes);
+    return (
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item lg={8} md={8} sm={12} xs={12}>
+            <div className={classes.image}>
+              <img src="https://i.postimg.cc/1XMvZ54C/46482905-762860140729270-5836505868274761728-n.jpg" alt="orgShirt" className={classes.orgshirt} />
+            </div>
+          </Grid>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
+            <List>
+              <ListItem>
+                <ListItemText>
+                  <Typography variant="h5" className={classes.name}>
                   SWITS ORG SHIRT
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemText>
-                <Typography variant="h6">
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>
+                  <Typography variant="h6">
                  PRICE
-                </Typography>
-              </ListItemText>
-              <ListItemText>
-                <Typography variant="h5" className={classes.name}>
+                  </Typography>
+                </ListItemText>
+                <ListItemText>
+                  <Typography variant="h5" className={classes.name}>
                  Php 250.00
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemText>
-                <Typography variant="h6">
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>
+                  <Typography variant="h6">
                  DESCRIPTION
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemText>
-                <Typography variant="subtitle2">
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>
+                  <Typography variant="subtitle2">
                 It is a long established fact that a reader will be distracted by the readable content of a page
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="SIZE" />
-            </ListItem>
-            <ListItem>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="XS" className={classes.text} />
-                </Center>
-              </div>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="S" className={classes.text} />
-                </Center>
-              </div>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="M" className={classes.text} />
-                </Center>
-              </div>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="L" className={classes.text} />
-                </Center>
-              </div>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="XL" className={classes.text} />
-                </Center>
-              </div>
-              <div className={classes.tiles}>
-                <Center>
-                  <ListItemText primary="XXL" className={classes.text} />
-                </Center>
-              </div>
-            </ListItem>
-          </List>
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText primary="SIZE" />
+              </ListItem>
+              <ListItem>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="XS" className={classes.text} />
+                  </Center>
+                </div>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="S" className={classes.text} />
+                  </Center>
+                </div>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="M" className={classes.text} />
+                  </Center>
+                </div>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="L" className={classes.text} />
+                  </Center>
+                </div>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="XL" className={classes.text} />
+                  </Center>
+                </div>
+                <div className={classes.tiles}>
+                  <Center>
+                    <ListItemText primary="XXL" className={classes.text} />
+                  </Center>
+                </div>
+              </ListItem>
+            </List>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
-FolderList.propTypes = {
-  classes: PropTypes.object.isRequired
+
+const mapStateToProps = createStructuredSelector({
+  shirts: makeSelectShirtsList(),
+  shirtSizes: makeSelectShirtSizes(),
+  meta: makeSelectShirtsMeta()
+});
+
+const mapDispatchToProps = {
+  fetchSizes,
+  fetchShirts
 };
 
-export default withStyles(styles)(FolderList);
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
+
+const withFetchInitialData = fetchInitialData((props) => {
+  props.fetchShirts();
+  props.fetchSizes();
+});
+
+export default compose(
+  withRedux,
+  withFetchInitialData,
+  withStyles(styles)
+)(OrgShirt);

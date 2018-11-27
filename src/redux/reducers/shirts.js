@@ -105,6 +105,21 @@ const shirts = (state = initialState, action) => {
       }));
     }
 
+    case SHIRTS.FETCH_SHIRT_ORGANIZATION: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case SHIRTS.FETCH_SHIRT_ORGANIZATION_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        shirt: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

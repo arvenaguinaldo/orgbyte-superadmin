@@ -167,9 +167,6 @@ class AddOrganizationalShirt extends Component {
                 <SubmitButton loading={meta.isLoading} valid={!valid}>
                   Save
                 </SubmitButton>
-                <Button variant="contained" color="primary" type="submit" className={style.button} disabled={!valid}>
-                  Save
-                </Button>
               </div>
             </form>
           </Paper>
