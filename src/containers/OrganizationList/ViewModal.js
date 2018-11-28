@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import QRCode from 'qrcode.react';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import {compose} from 'recompose';
@@ -41,7 +40,10 @@ class ViewModal extends React.Component {
                 <DialogContent>
                   <Grid container spacing={0}>
                     <Grid item md={7} xs={12} sm={12}>
-                      <QRCode value={organization.name} size={420} />
+                      <img
+                        src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
+                        alt="orgShirt"
+                      />
                     </Grid>
                     <Grid item md={5} xs={12} sm={12}>
                       <List disablePadding>
