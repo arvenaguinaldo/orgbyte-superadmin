@@ -272,7 +272,7 @@ class Dashboard extends Component {
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4" gutterBottom>Dashboard</Typography>
         <div className={styles.OverViewDiv}>
-          <Grid container spacing={0}>
+          <Grid container spacing={24}>
 
             <Grid item xs={12} sm={6} md={3}>
               <Card className={styles.OverViewCard}>

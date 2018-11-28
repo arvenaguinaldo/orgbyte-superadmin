@@ -37,6 +37,11 @@ export const makeSelectShirtPurchaseShirts = () => createSelector(
   shirts => shirts.fetchPurchaseShirts
 );
 
+export const makeSelectShirtOrganization = () => createSelector(
+  makeSelectShirts(),
+  shirts => shirts.shirtOrganization
+);
+
 export const makeSelectShirtsMeta = () => createSelector(
   makeSelectShirts(),
   shirts => shirts.meta

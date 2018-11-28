@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import moment from 'moment';
 
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -25,7 +26,9 @@ const formatter = buildFormatter(English);
 const styles = {
   card: {
     backgroundColor: 'transparent',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    maxHeight: 1100,
+    overflowY: 'scroll'
   },
   bullet: {
     display: 'inline-block',
@@ -130,46 +133,51 @@ const styles = {
 class Announcements extends Component {
   static propTypes = {
     announcements: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    id: PropTypes.number
   };
-
   static defaultProps = {
     announcements: []
   };
   render() {
-    const {classes, announcements} = this.props;
+    const {classes, announcements, id} = this.props;
+    const today = moment(moment().toString()).format('YYYY-MM-DD h:mm a');
     return (
-      <Card className={classes.card}>
-        <Grid container spacing={0}>
-          {announcements.map((ann) => {
-            return (
-              <Link key={ann.id} to={'/announcements/' + ann.id}>
-                <Card className={classes.paper2} key={ann.id}>
-                  <Grid container spacing={0}>
-                    <Grid item md={2} sm={12} xs={12}>
-                      <CardMedia
-                        className={classes.CardMedia}
-                        image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                        title="Announcement"
-                      />
-                    </Grid>
-                    <Grid item md={8} sm={12} xs={12}>
-                      <div className={classes.AnnouncementContent}>
-                        <Typography variant="h6">
-                          {ann.title}  <span className={classes.timeAgoSpan}>( posted <TimeAgo date={ann.starts} formatter={formatter} /> ) </span>
-                        </Typography>
-                        <Typography variant="body1" className={classes.Content}>
-                          {ann.content}
-                        </Typography>
-                      </div>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Link>
-            );
-          })}
-        </Grid>
-      </Card>
+      id === undefined ? <Typography variant="h6">Loading..</Typography>
+        :
+        (
+          <Card className={classes.card}>
+            <Grid container spacing={0}>
+              {announcements.filter(ann => (ann.organization_id === id ? ann : null)).filter(ann => (moment(ann.starts).format('YYYY-MM-DD h:mm a') < today ? ann : null)).sort((a, b) => (new Date(b.starts) - new Date(a.starts))).map((ann) => {
+                return (
+                  <Link key={ann.id} to={'/announcements/' + ann.id}>
+                    <Card className={classes.paper2} key={ann.id}>
+                      <Grid container spacing={0}>
+                        <Grid item md={2} sm={12} xs={12}>
+                          <CardMedia
+                            className={classes.CardMedia}
+                            image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                            title="Announcement"
+                          />
+                        </Grid>
+                        <Grid item md={8} sm={12} xs={12}>
+                          <div className={classes.AnnouncementContent}>
+                            <Typography variant="h6">
+                              {ann.title}  <span className={classes.timeAgoSpan}>( posted <TimeAgo date={ann.starts} formatter={formatter} /> ) </span>
+                            </Typography>
+                            <Typography variant="body1" className={classes.Content}>
+                              {ann.content}
+                            </Typography>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </Grid>
+          </Card>
+        )
     );
   }
 }
