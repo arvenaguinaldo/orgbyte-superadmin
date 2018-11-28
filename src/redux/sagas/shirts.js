@@ -95,6 +95,17 @@ function* purchaseImports(action) {
   }
 }
 
+function* fetchShirtOrganization(action) {
+  const response = yield call(shirtsService.fetchShirtOrganization, action.params);
+  if (response) {
+    if (response.error) {
+      yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
+    } else {
+      yield put(shirtsActions.fetchShirtOrganizationSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
@@ -125,6 +136,10 @@ function* watchRequestArchive() {
   yield* takeEvery(ARCHIVE.ARCHIVE_SUCCESS, fetchPurchaseShirts);
 }
 
+function* watchRequestFetchShirtOrganization() {
+  yield* takeEvery(SHIRTS.FETCH_SHIRT_ORGANIZATION, fetchShirtOrganization);
+}
+
 export default function* shirts() {
   yield [
     fork(watchRequest),
@@ -133,6 +148,7 @@ export default function* shirts() {
     fork(watchRequestPurchaseShirt),
     fork(watchRequestFetchPurchaseShirts),
     fork(watchRequestPurchaseImports),
-    fork(watchRequestArchive)
+    fork(watchRequestArchive),
+    fork(watchRequestFetchShirtOrganization)
   ];
 }

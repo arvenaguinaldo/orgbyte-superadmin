@@ -5,6 +5,7 @@ const initialState = fromJS({
   list: [],
   shirt: {},
   sizes: {},
+  shirtOrganization: {},
   orgshirt: '',
   purchaseShirt: '',
   fetchPurchaseShirts: [],
@@ -113,7 +114,7 @@ const shirts = (state = initialState, action) => {
     case SHIRTS.FETCH_SHIRT_ORGANIZATION_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        shirt: data,
+        shirtOrganization: data,
         meta: {
           loading: false
         }

@@ -7,8 +7,8 @@ import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
-import {makeSelectShirtsList, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
-import {fetchShirts} from 'redux/actions/shirts';
+import {makeSelectShirtOrganization, makeSelectShirtSizes, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+import {fetchShirtOrganization} from 'redux/actions/shirts';
 import {fetchSizes} from 'redux/actions/shirts';
 import fetchInitialData from 'hoc/fetchInitialData';
 
@@ -156,20 +156,20 @@ class OrgShirt extends Component {
 
 
 const mapStateToProps = createStructuredSelector({
-  shirts: makeSelectShirtsList(),
+  shirt: makeSelectShirtOrganization(),
   shirtSizes: makeSelectShirtSizes(),
   meta: makeSelectShirtsMeta()
 });
 
 const mapDispatchToProps = {
   fetchSizes,
-  fetchShirts
+  fetchShirtOrganization
 };
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withFetchInitialData = fetchInitialData((props) => {
-  props.fetchShirts();
+  props.fetchShirtOrganization(props.id);
   props.fetchSizes();
 });
 
