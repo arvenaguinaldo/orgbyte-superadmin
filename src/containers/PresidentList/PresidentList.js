@@ -11,7 +11,7 @@ import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchi
 
 import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
-
+import EmptyTable from 'containers/EmptyTable/EmptyTable';
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
 
 class PresidentsTable extends React.Component {
@@ -81,20 +81,23 @@ class PresidentsTable extends React.Component {
     };
     return (
       <LayoutWithTopbarAndSidebar>
-        <MUIDataTable
-          title={'Presidents'}
-          data={presidents.map((president) => {
-            return [
-              president.id,
-              president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
-              president.organization_name,
-              president.email,
-              president.contact_number
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+        { presidents.length !== 0 ?
+          (<MUIDataTable
+            title={'Presidents'}
+            data={presidents.map((president) => {
+              return [
+                president.id,
+                president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
+                president.organization_name,
+                president.email,
+                president.contact_number
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />) :
+          (<EmptyTable title={'Presidents'} message={'No registered presidents'} />)
+        }
       </LayoutWithTopbarAndSidebar>
     );
   }

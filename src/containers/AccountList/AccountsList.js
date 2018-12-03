@@ -67,7 +67,7 @@ class AccountsList extends React.Component {
           data={officers.map((president) => {
             return [
               president.id,
-              president.last_name + ',  ' + president.first_name + ' ' + president.middle_name,
+              president.last_name + ',  ' + president.first_name + ' ' + president.middle_name === null ? president.middle_name : '',
               president.position,
               president.email,
               president.contact_number,

@@ -19,6 +19,7 @@ import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+import EmptyTable from 'containers/EmptyTable/EmptyTable';
 import style from './OrganizationalShirtPage.scss';
 
 class OrganizationalShirtPage extends React.Component {
@@ -101,32 +102,38 @@ class OrganizationalShirtPage extends React.Component {
         <Typography variant="h4">
           Organizational Shirts
         </Typography>
-
-        <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" className={style.Button}>
+        <div className={style.Controls}>
+          <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" className={style.Button}>
           Purchase
-        </Button>
-        <Button component={Link} to="/admin/shirts/organizationalshirt" variant="contained" color="primary" className={style.Button}>
+          </Button>
+          <Button component={Link} to="/admin/shirts/organizationalshirt" variant="contained" color="primary" className={style.Button}>
           View
-        </Button>
-        <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
+          </Button>
+          <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
           Edit Shirt Details
-        </Button>
-        {console.log(this.props)}
-        <MUIDataTable
-          title={'Organizational Shirt Purchase Record'}
-          data={purchasedShirts.map((shirt) => {
-            return [
-              shirt.id,
-              shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
-              shirt.size,
-              shirt.year_level + shirt.section + ' - G' + shirt.group,
-              shirt.contact_number,
-              shirt.email
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+          </Button>
+          <Typography variant="subtitle1" className={style.Profit}>
+            Estimated net profit:<span className={style.Gray}>  Php 500.00</span>
+          </Typography>
+        </div>
+        { purchasedShirts.length !== 0 ?
+          (<MUIDataTable
+            title={'Organizational Shirt Purchase Record'}
+            data={purchasedShirts.map((shirt) => {
+              return [
+                shirt.id,
+                shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
+                shirt.size,
+                shirt.year_level + shirt.section + ' - G' + shirt.group,
+                shirt.contact_number,
+                shirt.email
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />) :
+          (<EmptyTable title={'Organizational Shirt Purchase Record'} message={'No purchase record to display'} />)
+        }
       </LayoutWithTopbarAndSidebar>
     );
   }

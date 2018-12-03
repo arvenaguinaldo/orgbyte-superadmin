@@ -8,7 +8,6 @@ import AdminRoute from 'router/routes/AdminRoute';
 // Components / Pages
 import Login from 'containers/Login/Login';
 import LoginAdmin from 'containers/LoginAdmin/LoginAdmin';
-
 // Super Admin Routes
 import Dashboard from 'containers/Dashboard/Dashboard';
 import AddOrganization from 'containers/AddOgranization/AddOrganization';
@@ -56,7 +55,6 @@ import AddAccount from 'containers/AccountList/AddAccount';
 import UserActivityLogs from 'containers/UserActivityLogs/LogsTable';
 import Forgot from 'containers/ForgotPassword/Main';
 import AdminDashboard from 'containers/AdminDashboard/AdminDashboard';
-import AdminActivityLogs from 'containers/AdminActivityLogs/AdminActivityLogs';
 
 // Reports
 import AnnouncementReport from 'containers/AdminReports/AnnouncementList';
@@ -66,7 +64,7 @@ import ShirtsReport from 'containers/AdminReports/ShirtPurchaseList';
 import AttendeesReport from 'containers/AdminReports/AttendeeList';
 import OfficersReport from 'containers/AdminReports/OfficerList';
 import AttendeeListView from 'containers/AdminReports/AttendeeListView';
-import ActivityLogsReport from 'containers/AdminReports/ActivityLogsList';
+import ActivityLogsReport from 'containers/AdminActivityLogs/ActivityLogsList';
 
 // User side Routes
 import HomePage from 'containers/UserPage/Home/index';
@@ -142,8 +140,7 @@ class MainRoutes extends Component {
         <AdminRoute path="/admin/reports/attendees" component={AttendeesReport} />
         <AdminRoute path="/admin/reports/officers" component={OfficersReport} />
         <AdminRoute path="/admin/reports/:id/attendees" component={AttendeeListView} />
-        <AdminRoute path="/admin/reports/useractivitylogs" component={ActivityLogsReport} />
-        <AdminRoute path="/admin/useractivitylogs" component={AdminActivityLogs} />
+        <AdminRoute path="/admin/useractivitylogs" component={ActivityLogsReport} />
 
         {/* User Sides */}
         <Route path="/" component={HomePage} exact />
