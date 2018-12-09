@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import ChartistGraph from 'react-chartist';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 // import {Player} from 'video-react';
-import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -23,12 +22,13 @@ import Store from '@material-ui/icons/Store';
 import College from '@material-ui/icons/Contacts';
 import OrganizationIcon from '@material-ui/icons/AccountBalance';
 import Calendar from '@material-ui/icons/CalendarToday';
+import To from '@material-ui/icons/ArrowForward';
+import Members from '@material-ui/icons/SupervisedUserCircle';
 import University from '@material-ui/icons/LocalLibrary';
 // import Renew from '@material-ui/icons/AutoRenew';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
 
 import 'chartist/dist/chartist.min.css';
 import styles from './Dashboard.scss';
@@ -64,7 +64,6 @@ class Dashboard extends Component {
     const durations = 500;
     // const Chartist = require('chartist');
     const data = {
-      labels: ['2012', '2013', '2014', '2015', '2016', '2017', '2018'],
       series: [[12, 17, 7, 17, 23, 18, 38]]
     };
     const chart2 = {
@@ -160,21 +159,18 @@ class Dashboard extends Component {
                 <CardHeader
                   avatar={
                     <Avatar className={styles.CardAvatar}>
-                      <Calendar className={styles.OverViewIcon} />
+                      <Members className={styles.OverViewIcon} />
                     </Avatar>
                   }
                   className={styles.CardHeader}
                 />
                 <div className={styles.CardUpperText}>
-                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Renewal Period</Typography>
-                  <Typography variant="body2" className={styles.DateText}>12/21/1995 to 12/21/1996</Typography>
+                  <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Registered Members</Typography>
+                  <Typography variant="subtitle1" className={styles.PrimaryText}>{organizationCount.length}</Typography>
                 </div>
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <Calendar />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/superadmin/renewaldate"><Typography variant="subtitle1" color="textSecondary">Renewal Period</Typography></Link>} />
+                  <ListItemText primary={<Typography variant="subtitle1" color="textSecondary" />} />
                 </ListItem>
               </Card>
             </Grid>
@@ -216,10 +212,8 @@ class Dashboard extends Component {
 
           <Grid container spacing={24}>
             <Grid item xs={12} sm={12} md={6}>
-              <ReactPlayer height="330px" url="https://www.youtube.com/watch?v=0Zl5moDWab0" playing />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
               <Card className={styles.ChartContainer}>
+                <Typography variant="caption" color="textSecondary" className={styles.ChartVerticalText}>no. of members</Typography>
                 <Card className={styles.ChartCard}>
                   <ChartistGraph
                     className="ct-chart"
@@ -228,6 +222,7 @@ class Dashboard extends Component {
                     options={chart2.options}
                     listener={chart2.animation}
                   />
+                  <Typography variant="caption" color="textSecondary" className={styles.ChartText}>Organizations</Typography>
                 </Card>
                 <Typography variant="body1" className={styles.ChartPrimaryText}>Organizations with highest member count</Typography>
                 <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText}>SWITS leading with (69) members</Typography>
@@ -237,6 +232,34 @@ class Dashboard extends Component {
                     <Store />
                   </ListItemIcon>
                   <ListItemText primary={<Link to="/superadmin/organizations">View all Organizations</Link>} />
+                </ListItem>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <Card className={styles.ChartContainer}>
+                <Typography variant="body1" className={styles.ChartPrimaryText}>Renewal Period</Typography>
+                <div className={styles.DateContainer}>
+                  <div className={styles.DateContainerMiddle}>
+                    <Typography variant="caption" className={styles.Starts}>Start</Typography>
+                    <Typography variant="caption" className={styles.Ends}>End</Typography>
+                    <Typography variant="body1" className={styles.Year1}>2018</Typography>
+                    <Typography variant="body1" className={styles.Year2}>2018</Typography>
+                    <Typography variant="body1" className={styles.Day1}>25</Typography>
+                    <Typography variant="body1" className={styles.Day2}>25</Typography>
+                    <Typography variant="body1" className={styles.Month1}>Dec</Typography>
+                    <Typography variant="body1" className={styles.Month2}>Dec</Typography>
+                    <Calendar className={styles.OverViewIconRenewal} />
+                    <To className={styles.To} />
+                    <Calendar className={styles.OverViewIconRenewal} />
+                    <Typography variant="body1" color="textSecondary" className={styles.Note}>*Organizations that did not renew after said date will automatically be archived</Typography>
+                  </div>
+                </div>
+                <div className={styles.DividerChart} />
+                <ListItem className={styles.CardBottomText}>
+                  <ListItemIcon >
+                    <Store />
+                  </ListItemIcon>
+                  <ListItemText primary={<Link to="/superadmin/renewaldate">Manage Renewal Period</Link>} />
                 </ListItem>
               </Card>
             </Grid>

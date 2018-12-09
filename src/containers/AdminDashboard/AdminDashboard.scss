@@ -88,6 +88,23 @@
   top: -20px;
 }
 
+.ChartText {
+  position: absolute;
+  bottom: 30;
+  left: 45%;
+}
+
+.ChartVerticalText {
+  position: absolute;
+  top: 35%;
+  left: -25px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
 .ChartContainer {
   margin-top: 40px;
   height: 300px;
@@ -111,4 +128,11 @@
 .ChartSecondaryText {
   margin-left: 20px;
   font-size: 15px;
+}
+
+.OrgAvatar {
+  margin-top: 25px;
+  margin-left: 20px;
+  height: 250px;
+  width: 250px;
 }
