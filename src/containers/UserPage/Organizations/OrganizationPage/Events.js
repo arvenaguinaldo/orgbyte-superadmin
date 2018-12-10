@@ -166,7 +166,7 @@ class Events extends Component {
                         <Card className={style.EventCard}>
                           <CardMedia
                             className={style.EventImage}
-                            image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                            image="https://i.postimg.cc/6pzTrRQ0/EVENTITCONGRESS.jpg"
                           />
                         </Card>
 

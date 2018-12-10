@@ -2,7 +2,7 @@ import {RENEWAL} from 'constants/actions/renewal';
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
-  list: [],
+  date: [],
   meta: {
     loading: false
   }
@@ -18,7 +18,22 @@ const renewal = (state = initialState, action) => {
     case RENEWAL.SET_RENEWAL_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        list: data,
+        date: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
+    case RENEWAL.GET_RENEWAL: {
+      return state.mergeIn(['meta'], fromJS({
+        isLoading: true
+      }));
+    }
+    case RENEWAL.GET_RENEWAL_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        date: data,
         meta: {
           loading: false
         }

@@ -7,9 +7,9 @@ export const makeSelectRenewal = () => createSelector(
   renewal => renewal.toJS()
 );
 
-export const makeSelectRenewalList = () => createSelector(
+export const makeSelectRenewalDate = () => createSelector(
   makeSelectRenewal(),
-  renewal => renewal.list
+  renewal => renewal.date
 );
 
 export const makeSelectRenewalMeta = () => createSelector(

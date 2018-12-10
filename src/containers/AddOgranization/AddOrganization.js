@@ -10,7 +10,7 @@ import _ from 'lodash';
 
 import {Field, reduxForm, FormSection, change} from 'redux-form';
 
-import {addOrganization} from 'redux/actions/organizations';
+import {addOrganization, addOrganizationSuccess} from 'redux/actions/organizations';
 import {fetchColleges} from 'redux/actions/colleges';
 import {fetchOrganizationNatures} from 'redux/actions/organization_natures';
 
@@ -67,6 +67,7 @@ const styles = theme => ({
 class AddOrganization extends Component {
   static propTypes = {
     addOrganization: PropTypes.func,
+    addOrganizationSuccess: PropTypes.func,
     classes: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     colleges: PropTypes.array.isRequired,
@@ -86,10 +87,13 @@ class AddOrganization extends Component {
     files: []
   };
 
-  onSubmit = (values, dispatch) => {
+  onSubmit = (values) => {
     _.set(values.user, 'password', values.user.last_name + values.organization.acronym);
     console.log(values);
-    dispatch(addOrganization(values, (data) => { this.fileUpload.processQueue(data); }));
+    this.props.addOrganization(values, (data) => {
+      this.fileUpload.processQueue(data.id);
+      return {type: 'file_upload_in_progress'};
+    });
   };
 
   getSteps = () => {
@@ -110,8 +114,7 @@ class AddOrganization extends Component {
   }
 
   handleUploadSuccess = (file, response) => {
-    this.setState({logo: response});
-    console.log(response);
+    this.props.addOrganizationSuccess(response.organization);
   }
 
 
@@ -334,12 +337,14 @@ class AddOrganization extends Component {
                   <Grid item xs={12} sm={12} md={7}>
                     <FileUpload
                       paramName="logo"
-                      maxFilesize={200}
+                      acceptedFiles="image/jpeg, image/png"
+                      thumbnailWidth={200}
+                      thumbnailHeight={200}
                       autoProcessQueue={false}
                       ref={(element) => { this.fileUpload = element; }}
                       onUploadSuccess={this.handleUploadSuccess}
                       uploadUrl="http://localhost:3000/organizations/logo"
-                      label="Upload a image"
+                      label="Drop image here or click to upload"
                     />
                   </Grid>
                 </Grid>
@@ -469,6 +474,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   addOrganization,
+  addOrganizationSuccess,
   fetchColleges,
   fetchOrganizationNatures
 };
