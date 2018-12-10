@@ -156,10 +156,14 @@ class EventDetails extends Component {
       height: 400
     };
 
-    const image = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
+    // const image = 'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key
 
     const attendDisable = moment().isSameOrAfter(this.props.event.starts) && moment().isSameOrBefore(this.props.event.ends);
     const registerDisable = moment().isAfter(this.props.event.ends);
+
+    if (!event.image_blobs) {
+      return null;
+    }
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -244,7 +248,7 @@ class EventDetails extends Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={10} sm={10} md={5} >
-                  <CardMedia className={styles.eventImage} image={image} component="img">
+                  <CardMedia className={styles.eventImage} image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key} component="img">
                   </CardMedia>
                 </Grid>
               </Grid>

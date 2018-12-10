@@ -33,7 +33,7 @@ class ViewModal extends React.Component {
           onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle>{'Member details'}</DialogTitle>
+          <DialogTitle>{'Organization details'}</DialogTitle>
           {organizations.filter(organization => (id === organization.id ? organization : null)).map((organization) => {
             return (
               <div key={organization.id} className={style.ModalContainer}>
@@ -43,6 +43,7 @@ class ViewModal extends React.Component {
                       <img
                         src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
                         alt="orgShirt"
+                        className={style.logo}
                       />
                     </Grid>
                     <Grid item md={5} xs={12} sm={12}>

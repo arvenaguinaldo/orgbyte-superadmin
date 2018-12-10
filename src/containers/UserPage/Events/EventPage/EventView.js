@@ -115,7 +115,7 @@ class EventPage extends Component {
         <div className={classes.ImageDiv}>
           <CardMedia
             className={classes.Image}
-            image="https://i.postimg.cc/FRzLXJfR/swits.jpg"
+            image="https://i.postimg.cc/6pzTrRQ0/EVENTITCONGRESS.jpg"
             title="Orgbyte Event Image"
             component="img"
             alt="Event Photo"

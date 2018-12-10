@@ -1,4 +1,4 @@
-import {takeEvery} from 'redux-saga';
+import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as eventsActions from 'redux/actions/events';
 import * as eventsService from 'services/api/events';
@@ -37,10 +37,13 @@ function* createEvent(action) {
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
-    } else {
-      yield call(callSuccessNotification, 'Event Created Successfully');
       yield put(eventsActions.createEventSuccess(response.data));
-      yield put(reset('CreateEventForm'));
+    } else {
+      yield put(action.callback(response.data));
+      yield call(delay, 5000);
+      yield call(callSuccessNotification, 'Event Created Successfully');
+      // yield put(eventsActions.fetchEvents());
+      yield put(reset('CreateEventForm')); // eslint-disable-line
       yield put(push('/admin/events'));
     }
   }
