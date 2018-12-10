@@ -23,11 +23,3 @@ body {
     padding-right: 1;
   }
 }
-
-button:focus {
-  outline: 0;
-}
-
-*:focus {
-  outline: none !important;
-}
