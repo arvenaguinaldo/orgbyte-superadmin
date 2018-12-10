@@ -39,7 +39,7 @@ const shirts = (state = initialState, action) => {
     case SHIRTS.ADD_ORGSHIRT_SUCCESS: {
       const {data} = action.response;
       return state.merge(fromJS({
-        orgshirt: data,
+        shirt: data,
         meta: {
           loading: false
         }

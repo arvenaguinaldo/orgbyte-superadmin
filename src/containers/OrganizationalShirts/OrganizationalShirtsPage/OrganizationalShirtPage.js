@@ -111,7 +111,6 @@ class OrganizationalShirtPage extends React.Component {
         <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
           Edit Shirt Details
         </Button>
-        {console.log(this.props)}
         <MUIDataTable
           title={'Organizational Shirt Purchase Record'}
           data={purchasedShirts.map((shirt) => {

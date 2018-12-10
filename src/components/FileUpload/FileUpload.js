@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Dropzone from 'dropzone';
 import classnames from 'classnames';
 import CloudUpload from '@material-ui/icons/CloudUpload';
+import LinearProgress from '@material-ui/core/LinearProgress';
 // import Icon from 'components/common/Icon/Icon';
 // import ProgressBar from 'components/common/Spinner/Spinner';
 // import qa from 'components/common/qa';
@@ -13,7 +14,7 @@ const FileList = ({files, formatFileSize}) => {
   const styles = require('./FileList.scss');
   return (
     <div>
-      {files.map(({size, status, upload: {filename}}) => {
+      {files.map(({size, status, upload: {filename, progress}}) => {
         const fileClassName = classnames(
           styles.file,
           status === 'error' && styles.errorFile
@@ -23,6 +24,9 @@ const FileList = ({files, formatFileSize}) => {
             <div className={styles.fileName}>{filename}</div>
             <div className={styles.fileSize}>
               &nbsp;(<span dangerouslySetInnerHTML={formatFileSize(size)} />)
+            </div>
+            <div className={styles.progressBar}>
+              <LinearProgress color="secondary" variant="determinate" value={progress} />
             </div>
           </div>
         );
@@ -43,6 +47,7 @@ export default class FileUpload extends Component {
     headers: PropTypes.object,
     isErrorMessageVisible: PropTypes.bool,
     isFileListVisible: PropTypes.bool,
+    uploadMultiple: PropTypes.bool,
     messages: PropTypes.shape({
       dictFileTooBig: PropTypes.string,
       dictInvalidFileType: PropTypes.string,
@@ -54,6 +59,8 @@ export default class FileUpload extends Component {
       dictMaxFilesExceeded: PropTypes.string
     }),
     label: PropTypes.string.isRequired,
+    thumbnailWidth: PropTypes.number,
+    thumbnailHeight: PropTypes.number,
     maxFiles: PropTypes.number,
     maxFilesize: PropTypes.number,
     paramName: PropTypes.string,
@@ -73,6 +80,7 @@ export default class FileUpload extends Component {
   static defaultProps = {
     isErrorMessageVisible: true,
     isFileListVisible: true,
+    uploadMultiple: false,
     maxFilesize: 256,
     onError: noop,
     onFileAdd: noop,
@@ -95,14 +103,24 @@ export default class FileUpload extends Component {
   }
 
   componentDidMount() {
+    const previewNode = document.querySelector('#tpl');
+
+    previewNode.id = '';
+
+    const previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+
     const {
       acceptedFiles,
       autoProcessQueue,
       headers,
+      thumbnailWidth,
+      thumbnailHeight,
       maxFiles,
       maxFilesize,
       messages,
       onMaxFilesExceed,
+      uploadMultiple,
       onUploadSuccess,
       paramName,
       timeout,
@@ -112,15 +130,19 @@ export default class FileUpload extends Component {
     const options = {
       acceptedFiles,
       autoProcessQueue,
-      addedfile: this.handleOnFileAdd,
+      previewTemplate,
+      previewsContainer: '#previews',
       canceled: this.handleOnUploadCanceled,
       complete: this.handleOnUploadComplete,
       error: this.handleOnError,
       headers,
+      thumbnailWidth,
+      thumbnailHeight,
       maxFiles,
       maxFilesize,
       maxfilesexceeded: onMaxFilesExceed,
       maxfilesreached: this.handleOnMaxFilesReach,
+      uploadMultiple,
       paramName,
       renameFile: this.handleRenameFile,
       success: onUploadSuccess,
@@ -158,6 +180,26 @@ export default class FileUpload extends Component {
       clearTimeout(this.uploadTimeoutId);
     }
   };
+
+  // handleAddedfile = (file) => {
+  //   file.previewElement = Dropzone.createElement(this.dropzone.previewTemplate); // eslint-disable-line
+  //   console.log(file.previewElement);
+  //   // Now attach this new element some where in your page
+  // }
+
+  // handleThumbnail = (file, dataUrl) => {
+  //   if (file.previewElement) {
+  //     console.log(file.previewElement);
+  //     file.previewElement.classList.remove('#tpl');
+  //     const images = file.previewElement.querySelector('.data-dz-thumbnail');
+  //     // for (let i = 0; i < images.length; i += 1) {
+  //     const thumbnailElement = images;
+  //     thumbnailElement.alt = file.name;
+  //     thumbnailElement.src = dataUrl;
+  //     // }
+  //     file.previewElement.classList.add('dz-image-preview');
+  //   }
+  // }
 
   handleOnUploadCanceled = () => {
     this.props.onUploadTimeout();
@@ -246,12 +288,12 @@ export default class FileUpload extends Component {
     const styles = require('./FileUpload.scss');
     const {
       errorMessage,
-      files,
+      // files,
       isMaxFilesReached
     } = this.state;
     const {
       isErrorMessageVisible,
-      isFileListVisible,
+      // isFileListVisible,
       size,
       label
     } = this.props;
@@ -266,33 +308,24 @@ export default class FileUpload extends Component {
       ref: (element) => { this.form = element; }
     };
     return (
-      <div {...rootProps}>
+      <div {...rootProps} >
         {isErrorMessageVisible && errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
         <form {...formProps} encType="multipart/form-data">
           {!isMaxFilesReached &&
-          <div className={classnames(styles.message, 'dz-message')}>
-            <div className={styles.icon}><CloudUpload /></div>
-            <div className={styles.label}>{label}</div>
-            {/* <input type="hidden" name="key" value="38212380_1858531684185480_5302473689139249152_n.jpg" />
-
-              <input type="hidden" name="acl" value="public-read" />
-              <input type="hidden" name="Content-Type" value="image/jpeg" />
-              <input type="hidden" name="x-amz-meta-uuid" value="14365123651274" />
-              <input type="hidden" name="x-amz-server-side-encryption" value="AES256" />
-              <input type="hidden" name="X-Amz-Algorithm" value="AWS4-HMAC-SHA256" />
-              <input type="hidden" name="X-Amz-Date" value="20191229T000000Z" />
-
-              <input type="hidden" name="x-amz-meta-tag" value="" />
-              <input type="hidden" name="X-Amz-Signature" value="fa73e8127e6ac5337e173f59c8f275007cdcb9ed1ea3a1d6d4cfd6c46760d996" />
-              <input
-                type="hidden"
-                name="Policy"
-                value="eyAiZXhwaXJhdGlvbiI6ICIyMDE5LTEyLTMwVDEyOjAwOjAwLjAwMFoiLA0KICAiY29uZGl0aW9ucyI6IFsNCiAgICB7ImJ1Y2tldCI6ICJvcmdieXRlIn0sDQogICAgWyJzdGFydHMtd2l0aCIsICIka2V5IiwgIiJdLA0KICAgIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sDQogICAgWyJzdGFydHMtd2l0aCIsICIkQ29udGVudC1UeXBlIiwgImltYWdlLyJdLA0KICAgIHsieC1hbXotbWV0YS11dWlkIjogIjE0MzY1MTIzNjUxMjc0In0sDQogICAgeyJ4LWFtei1zZXJ2ZXItc2lkZS1lbmNyeXB0aW9uIjogIkFFUzI1NiJ9LA0KICAgIFsic3RhcnRzLXdpdGgiLCAiJHgtYW16LW1ldGEtdGFnIiwgIiJdLA0KDQogICAgeyJ4LWFtei1jcmVkZW50aWFsIjogIkFLSUFJUktNNlZXTUVKTVhENFRBLzIwMTkxMjI5L2FwLXNvdXRoZWFzdC0xL3MzL2F3czRfcmVxdWVzdCJ9LA0KICAgIHsieC1hbXotYWxnb3JpdGhtIjogIkFXUzQtSE1BQy1TSEEyNTYifSwNCiAgICB7IngtYW16LWRhdGUiOiAiMjAxOTEyMjlUMDAwMDAwWiIgfQ0KICBdDQp9"
-              /> */}
+          <div className={classnames(styles.message, 'dz-message', 'dropzone-previews')} id="previews">
+            <div id="tpl">
+              <div className="dz-details">
+                <div className="dz-image"><img data-dz-thumbnail="" /></div> {/*eslint-disable-line*/}
+                <div className="dz-filename"><span data-dz-name="" /></div>
+              </div>
+            </div>
+            <div>
+              <div className={styles.icon}><CloudUpload /></div>
+              <div className={styles.label}>{label}</div>
+            </div>
           </div>
           }
         </form>
-        {isFileListVisible && <FileList files={files} formatFileSize={this.formatFileSize} />}
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -14,7 +15,7 @@ import FileUpload from 'components/FileUpload/FileUpload';
 import {createNumberMask} from 'redux-form-input-masks';
 import {validate, warn} from 'utils/Validations/CreateEvent';
 
-import {createEvent} from 'redux/actions/events';
+import {createEvent, createEventSuccess} from 'redux/actions/events';
 // import GoogleSearchPlaces from 'components/GoogleSearchPlaces/GoogleSearchPlaces';
 
 // import GooglePlaceAutocomplete from 'material-ui-autocomplete-google-places';
@@ -42,17 +43,21 @@ import style from './CreateEvent.scss';
 // };
 
 class CreateEvent extends Component {
-  // static propTypes = {
-  //   change: PropTypes.func.isRequired
-  // }
+  static propTypes = {
+    createEvent: PropTypes.func.isRequired,
+    createEventSuccess: PropTypes.func.isRequired
+  }
 
   state = {
     startsDate: new Date('2018-01-01T00:00:00.000Z'),
     endsDate: new Date()
   };
 
-  onSubmit = (values, dispatch) => {
-    dispatch(createEvent(values));
+  onSubmit = (values) => {
+    this.props.createEvent(values, (data) => {
+      this.fileUpload.processQueue(data.id);
+      return {type: 'event_image_upload_in_progress'};
+    });
   };
 
   handleStartsDateChange = (date) => {
@@ -61,6 +66,10 @@ class CreateEvent extends Component {
 
   handleEndsDateChange = (date) => {
     this.setState({endsDate: date});
+  }
+
+  handleUploadSuccess = (file, response) => {
+    this.props.createEventSuccess(response);
   }
 
   render() {
@@ -171,7 +180,17 @@ class CreateEvent extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <FormLabel component="legend">{'Event Poster'}</FormLabel>
                     <br />
-                    <FileUpload paramName="file" maxFilesize={200} uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Drag or Upload a image" />
+                    <FileUpload
+                      paramName="image"
+                      acceptedFiles="image/jpeg, image/png"
+                      thumbnailWidth={450}
+                      thumbnailHeight={200}
+                      autoProcessQueue={false}
+                      ref={(element) => { this.fileUpload = element; }}
+                      onUploadSuccess={this.handleUploadSuccess}
+                      uploadUrl="http://localhost:3000/events/image"
+                      label="Drop image here or click to upload"
+                    />
                   </Grid>
                 </Grid>
 
@@ -290,7 +309,12 @@ const mapStateToProps = createStructuredSelector({
   meta: makeSelectEventsMeta()
 });
 
-const withRedux = connect(mapStateToProps, null);
+const mapDispatchToProps = {
+  createEvent,
+  createEventSuccess
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   withRedux,

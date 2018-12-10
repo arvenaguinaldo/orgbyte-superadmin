@@ -19,14 +19,31 @@ function* setRenewal(action) {
   }
 }
 
+function* getRenewal(action) {
+  const response = yield call(renewalService.getRenewal, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+    } else {
+      // yield call(callSuccessNotification, 'Renewal dates get Successfully');
+      yield put(renewalActions.getRenewalSuccess(response));
+    }
+  }
+}
+
 //* *********** Watchers ************//
 
 function* watchRequest() {
   yield* takeEvery(RENEWAL.SET_RENEWAL, setRenewal);
 }
 
+function* watchRequestGetRenewal() {
+  yield* takeEvery(RENEWAL.GET_RENEWAL, getRenewal);
+}
+
 export default function* renewal() {
   yield [
-    fork(watchRequest)
+    fork(watchRequest),
+    fork(watchRequestGetRenewal)
   ];
 }

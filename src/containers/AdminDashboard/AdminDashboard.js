@@ -216,7 +216,7 @@ class Dashboard extends Component {
         }
       }
     };
-    const officerNames = officers.slice(0, 5).map((officer) => {
+    const officerNames = officers.map((officer) => {
       return officer.first_name
       ;
     });

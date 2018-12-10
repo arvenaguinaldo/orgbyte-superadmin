@@ -20,9 +20,10 @@ export const fetchEventSuccess = response => ({
   response
 });
 
-export const createEvent = params => ({
+export const createEvent = (params, callback) => ({
   type: EVENTS.CREATE_EVENT,
-  params
+  params,
+  callback
 });
 
 export const createEventSuccess = response => ({

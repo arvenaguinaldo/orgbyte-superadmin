@@ -1,4 +1,4 @@
-import {takeEvery} from 'redux-saga';
+import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as announcementsActions from 'redux/actions/announcements';
 import * as announcementsService from 'services/api/announcements';
@@ -39,8 +39,10 @@ function* createAnnouncement(action) {
     if (response.data.error) {
       yield call(callErrorNotification, response.data.error);
     } else {
-      yield call(callSuccessNotification, 'Announcement Posr Successfully');
-      yield put(announcementsActions.createAnnouncementSuccess(response.data));
+      yield put(action.callback(response.data));
+      yield call(delay, 5000);
+      yield call(callSuccessNotification, 'Announcement Post Successfully');
+      // yield put(announcementsActions.createAnnouncementSuccess(response.data));
       yield put(reset('AnnouncementsForm'));
       yield put(push('/admin/announcements'));
     }

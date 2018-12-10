@@ -10,9 +10,10 @@ export const fetchShirtSuccess = response => ({
   response
 });
 
-export const addOrgShirt = params => ({
+export const addOrgShirt = (params, callback) => ({
   type: SHIRTS.ADD_ORGSHIRT,
-  params
+  params,
+  callback
 });
 
 export const addOrgShirtSuccess = response => ({

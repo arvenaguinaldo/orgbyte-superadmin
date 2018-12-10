@@ -45,7 +45,6 @@ class Member extends Component {
     }
   };
 
-
   render() {
     const {isVerified, verifiedMember, event} = this.props;
 
