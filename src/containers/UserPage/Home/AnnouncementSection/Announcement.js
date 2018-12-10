@@ -41,65 +41,76 @@ class Announcements extends Component {
       <div className={style.ChildContainer}>
         <Grid container spacing={8}>
           <Grid item lg={6} md={6} sm={6} xs={6}>
-            <Typography variant="h5" className={style.SectionHeading}>
+            <Typography variant="h5" className={style.SectionHeading} gutterBottom>
               ANNOUNCEMENTS
             </Typography>
           </Grid>
           <Grid container spacing={0}>
-            {announcements.slice(0, 3).map((ann) => {
-              return (
-                <Grid item md={4} sm={12} xs={12} key={ann.id}>
-                  <Link key={ann.id} to={'/announcements/' + ann.id}>
-                    <Grid container spacing={0}>
-                      <Grid item md={12} sm={12} xs={12} key={ann.id}>
-                        <Card className={style.paper2} key={ann.id}>
-                          <Grid container spacing={16}>
-                            <Grid item md={4} sm={4} xs={4}>
-                              <Card className={style.CardImage}>
-                                <CardMedia
-                                  className={style.CardMedia}
-                                  image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                                  title="Announcement"
-                                />
-                              </Card>
-                            </Grid>
-                            <Grid item md={8} sm={8} xs={8}>
-                              <div className={style.AnnouncementDetails}>
-                                <div className={style.Title}>
-                                  <Typography variant="h5" component="p">
-                                    {ann.title}
-                                  </Typography>
-                                </div>
-                                <div className={style.RelativeTime}>
-                                  <Typography variant="subtitle1" color="textSecondary" component="p">
-                                    <TimeAgo date={ann.starts} formatter={formatter} />
-                                  </Typography>
-                                </div>
-                                <div className={style.Author}>
-                                  <Typography variant="body1">
+            { announcements.length !== 0 ?
+              (announcements.slice(0, 3).map((ann) => {
+                return (
+                  <Grid item md={4} sm={12} xs={12} key={ann.id}>
+                    <Link key={ann.id} to={'/announcements/' + ann.id}>
+                      <Grid container spacing={0}>
+                        <Grid item md={12} sm={12} xs={12} key={ann.id}>
+                          <Card className={style.paper2} key={ann.id}>
+                            <Grid container spacing={16}>
+                              <Grid item md={4} sm={4} xs={4}>
+                                <Card className={style.CardImage}>
+                                  <CardMedia
+                                    className={style.CardMedia}
+                                    image="https://i.postimg.cc/J7HQP4KL/miah1.png"
+                                    title="Announcement"
+                                  />
+                                </Card>
+                              </Grid>
+                              <Grid item md={8} sm={8} xs={8}>
+                                <div className={style.AnnouncementDetails}>
+                                  <div className={style.Title}>
+                                    <Typography variant="h5" component="p">
+                                      {ann.title}
+                                    </Typography>
+                                  </div>
+                                  <div className={style.RelativeTime}>
+                                    <Typography variant="subtitle1" color="textSecondary" component="p">
+                                      <TimeAgo date={ann.starts} formatter={formatter} />
+                                    </Typography>
+                                  </div>
+                                  <div className={style.Author}>
+                                    <Typography variant="body1">
                                       by {(ann.organization_name)}
-                                  </Typography>
+                                    </Typography>
+                                  </div>
                                 </div>
-                              </div>
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        </Card>
+                          </Card>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Link>
-                </Grid>
-              );
-            })}
+                    </Link>
+                  </Grid>
+                );
+              })) :
+              (<Grid item md={12} sm={12} xs={12}>
+                <div className={style.AnnouncementEmpty}>
+                  <Typography variant="h6" className={style.EmptyMessage} color="textSecondary">
+                      No Announcements Posted
+                  </Typography>
+                </div>
+              </Grid>)
+            }
           </Grid>
         </Grid>
-
-        <div className={style.AnnouncementButton}>
-          <Link to={'/announcements/'}>
-            <Button size="small" variant="contained" color="primary">
+        { announcements.length !== 0 ?
+          (<div className={style.AnnouncementButton}>
+            <Link to={'/announcements/'}>
+              <Button size="small" variant="contained" color="primary">
               See more
-            </Button>
-          </Link>
-        </div>
+              </Button>
+            </Link>
+          </div>) :
+          (null)
+        }
 
       </div>
     );
