@@ -36,6 +36,7 @@ class Announcements extends Component {
 
   render() {
     const {announcements} = this.props;
+    console.log(announcements);
 
     return (
       <div className={style.ChildContainer}>

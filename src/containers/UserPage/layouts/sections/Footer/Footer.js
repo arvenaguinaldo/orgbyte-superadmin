@@ -102,17 +102,17 @@ class Footer extends Component {
 
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                       <List component="nav">
-                        <a href="https://web.facebook.com/ORGBYTE">
-                          <ListItem button>
-                            <Typography variant="overline" className={classes.text}>Follow Us</Typography>
-                          </ListItem>
-                          <ListItem button>
-                            <ListItemIcon>
-                              <SocialIcon network="facebook" color="#171717" style={{height: 25, width: 25}} />
-                            </ListItemIcon>
-                            <Typography variant="caption" className={classes.text}>Facebook</Typography>
-                          </ListItem>
-                        </a>
+                        {/* <a href="https://web.facebook.com/ORGBYTE"> */}
+                        <ListItem button>
+                          <Typography variant="overline" className={classes.text}>Follow Us</Typography>
+                        </ListItem>
+                        <ListItem button>
+                          <ListItemIcon>
+                            <SocialIcon network="facebook" color="#171717" style={{height: 25, width: 25}} />
+                          </ListItemIcon>
+                          <Typography variant="caption" className={classes.text}>Facebook</Typography>
+                        </ListItem>
+                        {/* </a> */}
                       </List>
                     </Grid>
                   </Grid>

@@ -50,7 +50,11 @@ class Organizations extends Component {
                         <Center>
                           <CardContent>
                             <Center>
-                              <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png" />
+                              {org.logo_blobs.length === 0 ?
+                                <UserAvatar size="140" name="Society for the Welfare ..." src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png" />
+                                :
+                                <UserAvatar size="140" name="Society for the Welfare ..." src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + org.logo_blobs[0].key} />
+                              }
                             </Center>
                             <Center>
                               <Typography variant="caption" className={style.OrgName}>

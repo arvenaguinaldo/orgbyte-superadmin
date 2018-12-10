@@ -217,6 +217,9 @@ class Dashboard extends Component {
         }
       }
     };
+    if (!organization.logo_blobs) {
+      return null;
+    }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4" gutterBottom>Dashboard</Typography>
@@ -343,8 +346,8 @@ class Dashboard extends Component {
                 <Grid container spacing={0}>
                   <Grid item md={6} xs={12} sm={12}>
                     <Avatar
-                      alt="SWITS"
-                      src="https://i.postimg.cc/CxzJrZ0J/SWITS-Logo.png"
+                      alt={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].filename}
+                      src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
                       className={styles.OrgAvatar}
                     />
                   </Grid>

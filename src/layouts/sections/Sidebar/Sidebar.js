@@ -5,7 +5,9 @@ import {withRouter} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import {logout} from 'redux/actions/auth';
+import {createStructuredSelector} from 'reselect';
 
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 // Material UI Styles
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -42,6 +44,7 @@ class Sidebar extends Component {
     onHandleDrawerToggle: PropTypes.func.isRequired,
     mobileOpen: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
+    organization: PropTypes.object,
     // organization: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
   };
@@ -62,9 +65,12 @@ class Sidebar extends Component {
       location: {pathname},
       onHandleDrawerToggle,
       mobileOpen,
-      user
+      user,
+      organization
     } = this.props;
-
+    if (user.user_type_id !== 'super_admin' && !organization.logo_blobs) {
+      return null;
+    }
     const drawer = (
       <div>
         <div className={classes.toolbar}>
@@ -73,8 +79,8 @@ class Sidebar extends Component {
             <Grid container spacing={0}>
               <Grid item xs={12} sm={12} md={2}>
                 <Avatar
-                  alt="Organization_logo"
-                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                  alt={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].filename}
+                  src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
                   className={styles.Avatar}
                 />
               </Grid>
@@ -142,7 +148,11 @@ class Sidebar extends Component {
     );
   }
 }
-const withRedux = connect(null, {logout});
+const mapStateToProps = createStructuredSelector({
+  organization: makeSelectCurrentOrganization()
+});
+
+const withRedux = connect(mapStateToProps, {logout}, null);
 
 export default compose(
   withRouter,

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import {Field, reduxForm} from 'redux-form';
-import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
@@ -77,7 +77,6 @@ const styles = {
   paper2: {
     margin: '5px',
     padding: 10,
-    height: '200px',
     '&:hover': {
       boxShadow: '0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)'
     }
@@ -160,7 +159,7 @@ class UserOrganizationList extends Component {
                       onChange={this.searchHandler}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12}>
+                  {/* <Grid item xs={12} sm={12} md={12}>
                     <Field
                       name="organization_type_id"
                       component={renderSelectField}
@@ -182,7 +181,7 @@ class UserOrganizationList extends Component {
                       <option value="" />
                       <option value={1}>Academic</option>
                     </Field>
-                  </Grid>
+                  </Grid> */}
                 </form>
               </Paper>
             </Grid>
@@ -195,16 +194,25 @@ class UserOrganizationList extends Component {
                       <Link key={org.id} to={'/organizations/' + org.acronym}>
                         <Card className={classes.paper2}>
                           <Grid container spacing={0}>
-                            <Grid item md={3} xs={5}>
+                            <Grid item md={3} xs={12}>
                               <Card>
-                                <Avatar
-                                  alt="Organization Logo"
-                                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
-                                  className={classes.annou}
-                                />
+                                {org.logo_blobs.length === 0 ?
+                                  <Avatar
+                                    alt="Organization Logo"
+                                    src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png"
+                                    className={classes.annou}
+                                  />
+                                  :
+                                  <Avatar
+                                    alt="Organization Logo"
+                                    src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + org.logo_blobs[0].key}
+                                    className={classes.annou}
+                                  />
+                                }
+
                               </Card>
                             </Grid>
-                            <Grid item xs={7} >
+                            <Grid item md={9} xs={12} >
                               <Paper className={classes.title2}>
                                 <Typography variant="h5">
                                   {org.name}
