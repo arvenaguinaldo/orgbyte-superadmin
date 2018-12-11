@@ -50,6 +50,7 @@
     "react-center": "^1.1.1",
     "react-chartist": "^0.13.1",
     "react-color": "^2.14.1",
+    "react-date-range": "^1.0.0-beta",
     "react-dom": "^16.5.2",
     "react-draft-wysiwyg": "^1.12.13",
     "react-dropzone": "^7.0.1",

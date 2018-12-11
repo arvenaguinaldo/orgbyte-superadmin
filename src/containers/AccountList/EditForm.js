@@ -45,6 +45,7 @@ class EditForm extends React.Component {
               <Grid container spacing={40}>
                 <Grid item xs={10} sm={10} md={4}>
                   <Field
+                    required
                     name="last_name"
                     component={renderTextField}
                     label="Last Name"
@@ -54,6 +55,7 @@ class EditForm extends React.Component {
 
                 <Grid item xs={10} sm={10} md={4}>
                   <Field
+                    required
                     name="first_name"
                     component={renderTextField}
                     label="First Name"
@@ -74,6 +76,7 @@ class EditForm extends React.Component {
               <Grid container spacing={32}>
                 <Grid item xs={10} sm={10} md={4}>
                   <Field
+                    required
                     name="email"
                     component={renderTextField}
                     label="Email"
@@ -83,6 +86,7 @@ class EditForm extends React.Component {
 
                 <Grid item xs={6} sm={12} md={4}>
                   <Field
+                    required
                     name="contact_number"
                     component={renderTextField}
                     label="Contact Number"
@@ -95,7 +99,7 @@ class EditForm extends React.Component {
                   <Field
                     name="college_id"
                     component={renderSelectField}
-                    label="college"
+                    label="college*"
                     fullWidth
                   >
                     <option value="" />

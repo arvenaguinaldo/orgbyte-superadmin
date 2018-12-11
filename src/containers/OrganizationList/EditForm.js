@@ -52,6 +52,7 @@ class EditForm extends React.Component {
               <Grid container spacing={40}>
                 <Grid item xs={10} sm={10} md={8}>
                   <Field
+                    required
                     name="name"
                     component={renderTextField}
                     label="Organization Name"
@@ -63,7 +64,7 @@ class EditForm extends React.Component {
                   <Field
                     name="organization_nature_id"
                     component={renderSelectField}
-                    label="Nature of Organiation"
+                    label="Nature of Organiation*"
                     fullWidth
                   >
                     <option value="" />
@@ -79,7 +80,7 @@ class EditForm extends React.Component {
                   <Field
                     name="organization_type_id"
                     component={renderSelectField}
-                    label="Type of Organization"
+                    label="Type of Organization*"
                     fullWidth
                   >
                     <option value="" />
@@ -92,7 +93,7 @@ class EditForm extends React.Component {
                   <Field
                     name="college_id"
                     component={renderSelectField}
-                    label="College"
+                    label="College*"
                     fullWidth
                   >
                     <option value="" />
@@ -109,6 +110,7 @@ class EditForm extends React.Component {
               <Grid container spacing={32}>
                 <Grid item xs={6} sm={6} md={4}>
                   <Field
+                    required
                     name="acronym"
                     component={renderTextField}
                     label="Acronym"
@@ -118,6 +120,7 @@ class EditForm extends React.Component {
 
                 <Grid item xs={10} sm={10} md={3}>
                   <Field
+                    required
                     name="recognition_number"
                     component={renderTextField}
                     label="Recognition Number"
@@ -128,6 +131,7 @@ class EditForm extends React.Component {
 
                 <Grid item xs={11} sm={11} md={5}>
                   <Field
+                    required
                     name="formation"
                     component={renderDatePicker}
                     selected={this.state.selectedDate}

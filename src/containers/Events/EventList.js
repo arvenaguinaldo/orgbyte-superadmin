@@ -87,9 +87,13 @@ class EventList extends Component {
 
   searchHandler = (event) => {
     this.setState({term: event.target.value});
-  }
-
+  };
   render() {
+    // const {events} = this.props;
+    // console.log(events);
+    // if (!events.image_blobs) {
+    //   return null;
+    // }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4">
@@ -181,7 +185,7 @@ class EventList extends Component {
                         alt="Event Image"
                         height="200"
                         width="140"
-                        image="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
+                        image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
                         title="Event Image"
                         className={styles.cardMedia}
                       />

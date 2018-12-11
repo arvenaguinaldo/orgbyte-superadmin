@@ -42,12 +42,15 @@ class Home extends Component {
   };
   render() {
     const {shirt, organization, shirtSizes} = this.props;
-    const src = 'https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png';
     const style = {
       height: 500,
       marginTop: '-40px',
       marginLeft: '30px'
     };
+
+    if (!shirt.image_blobs) {
+      return null;
+    }
     return (
       <LayoutWithTopbarAndSidebar>
         <Paper className={styles.Paper} id={organization.id}>
@@ -92,7 +95,11 @@ class Home extends Component {
                 </Grid>
                 <Grid item xs={10} sm={10} md={6} >
                   <CardMedia className={styles.eventImage}>
-                    <img src={src} style={style} alt={src} />
+                    <img
+                      src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + shirt.image_blobs[0].key}
+                      style={style}
+                      alt={shirt.name}
+                    />
                   </CardMedia>
                 </Grid>
               </Grid>

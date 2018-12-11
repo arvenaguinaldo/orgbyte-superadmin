@@ -45,12 +45,11 @@ class Member extends Component {
     }
   };
 
-
   render() {
     const {isVerified, verifiedMember, event} = this.props;
 
     const studentNumberMask = createTextMask({
-      pattern: '9999-999999',
+      pattern: '9999999999',
       placeholder: ' ',
       guide: false
     });

@@ -20,9 +20,10 @@ export const fetchAnnouncementSuccess = response => ({
   response
 });
 
-export const createAnnouncement = params => ({
+export const createAnnouncement = (params, callback) => ({
   type: ANNOUNCEMENTS.CREATE_ANNOUNCEMENT,
-  params
+  params,
+  callback
 });
 
 export const createAnnouncementSuccess = response => ({

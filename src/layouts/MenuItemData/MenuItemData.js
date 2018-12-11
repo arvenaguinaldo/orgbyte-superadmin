@@ -21,6 +21,8 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import People from '@material-ui/icons/People';
 import Update from '@material-ui/icons/Update';
 import LogsIcon from '@material-ui/icons/History';
+import LocationCity from '@material-ui/icons/LocationCity';
+import School from '@material-ui/icons/School';
 
 // Admin Icons
 import Info from '@material-ui/icons/Info';
@@ -58,7 +60,7 @@ class SuperAdminMenuItemData extends Component {
     if (pathname === '/superadmin/organizations' || pathname === '/superadmin/addorganization' || pathname === '/superadmin/reneworganization') {
       this.setState(({organizationsAccountsOpen: !this.state.organizationsAccountsOpen}));
     }
-    if (pathname === '/superadmin/backups' || pathname === '/superadmin/renewaldate') {
+    if (pathname === '/superadmin/backups' || pathname === '/superadmin/renewaldate' || pathname === '/superadmin/colleges' || pathname === '/superadmin/courses') {
       this.setState(({advancedMenuOpen: !this.state.advancedMenuOpen}));
     }
     if (pathname === '/superadmin/presidents') {
@@ -156,6 +158,20 @@ class SuperAdminMenuItemData extends Component {
           <Collapse in={advancedMenuOpen} timeout="auto" unmountOnExit>
             <MenuList component="div" disablePadding>
 
+              <MenuItem component={Link} to="/superadmin/colleges" selected={pathname === '/superadmin/colleges'} className={style.nested}>
+                <ListItemIcon>
+                  <LocationCity className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Colleges</Typography>} />
+              </MenuItem>
+
+              <MenuItem component={Link} to="/superadmin/courses" selected={pathname === '/superadmin/courses'} className={style.nested}>
+                <ListItemIcon>
+                  <School className={style.listIcon} />
+                </ListItemIcon>
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Courses</Typography>} />
+              </MenuItem>
+
               <MenuItem component={Link} to="/superadmin/renewaldate" selected={pathname === '/superadmin/renewaldate'} className={style.nested}>
                 <ListItemIcon>
                   <Clock className={style.listIcon} />
@@ -238,7 +254,7 @@ class SuperAdminMenuItemData extends Component {
                 <ListItemIcon>
                   <LogsIcon className={style.listIcon} />
                 </ListItemIcon>
-                <ListItemText inset primary={<Typography variant="body1" className={style.list}>Activity logs</Typography>} />
+                <ListItemText inset primary={<Typography variant="body1" className={style.list}>User logs</Typography>} />
               </MenuItem>
 
             </MenuList>

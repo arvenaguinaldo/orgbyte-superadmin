@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import moment from 'moment';
 import JsPDF from 'jspdf';
 import {createStructuredSelector} from 'reselect';
@@ -233,13 +233,13 @@ class MemberForm extends Component {
         </Grid>
 
         <div className={style.bottomButton}>
-          {/* <Button component={Link} to={'/events/'} color="primary" className={style.button}>
-                  Cancel
-          </Button> */}
-
-          <Button onClick={e => this.onGenerateId(e)} color="primary" className={style.button}>
+          <Button component={Link} to={'admin/events/' + this.props.event.id} color="primary" className={style.button}>
                   Cancel
           </Button>
+
+          {/* <Button onClick={e => this.onGenerateId(e)} color="primary" className={style.button}>
+                  Cancel
+          </Button> */}
 
           <SubmitButton loading={meta.isLoadingSubmit} valid={!valid || !verifiedMember || registerDisable} success={success}>
                   Register
@@ -273,7 +273,7 @@ export default compose(
   withRedux,
   withFetchInitialData,
   reduxForm({
-    form: 'EventRegisterFormMember',
+    form: 'EventRegisterForm',
     enableReinitialize: true,
     destroyOnUnmount: true
   })

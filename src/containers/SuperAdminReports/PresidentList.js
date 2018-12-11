@@ -237,9 +237,7 @@ export class CustomToolbar extends Component {
         doc.text('Organization Presidents', 35, 190);
         // HEADER
         const pdfcenter = doc.internal.pageSize.getWidth() / 2;
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
-        doc.addImage('https://i.postimg.cc/fbVLbXsL/OSO.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
         doc.setTextColor(40);
         const split = doc.splitTextToSize(orgname, 300);
         doc.setFontSize(18);

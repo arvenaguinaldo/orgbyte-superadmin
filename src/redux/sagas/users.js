@@ -69,6 +69,7 @@ function* addUser(action) {
     } else {
       yield call(callSuccessNotification, 'Account added successfully');
       yield put(usersActions.addUserSuccess(response));
+      yield put(push('/admin/accounts'));
     }
   }
 }
@@ -94,7 +95,7 @@ function* addMembers(action) {
     } else {
       yield call(callSuccessNotification, 'Registration has been Successful');
       yield put(usersActions.addMembersSuccess(response.data));
-      // yield put(push('/admin/memberships'));
+      yield put(push('/admin/memberships'));
     }
   }
 }

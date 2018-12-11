@@ -13,7 +13,6 @@ export const validate = (values) => {
     'email',
     'last_name',
     'first_name',
-    'college_id',
     'contact_number',
     'position'
   ];

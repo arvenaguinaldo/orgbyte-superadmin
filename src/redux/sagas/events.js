@@ -1,7 +1,8 @@
-import {takeEvery} from 'redux-saga';
+import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as eventsActions from 'redux/actions/events';
 import * as eventsService from 'services/api/events';
+import * as usersActions from 'redux/actions/users';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EVENTS} from 'constants/actions/events';
@@ -37,10 +38,13 @@ function* createEvent(action) {
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
-    } else {
-      yield call(callSuccessNotification, 'Event Created Successfully');
       yield put(eventsActions.createEventSuccess(response.data));
-      yield put(reset('CreateEventForm'));
+    } else {
+      yield put(action.callback(response.data));
+      yield call(delay, 5000);
+      yield call(callSuccessNotification, 'Event Created Successfully');
+      // yield put(eventsActions.fetchEvents());
+      yield put(reset('CreateEventForm')); // eslint-disable-line
       yield put(push('/admin/events'));
     }
   }
@@ -55,9 +59,10 @@ function* register(action) {
     } else {
       yield call(callSuccessNotification, 'Register Successfully');
       yield put(eventsActions.registerSuccess(response.data));
-      yield put(reset('EventRegisterFormMember'));
+      yield put(usersActions.clearVerifyMember());
+      yield put(reset('EventRegisterForm'));
       yield put(reset('VerifyMemberForm'));
-      // yield put(push('/events'));
+      yield put(push('/admin/events/' + response.data.event_id));
     }
   }
 }

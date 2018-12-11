@@ -6,7 +6,7 @@ import {compose} from 'recompose';
 import {Link} from 'react-router-dom';
 import {renderTextField, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import {createNumberMask} from 'redux-form-input-masks';
-import {addOrgShirt} from 'redux/actions/shirts';
+import {addOrgShirt, addOrgShirtSuccess} from 'redux/actions/shirts';
 
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
@@ -37,13 +37,22 @@ const styles = ({
 
 class AddOrganizationalShirt extends Component {
   static propTypes = {
+    addOrgShirt: PropTypes.func.isRequired,
+    addOrgShirtSuccess: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     meta: PropTypes.object
   }
 
-  onSubmit = (values, dispatch) => {
-    dispatch(addOrgShirt(values));
+  onSubmit = (values) => {
+    this.props.addOrgShirt(values, (data) => {
+      this.fileUpload.processQueue(data.id);
+      return {type: 'shirt_image_upload_in_progress'};
+    });
   };
+
+  handleUploadSuccess = (file, response) => {
+    this.props.addOrgShirtSuccess(response);
+  }
 
   render() {
     const {classes, meta} = this.props;
@@ -89,7 +98,17 @@ class AddOrganizationalShirt extends Component {
 
                       <Grid container spacing={24}>
                         <Grid item xs={12} sm={12} md={10}>
-                          <FileUpload paramName="file" maxFilesize={200} size="large" uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Upload or Drag an Image" />
+                          <FileUpload
+                            paramName="image"
+                            acceptedFiles="image/jpeg, image/png"
+                            thumbnailWidth={200}
+                            thumbnailHeight={200}
+                            autoProcessQueue={false}
+                            ref={(element) => { this.fileUpload = element; }}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            uploadUrl="/shirts/image"
+                            label="Drop image here or click to upload"
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -103,6 +122,7 @@ class AddOrganizationalShirt extends Component {
                         <Grid container spacing={24}>
                           <Grid item xs={12} sm={12} md={6} >
                             <Field
+                              required
                               name="name"
                               component={renderTextField}
                               label="Name"
@@ -114,6 +134,7 @@ class AddOrganizationalShirt extends Component {
                         <Grid container spacing={24}>
                           <Grid item xs={12} sm={12} md={6} >
                             <Field
+                              required
                               name="price"
                               component={renderTextField}
                               label="Price"
@@ -126,6 +147,7 @@ class AddOrganizationalShirt extends Component {
                         <Grid container spacing={24} >
                           <Grid item xs={12} sm={12} md={12} >
                             <Field
+                              required
                               name="description"
                               component={renderTextField}
                               label="Description"
@@ -182,6 +204,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
+  addOrgShirt,
+  addOrgShirtSuccess,
   fetchSizes,
   fetchShirt
 };

@@ -46,12 +46,14 @@ class AddAccount extends React.Component {
   };
 
   render() {
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {organization, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
 
     const contactNumberMask = createTextMask({
       pattern: '+63 (999) 999-9999',
       placeholder: ' '
     });
+
+    const required = value => (!value && organization.organization_type_id === 1 ? 'This field is Required' : undefined);
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -64,6 +66,7 @@ class AddAccount extends React.Component {
                   <Grid container spacing={24}>
                     <Grid item xs={12} sm={12} md={4}>
                       <Field
+                        required
                         name="last_name"
                         component={renderTextField}
                         label="Last Name"
@@ -72,6 +75,7 @@ class AddAccount extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                       <Field
+                        required
                         name="first_name"
                         component={renderTextField}
                         label="First Name"
@@ -90,6 +94,7 @@ class AddAccount extends React.Component {
                   <Grid container spacing={24}>
                     <Grid item xs={12} sm={12} md={2}>
                       <Field
+                        required
                         name="email"
                         component={renderTextField}
                         label="Email"
@@ -99,6 +104,7 @@ class AddAccount extends React.Component {
 
                     <Grid item xs={6} sm={12} md={2}>
                       <Field
+                        required
                         name="contact_number"
                         component={renderTextField}
                         label="Contact Number"
@@ -109,6 +115,7 @@ class AddAccount extends React.Component {
 
                     <Grid item xs={6} sm={12} md={2}>
                       <Field
+                        required
                         name="position"
                         component={renderTextField}
                         label="Position"
@@ -117,19 +124,22 @@ class AddAccount extends React.Component {
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={6}>
-                      <Field
-                        name="college_id"
-                        component={renderSelectField}
-                        label="College"
-                        fullWidth
-                      >
-                        <option value="" />
-                        {this.props.colleges.map((college) => {
-                          return (
-                            <option key={college.id} value={college.id}> {college.name} </option>
-                          );
-                        })}
-                      </Field>
+                      {organization.organization_type_id === 1 &&
+                        <Field
+                          name="college_id"
+                          component={renderSelectField}
+                          label="College"
+                          validate={required}
+                          fullWidth
+                        >
+                          <option value="" />
+                          {this.props.colleges.map((college) => {
+                            return (
+                              <option key={college.id} value={college.id}> {college.name} </option>
+                            );
+                          })}
+                        </Field>
+                      }
                     </Grid>
                   </Grid>
                 </Grid>

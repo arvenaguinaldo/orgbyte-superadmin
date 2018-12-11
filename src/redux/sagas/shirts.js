@@ -1,7 +1,8 @@
-import {takeEvery} from 'redux-saga';
+import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as shirtsActions from 'redux/actions/shirts';
 import * as shirtsService from 'services/api/shirts';
+import * as usersActions from 'redux/actions/users';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {SHIRTS} from 'constants/actions/shirts';
@@ -21,25 +22,42 @@ function* fetchShirt(action) {
   }
 }
 
+// function* addOrgShirt(action) {
+//   const responseSizes = yield call(shirtsService.addOrgShirtSizes, action.params);
+
+//   if (responseSizes) {
+//     if (responseSizes.error) {
+//       yield call(callErrorNotification, `Could not fetch data: ${responseSizes.error}`);
+//     } else {
+
+//       const responseShirt = yield call(shirtsService.addOrgShirt, action.params);
+
+//       if (responseShirt) {
+//         if (responseShirt.error) {
+//           yield call(callErrorNotification, `Could not fetch data: ${responseShirt.error}`);
+//         } else {
+//           const params = {shirt_sizes_id: responseSizes.data.id, shirt_id: responseShirt.data.id};
+//           yield call(shirtsService.addOrgShirtSizestoShirt, params);
+//           yield put(shirtsActions.addOrgShirtSuccess(responseShirt));
+//         }
+//       }
+//     }
+//   }
+// }
+
 function* addOrgShirt(action) {
-  const responseSizes = yield call(shirtsService.addOrgShirtSizes, action.params);
-
-  if (responseSizes) {
-    if (responseSizes.error) {
-      yield call(callErrorNotification, `Could not fetch data: ${responseSizes.error}`);
+  const response = yield call(shirtsService.addOrgShirt, action.params);
+  if (response) {
+    if (response.data.error) {
+      yield call(callErrorNotification, response.data.error);
+      yield put(shirtsActions.addOrgShirtSuccess(response.data.error));
+      // yield put(shirtsActions.addUserSuccess(response.data.error));
     } else {
-
-      const responseShirt = yield call(shirtsService.addOrgShirt, action.params);
-
-      if (responseShirt) {
-        if (responseShirt.error) {
-          yield call(callErrorNotification, `Could not fetch data: ${responseShirt.error}`);
-        } else {
-          const params = {shirt_sizes_id: responseSizes.data.id, shirt_id: responseShirt.data.id};
-          yield call(shirtsService.addOrgShirtSizestoShirt, params);
-          yield put(shirtsActions.addOrgShirtSuccess(responseShirt));
-        }
-      }
+      yield put(action.callback(response.data.shirt));
+      yield call(delay, 5000);
+      yield call(callSuccessNotification, 'Org shirt added successfully');
+      yield put(reset('AddOrgShirtForm'));
+      yield put(push('/admin/shirts'));
     }
   }
 }
@@ -62,6 +80,7 @@ function* purchaseShirt(action) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
       yield put(shirtsActions.purchaseShirtSuccess(response.data));
+      yield put(usersActions.clearVerifyMember());
       yield call(callSuccessNotification, 'Purchased Successfully');
       yield put(reset('IndividualPurchaseForm'));
       yield put(reset('VerifyMemberForm'));

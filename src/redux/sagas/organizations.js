@@ -1,4 +1,4 @@
-import {takeEvery} from 'redux-saga';
+import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as organizationsActions from 'redux/actions/organizations';
 import * as usersActions from 'redux/actions/users';
@@ -53,11 +53,12 @@ function* addOrganization(action) {
       yield put(organizationsActions.addOrganizationSuccess(response.data.error));
       yield put(usersActions.addUserSuccess(response.data.error));
     } else {
-      yield call(callSuccessNotification, 'Registration has been Successful');
-      yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
-      yield put(usersActions.addUserSuccess(response.data.user));
-      console.log(response.data.organization);
       yield put(action.callback(response.data.organization));
+      yield call(delay, 5000);
+      yield call(callSuccessNotification, 'Registration has been Successful');
+      // yield put(organizationsActions.addOrganizationSuccess(response.data.organization));
+      // yield put(usersActions.addUserSuccess(response.data.user));
+      // yield put(organizationsActions.fetchOrganizations());
       yield put(reset('AddOrganizationForm'));
       yield put(push('/superadmin/organizations'));
     }

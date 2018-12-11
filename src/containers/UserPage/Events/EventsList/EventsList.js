@@ -12,7 +12,7 @@ import {createStructuredSelector} from 'reselect';
 import {compose} from 'recompose';
 import {Field, reduxForm} from 'redux-form';
 import {withStyles} from '@material-ui/core/styles';
-import {renderTextField, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
@@ -182,7 +182,7 @@ class EventList extends Component {
                       onChange={this.searchHandler}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={12}>
+                  {/* <Grid item xs={12} sm={12} md={12}>
                     <Field
                       name="date_added"
                       component={renderSelectField}
@@ -193,7 +193,7 @@ class EventList extends Component {
                       <option value={1}>Newest</option>
                       <option value={1}>Oldest</option>
                     </Field>
-                  </Grid>
+                  </Grid> */}
                 </form>
               </Paper>
             </Grid>
@@ -209,7 +209,7 @@ class EventList extends Component {
                           <Card className={style.EventCard}>
                             <CardMedia
                               className={style.EventImage}
-                              image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                              image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
                             />
                           </Card>
 

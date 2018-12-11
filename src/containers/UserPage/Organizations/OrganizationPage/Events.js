@@ -149,7 +149,6 @@ class Events extends Component {
   };
   render() {
     const {classes, events, id} = this.props;
-    console.log(events);
     // const today = moment(moment().toString()).format('YYYY-MM-DD h:mm a');
     return (
       id === undefined ? <Typography variant="h6">Loading..</Typography>
@@ -166,7 +165,7 @@ class Events extends Component {
                         <Card className={style.EventCard}>
                           <CardMedia
                             className={style.EventImage}
-                            image="https://i.postimg.cc/43SNX3Qq/launch.jpg"
+                            image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
                           />
                         </Card>
 

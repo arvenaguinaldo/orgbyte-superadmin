@@ -6,7 +6,7 @@ import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -77,7 +77,11 @@ class OrganizationProfile extends Component {
   };
   render() {
     Moment.locale('en');
-    const {theme} = this.props;
+    const {theme, organization} = this.props;
+    if (!organization.organizations) {
+      return null;
+    }
+    console.log(organization);
     return (
       <div>
         <TopBarAndFooter>
@@ -85,18 +89,26 @@ class OrganizationProfile extends Component {
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Card className={styles.OrganizationDetail}>
                 <Center>
-                  <Avatar
-                    alt="SWITS"
-                    src="https://i.postimg.cc/CxzJrZ0J/SWITS-Logo.png"
-                    className={styles.OrgAvatar}
-                  />
+                  {/* {organization.logo_blobs.length === 0 ?
+                    <Avatar
+                      alt="SWITS"
+                      src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png"
+                      className={styles.OrgAvatar}
+                    />
+                    :
+                    <Avatar
+                      alt="SWITS"
+                      src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
+                      className={styles.OrgAvatar}
+                    />
+                  } */}
                 </Center>
                 <div className={styles.DetailContainer}>
                   <Typography variant="subtitle1" className={styles.Text}>
                     Organization name
                   </Typography>
                   <Typography variant="h6" className={styles.Text}>
-                    {this.state.name}
+                    {organization.organizations.name}
                   </Typography>
                 </div>
 
@@ -105,7 +117,7 @@ class OrganizationProfile extends Component {
                     President
                   </Typography>
                   <Typography variant="h6" className={styles.Text}>
-                    {this.state.user}
+                    {organization.user.first_name + ' ' + organization.user.last_name}
                   </Typography>
                 </div>
 

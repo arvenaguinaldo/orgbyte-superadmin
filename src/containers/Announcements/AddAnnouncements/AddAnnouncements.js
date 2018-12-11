@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 // actions
-import {createAnnouncement} from 'redux/actions/announcements';
+import {createAnnouncement, createAnnouncementSuccess} from 'redux/actions/announcements';
 import {makeSelectAnnouncementsMeta} from 'redux/selectors/announcements';
 
 import FileUpload from 'components/FileUpload/FileUpload';
@@ -25,6 +25,8 @@ import myStyles from './Announcements.scss';
 
 class AddAnnouncements extends Component {
     static propTypes = {
+      createAnnouncement: PropTypes.func.required,
+      createAnnouncementSuccess: PropTypes.func.required,
       meta: PropTypes.object
     };
     state = {
@@ -32,9 +34,16 @@ class AddAnnouncements extends Component {
       endsDate: new Date()
     }
 
-    onSubmit = (values, dispatch) => {
-      dispatch(createAnnouncement(values));
+    onSubmit = (values) => {
+      this.props.createAnnouncement(values, (data) => {
+        this.fileUpload.processQueue(data.id);
+        return {type: 'announcement_shirt_image_upload_in_progress'};
+      });
     };
+
+    handleUploadSuccess = (file, response) => {
+      this.props.createAnnouncementSuccess(response);
+    }
 
     handleStartsDateChange = (date) => {
       this.setState({startsDate: date});
@@ -57,6 +66,7 @@ class AddAnnouncements extends Component {
 
                     <Grid item xs={10} sm={10} md={6} >
                       <Field
+                        required
                         name="title"
                         component={renderTextField}
                         label="Title"
@@ -65,6 +75,7 @@ class AddAnnouncements extends Component {
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
+                        required
                         name="starts"
                         component={renderDateTimePicker}
                         label="Announcements Starts"
@@ -76,6 +87,7 @@ class AddAnnouncements extends Component {
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
+                        required
                         name="ends"
                         component={renderDateTimePicker}
                         label="Announcements Ends"
@@ -88,13 +100,24 @@ class AddAnnouncements extends Component {
 
                   <Typography variant="h5" gutterBottom>Announcement Image (optional)</Typography>
                   <Grid item xs={12} sm={12} md={3}>
-                    <FileUpload paramName="file" maxFilesize={200} size="small" uploadUrl="http://s3.ap-southeast-1.amazonaws.com/orgbyte" label="Upload or Drag an Image" />
+                    <FileUpload
+                      paramName="image"
+                      acceptedFiles="image/jpeg, image/png"
+                      thumbnailWidth={200}
+                      thumbnailHeight={200}
+                      autoProcessQueue={false}
+                      ref={(element) => { this.fileUpload = element; }}
+                      onUploadSuccess={this.handleUploadSuccess}
+                      uploadUrl="/announcements/image"
+                      label="Drop image here or click to upload"
+                    />
                   </Grid>
 
 
                   <Grid container spacing={40}>
                     <Grid item xs={12} sm={12} md={12}>
                       <Field
+                        required
                         name="content"
                         component={renderTextField}
                         label="Message"
@@ -127,7 +150,12 @@ const mapStateToProps = createStructuredSelector({
   meta: makeSelectAnnouncementsMeta()
 });
 
-const withRedux = connect(mapStateToProps, {createAnnouncement});
+const mapDispatchToProps = {
+  createAnnouncement,
+  createAnnouncementSuccess
+};
+
+const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(
   withRedux,

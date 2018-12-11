@@ -172,7 +172,7 @@ class OrganizationList extends Component {
               org.id,
               org.name,
               org.acronym,
-              org.recognition_number,
+              org.recognition_number.replace(/(\d{2})(\d{3})/, '$1-$2'),
               moment(org.formation).format('MMM DD YYYY'),
               org.college_name,
               org.organization_type_name,
@@ -195,7 +195,7 @@ export class CustomToolbar extends Component {
       0: org.id,
       1: org.name,
       2: org.acronym,
-      3: org.recognition_number,
+      3: org.recognition_number.replace(/(\d{2})(\d{3})/, '$1-$2'),
       4: moment(org.formation).format('MM-DD-YYYY h:mm A'),
       5: org.college_name,
       6: org.organization_type_name,
@@ -264,9 +264,7 @@ export class CustomToolbar extends Component {
         doc.text('Organization List', 35, 190);
         // HEADER
         const pdfcenter = doc.internal.pageSize.getWidth() / 2;
-        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', 85, 30, 80, 80); // LEFT IMAGE
-        doc.addImage('https://i.postimg.cc/fyCSqmq1/Swits.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
-        doc.addImage('https://i.postimg.cc/fbVLbXsL/OSO.png', 'PNG', 430, 30, 80, 80); // RIGHT IMAGE
+        doc.addImage('https://i.postimg.cc/gJjpp5M7/bsu.png', 'PNG', pdfcenter - 40, 30, 80, 80); // CENTER IMAGE
         doc.setTextColor(40);
         const split = doc.splitTextToSize(orgname, 300);
         doc.setFontSize(18);
