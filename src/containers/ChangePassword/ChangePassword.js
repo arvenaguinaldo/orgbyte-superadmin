@@ -64,6 +64,7 @@ class PasswordReset extends Component {
 
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
+                        required
                         name="old_password"
                         id="old_password"
                         component={renderPasswordField}
@@ -88,6 +89,7 @@ class PasswordReset extends Component {
 
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
+                        required
                         name="new_password"
                         id="new_password"
                         component={renderPasswordField}
@@ -112,6 +114,7 @@ class PasswordReset extends Component {
 
                     <Grid item xs={10} sm={10} md={11}>
                       <Field
+                        required
                         name="password"
                         id="password"
                         component={renderPasswordField}

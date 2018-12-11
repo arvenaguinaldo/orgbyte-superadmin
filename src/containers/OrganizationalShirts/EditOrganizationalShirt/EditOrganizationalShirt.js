@@ -96,6 +96,7 @@ class EditOrganizationalShirt extends Component {
                         <Grid container spacing={24}>
                           <Grid item xs={12} sm={12} md={6} >
                             <Field
+                              required
                               name="name"
                               component={renderTextField}
                               label="Name"
@@ -107,6 +108,7 @@ class EditOrganizationalShirt extends Component {
                         <Grid container spacing={24}>
                           <Grid item xs={12} sm={12} md={6} >
                             <Field
+                              required
                               name="price"
                               component={renderTextField}
                               label="Price"
@@ -119,6 +121,7 @@ class EditOrganizationalShirt extends Component {
                         <Grid container spacing={24} >
                           <Grid item xs={12} sm={12} md={12} >
                             <Field
+                              required
                               name="description"
                               component={renderTextField}
                               label="Description"
