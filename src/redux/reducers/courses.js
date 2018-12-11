@@ -25,6 +25,21 @@ const courses = (state = initialState, action) => {
       }));
     }
 
+    case COURSES.ADD_COURSE: {
+      return state.mergeIn(['meta'], fromJS({
+        isSubmitLoading: true
+      }));
+    }
+    case COURSES.ADD_COURSE_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

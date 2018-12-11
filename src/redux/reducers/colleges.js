@@ -25,6 +25,21 @@ const colleges = (state = initialState, action) => {
       }));
     }
 
+    case COLLEGES.ADD_COLLEGE: {
+      return state.mergeIn(['meta'], fromJS({
+        isSubmitLoading: true
+      }));
+    }
+    case COLLEGES.ADD_COLLEGE_SUCCESS: {
+      const {data} = action.response;
+      return state.merge(fromJS({
+        list: data,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     default:
       return state;
   }

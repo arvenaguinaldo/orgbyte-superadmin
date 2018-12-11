@@ -46,12 +46,14 @@ class AddAccount extends React.Component {
   };
 
   render() {
-    const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
+    const {organization, valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
 
     const contactNumberMask = createTextMask({
       pattern: '+63 (999) 999-9999',
       placeholder: ' '
     });
+
+    const required = value => (!value && organization.organization_type_id === 1 ? 'This field is Required' : undefined);
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -117,19 +119,22 @@ class AddAccount extends React.Component {
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={6}>
-                      <Field
-                        name="college_id"
-                        component={renderSelectField}
-                        label="College"
-                        fullWidth
-                      >
-                        <option value="" />
-                        {this.props.colleges.map((college) => {
-                          return (
-                            <option key={college.id} value={college.id}> {college.name} </option>
-                          );
-                        })}
-                      </Field>
+                      {organization.organization_type_id === 1 &&
+                        <Field
+                          name="college_id"
+                          component={renderSelectField}
+                          label="College"
+                          validate={required}
+                          fullWidth
+                        >
+                          <option value="" />
+                          {this.props.colleges.map((college) => {
+                            return (
+                              <option key={college.id} value={college.id}> {college.name} </option>
+                            );
+                          })}
+                        </Field>
+                      }
                     </Grid>
                   </Grid>
                 </Grid>

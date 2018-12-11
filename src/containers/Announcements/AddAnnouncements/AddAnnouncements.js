@@ -105,7 +105,7 @@ class AddAnnouncements extends Component {
                       autoProcessQueue={false}
                       ref={(element) => { this.fileUpload = element; }}
                       onUploadSuccess={this.handleUploadSuccess}
-                      uploadUrl="http://localhost:3000/announcements/image"
+                      uploadUrl="/announcements/image"
                       label="Drop image here or click to upload"
                     />
                   </Grid>

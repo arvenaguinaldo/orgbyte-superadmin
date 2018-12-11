@@ -128,7 +128,7 @@ render() {
                     org.id,
                     org.name,
                     org.acronym,
-                    org.recognition_number,
+                    org.recognition_number.replace(/(\d{2})(\d{3})/, '$1-$2'),
                     org.formation,
                     org.college_name,
                     org.organization_type_name,
