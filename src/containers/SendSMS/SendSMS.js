@@ -101,6 +101,7 @@ class SendSMS extends Component {
                 <Grid container spacing={40}>
                   <Grid item xs={10} sm={10} md={6}>
                     <Field
+                      required
                       name="subject"
                       component={renderTextField}
                       label="Subject"
@@ -111,7 +112,7 @@ class SendSMS extends Component {
                     <Field
                       name="email_type"
                       component={renderSelectField}
-                      label="Type of Message"
+                      label="Type of Message*"
                       fullWidth
                     >
                       <option value="" />
@@ -161,6 +162,7 @@ class SendSMS extends Component {
                 <Grid container spacing={40}>
                   <Grid item xs={12} sm={12} md={12}>
                     <Field
+                      required
                       name="content"
                       component={renderTextField}
                       label="Message"

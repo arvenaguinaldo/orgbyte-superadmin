@@ -105,6 +105,7 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="name"
                       component={renderTextField}
                       label="Event Name"
@@ -130,6 +131,7 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="venue"
                       component={renderTextField}
                       label="Venue"
@@ -141,6 +143,7 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={3}>
                     <Field
+                      required
                       name="starts"
                       component={renderDateTimePicker}
                       label="Date Starts"
@@ -153,6 +156,7 @@ class CreateEvent extends Component {
 
                   <Grid item xs={12} sm={12} md={3}>
                     <Field
+                      required
                       name="ends"
                       component={renderDateTimePicker}
                       label="Date Ends"
@@ -166,6 +170,7 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="number_of_attendees"
                       component={renderTextField}
                       label="Number of Attendees"
@@ -197,6 +202,7 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="description"
                       component={renderTextField}
                       label="Description"
@@ -210,9 +216,10 @@ class CreateEvent extends Component {
                 <Grid container spacing={0}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="nature_of_event"
                       component={renderRadioButton}
-                      label="Nature of Event"
+                      label="Nature of Event*"
                       fullWidth
                     >
                       <FormControlLabel value="curricular" control={<Radio color="primary" />} label="Curricular" />
@@ -228,9 +235,10 @@ class CreateEvent extends Component {
                 <Grid container spacing={0}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
+                      required
                       name="ticket_price_type"
                       component={renderRadioButton}
-                      label="Ticket Price Type"
+                      label="Ticket Price Type*"
                       fullWidth
                     >
                       <FormControlLabel value="free" control={<Radio color="primary" />} label="Free Ticket" />
@@ -241,7 +249,7 @@ class CreateEvent extends Component {
 
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
-                    <FormLabel component="legend">{'Attendees'}</FormLabel>
+                    <FormLabel component="legend">{'Attendees*'}</FormLabel>
                     {checkboxLabel.map(option => (
                       <Field
                         key={option.name}

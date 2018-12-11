@@ -18,7 +18,6 @@ import fetchInitialData from 'hoc/fetchInitialData';
 
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import {Grid, CardMedia, Paper} from '@material-ui/core';
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
@@ -133,7 +132,7 @@ const styles = {
     textAlign: 'center'
   },
   ColumnSubTitle: {
-    marginLeft: '33px'
+    marginLeft: 20
   },
   RelativeTime: {
     marginLeft: '1px',
@@ -239,11 +238,6 @@ class AnnouncementList extends Component {
                                 <Typography variant="body1" className={classes.ColumnTitle}>
                                    Posted by
                                 </Typography>
-                                <Avatar
-                                  alt="Organization Logo"
-                                  src="https://i.postimg.cc/nh2GRKcZ/SWITS_Logo.png"
-                                  className={classes.Avatar}
-                                />
                                 <Typography variant="caption" className={classes.ColumnSubTitle}>
                                   {ann.organization_acronym}
                                 </Typography>

@@ -109,13 +109,16 @@ class EventPage extends Component {
   render() {
     const {classes, event} = this.props;
     Moment.locale('en');
+    if (!event.image_blobs) {
+      return null;
+    }
     return (
       <TopBarAndFooter>
         <div className={classes.EventCoverImage} />
         <div className={classes.ImageDiv}>
           <CardMedia
             className={classes.Image}
-            image="https://i.postimg.cc/6pzTrRQ0/EVENTITCONGRESS.jpg"
+            image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key}
             title="Orgbyte Event Image"
             component="img"
             alt="Event Photo"

@@ -87,9 +87,13 @@ class EventList extends Component {
 
   searchHandler = (event) => {
     this.setState({term: event.target.value});
-  }
-
+  };
   render() {
+    // const {events} = this.props;
+    // console.log(events);
+    // if (!events.image_blobs) {
+    //   return null;
+    // }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4">
