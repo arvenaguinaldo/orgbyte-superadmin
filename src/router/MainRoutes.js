@@ -21,6 +21,8 @@ import RenewalDate from 'containers/RenewalDate/RenewalDate';
 import SuperAdminOrganizationReport from 'containers/SuperAdminReports/OrganizationList';
 import SuperAdminPresidentReport from 'containers/SuperAdminReports/PresidentList';
 import SuperAdminActivityLogs from 'containers/SuperAdminActivityLogs/SuperAdminActivityLogs';
+import Colleges from 'containers/Colleges/Colleges';
+import Courses from 'containers/Courses/Courses';
 import SuperAdminActivityLogsReport from 'containers/SuperAdminReports/ActivityLogsList';
 
 // Admin Routes
@@ -99,6 +101,8 @@ class MainRoutes extends Component {
         <SuperAdminRoute path="/superadmin/reports/organizations" component={SuperAdminOrganizationReport} />
         <SuperAdminRoute path="/superadmin/reports/presidents" component={SuperAdminPresidentReport} />
         <SuperAdminRoute path="/superadmin/reports/useractivitylogs" component={SuperAdminActivityLogsReport} />
+        <SuperAdminRoute path="/superadmin/colleges" component={Colleges} />
+        <SuperAdminRoute path="/superadmin/courses" component={Courses} />
         <SuperAdminRoute path="/superadmin/activitylogs" component={SuperAdminActivityLogs} />
 
         {/* Admin Routes */}

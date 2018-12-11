@@ -2,6 +2,7 @@ import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as shirtsActions from 'redux/actions/shirts';
 import * as shirtsService from 'services/api/shirts';
+import * as usersActions from 'redux/actions/users';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {SHIRTS} from 'constants/actions/shirts';
@@ -79,6 +80,7 @@ function* purchaseShirt(action) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
       yield put(shirtsActions.purchaseShirtSuccess(response.data));
+      yield put(usersActions.clearVerifyMember());
       yield call(callSuccessNotification, 'Purchased Successfully');
       yield put(reset('IndividualPurchaseForm'));
       yield put(reset('VerifyMemberForm'));

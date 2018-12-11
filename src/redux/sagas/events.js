@@ -2,6 +2,7 @@ import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
 import * as eventsActions from 'redux/actions/events';
 import * as eventsService from 'services/api/events';
+import * as usersActions from 'redux/actions/users';
 import {reset} from 'redux-form';
 import {push} from 'react-router-redux';
 import {EVENTS} from 'constants/actions/events';
@@ -58,9 +59,10 @@ function* register(action) {
     } else {
       yield call(callSuccessNotification, 'Register Successfully');
       yield put(eventsActions.registerSuccess(response.data));
-      yield put(reset('EventRegisterFormMember'));
+      yield put(usersActions.clearVerifyMember());
+      yield put(reset('EventRegisterForm'));
       yield put(reset('VerifyMemberForm'));
-      // yield put(push('/events'));
+      yield put(push('/admin/events/' + response.data.event_id));
     }
   }
 }

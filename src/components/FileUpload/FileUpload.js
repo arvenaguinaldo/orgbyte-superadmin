@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'dropzone';
 import classnames from 'classnames';
+import config from 'config';
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import LinearProgress from '@material-ui/core/LinearProgress';
 // import Icon from 'components/common/Icon/Icon';
@@ -92,7 +93,7 @@ export default class FileUpload extends Component {
     onUploadTimeout: noop,
     paramName: 'file',
     size: 'small',
-    timeout: 30000,
+    timeout: 4800,
     uploadUrl: noop
   }
 
@@ -149,7 +150,7 @@ export default class FileUpload extends Component {
       sending: this.onSendingFile,
       timeout,
       uploadprogress: this.handleOnUploadProgress,
-      url: uploadUrl,
+      url: config.apiUrl + uploadUrl,
       ...messages
     };
 
@@ -316,7 +317,8 @@ export default class FileUpload extends Component {
             <div id="tpl">
               <div className="dz-details">
                 <div className="dz-image"><img data-dz-thumbnail="" /></div> {/*eslint-disable-line*/}
-                <div className="dz-filename"><span data-dz-name="" /></div>
+                <div className="dz-filename" style={{fontSize: 15, color: '#ccc'}}><span data-dz-name="" /></div>
+                <div className="dz-size" style={{fontSize: 15, color: '#ccc'}} data-dz-size="" />
               </div>
             </div>
             <div>

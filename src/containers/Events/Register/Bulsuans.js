@@ -125,7 +125,7 @@ class Bulsuans extends Component {
     });
 
     const studentNumberMask = createTextMask({
-      pattern: '9999-999999',
+      pattern: '9999999999',
       placeholder: ' ',
       guide: false
     });

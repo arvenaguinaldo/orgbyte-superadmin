@@ -109,6 +109,15 @@ const users = (state = initialState, action) => {
       }));
     }
 
+    case USERS.CLEAR_VERIFY_MEMBER: {
+      return state.merge(fromJS({
+        verifyMember: null,
+        meta: {
+          loading: false
+        }
+      }));
+    }
+
     case USERS.ADD_MEMBERS: {
       return state.mergeIn(['meta'], fromJS({
         isLoading: true

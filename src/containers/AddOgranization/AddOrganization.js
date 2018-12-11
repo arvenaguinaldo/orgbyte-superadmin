@@ -351,7 +351,7 @@ class AddOrganization extends Component {
                       autoProcessQueue={false}
                       ref={(element) => { this.fileUpload = element; }}
                       onUploadSuccess={this.handleUploadSuccess}
-                      uploadUrl="http://localhost:3000/organizations/logo"
+                      uploadUrl="/organizations/logo"
                       label="Drop image here or click to upload"
                     />
                   </Grid>

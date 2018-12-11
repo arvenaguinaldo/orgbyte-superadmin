@@ -60,6 +60,11 @@ export const verifyMemberSuccess = response => ({
   response
 });
 
+export const clearVerifyMember = params => ({
+  type: USERS.CLEAR_VERIFY_MEMBER,
+  params
+});
+
 export const addMembers = params => ({
   type: USERS.ADD_MEMBERS,
   params

@@ -44,7 +44,7 @@ class EditForm extends React.Component {
       placeholder: ' '
     });
     const studentNumberMask = createTextMask({
-      pattern: '9999-999999',
+      pattern: '9999999999',
       placeholder: ' ',
       guide: false
     });
