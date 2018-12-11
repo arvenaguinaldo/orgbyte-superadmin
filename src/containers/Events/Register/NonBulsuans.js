@@ -118,6 +118,7 @@ class NonBulsuans extends Component {
         <Grid container spacing={32}>
           <Grid item xs={12} sm={12} md={4}>
             <Field
+              required
               name="last_name"
               component={renderTextField}
               label="Last Name"
@@ -126,6 +127,7 @@ class NonBulsuans extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <Field
+              required
               name="first_name"
               component={renderTextField}
               label="First Name"
@@ -145,6 +147,7 @@ class NonBulsuans extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={3}>
             <Field
+              required
               name="email"
               component={renderTextField}
               label="Email"
@@ -154,6 +157,7 @@ class NonBulsuans extends Component {
 
           <Grid item xs={6} sm={12} md={3}>
             <Field
+              required
               name="contact_number"
               component={renderTextField}
               label="Contact Number"

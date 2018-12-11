@@ -17,6 +17,7 @@ import {fetchAnnouncements} from 'redux/actions/announcements';
 
 import {fetchOfficers} from 'redux/actions/users';
 import {makeSelectOfficersList} from 'redux/selectors/users';
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
 
 import {fetchEvents} from 'redux/actions/events';
 
@@ -25,6 +26,7 @@ import fetchInitialData from 'hoc/fetchInitialData';
 
 // @material-ui
 import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +35,6 @@ import Event from '@material-ui/icons/Event';
 import People from '@material-ui/icons/People';
 import Calendar from '@material-ui/icons/CalendarToday';
 import Announcement from '@material-ui/icons/Announcement';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -59,7 +60,7 @@ class Dashboard extends Component {
     members: PropTypes.array.isRequired,
     events: PropTypes.array.isRequired,
     announcements: PropTypes.array.isRequired,
-    officers: PropTypes.array
+    organization: PropTypes.object
   }
   static defaultProps = {
     members: [],
@@ -144,7 +145,7 @@ class Dashboard extends Component {
     dec = 0;
     const delays = 80;
     const durations = 500;
-    const {members, events, announcements, officers} = this.props;
+    const {members, events, announcements, organization} = this.props;
     // line chart
     const activeMemberCount = members.filter(member => (member.status === 'active' ? member.status : null)).map((member) => {
       return [
@@ -216,58 +217,9 @@ class Dashboard extends Component {
         }
       }
     };
-    const officerNames = officers.map((officer) => {
-      return officer.first_name
-      ;
-    });
-    console.log(officerNames);
-    const chart2 = {
-      data: {
-        labels: officerNames,
-        series: [[542, 443, 40, 450]]
-      },
-      options: {
-        axisX: {
-          showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: {
-          top: 0,
-          right: 5,
-          bottom: 0,
-          left: 0
-        }
-      },
-      responsiveOptions: [
-        [
-          'screen and (max-width: 640px)',
-          {
-            seriesBarDistance: 5,
-            axisX: {
-              labelInterpolationFnc(value) {
-                return value[0];
-              }
-            }
-          }
-        ]
-      ],
-      animation: {
-        draw() {
-          if (data.type === 'bar') {
-            data.element.animate({
-              opacity: {
-                begin: (data.index + 1) * delays,
-                dur: durations,
-                from: 0,
-                to: 1,
-                easing: 'ease'
-              }
-            });
-          }
-        }
-      }
-    };
+    if (!organization.logo_blobs) {
+      return null;
+    }
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4" gutterBottom>Dashboard</Typography>
@@ -368,6 +320,7 @@ class Dashboard extends Component {
             <Grid item xs={12} sm={12} md={6}>
               <Card className={styles.ChartContainer}>
                 <Card className={styles.ChartCard}>
+                  <Typography variant="caption" color="textSecondary" className={styles.ChartVerticalText}>no. of events</Typography>
                   <ChartistGraph
                     className="ct-chart"
                     data={data}
@@ -375,6 +328,7 @@ class Dashboard extends Component {
                     options={options}
                     listener={animation}
                   />
+                  <Typography variant="caption" color="textSecondary" className={styles.ChartText}>Year {year}</Typography>
                 </Card>
                 <Typography variant="body1" className={styles.ChartPrimaryText}>Events held for this year</Typography>
                 <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText} />
@@ -389,24 +343,43 @@ class Dashboard extends Component {
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <Card className={styles.ChartContainer}>
-                <Card className={styles.ChartCard}>
-                  <ChartistGraph
-                    className="ct-chart"
-                    data={chart2.data}
-                    type="Bar"
-                    options={chart2.options}
-                    listener={chart2.animation}
-                  />
-                </Card>
-                <Typography variant="body1" className={styles.ChartPrimaryText}>Highest users sign in count</Typography>
-                <Typography variant="subtitle1" color="textSecondary" className={styles.ChartSecondaryText} />
-                <div className={styles.DividerChart} />
-                <ListItem className={styles.CardBottomText}>
-                  <ListItemIcon >
-                    <AccountCircle />
-                  </ListItemIcon>
-                  <ListItemText primary={<Link to="/admin/accounts">View Accounts</Link>} />
-                </ListItem>
+                <Grid container spacing={0}>
+                  <Grid item md={6} xs={12} sm={12}>
+                    <Avatar
+                      alt={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].filename}
+                      src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
+                      className={styles.OrgAvatar}
+                    />
+                  </Grid>
+                  <Grid item md={6} xs={12} sm={12}>
+                    <List disablePadding dense>
+                      <ListItem>
+                        <ListItemText
+                          secondary={organization.name}
+                          primary="Name"
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          secondary={organization.acronym}
+                          primary="Acronym"
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          secondary={organization.recognition_number}
+                          primary="Recognition Number"
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          secondary={organization.formation}
+                          primary="Date of Formation"
+                        />
+                      </ListItem>
+                    </List>
+                  </Grid>
+                </Grid>
               </Card>
             </Grid>
           </Grid>
@@ -420,6 +393,7 @@ const mapStateToProps = createStructuredSelector({
   members: makeSelectMembersList(),
   events: makeSelectEventsList(),
   announcements: makeSelectAnnouncementsList(),
+  organization: makeSelectCurrentOrganization(),
   officers: makeSelectOfficersList(),
   meta: makeSelectUsersMeta()
 });

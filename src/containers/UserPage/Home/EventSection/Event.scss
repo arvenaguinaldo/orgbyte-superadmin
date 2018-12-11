@@ -1,5 +1,4 @@
 
-
 .ChildContainer {
   margin-top: 50px;
   position: relative;
@@ -67,4 +66,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.AnnouncementEmpty {
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.EmptyMessage {
+  text-align: center;
+  line-height: 200px;
 }

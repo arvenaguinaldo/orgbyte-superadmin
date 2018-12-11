@@ -66,6 +66,7 @@ class AddAccount extends React.Component {
                   <Grid container spacing={24}>
                     <Grid item xs={12} sm={12} md={4}>
                       <Field
+                        required
                         name="last_name"
                         component={renderTextField}
                         label="Last Name"
@@ -74,6 +75,7 @@ class AddAccount extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                       <Field
+                        required
                         name="first_name"
                         component={renderTextField}
                         label="First Name"
@@ -92,6 +94,7 @@ class AddAccount extends React.Component {
                   <Grid container spacing={24}>
                     <Grid item xs={12} sm={12} md={2}>
                       <Field
+                        required
                         name="email"
                         component={renderTextField}
                         label="Email"
@@ -101,6 +104,7 @@ class AddAccount extends React.Component {
 
                     <Grid item xs={6} sm={12} md={2}>
                       <Field
+                        required
                         name="contact_number"
                         component={renderTextField}
                         label="Contact Number"
@@ -111,6 +115,7 @@ class AddAccount extends React.Component {
 
                     <Grid item xs={6} sm={12} md={2}>
                       <Field
+                        required
                         name="position"
                         component={renderTextField}
                         label="Position"

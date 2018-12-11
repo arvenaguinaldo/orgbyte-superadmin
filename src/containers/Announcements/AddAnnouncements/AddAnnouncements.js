@@ -66,6 +66,7 @@ class AddAnnouncements extends Component {
 
                     <Grid item xs={10} sm={10} md={6} >
                       <Field
+                        required
                         name="title"
                         component={renderTextField}
                         label="Title"
@@ -74,6 +75,7 @@ class AddAnnouncements extends Component {
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
+                        required
                         name="starts"
                         component={renderDateTimePicker}
                         label="Announcements Starts"
@@ -85,6 +87,7 @@ class AddAnnouncements extends Component {
                     </Grid>
                     <Grid item xs={10} sm={10} md={3} >
                       <Field
+                        required
                         name="ends"
                         component={renderDateTimePicker}
                         label="Announcements Ends"
@@ -114,6 +117,7 @@ class AddAnnouncements extends Component {
                   <Grid container spacing={40}>
                     <Grid item xs={12} sm={12} md={12}>
                       <Field
+                        required
                         name="content"
                         component={renderTextField}
                         label="Message"

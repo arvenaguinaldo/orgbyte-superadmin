@@ -147,6 +147,7 @@ class AddOrganization extends Component {
             <Grid container spacing={40}>
               <Grid item xs={12} sm={12} md={6}>
                 <Field
+                  required
                   name="name"
                   component={renderTextField}
                   label="Organization Name"
@@ -158,7 +159,7 @@ class AddOrganization extends Component {
                 <Field
                   name="organization_type_id"
                   component={renderSelectField}
-                  label="Type of Organization"
+                  label="Type of Organization*"
                   fullWidth
                 >
                   <option value="" />
@@ -171,7 +172,7 @@ class AddOrganization extends Component {
                 <Field
                   name="organization_nature_id"
                   component={renderSelectField}
-                  label="Nature of Organization"
+                  label="Nature of Organization*"
                   fullWidth
                 >
                   <option value="" />
@@ -188,6 +189,7 @@ class AddOrganization extends Component {
             <Grid container spacing={32}>
               <Grid item xs={6} sm={6} md={2}>
                 <Field
+                  required
                   name="acronym"
                   component={renderTextField}
                   label="Acronym"
@@ -197,6 +199,7 @@ class AddOrganization extends Component {
 
               <Grid item xs={6} sm={6} md={2}>
                 <Field
+                  required
                   name="recognition_number"
                   component={renderTextField}
                   label="Recognition Number"
@@ -207,6 +210,7 @@ class AddOrganization extends Component {
 
               <Grid item xs={6} sm={6} md={2}>
                 <Field
+                  required
                   name="formation"
                   component={renderDatePicker}
                   selected={this.state.selectedDate}
@@ -221,7 +225,7 @@ class AddOrganization extends Component {
                 <Field
                   name="college_id"
                   component={renderSelectField}
-                  label="College"
+                  label="College*"
                   fullWidth
                 >
                   <option value="" />
@@ -252,6 +256,7 @@ class AddOrganization extends Component {
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12} md={4}>
                 <Field
+                  required
                   name="last_name"
                   component={renderTextField}
                   label="Last Name"
@@ -260,6 +265,7 @@ class AddOrganization extends Component {
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
                 <Field
+                  required
                   name="first_name"
                   component={renderTextField}
                   label="First Name"
@@ -278,6 +284,7 @@ class AddOrganization extends Component {
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12} md={3}>
                 <Field
+                  required
                   name="email"
                   component={renderTextField}
                   label="Email"
@@ -287,6 +294,7 @@ class AddOrganization extends Component {
 
               <Grid item xs={6} sm={12} md={3}>
                 <Field
+                  required
                   name="contact_number"
                   component={renderTextField}
                   label="Contact Number"
@@ -299,7 +307,7 @@ class AddOrganization extends Component {
                 <Field
                   name="college_id"
                   component={renderSelectField}
-                  label="College"
+                  label="College*"
                   fullWidth
                 >
                   <option value="" />

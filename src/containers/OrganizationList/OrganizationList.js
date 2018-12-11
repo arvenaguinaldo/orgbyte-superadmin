@@ -88,7 +88,7 @@ class OrganizationTable extends React.Component {
           sort: false,
           customBodyRender: (value) => {
             return (
-              <Tooltip title={'View Member'}>
+              <Tooltip title={'View Organization'}>
                 <IconButton onClick={e => this.handleModal(e, value)} className={style.ViewIcon}>
                   <View />
                 </IconButton>

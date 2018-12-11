@@ -137,6 +137,7 @@ class Bulsuans extends Component {
         <Grid container spacing={32}>
           <Grid item xs={12} sm={12} md={3}>
             <Field
+              required
               name="student_number"
               component={renderTextField}
               label="Student Number"
@@ -146,6 +147,7 @@ class Bulsuans extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Field
+              required
               name="last_name"
               component={renderTextField}
               label="Last Name"
@@ -154,6 +156,7 @@ class Bulsuans extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Field
+              required
               name="first_name"
               component={renderTextField}
               label="First Name"
@@ -173,6 +176,7 @@ class Bulsuans extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={3}>
             <Field
+              required
               name="email"
               component={renderTextField}
               label="Email"
@@ -182,6 +186,7 @@ class Bulsuans extends Component {
 
           <Grid item xs={6} sm={12} md={3}>
             <Field
+              required
               name="contact_number"
               component={renderTextField}
               label="Contact Number"
@@ -194,7 +199,7 @@ class Bulsuans extends Component {
             <Field
               name="year_level"
               component={renderSelectField}
-              label="Year Level"
+              label="Year Level*"
               fullWidth
             >
               <option value="" />
@@ -207,6 +212,7 @@ class Bulsuans extends Component {
 
           <Grid item xs={6} sm={6} md={2}>
             <Field
+              required
               name="section"
               component={renderTextField}
               label="Section"
@@ -217,6 +223,7 @@ class Bulsuans extends Component {
 
           <Grid item xs={6} sm={6} md={2}>
             <Field
+              required
               name="group"
               component={renderTextField}
               label="Group"
@@ -231,7 +238,7 @@ class Bulsuans extends Component {
             <Field
               name="college_id"
               component={renderSelectField}
-              label="College"
+              label="College*"
               fullWidth
               onChange={event => this.handleFetchCourse(event.target.value)}
             >
@@ -248,7 +255,7 @@ class Bulsuans extends Component {
             <Field
               name="course_id"
               component={renderSelectField}
-              label="Course"
+              label="Course*"
               fullWidth
             >
               <option value="" />

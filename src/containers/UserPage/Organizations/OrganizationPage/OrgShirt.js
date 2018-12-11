@@ -65,13 +65,10 @@ class OrgShirt extends Component {
   };
   render() {
     const {classes, id, shirts, shirtSizes} = this.props;
-    console.log(id);
-    console.log(shirts);
-    console.log(shirtSizes);
     return (
       <div className={classes.root}>
         <Grid container>
-          <Grid item lg={8} md={8} sm={12} xs={12}>
+          <Grid item lg={8} md={8} sm={12} xs={12} key={id + shirts + shirtSizes}>
             <div className={classes.image}>
               <img src="https://i.postimg.cc/1XMvZ54C/46482905-762860140729270-5836505868274761728-n.jpg" alt="orgShirt" className={classes.orgshirt} />
             </div>
