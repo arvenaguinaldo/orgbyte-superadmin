@@ -479,12 +479,6 @@ class AdminMenuItemData extends Component {
                 <ListItemText primary={<Typography variant="subtitle1" className={style.list}>Attendees</Typography>} />
               </MenuItem>
 
-              <MenuItem className={style.nested} component={Link} to="/admin/reports/useractivitylogs" selected={pathname === '/admin/reports/useractivitylogs'}>
-                <ListItemIcon>
-                  <LogsIcon className={style.listIcon} />
-                </ListItemIcon>
-                <ListItemText primary={<Typography variant="subtitle1" className={style.list}>User logs</Typography>} />
-              </MenuItem>
               <MenuItem className={style.nested} component={Link} to="/admin/reports/officers" selected={pathname === '/admin/reports/officers'} >
                 <ListItemIcon>
                   <ManageIcon className={style.listIcon} />

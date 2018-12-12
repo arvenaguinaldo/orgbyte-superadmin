@@ -10,6 +10,11 @@ import Button from '@material-ui/core/Button';
 
 import {createStructuredSelector} from 'reselect';
 import {makeSelectShirtPurchaseShirts, makeSelectShirtsMeta} from 'redux/selectors/shirts';
+
+import {makeSelectCurrentOrganization} from 'redux/selectors/organizations';
+import {makeSelectShirt} from 'redux/selectors/shirts';
+import {fetchShirt} from 'redux/actions/shirts';
+
 import {fetchPurchaseShirts} from 'redux/actions/shirts';
 
 import fetchInitialData from 'hoc/fetchInitialData';
@@ -19,11 +24,13 @@ import MUIDataTable from 'mui-datatables';
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+import EmptyTable from 'containers/EmptyTable/EmptyTable';
 import style from './OrganizationalShirtPage.scss';
 
 class OrganizationalShirtPage extends React.Component {
   static propTypes = {
-    purchasedShirts: PropTypes.array.isRequired
+    purchasedShirts: PropTypes.array.isRequired,
+    shirt: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -78,7 +85,8 @@ class OrganizationalShirtPage extends React.Component {
 
   render() {
     const {columns, dbTable} = this.state;
-    const {purchasedShirts} = this.props;
+    const {purchasedShirts, shirt} = this.props;
+    const estimateprice = purchasedShirts.length * shirt.price;
     const options = {
       filter: true,
       selectableRows: true,
@@ -101,31 +109,38 @@ class OrganizationalShirtPage extends React.Component {
         <Typography variant="h4">
           Organizational Shirts
         </Typography>
-
-        <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" className={style.Button}>
+        <div className={style.Controls}>
+          <Button component={Link} to="/admin/shirts/purchase" variant="contained" color="primary" className={style.Button}>
           Purchase
-        </Button>
-        <Button component={Link} to="/admin/shirts/organizationalshirt" variant="contained" color="primary" className={style.Button}>
+          </Button>
+          <Button component={Link} to="/admin/shirts/organizationalshirt" variant="contained" color="primary" className={style.Button}>
           View
-        </Button>
-        <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
+          </Button>
+          <Button component={Link} to="/admin/shirts/editorganizationalshirt" variant="contained" color="primary" className={style.Button}>
           Edit Shirt Details
-        </Button>
-        <MUIDataTable
-          title={'Organizational Shirt Purchase Record'}
-          data={purchasedShirts.map((shirt) => {
-            return [
-              shirt.id,
-              shirt.last_name + ',  ' + shirt.first_name + ' ' + shirt.middle_name,
-              shirt.size,
-              shirt.year_level + shirt.section + ' - G' + shirt.group,
-              shirt.contact_number,
-              shirt.email
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+          </Button>
+          <Typography variant="subtitle1" className={style.Profit}>
+            Estimated net profit:<span className={style.Gray}>  Php {parseFloat(estimateprice).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+          </Typography>
+        </div>
+        { purchasedShirts.length !== 0 ?
+          (<MUIDataTable
+            title={'Organizational Shirt Purchase Record'}
+            data={purchasedShirts.map((shirts) => {
+              return [
+                shirts.id,
+                shirts.last_name + ',  ' + shirts.first_name + ' ' + shirts.middle_name,
+                shirts.size,
+                shirts.year_level + shirts.section + ' - G' + shirts.group,
+                shirts.contact_number,
+                shirts.email
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />) :
+          (<EmptyTable title={'Organizational Shirt Purchase Record'} message={'No purchase record to display'} />)
+        }
       </LayoutWithTopbarAndSidebar>
     );
   }
@@ -133,17 +148,21 @@ class OrganizationalShirtPage extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   purchasedShirts: makeSelectShirtPurchaseShirts(),
+  shirt: makeSelectShirt(),
+  organization: makeSelectCurrentOrganization(),
   meta: makeSelectShirtsMeta()
 });
 
 const mapDispatchToProps = {
-  fetchPurchaseShirts
+  fetchPurchaseShirts,
+  fetchShirt
 };
 
 const withRedux = connect(mapStateToProps, mapDispatchToProps);
 
 const withFetchInitialData = fetchInitialData((props) => {
   props.fetchPurchaseShirts();
+  props.fetchShirt();
 });
 
 const withLoadingWhileFetchingDataInsideLayout = showLoadingWhileFetchingDataInsideLayout((props) => {

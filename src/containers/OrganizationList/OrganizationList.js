@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
+import moment from 'moment';
 import {createStructuredSelector} from 'reselect';
 import {makeSelectOrganizationsList, makeSelectOrganizationsMeta} from 'redux/selectors/organizations';
 import {fetchOrganizations} from 'redux/actions/organizations';
+
 
 import fetchInitialData from 'hoc/fetchInitialData';
 import showLoadingWhileFetchingDataInsideLayout from 'hoc/showLoadingWhileFetchingDataInsideLayout';
@@ -16,8 +18,8 @@ import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSel
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import View from '@material-ui/icons/Visibility';
+import EmptyTable from 'containers/EmptyTable/EmptyTable';
 import ViewModal from './ViewModal';
-
 import style from './OrganizationList.scss';
 
 
@@ -133,24 +135,27 @@ class OrganizationTable extends React.Component {
     return (
       <LayoutWithTopbarAndSidebar>
         <ViewModal open={this.state.open} id={this.state.id} handleClose={this.handleClose.bind(this)} organizations={organizations} />
-        <MUIDataTable
-          title={'Organization List'}
-          data={organizations.map((org) => {
-            return [
-              org.id,
-              org.name,
-              org.acronym,
-              org.recognition_number.replace(/(\d{2})(\d{3})/, '$1-$2'),
-              org.formation,
-              org.college_name,
-              org.organization_type_name,
-              org.status,
-              org.id
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+        { organizations.length !== 0 ?
+          (<MUIDataTable
+            title={'Organization List'}
+            data={organizations.map((org) => {
+              return [
+                org.id,
+                org.name,
+                org.acronym,
+                org.recognition_number.replace(/(\d{2})(\d{3})/, '$1-$2'),
+                moment(org.formation).format('MMM DD YYYY'),
+                org.college_name,
+                org.organization_type_name,
+                org.status.toUpperCase(),
+                org.id
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />) :
+          (<EmptyTable title={'Organization List'} message={'No registered organizations'} />)
+        }
       </LayoutWithTopbarAndSidebar>
     );
   }

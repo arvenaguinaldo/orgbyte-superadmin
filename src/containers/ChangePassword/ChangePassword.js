@@ -74,7 +74,7 @@ class PasswordReset extends Component {
                               aria-label="Toggle password visibility"
                               onClick={this.handleClickShowPassword1}
                             >
-                              {this.state.showPassword1 ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword1 ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                           </InputAdornment>
                         }
@@ -99,7 +99,7 @@ class PasswordReset extends Component {
                               aria-label="Toggle password visibility"
                               onClick={this.handleClickShowPassword2}
                             >
-                              {this.state.showPassword2 ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword2 ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                           </InputAdornment>
                         }
@@ -124,7 +124,7 @@ class PasswordReset extends Component {
                               aria-label="Toggle password visibility"
                               onClick={this.handleClickShowPassword3}
                             >
-                              {this.state.showPassword3 ? <VisibilityOff /> : <Visibility />}
+                              {this.state.showPassword3 ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                           </InputAdornment>
                         }

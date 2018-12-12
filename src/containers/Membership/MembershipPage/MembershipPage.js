@@ -20,6 +20,7 @@ import View from '@material-ui/icons/Visibility';
 
 import LayoutWithTopbarAndSidebar from 'layouts/LayoutWithTopbarAndSidebar';
 import CustomToolbarSelect from 'containers/CustomToolbarSelect/CustomToolbarSelect';
+import EmptyTable from 'containers/EmptyTable/EmptyTable';
 import ViewModal from './ViewModal';
 
 import style from './MembershipPage.scss';
@@ -101,7 +102,6 @@ class MembershipPage extends React.Component {
   };
   handleModal =(e, value) => {
     // e.preventDefault();
-    console.log(value);
     this.setState({open: true, id: value});
   };
   handleClose = () => {
@@ -138,24 +138,26 @@ class MembershipPage extends React.Component {
         <Button component={Link} to="/admin/memberships/addmember" variant="contained" color="primary" className={style.button} >
           Add a member
         </Button>
-
-        <MUIDataTable
-          title={'Memberships List'}
-          data={members.map((member) => {
-            return [
-              member.id,
-              member.student_number,
-              member.last_name + ',  ' + member.first_name + ' ' + member.middle_name,
-              member.year_level + member.section + ' - G' + member.group,
-              member.contact_number,
-              member.email,
-              member.address,
-              member.id
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+        { members.length !== 0 ?
+          (<MUIDataTable
+            title={'Memberships List'}
+            data={members.map((member) => {
+              return [
+                member.id,
+                member.student_number,
+                member.last_name + ',  ' + member.first_name + ' ' + member.middle_name,
+                member.year_level + member.section + ' - G' + member.group,
+                member.contact_number,
+                member.email,
+                member.address,
+                member.id
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />) :
+          (<EmptyTable title={'Memberships List'} message={'No registered members'} />)
+        }
       </LayoutWithTopbarAndSidebar>
     );
   }
