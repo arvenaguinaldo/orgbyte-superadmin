@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import _ from 'lodash';
 import {createStructuredSelector} from 'reselect';
 import moment from 'moment';
 
@@ -10,7 +11,7 @@ import {makeSelectEventsMeta} from 'redux/selectors/events';
 
 // Redux Form
 import {Field, reduxForm} from 'redux-form';
-import {renderTextField, renderDateTimePicker, renderRadioButton, renderCheckbox} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
+import {renderTextField, renderDateTimePicker, renderRadioButton, renderCheckbox, renderSelectField} from 'components/ReduxMaterialUiForms/ReduxMaterialUiForms';
 import FileUpload from 'components/FileUpload/FileUpload';
 import {createNumberMask} from 'redux-form-input-masks';
 import {validate, warn} from 'utils/Validations/CreateEvent';
@@ -50,10 +51,16 @@ class CreateEvent extends Component {
 
   state = {
     startsDate: new Date('2018-01-01T00:00:00.000Z'),
-    endsDate: new Date()
+    endsDate: new Date(),
+    venueTextfield: false
   };
 
   onSubmit = (values) => {
+    console.log(values.venueSelectField);
+    if (values.venueSelectField !== 'Others') {
+      _.set(values, 'venue', values.venueSelectField);
+    }
+    delete values.venueSelectField; // eslint-disable-line
     this.props.createEvent(values, (data) => {
       this.fileUpload.processQueue(data.id);
       return {type: 'event_image_upload_in_progress'};
@@ -72,6 +79,14 @@ class CreateEvent extends Component {
     this.props.createEventSuccess(response);
   }
 
+  handleVenueTextField = (value) => {
+    if (value === 'Others') {
+      this.setState({venueTextfield: true});
+    } else {
+      this.setState({venueTextfield: false});
+    }
+  }
+
   render() {
 
     const {valid, handleSubmit, meta} = this.props; // eslint-disable-line react/prop-types
@@ -87,6 +102,8 @@ class CreateEvent extends Component {
       decimalPlaces: 2,
       guide: true
     });
+
+    const required = value => (!value && this.state.venueTextfield === false ? 'This field is Required' : undefined);
 
     return (
       <LayoutWithTopbarAndSidebar>
@@ -131,14 +148,35 @@ class CreateEvent extends Component {
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Field
-                      required
-                      name="venue"
-                      component={renderTextField}
-                      label="Venue"
+                      name="venueSelectField"
+                      component={renderSelectField}
+                      label="Venue*"
                       fullWidth
-                    />
+                      validate={required}
+                      onChange={event => this.handleVenueTextField(event.target.value)}
+                    >
+                      <option value="" />
+                      <option value="Valencia Hall Bulacan State University">Valencia Hall Bulacan State University</option>
+                      <option value="KB Gym Malolos Bulacan">KB Gym Malolos Bulacan</option>
+                      <option value="Malolos Convention, Malolos Bulacan">Malolos Convention, Malolos Bulacan</option>
+                      <option value="Others">Others</option>
+                    </Field>
                   </Grid>
                 </Grid>
+
+                {this.state.venueTextfield === true &&
+                  <Grid container spacing={32}>
+                    <Grid item xs={12} sm={12} md={6}>
+                      <Field
+                        required
+                        name="venue"
+                        component={renderTextField}
+                        label="Venue"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                }
 
                 <Grid container spacing={32}>
                   <Grid item xs={12} sm={12} md={3}>

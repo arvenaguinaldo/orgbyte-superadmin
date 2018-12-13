@@ -1,6 +1,10 @@
 body {
   overflow-x: hidden;
   background: url("https://i.postimg.cc/d1VLPTtd/Untitled-1.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-position: center;
 }
 
 #body1 {
@@ -8,7 +12,7 @@ body {
   background: url("https://i.postimg.cc/d1VLPTtd/Untitled-1.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  // background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
 }
 
@@ -22,4 +26,12 @@ body {
     padding-left: 1;
     padding-right: 1;
   }
+}
+
+button:focus {
+  outline: 0;
+}
+
+*:focus {
+  outline: none !important;
 }

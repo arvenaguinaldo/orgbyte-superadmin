@@ -4,6 +4,7 @@ import {reset} from 'redux-form';
 import * as coursesActions from 'redux/actions/courses';
 import * as coursesService from 'services/api/courses';
 import {COURSES} from 'constants/actions/courses';
+import {EDIT} from 'constants/actions/edit';
 import {callErrorNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -42,9 +43,14 @@ function* watchRequestAddCourse() {
   yield* takeEvery(COURSES.ADD_COURSE, addCourse);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchCourses);
+}
+
 export default function* courses() {
   yield [
     fork(watchRequest),
-    fork(watchRequestAddCourse)
+    fork(watchRequestAddCourse),
+    fork(watchRequestSaveEdit)
   ];
 }
