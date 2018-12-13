@@ -24,6 +24,9 @@ import {fetchEvents} from 'redux/actions/events';
 import {fetchMembers} from 'redux/actions/users';
 import fetchInitialData from 'hoc/fetchInitialData';
 
+import {getRenewal} from 'redux/actions/renewal';
+import {makeSelectRenewalDate} from 'redux/selectors/renewal';
+
 // @material-ui
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -60,12 +63,14 @@ class Dashboard extends Component {
     members: PropTypes.array.isRequired,
     events: PropTypes.array.isRequired,
     announcements: PropTypes.array.isRequired,
-    organization: PropTypes.object
+    organization: PropTypes.object,
+    renewal: PropTypes.array
   }
   static defaultProps = {
     members: [],
     events: [],
-    announcements: []
+    announcements: [],
+    renewal: []
   };
   getCount = (startsDate) => {
     moment.locale('en');
@@ -145,7 +150,8 @@ class Dashboard extends Component {
     dec = 0;
     const delays = 80;
     const durations = 500;
-    const {members, events, announcements, organization} = this.props;
+    const {members, events, announcements, organization, renewal} = this.props;
+    console.log(renewal);
     // line chart
     const activeMemberCount = members.filter(member => (member.status === 'active' ? member.status : null)).map((member) => {
       return [
@@ -217,7 +223,7 @@ class Dashboard extends Component {
         }
       }
     };
-    if (!organization.logo_blobs) {
+    if (!organization.logo_blobs || renewal.length === 0) {
       return null;
     }
     return (
@@ -308,7 +314,12 @@ class Dashboard extends Component {
                 />
                 <div className={styles.CardUpperText}>
                   <Typography variant="subtitle1" color="textSecondary" className={styles.SecondaryText}>Next renewal date</Typography>
-                  <Typography variant="subtitle1" className={styles.PrimaryText}>Jan 12 2018</Typography>
+                  {renewal.length === 0 ?
+                    (<Typography variant="subtitle1" className={styles.PrimaryText}>Not set </Typography>)
+                    :
+                    (<Typography variant="subtitle1" className={styles.PrimaryText}>{moment(renewal[0].starts).format('MMMM/DD/YYYY')}</Typography>)
+                  }
+
                 </div>
                 <div className={styles.Divider} />
                 <ListItem className={styles.CardBottomText} />
@@ -395,6 +406,7 @@ const mapStateToProps = createStructuredSelector({
   announcements: makeSelectAnnouncementsList(),
   organization: makeSelectCurrentOrganization(),
   officers: makeSelectOfficersList(),
+  renewal: makeSelectRenewalDate(),
   meta: makeSelectUsersMeta()
 });
 
@@ -402,13 +414,14 @@ const mapStateToProps = createStructuredSelector({
 //   fetchEvents
 // };
 
-const withRedux = connect(mapStateToProps, {fetchMembers, fetchEvents, fetchAnnouncements, fetchOfficers});
+const withRedux = connect(mapStateToProps, {fetchMembers, fetchEvents, fetchAnnouncements, fetchOfficers, getRenewal});
 
 const withFetchInitialData = fetchInitialData((props) => {
   props.fetchMembers();
   props.fetchEvents();
   props.fetchAnnouncements();
   props.fetchOfficers();
+  props.getRenewal();
 });
 
 export default compose(
