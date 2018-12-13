@@ -4,6 +4,7 @@ import {reset} from 'redux-form';
 import * as collegesActions from 'redux/actions/colleges';
 import * as collegesService from 'services/api/colleges';
 import {COLLEGES} from 'constants/actions/colleges';
+import {EDIT} from 'constants/actions/edit';
 import {callErrorNotification} from './notification';
 
 //* *********** Subroutines ************//
@@ -42,9 +43,14 @@ function* watchRequestAddCollege() {
   yield* takeEvery(COLLEGES.ADD_COLLEGE, addCollege);
 }
 
+function* watchRequestSaveEdit() {
+  yield* takeEvery(EDIT.SAVE_EDIT_SUCCESS, fetchColleges);
+}
+
 export default function* colleges() {
   yield [
     fork(watchRequest),
-    fork(watchRequestAddCollege)
+    fork(watchRequestAddCollege),
+    fork(watchRequestSaveEdit)
   ];
 }

@@ -8,6 +8,7 @@ import JsPDF from 'jspdf';
 import Button from '@material-ui/core/Button';
 import MUIDataTable from 'mui-datatables';
 import * as Papa from 'papaparse';
+import * as XLSX from 'xlsx';
 import {reduxForm} from 'redux-form';
 import {createStructuredSelector} from 'reselect';
 
@@ -85,14 +86,29 @@ class Multiple extends Component {
     this.props.addMembers({memberships});
   };
 
-  handleImport = (value) => {
-    console.log(value);
-    Papa.parse(value, {
-      header: true,
-      download: true,
-      skipEmptyLines: true,
-      complete: this.handleResult
-    });
+  handleImport = (event) => {
+    const extension = event.target.files[0].name.split('.').pop();
+    if (extension === 'xlsx') {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const workbook = XLSX.read(reader.result, {type: 'binary'});
+        const sheetName = workbook.SheetNames[0];
+        const csv = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        this.handleResult(csv);
+      };
+      reader.readAsBinaryString(event.target.files[0]);
+    }
+
+    if (extension === 'csv') {
+      Papa.parse(event.target.files[0], {
+        header: true,
+        download: true,
+        skipEmptyLines: true,
+        dynamicTyping: true,
+        complete: this.handleResult
+      });
+    }
     document.getElementById('contained-button-file').value = '';
   }
 
@@ -108,13 +124,12 @@ class Multiple extends Component {
     return isValid;
   }
 
-  handleResult = (results) => {
-    console.log(results.data);
-    console.log(results.data[0]);
+  handleResult = (result) => {
+    const results = result.data ? result.data : result;
     this.setState({members: []});
-    if (this.isValid(results.data)) {
+    if (this.isValid(results)) {
       this.setState({errors: {}});
-      this.setState({members: results.data});
+      this.setState({members: results});
       console.log(this.state.members);
     }
   }
@@ -134,12 +149,12 @@ class Multiple extends Component {
     return (
       <div>
         <input
-          accept=".csv"
+          accept=".csv,.xlsx"
           id="contained-button-file"
           multiple
           type="file"
           style={{display: 'none'}}
-          onChange={event => this.handleImport(event.target.files[0])}
+          onChange={event => this.handleImport(event)}
         />
         <label htmlFor="contained-button-file">
           <Button color="primary" variant="contained" component="span" className={style.button}>

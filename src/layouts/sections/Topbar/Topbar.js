@@ -62,7 +62,7 @@ class Topbar extends Component {
             </Typography>
           ) :
             <Typography key={user.id} variant="h6" color="inherit" noWrap >
-              SUPER ADMIN
+              DIRECTOR
             </Typography>
           }
         </Toolbar>

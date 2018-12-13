@@ -89,6 +89,8 @@
     "unit-to-px": "^1.0.5",
     "validator": "^10.7.1",
     "video-react": "^0.13.1",
+    "xlsx": "^0.14.1",
+    "xlsx-to-json": "^0.3.0",
     "yaqrcode": "^0.2.1"
   },
   "devDependencies": {
