@@ -31,6 +31,8 @@ import 'styles/base.scss';
 
 import './styles/index.scss';
 
+import registerServiceWorker from './registerServiceWorker';
+
 function startApp() {
 
   const history = createHistory();
@@ -70,6 +72,7 @@ function startApp() {
     </JssProvider>,
     document.getElementById('root'),
   );
+  registerServiceWorker();
 
 }
 
