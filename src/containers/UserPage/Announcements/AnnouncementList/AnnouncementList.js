@@ -171,6 +171,7 @@ class AnnouncementList extends Component {
     const today = moment(moment().toString()).format('YYYY-MM-DD h:mm a');
     return (
       <TopBarAndFooter>
+        <div style={{height: 50}} />
         <Typography variant="h4" className={classes.header} >Announcements</Typography>
         <Grid container >
           <Grid item lg={3} md={3} sm={12} xs={12} className={classes.content} >

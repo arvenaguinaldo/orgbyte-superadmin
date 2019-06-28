@@ -6,7 +6,7 @@ import Moment from 'moment';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-// import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -81,27 +81,23 @@ class OrganizationProfile extends Component {
     if (!organization.organizations) {
       return null;
     }
+    // if (!organization.organizations.logo_blobs) {
+    //   return null;
+    // }
     console.log(organization);
     return (
       <div>
         <TopBarAndFooter>
+          <div style={{height: 50}} />
           <Grid container spacing={0} >
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Card className={styles.OrganizationDetail}>
                 <Center>
-                  {/* {organization.logo_blobs.length === 0 ?
-                    <Avatar
-                      alt="SWITS"
-                      src="https://i.postimg.cc/nVGQ2Lqs/ang-pogi-ni-jeremiah-Robles.png"
-                      className={styles.OrgAvatar}
-                    />
-                    :
-                    <Avatar
-                      alt="SWITS"
-                      src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.logo_blobs[0].key}
-                      className={styles.OrgAvatar}
-                    />
-                  } */}
+                  <Avatar
+                    alt={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.organizations.logo_blobs[0].filename}
+                    src={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + organization.organizations.logo_blobs[0].key}
+                    className={styles.OrgAvatar}
+                  />
                 </Center>
                 <div className={styles.DetailContainer}>
                   <Typography variant="subtitle1" className={styles.Text}>
