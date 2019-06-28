@@ -114,6 +114,7 @@ class EventPage extends Component {
     }
     return (
       <TopBarAndFooter>
+        <div style={{height: 50}} />
         <div className={classes.EventCoverImage} />
         <div className={classes.ImageDiv}>
           <CardMedia

@@ -3,22 +3,26 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Grid from '@material-ui/core/Grid';
-import Center from 'react-center';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Hidden from '@material-ui/core/Hidden';
 import TabBar from './Tab';
+import TopBarMobile from './TopBarMobile';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingRight: 0
-  },
-  menuButton: {
-    marginLeft: -18,
-    marginRight: 10
+    // height: '104px',
+    width: '100%'
   },
   app: {
-    backgroundColor: 'white',
-    borderBottom: 'solid 5px #5C181D',
+    position: 'relative',
+    zIndex: 1400,
+    backgroundColor: '#5c181d',
+    color: 'white',
+    width: '100%',
+    height: '50px',
+    margin: 0,
     padding: 0
   },
   logo: {
@@ -28,7 +32,7 @@ const styles = {
   log: {
     height: '45%',
     width: '50%',
-    marginTop: '2%  '
+    marginTop: '2%'
   },
   menu: {
     width: '100%',
@@ -39,38 +43,61 @@ const styles = {
   },
   bar: {
     padding: 0
+  },
+  navIconHide: {
+    [theme.breakpoints.up('lg')]: {
+      display: 'none'
+    }
   }
-};
+});
 
+class DenseAppBar extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  }
 
-function DenseAppBar(props) {
-  const {classes} = props;
+  state = {
+    topBarMobileOpen: false
+  };
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.app}>
-        <Toolbar variant="dense" className={classes.bar}>
-          <Grid container spacing={0}>
-            <Grid item lg={3} md={3} sm={12} xs={12}>
-              <div className={classes.logo}>
-                <Center>
-                  <img src="https://i.postimg.cc/59CnSdDj/logo23.png" alt="logo" className={classes.log} />
-                </Center>
-              </div>
-            </Grid>
-            <Grid item lg={3} md={3} sm={false} xs={false} />
-            <Grid item lg={6} md={6} sm={12} xs={12} className={classes.right}>
-              <TabBar className={classes.menu} />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+  toggleDrawer = () => {
+    this.setState({
+      topBarMobileOpen: !this.state.topBarMobileOpen
+    });
+  };
+
+  render() {
+    const {classes} = this.props;
+    const {topBarMobileOpen} = this.state;
+
+    return (
+      <div className={classes.root}>
+        <Hidden lgUp>
+          <TopBarMobile topBarMobileOpen={topBarMobileOpen} onToggleDrawer={this.toggleDrawer} />
+          <AppBar position="static" className={classes.app}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                className={classes.navIconHide}
+                onClick={this.toggleDrawer}
+              >
+                <MenuIcon />
+              </IconButton>
+              <TabBar displayLogo={false} />
+            </Toolbar>
+          </AppBar>
+        </Hidden>
+
+        <Hidden mdDown>
+          <AppBar position="static" className={classes.app}>
+            <TabBar displayLogo />
+          </AppBar>
+        </Hidden>
+      </div>
+    );
+  }
 }
 
-DenseAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(DenseAppBar);

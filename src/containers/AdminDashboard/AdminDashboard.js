@@ -223,7 +223,7 @@ class Dashboard extends Component {
         }
       }
     };
-    if (!organization.logo_blobs || renewal.length === 0) {
+    if (!organization.logo_blobs) {
       return null;
     }
     return (

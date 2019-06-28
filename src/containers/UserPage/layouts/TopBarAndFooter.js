@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
-import Topbar from './sections/Topbar/Topbar';
+import Topbar from './sections/TopBar/TopBar';
 import Footer from './sections/Footer/Footer';
 
 const styles = ({
   root: {
     flexGrow: 1,
-    padding: 0
+    padding: 0,
+    backgroundColor: '#F2F2F2'
   }
 });
 

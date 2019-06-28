@@ -1,5 +1,6 @@
 import {takeEvery, delay} from 'redux-saga';
 import {put, call, fork} from 'redux-saga/effects';
+import _ from 'lodash';
 import * as organizationsActions from 'redux/actions/organizations';
 import * as usersActions from 'redux/actions/users';
 import * as organizationsService from 'services/api/organizations';
@@ -67,11 +68,19 @@ function* addOrganization(action) {
 
 function* fetchOrganizationToUserSide(action) {
   const response = yield call(organizationsService.fetchOrganizationToUserSide, action.params);
+  const responseInfo = yield call(organizationsService.fetchOrganizationToUserSideInfo, action.params);
+  console.log(response);
+  console.log(responseInfo);
   if (response) {
     if (response.error) {
       yield call(callErrorNotification, `Could not fetch data: ${response.error}`);
     } else {
-      yield put(organizationsActions.fetchOrganizationToUserSideSuccess(response));
+      // const resp = {...response, ...responseInfo};
+      // const respon = {responseInfo.data.organizations: response};
+      _.set(responseInfo.data, 'organizations', response.data);
+      // const resp = _.merge(respon, responseInfo);
+      // console.log(resp);
+      yield put(organizationsActions.fetchOrganizationToUserSideSuccess(responseInfo));
     }
   }
 }
