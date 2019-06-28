@@ -180,7 +180,7 @@
     "extends": "eslint-config-airbnb"
   },
   "scripts": {
-    "npm sm start": "./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js --progress --colors",
+    "build-prod": "./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js --progress --colors",
     "build-staging": "./node_modules/webpack/bin/webpack.js --config webpack/staging.config.js --progress --colors",
     "dev": "./node_modules/.bin/webpack-dev-server --config webpack/dev.config.js --color --progress",
     "start": "npm run dev",
