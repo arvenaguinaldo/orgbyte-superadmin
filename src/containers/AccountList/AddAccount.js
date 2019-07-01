@@ -149,7 +149,7 @@ class AddAccount extends React.Component {
                   Cancel
                 </Button>
 
-                <SubmitButton loading={meta.isLoading} valid={!valid}>
+                <SubmitButton loading={meta.isLoading} valid={!valid}> {/* eslint-disable-line */}
                   ADD ACCOUNT
                 </SubmitButton>
               </div>

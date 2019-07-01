@@ -106,7 +106,7 @@ const toolbarStyles = theme => ({
     flex: '0 0 auto'
   }
 });
-let EnhancedTableToolbar = (props) => {
+let EnhancedTableToolbar = (props) => { {/* eslint-disable-line */}
   const {numSelected, classes} = props;
   EnhancedTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,

@@ -342,7 +342,7 @@ class CreateEvent extends Component {
                   CANCEL
             </Button>
 
-            <SubmitButton loading={meta.isLoading} valid={!valid}>
+            <SubmitButton loading={meta.isLoading} valid={!valid}> {/* eslint-disable-line */}
                   SUBMIT
             </SubmitButton>
           </div>
