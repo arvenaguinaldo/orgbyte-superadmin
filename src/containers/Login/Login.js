@@ -134,7 +134,7 @@ LOGIN
 
           </CardContent>
           <CardActions>
-            <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}>
+            <SubmitButton loading={meta.isLoading} valid={!valid} className={classes.loginButton}> {/* eslint-disable-line */}
 LOGIN
             </SubmitButton>
           </CardActions>

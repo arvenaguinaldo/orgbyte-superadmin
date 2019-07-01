@@ -147,7 +147,7 @@ class PasswordReset extends Component {
 
               </Grid>
               <div className={styles.submitButtonDiv}>
-                <SubmitButton loading={meta.isLoading} valid={!valid} >
+                <SubmitButton loading={meta.isLoading} valid={!valid} > {/* eslint-disable-line */}
                 SAVE
                 </SubmitButton>
               </div>

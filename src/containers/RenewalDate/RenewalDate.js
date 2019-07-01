@@ -79,7 +79,7 @@ class RenewalDate extends Component {
                           <Grid container spacing={0}>
                             <Grid item xs={12} sm={12} md={9} />
                             <Grid item xs={12} sm={12} md={3}>
-                              <SubmitButton loading={meta.isLoading} valid={!valid}>
+                              <SubmitButton loading={meta.isLoading} valid={!valid}> {/* eslint-disable-line */}
                                 SUBMIT
                               </SubmitButton>
                             </Grid>

@@ -12,7 +12,7 @@ class HomePage extends Component {
   render() {
     return (
       <TopBarAndFooter>
-        <div className={style.Children}>
+        <div className={style.CarouselContainer}>
           <Carousel autoPlay showThumbs={false} showStatus={false} infiniteLoop dynamicHeight>
             <div><img src="http://bulsu.edu.ph/resources/slider/pres_gascon.jpg" alt="TopNews" /></div>
             <div><img src="http://bulsu.edu.ph/resources/slider/6b81f230dad0c1c002d99630ed2f4bba.jpg" alt="TopNews" /></div>

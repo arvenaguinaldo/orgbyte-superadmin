@@ -1,7 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -63,7 +64,7 @@ module.exports = {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: function () {
+                plugins() {
                   return [
                     require('autoprefixer')
                   ];
@@ -97,7 +98,7 @@ module.exports = {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: function () {
+                plugins() {
                   return [
                     require('autoprefixer')
                   ];
@@ -157,17 +158,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('prod')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        screw_ie8: true // React doesn't support IE8
-      },
-      mangle: {
-        screw_ie8: true
-      },
-      output: {
-        comments: false,
-        screw_ie8: true
-      }
-    })
+    new UglifyJSPlugin()
   ]
 };

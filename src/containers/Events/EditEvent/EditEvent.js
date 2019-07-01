@@ -62,7 +62,7 @@ class EditEvent extends Component {
 
   onSubmit = (values, dispatch) => {
     const {match: {params}} = this.props; // eslint-disable-line
-    const param = {id: params.id, values};
+    const param = {id: params.id, values}; // eslint-disable-line
     dispatch(saveEdit(param));
   };
 
@@ -327,7 +327,7 @@ class EditEvent extends Component {
                   CANCEL
             </Button>
 
-            <SubmitButton loading={meta.isLoading} valid={!valid}>
+            <SubmitButton loading={meta.isLoading} valid={!valid}> {/* eslint-disable-line */}
                   SAVE CHANGES
             </SubmitButton>
           </div>

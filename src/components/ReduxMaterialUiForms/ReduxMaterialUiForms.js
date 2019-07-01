@@ -77,7 +77,7 @@ export const renderSelectField = (
       <Select
         native
         {...input}
-        onChange={(event, index, value) => input.onChange(value)}
+        onChange={(event, index, value) => input.onChange(value)} // eslint-disable-line
         input={<Input name="name" id="name-readonly" readOnly />}
         {...custom}
       >
@@ -86,7 +86,7 @@ export const renderSelectField = (
     ) : (
       <Select
         native
-        onChange={(event, index, value) => input.onChange(value)}
+        onChange={(event, index, value) => input.onChange(value)} // eslint-disable-line
         {...input}
         {...custom}
       >
@@ -189,7 +189,7 @@ export const renderRadioButton = (
     <FormLabel component="legend">{label}</FormLabel>
     <RadioGroup
       aria-label={label}
-      onChange={(event, index, value) => input.onChange(value)}
+      onChange={(event, index, value) => input.onChange(value)} // eslint-disable-line
       style={{display: 'inline-table', padding: '0px'}}
       {...input}
       {...custom}
@@ -208,9 +208,9 @@ export const renderCheckbox = (
       control={
         <Checkbox
           {...input}
-          defaultChecked={input.value}
-          checked={input.checked}
-          onChange={input.onChange}
+          defaultChecked={input.value} // eslint-disable-line
+          checked={input.checked} // eslint-disable-line
+          onChange={input.onChange} // eslint-disable-line
         />
       }
       label={label}
@@ -236,24 +236,24 @@ export const renderChipEmail = (
     <ChipInput
       {...input}
       {...custom}
-      value={input.value || []}
+      value={input.value || []} // eslint-disable-line
       onBeforeAdd={(toAddChip) => {
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(toAddChip)) {
           return false;
         } return true;
       }}
       onAdd={(addedChip) => {
-        let values = input.value || [];
+        let values = input.value || []; // eslint-disable-line
         values = values.slice();
         values.push(addedChip);
-        input.onChange(values);
+        input.onChange(values); // eslint-disable-line
       }}
       onDelete={(deletedChip) => {
-        let values = input.value || [];
+        let values = input.value || []; // eslint-disable-line
         values = values.filter(v => v !== deletedChip);
-        input.onChange(values);
+        input.onChange(values); // eslint-disable-line
       }}
-      onBlur={() => input.onBlur()}
+      onBlur={() => input.onBlur()} // eslint-disable-line
       label={label}
       fullWidth={fullWidth}
     />
@@ -268,24 +268,24 @@ export const renderChipPhoneNumber = (
     <ChipInput
       {...input}
       {...custom}
-      value={input.value || []}
+      value={input.value || []} // eslint-disable-line
       onBeforeAdd={(toAddChip) => {
         if (!/^(0|[1-9][0-9]{9})$/i.test(toAddChip)) {
           return false;
         } return true;
       }}
       onAdd={(addedChip) => {
-        let values = input.value || [];
+        let values = input.value || []; // eslint-disable-line
         values = values.slice();
         values.push(addedChip);
-        input.onChange(values);
+        input.onChange(values); // eslint-disable-line
       }}
       onDelete={(deletedChip) => {
-        let values = input.value || [];
+        let values = input.value || []; // eslint-disable-line
         values = values.filter(v => v !== deletedChip);
-        input.onChange(values);
+        input.onChange(values); // eslint-disable-line
       }}
-      onBlur={() => input.onBlur()}
+      onBlur={() => input.onBlur()} // eslint-disable-line
       label={label}
       fullWidth={fullWidth}
     />

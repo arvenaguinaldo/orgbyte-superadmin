@@ -179,7 +179,7 @@ class GenerateCertificate extends Component {
         doc.text(attend.last_name + ', ' + attend.first_name, x + 74, y + 14);
         const certificatePdf = doc.output('datauristring'); // Display in iframe
         const base64 = certificatePdf.substring(28);
-        this.props.sendCertificate({certificatePdf: base64, event_id: params.id, attendee: attend});
+        this.props.sendCertificate({certificatePdf: base64, event_id: params.id, attendee: attend}); {/* eslint-disable-line */}
 
         return null;
       });

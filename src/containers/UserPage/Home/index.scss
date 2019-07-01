@@ -49,3 +49,9 @@
 .Divide {
   color: #5c181d;
 }
+
+@media only screen and (max-width: 800px) {
+  .CarouselContainer {
+    margin-top: 30px;
+  }
+}

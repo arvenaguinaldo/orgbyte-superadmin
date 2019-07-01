@@ -82,7 +82,7 @@ class CheckIn extends Component {
     event.preventDefault();
     const {match: {params}} = this.props; // eslint-disable-line
     const attendeeId = value.event_attendee_type_name === 'Non-Bulsuan' ? value.id : value.student_number;
-    const parameters = {qr_result: attendeeId, event_id: params.id};
+    const parameters = {qr_result: attendeeId, event_id: params.id}; {/* eslint-disable-line */}
     this.props.attend(parameters);
   };
 
