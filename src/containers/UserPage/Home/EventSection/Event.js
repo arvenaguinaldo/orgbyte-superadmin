@@ -48,6 +48,7 @@ class UserSideEvents extends Component {
           { events.length !== 0 ?
             (events.slice(0, 4).map((event) => {
               return (
+                event.publish &&
                 <Grid item lg={3} md={3} sm={12} xs={12} key={event.id}>
                   <Link key={event.id} to={'/events/' + event.id}>
                     <Paper elevation={0} className={style.EventPaper}>
