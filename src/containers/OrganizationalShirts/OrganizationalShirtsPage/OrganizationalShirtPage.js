@@ -86,7 +86,6 @@ class OrganizationalShirtPage extends React.Component {
   render() {
     const {columns, dbTable} = this.state;
     const {purchasedShirts, shirt} = this.props;
-    const estimateprice = purchasedShirts.length * shirt.price;
     const options = {
       filter: true,
       selectableRows: true,
@@ -104,6 +103,21 @@ class OrganizationalShirtPage extends React.Component {
           columns={this.state.columns}
         />)
     };
+
+    if (!shirt) {
+      return (
+        <LayoutWithTopbarAndSidebar>
+          <Typography variant="h4">
+          Organizational Shirts
+          </Typography>
+
+          <Typography variant="h5">
+            No Shirt Available
+          </Typography>
+        </LayoutWithTopbarAndSidebar>
+      );
+    }
+    const estimateprice = purchasedShirts.length * shirt.price;
     return (
       <LayoutWithTopbarAndSidebar>
         <Typography variant="h4">
