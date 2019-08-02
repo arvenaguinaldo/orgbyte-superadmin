@@ -233,7 +233,7 @@ class MemberForm extends Component {
         </Grid>
 
         <div className={style.bottomButton}>
-          <Button component={Link} to={'admin/events/' + this.props.event.id} color="primary" className={style.button}>
+          <Button component={Link} to={'/admin/events/' + this.props.event.id} color="primary" className={style.button}>
                   Cancel
           </Button>
 
