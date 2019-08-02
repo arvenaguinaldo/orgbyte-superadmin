@@ -183,7 +183,7 @@ class AddOrganizationalShirt extends Component {
               </Grid>
 
               <div className={style.bottomButton}>
-                <Button component={Link} to="/shirts" color="primary" className={style.button}>
+                <Button component={Link} to="/admin/shirts" color="primary" className={style.button}>
                   Cancel
                 </Button>
                 <SubmitButton loading={meta.isLoading} valid={!valid}>
