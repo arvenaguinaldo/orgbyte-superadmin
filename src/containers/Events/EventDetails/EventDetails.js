@@ -266,7 +266,7 @@ class EventDetails extends Component {
                       Register
             </Button>
 
-            <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={!attendDisable && event.publish} size="small" variant="contained" color="primary" className={styles.actionsButton}>
+            <Button component={Link} to={'/admin/events/' + event.id + '/checkin'} target="_blank" disabled={(!attendDisable && event.publish) || !event.publish} size="small" variant="contained" color="primary" className={styles.actionsButton}>
                       Check In
             </Button>
             <Button component={Link} to={'/admin/events/' + event.id + '/edit'} size="small" variant="contained" color="primary" className={styles.actionsButton}>

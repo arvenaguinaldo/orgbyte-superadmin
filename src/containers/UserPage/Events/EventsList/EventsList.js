@@ -202,6 +202,7 @@ class EventList extends Component {
               <Grid container spacing={0}>
                 {events.filter(searchingFor(this.state.term)).map((event) => {
                   return (
+                    event.publish &&
                     <Grid item lg={4} md={4} sm={12} xs={12} >
                       <Link key={event.id} to={'/events/' + event.id}>
                         <Paper elevation={0} className={style.EventPaper}>
