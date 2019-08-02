@@ -338,7 +338,7 @@ class CreateEvent extends Component {
             </Grid>
           </Paper>
           <div className={style.bottomButton}>
-            <Button component={Link} to="/events" color="primary" className={style.button}>
+            <Button component={Link} to="/admin/events" color="primary" className={style.button}>
                   CANCEL
             </Button>
 

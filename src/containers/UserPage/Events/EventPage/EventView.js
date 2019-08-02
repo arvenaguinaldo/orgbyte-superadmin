@@ -17,13 +17,10 @@ import {createStructuredSelector} from 'reselect';
 import {makeSelectEvent, makeSelectEventsMeta} from 'redux/selectors/events';
 import {fetchEvent} from 'redux/actions/events';
 import fetchInitialData from 'hoc/fetchInitialData';
-import {Player} from 'video-react';
 
 import 'video-react/dist/video-react.css';
 
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
-
-const bgImage = 'https://i.postimg.cc/FRzLXJfR/swits.jpg';
 
 const styles = {
   root: {
@@ -46,8 +43,11 @@ const styles = {
     height: '400px',
     textAlign: 'center'
   },
+  EventCoverImageContainer: {
+    height: '400px',
+    overflow: 'hidden'
+  },
   EventCoverImage: {
-    backgroundImage: 'url(' + bgImage + ')',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -112,10 +112,13 @@ class EventPage extends Component {
     if (!event.image_blobs) {
       return null;
     }
+
     return (
       <TopBarAndFooter>
         <div style={{height: 50}} />
-        <div className={classes.EventCoverImage} />
+        <div className={classes.EventCoverImageContainer}>
+          <div style={{backgroundImage: 'url(https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + event.image_blobs[0].key + ')'}} className={classes.EventCoverImage} />
+        </div>
         <div className={classes.ImageDiv}>
           <CardMedia
             className={classes.Image}
@@ -195,15 +198,15 @@ class EventPage extends Component {
                                 Ticket Price
                               </Typography>
                               {event.members === true ? (
-                                <Typography variant="subtitle1">Member {event.members_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.members_price}</Typography> }</Typography>
+                                <Typography variant="subtitle2">Member {event.members_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.members_price}</Typography> }</Typography>
                               ) : null}
 
                               {event.bulsuans === true ? (
-                                <Typography variant="subtitle1">BulSUan {event.bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.bulsuans_price}</Typography> }</Typography>
+                                <Typography variant="subtitle2">BulSUan {event.bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.bulsuans_price}</Typography> }</Typography>
                               ) : null}
 
                               {event.non_bulsuans === true ? (
-                                <Typography variant="subtitle1">Non-BulSUan {event.non_bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.non_bulsuans_price}</Typography> }</Typography>
+                                <Typography variant="subtitle2">Non-BulSUan {event.non_bulsuans_price === null ? <Typography variant="body1" className={classes.Price}>Free</Typography> : <Typography variant="body1" className={classes.Price}>₱ {event.non_bulsuans_price}</Typography> }</Typography>
                               ) : null}
                             </div>
                           </Grid>
@@ -241,7 +244,7 @@ class EventPage extends Component {
                         </Typography>
                       </CardContent>
 
-                      <CardContent>
+                      {/* <CardContent>
                         <Typography className={classes.title} gutterBottom>
                              Video
                         </Typography>
@@ -252,7 +255,7 @@ class EventPage extends Component {
                             src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
                           />
                         </Card>
-                      </CardContent>
+                      </CardContent> */}
                     </Grid>
 
 
