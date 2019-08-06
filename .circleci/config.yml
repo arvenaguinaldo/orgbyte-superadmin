@@ -24,7 +24,7 @@ jobs:
       - run: rm -rf build
       - run: npm install
 
-      - run: npm run build
+      - run: npm run build-prod
 
       - persist_to_workspace:
           root: build
