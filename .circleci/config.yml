@@ -1,0 +1,133 @@
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.0
+  aws-cli: circleci/aws-cli@0.1.13
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.4.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm cache clean --force
+      - run: rm -rf node_modules && rm package-lock.json
+      - run: rm -rf build
+      - run: npm install
+
+      - run: npm run build
+
+      - persist_to_workspace:
+          root: build
+          paths:
+            - ./*
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      # - run: npm test
+
+  deploy:
+    docker:
+      - image: 'circleci/python:2.7'
+
+    working_directory: ~/repo
+
+    description: >-
+      Syncs directories and S3 prefixes.
+      https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
+    parameters:
+      from:
+        type: string
+        description: A local *../build* path to sync with S3
+        default: './build'
+      to:
+        type: string
+        description: 'A URI to an S3 bucket, i.e. ''s3://orgbyte.com'''
+        default: 's3://orgbyte.com'
+      arguments:
+        type: string
+        default: ''
+        description: >
+          Optional additional arguments to pass to the `aws sync` command (e.g.,
+          `--acl public-read`). Note: if passing a multi-line value to this
+          parameter, include `\` characters after each line, so the Bash shell can
+          correctly interpret the entire command.
+      overwrite:
+        default: false
+        type: boolean
+      aws-access-key-id:
+        type: env_var_name
+        description: aws access key id override
+        default: AWS_ACCESS_KEY_ID
+      aws-secret-access-key:
+        type: env_var_name
+        description: aws secret access key override
+        default: AWS_SECRET_ACCESS_KEY
+      aws-region:
+        type: env_var_name
+        description: aws region override
+        default: AWS_REGION
+
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ~/repo/build
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-access-key-id: << parameters.aws-access-key-id >>
+          aws-secret-access-key: << parameters.aws-secret-access-key >>
+          aws-region: << parameters.aws-region >>
+
+      - run:
+          name: List
+          command: ls
+
+      - deploy:
+          name: Deploy to S3
+          command: |
+            aws s3 sync \
+              <<parameters.from>> <<parameters.to>><<#parameters.overwrite>> --delete<</parameters.overwrite>><<#parameters.arguments>> \
+              <<parameters.arguments>><</parameters.arguments>>
+
+      - aws-s3/copy:
+          from: ./build
+          to: "s3://orgbyte.com"
+          arguments: --recursive
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+workflows:
+   version: 2
+   build_and_deploy:
+     jobs:
+       - build
+       - deploy:
+            requires:
+              - build
+            filters:
+              branches:
+                only: develop
