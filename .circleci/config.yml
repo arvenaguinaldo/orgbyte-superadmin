@@ -19,8 +19,8 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm cache clean --force
-      - run: rm -rf node_modules && rm package-lock.json
+      # - run: npm cache clean --force
+      # - run: rm -rf node_modules && rm package-lock.json
       - run: rm -rf build
       - run: npm install
 
