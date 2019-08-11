@@ -31,7 +31,7 @@ import 'styles/base.scss';
 
 import './styles/index.scss';
 
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 
 function startApp() {
 
@@ -72,7 +72,7 @@ function startApp() {
     </JssProvider>,
     document.getElementById('root'),
   );
-  registerServiceWorker();
+  serviceWorker.register();
 
 }
 
