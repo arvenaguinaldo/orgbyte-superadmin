@@ -16,6 +16,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import {Grid, CardMedia} from '@material-ui/core';
+import Announcement from '@material-ui/icons/Announcement';
 
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
@@ -91,6 +92,11 @@ const styles = {
     border: '1px solid #eee',
     objectFit: 'contain'
   },
+  announcementIcon: {
+    width: '90%',
+    height: '100%',
+    color: '#888888'
+  },
   AnnouncementContent: {
     marginLeft: '20px',
     marginTop: '10px',
@@ -131,6 +137,11 @@ class AnnouncementPage extends Component {
   };
   render() {
     const {classes, announcement} = this.props;
+
+    if (!announcement.image_blobs) {
+      return null;
+    }
+
     return (
       <TopBarAndFooter>
         <div style={{height: 50}} />
@@ -143,13 +154,17 @@ class AnnouncementPage extends Component {
                 <Card className={classes.paper2}>
                   <Grid container spacing={0}>
                     <Grid item lg={4} md={6} sm={12} xs={12}>
-                      <Card className={classes.CardImage}>
-                        <CardMedia
-                          className={classes.CardMedia}
-                          image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                          title="Announcement"
-                        />
-                      </Card>
+                      {announcement.image_blobs[0] ?
+                        <Card className={classes.CardImage}>
+                          <CardMedia
+                            className={classes.CardMedia}
+                            image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + announcement.image_blobs[0].key}
+                            title="Announcement"
+                          />
+                        </Card>
+                        :
+                        <Announcement className={classes.announcementIcon} />
+                      }
                     </Grid>
                     <Grid item lg={7} md={7} xs={12}>
                       <Grid container spacing={24}>
@@ -198,10 +213,6 @@ const mapStateToProps = createStructuredSelector({
   announcement: makeSelectAnnouncement(),
   meta: makeSelectAnnouncementsMeta()
 });
-
-// const mapDispatchToProps = {
-//   fetchAnnouncement
-// };
 
 const withRedux = connect(mapStateToProps, {fetchAnnouncement});
 

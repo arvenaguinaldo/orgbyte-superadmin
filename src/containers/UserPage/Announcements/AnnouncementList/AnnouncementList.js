@@ -20,6 +20,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import {Grid, CardMedia, Paper} from '@material-ui/core';
+import Announcement from '@material-ui/icons/Announcement';
 import TopBarAndFooter from '../../layouts/TopBarAndFooter';
 
 function searchingFor(term) {
@@ -138,7 +139,13 @@ const styles = {
     marginLeft: '1px',
     marginTop: '40px',
     textAlign: 'center'
+  },
+  announcementIcon: {
+    width: '90%',
+    height: '100%',
+    color: '#888888'
   }
+
 };
 
 class AnnouncementList extends Component {
@@ -215,13 +222,17 @@ class AnnouncementList extends Component {
                       <Card className={classes.paper2} key={ann.id}>
                         <Grid container spacing={0}>
                           <Grid item lg={2} md={4} sm={12} xs={12}>
-                            <Card className={classes.CardImage}>
-                              <CardMedia
-                                className={classes.CardMedia}
-                                image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                                title="Announcement"
-                              />
-                            </Card>
+                            {ann.image_blobs[0] ?
+                              <Card className={classes.CardImage}>
+                                <CardMedia
+                                  className={classes.CardMedia}
+                                  image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + ann.image_blobs[0].key}
+                                  title="Announcement"
+                                />
+                              </Card>
+                              :
+                              <Announcement className={classes.announcementIcon} />
+                            }
                           </Grid>
                           <Grid item lg={6} md={6} xs={12}>
                             <div className={classes.AnnouncementContent}>

@@ -17,6 +17,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import {Grid, CardMedia} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Announcement from '@material-ui/icons/Announcement';
 
 // import UserAvatar from 'react-user-avatar';
 // import Center from 'react-center';
@@ -57,13 +58,17 @@ class Announcements extends Component {
                           <Card className={style.paper2} key={ann.id}>
                             <Grid container spacing={16}>
                               <Grid item md={4} sm={4} xs={4}>
-                                <Card className={style.CardImage}>
-                                  <CardMedia
-                                    className={style.CardMedia}
-                                    image="https://i.postimg.cc/J7HQP4KL/miah1.png"
-                                    title="Announcement"
-                                  />
-                                </Card>
+                                {ann.image_blobs[0] ?
+                                  <Card className={style.CardImage}>
+                                    <CardMedia
+                                      className={style.CardMedia}
+                                      image={'https://s3-ap-southeast-1.amazonaws.com/orgbyte/' + ann.image_blobs[0].key}
+                                      title="Announcement"
+                                    />
+                                  </Card>
+                                  :
+                                  <Announcement className={style.announcementIcon} />
+                                }
                               </Grid>
                               <Grid item md={8} sm={8} xs={8}>
                                 <div className={style.AnnouncementDetails}>
