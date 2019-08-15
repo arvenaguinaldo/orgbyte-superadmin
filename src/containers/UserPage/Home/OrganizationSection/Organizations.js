@@ -63,7 +63,7 @@ class Organizations extends Component {
                             </Center>
                             <Center>
                               <Typography variant="caption" className={style.Details} color="textSecondary">
-                                ({org.organization_type_name} {org.organization_nature_name} organization)
+                                ({org.organization_type_name} {org.organization_nature_name})
                               </Typography>
                             </Center>
                           </CardContent>
@@ -86,7 +86,7 @@ class Organizations extends Component {
         </Grid>
 
         { organizations.length !== 0 && organizations.length > 6 ?
-          (<div className={style.OrganizationButton}>
+          (<div align="right" className={style.OrganizationButton}>
             <Link to={'/organizations/'}>
               <Button size="small" variant="contained" color="primary">
                 See more

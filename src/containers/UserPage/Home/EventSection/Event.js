@@ -105,7 +105,7 @@ class UserSideEvents extends Component {
           }
         </Grid>
         { events.length !== 0 ?
-          (<div className={style.EventButton}>
+          (<div align="right" className={style.EventButton}>
             <Link to={'/events/'}>
               <Button size="small" variant="contained" color="primary">
               See more
