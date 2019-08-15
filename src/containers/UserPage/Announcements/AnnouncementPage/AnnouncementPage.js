@@ -82,7 +82,6 @@ const styles = {
   },
   CardMedia: {
     height: '100%',
-    marginLeft: '5px',
     objectFit: 'cover',
     textAlign: 'center'
   },

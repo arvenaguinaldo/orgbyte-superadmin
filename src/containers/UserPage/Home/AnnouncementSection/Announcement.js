@@ -108,7 +108,7 @@ class Announcements extends Component {
           </Grid>
         </Grid>
         { announcements.length !== 0 ?
-          (<div className={style.AnnouncementButton}>
+          (<div align="right" className={style.AnnouncementButton}>
             <Link to={'/announcements/'}>
               <Button size="small" variant="contained" color="primary">
               See more
