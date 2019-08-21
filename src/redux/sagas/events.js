@@ -45,7 +45,7 @@ function* createEvent(action) {
       yield call(callSuccessNotification, 'Event Created Successfully');
       // yield put(eventsActions.fetchEvents());
       yield put(reset('CreateEventForm')); // eslint-disable-line
-      yield put(push('/admin/events'));
+      yield put(push('/admin/events/' + response.data.id));
     }
   }
 }
