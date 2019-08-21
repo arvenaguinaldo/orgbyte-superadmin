@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {compose} from 'recompose';
 import {connect} from 'react-redux';
-import _ from 'lodash';
+// import _ from 'lodash';
 import {createStructuredSelector} from 'reselect';
 import JsPDF from 'jspdf';
 
@@ -79,8 +79,8 @@ class Individual extends Component {
   };
 
   onSubmit = (values, dispatch) => {
-    const membershipId = this.onGenerateId(values);
-    _.set(values, 'membershipId', membershipId);
+    // const membershipId = this.onGenerateId(values);
+    // _.set(values, 'membershipId', membershipId);
     dispatch(addMember(values));
   };
 
